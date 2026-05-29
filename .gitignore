@@ -1,0 +1,38 @@
+# Secrets and Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*
+*.env
+*.pem
+*.key
+secrets/
+credentials/
+config/local.json
+
+# Dependencies
+node_modules/
+jspm_packages/
+web_modules/
+
+# Build and Output
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+*.log
+
+# OS & IDE Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
