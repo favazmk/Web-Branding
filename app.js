@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     handleScroll(); // Run initially in case of refresh
 
     // --- 2. Scroll Reveal Animations (Intersection Observer) ---
-    const animatedElements = document.querySelectorAll('.fade-in-up');
+    const animatedElements = document.querySelectorAll('.fade-in-up, .reveal-title, .fade-in-scale, .slide-in-left, .slide-in-right');
     
     const revealCallback = (entries, observer) => {
         entries.forEach(entry => {
@@ -524,4 +524,47 @@ Looking forward to bringing this digital transformation to life!`;
         });
     };
     initMobileMenu();
+
+    // --- 9. Smooth Momentum Inertia Scrolling (Lenis-like Inertia) ---
+    const initSmoothScroll = () => {
+        if (window.matchMedia('(pointer: coarse)').matches) return; // Disable on touchscreen devices
+        
+        let targetScrollY = window.scrollY;
+        let currentScrollY = window.scrollY;
+        const speed = 0.085; // Deceleration inertia coefficient
+        let isScrolling = false;
+
+        window.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            targetScrollY += e.deltaY * 0.85; // Scale scroll amount
+            targetScrollY = Math.max(0, Math.min(targetScrollY, document.documentElement.scrollHeight - window.innerHeight));
+            
+            if (!isScrolling) {
+                isScrolling = true;
+                requestAnimationFrame(updateScroll);
+            }
+        }, { passive: false });
+
+        const updateScroll = () => {
+            const diff = targetScrollY - currentScrollY;
+            if (Math.abs(diff) > 0.4) {
+                currentScrollY += diff * speed;
+                window.scrollTo(0, currentScrollY);
+                requestAnimationFrame(updateScroll);
+            } else {
+                currentScrollY = targetScrollY;
+                window.scrollTo(0, currentScrollY);
+                isScrolling = false;
+            }
+        };
+
+        // Sync target scroll position on manual browser/scrollbar scrolling
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                targetScrollY = window.scrollY;
+                currentScrollY = window.scrollY;
+            }
+        });
+    };
+    initSmoothScroll();
 });
