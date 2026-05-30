@@ -1,0 +1,14 @@
+{
+  "name": "the-web-branding-rebuild",
+  "version": "1.0.0",
+  "description": "Premium, ultra-high performance landing page rebuild for thewebbranding.com",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}
