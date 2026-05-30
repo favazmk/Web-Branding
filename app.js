@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     handleScroll(); // Run initially in case of refresh
 
     // --- 2. Scroll Reveal Animations (Intersection Observer) ---
-    const animatedElements = document.querySelectorAll('.fade-in-up, .reveal-title, .fade-in-scale, .slide-in-left, .slide-in-right');
+    const animatedElements = document.querySelectorAll('.fade-in-up');
     
     const revealCallback = (entries, observer) => {
         entries.forEach(entry => {
@@ -218,6 +218,11 @@ Looking forward to bringing this digital transformation to life!`;
         const canvas = document.getElementById('particles-canvas');
         if (!canvas) return;
         
+        if (window.innerWidth < 768) {
+            canvas.style.display = 'none';
+            return;
+        }
+
         const ctx = canvas.getContext('2d');
         const heroSection = document.getElementById('home');
         
@@ -225,7 +230,7 @@ Looking forward to bringing this digital transformation to life!`;
         let height = canvas.height = heroSection.offsetHeight;
         
         const particles = [];
-        const maxParticles = window.innerWidth < 768 ? 25 : 60;
+        const maxParticles = 60;
         const connectionDistance = 110;
         
         const mouse = { x: null, y: null, radius: 150 };
@@ -330,6 +335,7 @@ Looking forward to bringing this digital transformation to life!`;
     // --- 6. Dynamic 3D Tilt Effect (Mouse Hover & Mobile Gyroscope) ---
     const init3DTilt = () => {
         const tiltCards = document.querySelectorAll('.service-card, .portfolio-card, .founder-card-right, .founder-card-left, .visual-canvas');
+        let isTactileActive = false;
         
         // Tracking visible cards to optimize orientation calculations
         const visibleCards = new Set();
@@ -397,45 +403,115 @@ Looking forward to bringing this digital transformation to life!`;
             });
         });
 
+        // 2. Mobile Touch & Drag 3D Tilt (Silky Tactile Mobile Enhancements)
+        tiltCards.forEach(card => {
+            let touchScheduled = false;
+
+            const handleTouch = (e) => {
+                if (!window.matchMedia('(pointer: coarse)').matches) return;
+                
+                isTactileActive = true;
+                
+                const touch = e.touches[0];
+                const rect = card.getBoundingClientRect();
+                
+                // Keep touch coordinates inside bounding box limits
+                const x = Math.min(Math.max(touch.clientX - rect.left, 0), rect.width);
+                const y = Math.min(Math.max(touch.clientY - rect.top, 0), rect.height);
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const maxRotationX = 12; // Slightly more prominent on direct touch/drag
+                const maxRotationY = 12;
+                
+                const rotateX = ((centerY - y) / centerY) * maxRotationX;
+                const rotateY = ((x - centerX) / centerX) * maxRotationY;
+
+                if (touchScheduled) return;
+                touchScheduled = true;
+                
+                window.requestAnimationFrame(() => {
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                    
+                    const shadowX = -rotateY * 1.5;
+                    const shadowY = rotateX * 1.5;
+                    card.style.boxShadow = `${shadowX}px ${shadowY}px 30px var(--primary-glow), var(--shadow-premium)`;
+                    
+                    const img = card.querySelector('.founder-img, .portfolio-img, img[src="hero-shape.webp"]');
+                    if (img) {
+                        img.style.transform = `scale(1.08) translate3d(${-rotateY * 0.4}px, ${-rotateX * 0.4}px, 30px)`;
+                    }
+                    touchScheduled = false;
+                });
+            };
+
+            const resetTouch = () => {
+                if (!window.matchMedia('(pointer: coarse)').matches) return;
+                
+                isTactileActive = false;
+                
+                window.requestAnimationFrame(() => {
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                    const img = card.querySelector('.founder-img, .portfolio-img, img[src="hero-shape.webp"]');
+                    if (img) img.style.transform = '';
+                });
+            };
+
+            card.addEventListener('touchstart', handleTouch, { passive: true });
+            card.addEventListener('touchmove', handleTouch, { passive: true });
+            card.addEventListener('touchend', resetTouch, { passive: true });
+            card.addEventListener('touchcancel', resetTouch, { passive: true });
+        });
+
         // 2. Mobile Gyroscope Device Orientation Tilt
         if (window.DeviceOrientationEvent) {
+            let gyroScheduled = false;
             window.addEventListener('deviceorientation', (e) => {
                 if (!window.matchMedia('(pointer: coarse)').matches) return; // Only trigger on mobile touchscreens
+                if (isTactileActive) return; // Skip gyro tilt if user is actively touching/dragging
                 
                 const beta = e.beta;   // front-back tilt (-180 to 180)
                 const gamma = e.gamma; // left-right tilt (-90 to 90)
                 
                 if (beta === null || gamma === null) return;
                 
-                // Normalizing phone angles based on standard vertical holding context
-                const normalBeta = Math.min(Math.max(beta - 45, -30), 30);
-                const normalGamma = Math.min(Math.max(gamma, -30), 30);
+                if (gyroScheduled) return;
+                gyroScheduled = true;
                 
-                const rotateX = (-normalBeta / 30) * 8; 
-                const rotateY = (normalGamma / 30) * 8; 
-
-                visibleCards.forEach(card => {
-                    card.style.transition = 'transform 0.25s ease-out, box-shadow 0.25s ease-out';
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+                window.requestAnimationFrame(() => {
+                    // Normalizing phone angles based on standard vertical holding context
+                    const normalBeta = Math.min(Math.max(beta - 45, -30), 30);
+                    const normalGamma = Math.min(Math.max(gamma, -30), 30);
                     
-                    const shadowX = -rotateY * 1.2;
-                    const shadowY = rotateX * 1.2;
-                    card.style.boxShadow = `${shadowX}px ${shadowY}px 25px rgba(168, 134, 205, 0.1), var(--shadow-premium)`;
+                    const rotateX = (-normalBeta / 30) * 8; 
+                    const rotateY = (normalGamma / 30) * 8; 
 
-                    const img = card.querySelector('.founder-img, .portfolio-img, img[src="hero-shape.webp"]');
-                    if (img) {
-                        img.style.transition = 'transform 0.25s ease-out';
-                        img.style.transform = `scale(1.05) translate3d(${-rotateY * 0.3}px, ${-rotateX * 0.3}px, 20px)`;
-                    }
+                    visibleCards.forEach(card => {
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+                        
+                        const shadowX = -rotateY * 1.2;
+                        const shadowY = rotateX * 1.2;
+                        card.style.boxShadow = `${shadowX}px ${shadowY}px 25px var(--primary-glow), var(--shadow-premium)`;
+
+                        const img = card.querySelector('.founder-img, .portfolio-img, img[src="hero-shape.webp"]');
+                        if (img) {
+                            img.style.transform = `scale(1.05) translate3d(${-rotateY * 0.3}px, ${-rotateX * 0.3}px, 20px)`;
+                        }
+                    });
+                    
+                    gyroScheduled = false;
                 });
             });
         }
 
-        // 3. Mobile Scroll Center Highlight Focus
+        // 3. Mobile Scroll Center Highlight Focus (Optimized to prevent layout thrashing)
         const handleScrollFocus = () => {
             const viewportCenterY = window.innerHeight / 2;
 
-            tiltCards.forEach(card => {
+            // Only run getBoundingClientRect on cards currently visible in viewport to prevent layout thrashing
+            visibleCards.forEach(card => {
                 const rect = card.getBoundingClientRect();
                 const cardCenterY = rect.top + (rect.height / 2);
                 
@@ -453,35 +529,53 @@ Looking forward to bringing this digital transformation to life!`;
             });
         };
 
-        window.addEventListener('scroll', handleScrollFocus);
+        let scrollFocusScheduled = false;
+        window.addEventListener('scroll', () => {
+            if (scrollFocusScheduled) return;
+            scrollFocusScheduled = true;
+            window.requestAnimationFrame(() => {
+                handleScrollFocus();
+                scrollFocusScheduled = false;
+            });
+        }, { passive: true });
+        
         handleScrollFocus(); // Run initially
     };
     init3DTilt();
 
-    // --- 7. Scroll-Bound 3D & Parallax Scrolling ---
+    // --- 7. Scroll-Bound 3D & Parallax Scrolling (Optimized) ---
     const initScrollParallax = () => {
         const orbs = document.querySelectorAll('.orb-primary, .orb-secondary, .orb-accent');
         const heroShape = document.querySelector('img[src="hero-shape.webp"]');
         
+        let scrollParallaxScheduled = false;
+        
         window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
+            if (scrollParallaxScheduled) return;
             
-            // Move decorative background glowing blobs at variable slower speeds (depth effect)
-            orbs.forEach((orb, index) => {
-                const speed = (index + 1) * 0.12;
-                orb.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-            
-            // Subtly rotate and shift hero 3D asset on scroll
-            if (heroShape) {
-                const rect = heroShape.getBoundingClientRect();
-                if (rect.bottom > 0 && rect.top < window.innerHeight) {
-                    const speed = -0.2;
-                    const rotationSpeed = 0.04;
-                    heroShape.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * rotationSpeed}deg) translateZ(50px)`;
+            scrollParallaxScheduled = true;
+            window.requestAnimationFrame(() => {
+                const scrolled = window.pageYOffset;
+                
+                // Move decorative background glowing blobs at variable slower speeds (depth effect)
+                orbs.forEach((orb, index) => {
+                    const speed = (index + 1) * 0.12;
+                    orb.style.transform = `translate3d(0, ${scrolled * speed}px, 0)`;
+                });
+                
+                // Subtly rotate and shift hero 3D asset on scroll
+                if (heroShape) {
+                    // Check scroll range directly instead of calling getBoundingClientRect to prevent layout thrashing
+                    if (scrolled < 1200) {
+                        const speed = -0.2;
+                        const rotationSpeed = 0.04;
+                        heroShape.style.transform = `translate3d(0, ${scrolled * speed}px, 50px) rotate(${scrolled * rotationSpeed}deg)`;
+                    }
                 }
-            }
-        });
+                
+                scrollParallaxScheduled = false;
+            });
+        }, { passive: true });
     };
     initScrollParallax();
 
@@ -524,47 +618,4 @@ Looking forward to bringing this digital transformation to life!`;
         });
     };
     initMobileMenu();
-
-    // --- 9. Smooth Momentum Inertia Scrolling (Lenis-like Inertia) ---
-    const initSmoothScroll = () => {
-        if (window.matchMedia('(pointer: coarse)').matches) return; // Disable on touchscreen devices
-        
-        let targetScrollY = window.scrollY;
-        let currentScrollY = window.scrollY;
-        const speed = 0.085; // Deceleration inertia coefficient
-        let isScrolling = false;
-
-        window.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            targetScrollY += e.deltaY * 0.85; // Scale scroll amount
-            targetScrollY = Math.max(0, Math.min(targetScrollY, document.documentElement.scrollHeight - window.innerHeight));
-            
-            if (!isScrolling) {
-                isScrolling = true;
-                requestAnimationFrame(updateScroll);
-            }
-        }, { passive: false });
-
-        const updateScroll = () => {
-            const diff = targetScrollY - currentScrollY;
-            if (Math.abs(diff) > 0.4) {
-                currentScrollY += diff * speed;
-                window.scrollTo(0, currentScrollY);
-                requestAnimationFrame(updateScroll);
-            } else {
-                currentScrollY = targetScrollY;
-                window.scrollTo(0, currentScrollY);
-                isScrolling = false;
-            }
-        };
-
-        // Sync target scroll position on manual browser/scrollbar scrolling
-        window.addEventListener('scroll', () => {
-            if (!isScrolling) {
-                targetScrollY = window.scrollY;
-                currentScrollY = window.scrollY;
-            }
-        });
-    };
-    initSmoothScroll();
 });
