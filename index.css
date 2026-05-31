@@ -34,7 +34,7 @@
     --grad-primary: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%); /* Saturated cosmic violet gradient */
     --grad-glow: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
     --grad-dark: linear-gradient(180deg, #10081d 0%, #06020e 100%);
-    --grad-text: linear-gradient(135deg, #ffffff 15%, #c084fc 100%);
+    --grad-text: linear-gradient(135deg, #ffffff -10%, #c084fc 100%);
     --grad-neon-text: linear-gradient(135deg, #ffffff 0%, #c084fc 100%);
     
     /* Border & Glassmorphic Details */
