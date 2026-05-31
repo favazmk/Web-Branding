@@ -161,6 +161,47 @@ img {
     -webkit-text-fill-color: transparent;
 }
 
+/* --- Premium Animated Gradient Text (React Bits Port) --- */
+.animated-gradient-text {
+    background-size: 300% 100%;
+    background-repeat: repeat;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: gradient-text-anim 8s linear infinite;
+    display: inline-block;
+    transition: background-position 0.5s ease-out;
+}
+
+.animated-gradient-text:hover {
+    animation-play-state: paused;
+}
+
+/* Variation 1: Velvet Purple / Lavender (Hashir Nisam Profile) */
+.gradient-velvet {
+    background-image: linear-gradient(to right, #8c52ff, #ff9ffc, #a886cd, #8c52ff);
+}
+
+/* Variation 2: Teal / Cyan Neon (Founder & CEO Tag) */
+.gradient-teal {
+    background-image: linear-gradient(to right, #40ffaa, #4079ff, #00f0ff, #40ffaa);
+    animation-duration: 6s;
+}
+
+@keyframes gradient-text-anim {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
 .neon-text {
     background: var(--grad-neon-text);
     -webkit-background-clip: text;
