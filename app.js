@@ -1107,4 +1107,57 @@ Looking forward to bringing this digital transformation to life!`;
         });
     };
     initMobileMenu();
+
+    // --- 9. Dynamic Stat Counter Animation with Deceleration Easing (Repeating Viewport Observer) ---
+    const initCounterAnimation = () => {
+        const counters = document.querySelectorAll('.counter-number');
+        if (counters.length === 0) return;
+        
+        const countUp = (element) => {
+            const target = parseInt(element.getAttribute('data-target'), 10);
+            const suffix = element.getAttribute('data-suffix') || '';
+            const duration = 2200; // Eased over 2.2 seconds for luxury deceleration
+            const startTime = performance.now();
+            
+            const animateCount = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Ease-out quadratic progression for organic speed reduction
+                const easeProgress = 1 - Math.pow(1 - progress, 2);
+                const currentVal = Math.floor(easeProgress * target);
+                
+                element.textContent = `${currentVal}${suffix}`;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animateCount);
+                } else {
+                    element.textContent = `${target}${suffix}`;
+                }
+            };
+            
+            requestAnimationFrame(animateCount);
+        };
+        
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const element = entry.target;
+                const suffix = element.getAttribute('data-suffix') || '';
+                
+                if (entry.isIntersecting) {
+                    if (!element.classList.contains('counted')) {
+                        element.classList.add('counted');
+                        countUp(element);
+                    }
+                } else {
+                    // Reset value when scrolling out of viewport to allow looping playback
+                    element.classList.remove('counted');
+                    element.textContent = `0${suffix}`;
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        counters.forEach(counter => counterObserver.observe(counter));
+    };
+    initCounterAnimation();
 });
