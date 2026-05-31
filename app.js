@@ -605,7 +605,7 @@ Looking forward to bringing this digital transformation to life!`;
                     visibleCards.delete(entry.target);
                     entry.target.style.transform = '';
                     entry.target.style.boxShadow = '';
-                    const img = entry.target.querySelector('.founder-img, .portfolio-img, img[src="hero-shape.webp"]');
+                    const img = entry.target.querySelector('.founder-img, .portfolio-img, .hero-visual-img');
                     if (img) img.style.transform = '';
                 }
             });
@@ -637,7 +637,7 @@ Looking forward to bringing this digital transformation to life!`;
                 const shadowY = rotateX * 1.5;
                 card.style.boxShadow = `${shadowX}px ${shadowY}px 30px rgba(168, 134, 205, 0.12), var(--shadow-premium)`;
                 
-                const img = card.querySelector('.founder-img, .portfolio-img, img[src="hero-shape.webp"]');
+                const img = card.querySelector('.founder-img, .portfolio-img, .hero-visual-img');
                 if (img) {
                     img.style.transform = `scale(1.08) translate3d(${-rotateY * 0.4}px, ${-rotateX * 0.4}px, 40px)`;
                 }
@@ -653,7 +653,7 @@ Looking forward to bringing this digital transformation to life!`;
                 card.style.transform = '';
                 card.style.boxShadow = '';
                 
-                const img = card.querySelector('.founder-img, .portfolio-img, img[src="hero-shape.webp"]');
+                const img = card.querySelector('.founder-img, .portfolio-img, .hero-visual-img');
                 if (img) img.style.transform = '';
                 
                 const mesh = card.querySelector('.visual-mesh');
@@ -696,7 +696,7 @@ Looking forward to bringing this digital transformation to life!`;
                     const shadowY = rotateX * 1.5;
                     card.style.boxShadow = `${shadowX}px ${shadowY}px 30px var(--primary-glow), var(--shadow-premium)`;
                     
-                    const img = card.querySelector('.founder-img, .portfolio-img, img[src="hero-shape.webp"]');
+                    const img = card.querySelector('.founder-img, .portfolio-img, .hero-visual-img');
                     if (img) {
                         img.style.transform = `scale(1.08) translate3d(${-rotateY * 0.4}px, ${-rotateX * 0.4}px, 30px)`;
                     }
@@ -712,7 +712,7 @@ Looking forward to bringing this digital transformation to life!`;
                 window.requestAnimationFrame(() => {
                     card.style.transform = '';
                     card.style.boxShadow = '';
-                    const img = card.querySelector('.founder-img, .portfolio-img, img[src="hero-shape.webp"]');
+                    const img = card.querySelector('.founder-img, .portfolio-img, .hero-visual-img');
                     if (img) img.style.transform = '';
                 });
             };
@@ -753,7 +753,7 @@ Looking forward to bringing this digital transformation to life!`;
                         const shadowY = rotateX * 1.2;
                         card.style.boxShadow = `${shadowX}px ${shadowY}px 25px var(--primary-glow), var(--shadow-premium)`;
 
-                        const img = card.querySelector('.founder-img, .portfolio-img, img[src="hero-shape.webp"]');
+                        const img = card.querySelector('.founder-img, .portfolio-img, .hero-visual-img');
                         if (img) {
                             img.style.transform = `scale(1.05) translate3d(${-rotateY * 0.3}px, ${-rotateX * 0.3}px, 20px)`;
                         }
@@ -816,7 +816,7 @@ Looking forward to bringing this digital transformation to life!`;
     // --- 7. Scroll-Bound 3D & Parallax Scrolling (Optimized) ---
     const initScrollParallax = () => {
         const orbs = document.querySelectorAll('.orb-primary, .orb-secondary, .orb-accent');
-        const heroShape = document.querySelector('img[src="hero-shape.webp"]');
+        const heroShape = document.querySelector('.hero-visual-img');
         
         let scrollParallaxScheduled = false;
         

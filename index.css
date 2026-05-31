@@ -505,6 +505,24 @@ nav {
     transition: var(--transition-smooth);
 }
 
+.hero-visual-img {
+    width: 100%;
+    max-width: 440px;
+    height: auto;
+    position: relative;
+    z-index: 3;
+    animation: floatVisual 8s ease-in-out infinite;
+    will-change: transform;
+    
+    /* Radial masking to fade the rectangular borders organically */
+    -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.75) 60%, rgba(0, 0, 0, 0) 95%);
+    mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.75) 60%, rgba(0, 0, 0, 0) 95%);
+    
+    /* Deep cosmic blending integration */
+    filter: brightness(0.9) contrast(1.1) saturate(1.1);
+    mix-blend-mode: screen; /* Integrates perfectly with glowing elements and grid dots! */
+}
+
 .visual-mesh {
     position: absolute;
     width: 200%;
