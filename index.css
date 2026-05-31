@@ -203,6 +203,11 @@ img {
     margin-bottom: 60px;
 }
 
+/* Responsive visibility utilities */
+.show-mobile {
+    display: none !important;
+}
+
 /* --- Glassmorphic Premium Card Token --- */
 .glass-card {
     background: var(--bg-glass);
@@ -1640,8 +1645,12 @@ nav {
 }
 
 @media (max-width: 768px) {
-    .hide-mobile {
+    .hide-mobile, .show-desktop {
         display: none !important;
+    }
+    
+    .show-mobile {
+        display: inline !important;
     }
     
     .hero-title {
