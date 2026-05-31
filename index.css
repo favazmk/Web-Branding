@@ -490,33 +490,113 @@ nav {
 
 .hero-stats {
     display: flex;
-    gap: 48px;
-    padding-top: 40px;
-    border-top: 1px solid var(--border-glass);
+    gap: 24px;
+    padding-top: 48px;
+    border-top: none;
     justify-content: center;
     width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .stat-item {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px 32px;
+    border-radius: var(--radius-md);
+    background: rgba(16, 9, 29, 0.45); /* Elegant deep obsidian violet-slate glass */
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Thin premium glass border */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: var(--transition-smooth);
+    min-width: 190px;
+    flex: 1;
+    box-shadow: 
+        inset 0 1px 1px rgba(255, 255, 255, 0.05),
+        0 12px 30px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle glow effect for hover */
+.stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top center, rgba(192, 132, 252, 0.15), transparent 50%);
+    opacity: 0;
+    transition: var(--transition-smooth);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.stat-item:hover::before {
+    opacity: 1;
+}
+
+.stat-item:hover {
+    transform: translateY(-6px);
+    background: rgba(22, 12, 39, 0.65);
+    border-color: rgba(192, 132, 252, 0.35); /* Bright electric lavender border highlight */
+    box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 0.12),
+        0 20px 40px rgba(139, 61, 255, 0.15), /* signature purple accent glow */
+        0 0 20px rgba(192, 132, 252, 0.05);
 }
 
 .stat-num {
     font-family: 'Outfit', sans-serif;
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     font-weight: 800;
     background: var(--grad-text);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    position: relative;
+    z-index: 2;
+    line-height: 1.1;
 }
 
 .stat-label {
     font-size: 0.85rem;
-    color: var(--text-faded);
+    color: var(--text-gray); /* Lighter gray for better legibility against the card backdrop */
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: 4px;
+    letter-spacing: 0.07em;
+    margin-top: 8px;
+    position: relative;
+    z-index: 2;
+    font-weight: 500;
+}
+
+@media (max-width: 992px) {
+    .hero-stats {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        padding-top: 32px;
+    }
+    
+    .stat-item {
+        width: 100%;
+        max-width: 320px;
+        min-width: unset;
+        padding: 16px 24px;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(16, 9, 29, 0.85); /* Solid premium contrast backdrop for zero-lag mobile scrolling */
+    }
 }
 
 /* Hero Illustration / Visual Mockup */
