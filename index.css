@@ -442,6 +442,16 @@ nav {
     display: inline-block;
 }
 
+.pressure-word {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.pressure-char {
+    display: inline-block;
+    transition: font-variation-settings 0.12s ease-out;
+}
+
 .hero-disc {
     font-size: 1.2rem;
     color: var(--text-gray);
@@ -1632,6 +1642,12 @@ nav {
 @media (max-width: 768px) {
     .hide-mobile {
         display: none !important;
+    }
+    
+    .hero-title {
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
+        line-height: 1.1;
+        margin-bottom: 18px;
     }
     
     .section-padding {

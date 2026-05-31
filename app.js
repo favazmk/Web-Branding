@@ -617,20 +617,32 @@ Looking forward to bringing this digital transformation to life!`;
             nodes.forEach(node => {
                 if (node.nodeType === Node.TEXT_NODE) {
                     const text = node.textContent;
-                    const chars = text.split('');
+                    // Split text into words and whitespace to prevent breaking mid-word on mobile
+                    const parts = text.split(/(\s+)/);
                     const frag = document.createDocumentFragment();
                     
-                    chars.forEach(char => {
-                        if (char.trim() === '') {
-                            frag.appendChild(document.createTextNode(' '));
+                    parts.forEach(part => {
+                        if (part.trim() === '') {
+                            // Whitespace node, keep it as is
+                            frag.appendChild(document.createTextNode(part));
                         } else {
-                            const span = document.createElement('span');
-                            span.className = 'pressure-char';
-                            span.textContent = char;
-                            span.style.display = 'inline-block';
-                            span.style.transition = 'font-variation-settings 0.12s ease-out';
-                            spans.push(span);
-                            frag.appendChild(span);
+                            // A word node! Wrap in a word span to keep it together
+                            const wordSpan = document.createElement('span');
+                            wordSpan.className = 'pressure-word';
+                            wordSpan.style.display = 'inline-block';
+                            wordSpan.style.whiteSpace = 'nowrap';
+                            
+                            const chars = part.split('');
+                            chars.forEach(char => {
+                                const charSpan = document.createElement('span');
+                                charSpan.className = 'pressure-char';
+                                charSpan.textContent = char;
+                                charSpan.style.display = 'inline-block';
+                                charSpan.style.transition = 'font-variation-settings 0.12s ease-out';
+                                spans.push(charSpan);
+                                wordSpan.appendChild(charSpan);
+                            });
+                            frag.appendChild(wordSpan);
                         }
                     });
                     
@@ -655,6 +667,36 @@ Looking forward to bringing this digital transformation to life!`;
         let titleRect = title.getBoundingClientRect();
         mouse.x = cursor.x = window.innerWidth / 2;
         mouse.y = cursor.y = titleRect.top + titleRect.height / 2;
+
+        // Caching relative offsets of character spans to eliminate layout thrashing
+        let spanCoords = [];
+        const cacheCoords = () => {
+            // Temporarily set to baseline so we get the resting coordinates
+            spans.forEach(span => {
+                span.style.fontVariationSettings = `'wght' 200, 'wdth' 100, 'ital' 0`;
+            });
+            // Force layout reflow once
+            titleRect = title.getBoundingClientRect();
+            
+            spanCoords = spans.map(span => {
+                const rect = span.getBoundingClientRect();
+                return {
+                    span: span,
+                    // Center coordinates relative to the title container
+                    relX: (rect.left + rect.width / 2) - titleRect.left,
+                    relY: (rect.top + rect.height / 2) - titleRect.top
+                };
+            });
+        };
+
+        // Cache coordinates when fonts are loaded or immediately
+        if (document.fonts) {
+            document.fonts.ready.then(() => {
+                cacheCoords();
+            });
+        } else {
+            setTimeout(cacheCoords, 100);
+        }
 
         const activatePointer = () => {
             isActive = true;
@@ -697,15 +739,11 @@ Looking forward to bringing this digital transformation to life!`;
             }
         }, { passive: true });
 
-        const dist = (a, b) => {
-            const dx = b.x - a.x;
-            const dy = b.y - a.y;
-            return Math.sqrt(dx * dx + dy * dy);
-        };
-
+        // Enhanced mathematically bounded scaling function with ease-out quadratic fallback
         const getAttr = (distance, maxD, minVal, maxVal) => {
-            const val = maxVal - Math.abs((maxVal * distance) / maxD);
-            return Math.max(minVal, val + minVal);
+            const ratio = Math.max(0, Math.min(1, 1 - distance / maxD));
+            const easeRatio = 1 - Math.pow(1 - ratio, 2); // Quadratic ease-out for elasticity
+            return minVal + (maxVal - minVal) * easeRatio;
         };
 
         let rafId = null;
@@ -713,35 +751,48 @@ Looking forward to bringing this digital transformation to life!`;
 
         const animate = () => {
             titleRect = title.getBoundingClientRect();
-            const maxDist = titleRect.width * 0.75;
+            
+            // Check viewport characteristics
+            const isMobile = window.innerWidth < 768;
+            
+            // maxDist floor avoids extreme squishing when screen width scales down
+            const maxDist = Math.max(isMobile ? 450 : 650, titleRect.width * 0.85);
 
             // Ambient breathing wave when there is no active physical touch/hover
             if (!isActive) {
-                ambientTime += 0.012; // breathing rate
-                cursor.x = titleRect.left + titleRect.width / 2 + Math.sin(ambientTime) * (titleRect.width * 0.38);
-                cursor.y = titleRect.top + titleRect.height / 2 + Math.cos(ambientTime * 0.65) * 15;
+                ambientTime += isMobile ? 0.008 : 0.012; // Breathing rate
+                cursor.x = titleRect.left + titleRect.width / 2 + Math.sin(ambientTime) * (titleRect.width * 0.35);
+                cursor.y = titleRect.top + titleRect.height / 2 + Math.cos(ambientTime * 0.6) * (isMobile ? 8 : 15);
             }
 
             // Easing physics
-            mouse.x += (cursor.x - mouse.x) / 12;
-            mouse.y += (cursor.y - mouse.y) / 12;
+            mouse.x += (cursor.x - mouse.x) / 10;
+            mouse.y += (cursor.y - mouse.y) / 10;
 
-            spans.forEach(span => {
-                const rect = span.getBoundingClientRect();
-                const charCenter = {
-                    x: rect.x + rect.width / 2,
-                    y: rect.y + rect.height / 2
-                };
+            // Apply font variation settings from precalculated cached offsets relative to titleRect
+            spanCoords.forEach(item => {
+                const charX = titleRect.left + item.relX;
+                const charY = titleRect.top + item.relY;
 
-                const d = dist(mouse, charCenter);
+                const dx = charX - mouse.x;
+                const dy = charY - mouse.y;
+                const d = Math.sqrt(dx * dx + dy * dy);
 
-                // Width ('wdth') axes range: 5 to 200, Weight ('wght') axes range: 100 to 900
-                const wdth = Math.floor(getAttr(d, maxDist, 5, 200));
-                const wght = Math.floor(getAttr(d, maxDist, 100, 900));
+                // Define limits to prevent over-stretching or over-squishing
+                // Width range: 25 to 190 (desktop), 45 to 125 (mobile to prevent horizontal overflow)
+                const minWdth = isMobile ? 45 : 25;
+                const maxWdth = isMobile ? 120 : 190;
+                
+                // Weight range: 150 to 900 (desktop), 250 to 800 (mobile)
+                const minWght = isMobile ? 250 : 150;
+                const maxWght = isMobile ? 800 : 900;
+
+                const wdth = Math.floor(getAttr(d, maxDist, minWdth, maxWdth));
+                const wght = Math.floor(getAttr(d, maxDist, minWght, maxWght));
                 const italVal = getAttr(d, maxDist, 0, 1).toFixed(2);
 
                 const settings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
-                span.style.fontVariationSettings = settings;
+                item.span.style.fontVariationSettings = settings;
             });
 
             rafId = requestAnimationFrame(animate);
@@ -752,7 +803,7 @@ Looking forward to bringing this digital transformation to life!`;
         window.addEventListener('resize', () => {
             if (window.innerWidth !== lastWidth) {
                 lastWidth = window.innerWidth;
-                titleRect = title.getBoundingClientRect();
+                cacheCoords();
             }
         });
     };
