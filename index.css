@@ -605,10 +605,10 @@ nav {
 
 /* --- Founder Spotlight Premium Cards --- */
 .founder-card-left {
-    background: linear-gradient(135deg, rgba(90, 44, 137, 0.15) 0%, rgba(20, 10, 35, 0.3) 100%);
-    border: 1px solid rgba(139, 61, 255, 0.15);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    background: linear-gradient(135deg, rgba(90, 44, 137, 0.22) 0%, rgba(6, 2, 14, 0.85) 100%);
+    border: 1px solid rgba(139, 61, 255, 0.25);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
     border-radius: var(--radius-lg);
     padding: 48px;
     display: flex;
@@ -623,8 +623,8 @@ nav {
 }
 
 .founder-card-left:hover {
-    border-color: rgba(139, 61, 255, 0.3);
-    box-shadow: 0 20px 40px rgba(139, 61, 255, 0.08);
+    border-color: rgba(139, 61, 255, 0.45);
+    box-shadow: 0 20px 40px rgba(139, 61, 255, 0.12), var(--shadow-premium);
     transform: translateY(-4px);
 }
 
