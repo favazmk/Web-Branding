@@ -648,25 +648,54 @@ Looking forward to bringing this digital transformation to life!`;
         // Tracking coordinates
         const mouse = { x: 0, y: 0 };
         const cursor = { x: 0, y: 0 };
+        let isActive = false;
+        let inactivityTimeout = null;
+        let ambientTime = 0;
         
         let titleRect = title.getBoundingClientRect();
         mouse.x = cursor.x = window.innerWidth / 2;
         mouse.y = cursor.y = titleRect.top + titleRect.height / 2;
 
+        const activatePointer = () => {
+            isActive = true;
+            if (inactivityTimeout) clearTimeout(inactivityTimeout);
+            // On mobile viewports, go back to ambient mode after 2.5 seconds of no new coordinates
+            inactivityTimeout = setTimeout(() => {
+                isActive = false;
+            }, 2500);
+        };
+
         const handleMouseMove = (e) => {
+            activatePointer();
             cursor.x = e.clientX;
             cursor.y = e.clientY;
         };
 
         const handleTouchMove = (e) => {
             if (e.touches.length > 0) {
+                activatePointer();
                 cursor.x = e.touches[0].clientX;
                 cursor.y = e.touches[0].clientY;
             }
         };
 
+        const handleMouseLeave = () => {
+            isActive = false;
+            if (inactivityTimeout) clearTimeout(inactivityTimeout);
+        };
+
         window.addEventListener('mousemove', handleMouseMove);
         window.addEventListener('touchmove', handleTouchMove, { passive: true });
+        window.addEventListener('mouseleave', handleMouseLeave);
+        
+        // Let touches directly on the title trigger it instantly
+        title.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 0) {
+                activatePointer();
+                cursor.x = e.touches[0].clientX;
+                cursor.y = e.touches[0].clientY;
+            }
+        }, { passive: true });
 
         const dist = (a, b) => {
             const dx = b.x - a.x;
@@ -686,9 +715,16 @@ Looking forward to bringing this digital transformation to life!`;
             titleRect = title.getBoundingClientRect();
             const maxDist = titleRect.width * 0.75;
 
+            // Ambient breathing wave when there is no active physical touch/hover
+            if (!isActive) {
+                ambientTime += 0.012; // breathing rate
+                cursor.x = titleRect.left + titleRect.width / 2 + Math.sin(ambientTime) * (titleRect.width * 0.38);
+                cursor.y = titleRect.top + titleRect.height / 2 + Math.cos(ambientTime * 0.65) * 15;
+            }
+
             // Easing physics
-            mouse.x += (cursor.x - mouse.x) / 15;
-            mouse.y += (cursor.y - mouse.y) / 15;
+            mouse.x += (cursor.x - mouse.x) / 12;
+            mouse.y += (cursor.y - mouse.y) / 12;
 
             spans.forEach(span => {
                 const rect = span.getBoundingClientRect();
