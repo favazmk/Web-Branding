@@ -1246,16 +1246,63 @@ nav {
 /* ==========================================================================
    TESTIMONIALS & TRUST
    ========================================================================== */
-.testimonials-slider {
-    position: relative;
+/* Testimonials Infinite Marquee Slider */
+.testimonial-marquee {
     overflow: hidden;
     width: 100%;
+    position: relative;
+    padding: 24px 0;
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
 }
 
-.testimonial-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
+.marquee-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    animation: marquee-slide 45s linear infinite;
+}
+
+.testimonial-marquee:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+/* Base card width override for continuous line marquee */
+.testimonial-marquee .test-card {
+    flex-shrink: 0;
+    width: 380px;
+    white-space: normal;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+}
+
+@keyframes marquee-slide {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+@media (max-width: 768px) {
+    .testimonial-marquee {
+        mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+        padding: 16px 0;
+    }
+    
+    .testimonial-marquee .test-card {
+        width: 300px;
+        padding: 20px;
+    }
+    
+    .marquee-track {
+        gap: 16px;
+        animation: marquee-slide 30s linear infinite;
+    }
 }
 
 .test-card {
