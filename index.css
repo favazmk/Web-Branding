@@ -1426,6 +1426,66 @@ nav {
     transform: translateY(0);
 }
 
+/* --- Premium 3D Scroll Reveal Utilities --- */
+.reveal-3d-fold {
+    opacity: 0;
+    transform: perspective(1200px) rotateX(22deg) translateY(60px) scale(0.96);
+    transform-origin: top center;
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+.reveal-3d-fold.appeared {
+    opacity: 1;
+    transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
+}
+
+.reveal-3d-flip-left {
+    opacity: 0;
+    transform: perspective(1200px) rotateY(-35deg) translateX(-80px);
+    transform-origin: left center;
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+.reveal-3d-flip-left.appeared {
+    opacity: 1;
+    transform: perspective(1200px) rotateY(0deg) translateX(0);
+}
+
+.reveal-3d-flip-right {
+    opacity: 0;
+    transform: perspective(1200px) rotateY(35deg) translateX(80px);
+    transform-origin: right center;
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+.reveal-3d-flip-right.appeared {
+    opacity: 1;
+    transform: perspective(1200px) rotateY(0deg) translateX(0);
+}
+
+.reveal-3d-pop {
+    opacity: 0;
+    transform: perspective(1200px) rotateX(-18deg) rotateY(8deg) scale(0.88) translateY(50px);
+    transition: opacity 1.1s cubic-bezier(0.34, 1.56, 0.64, 1), transform 1.1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform, opacity;
+}
+.reveal-3d-pop.appeared {
+    opacity: 1;
+    transform: perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0);
+}
+
+.reveal-3d-roll {
+    opacity: 0;
+    transform: perspective(1000px) rotateX(-75deg);
+    transform-origin: top center;
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+.reveal-3d-roll.appeared {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0deg);
+}
+
 .delay-100 { transition-delay: 0.1s; }
 .delay-200 { transition-delay: 0.2s; }
 .delay-300 { transition-delay: 0.3s; }
@@ -1731,99 +1791,4 @@ nav {
     border-color: rgba(139, 61, 255, 0.25) !important;
     box-shadow: 0 20px 40px rgba(139, 61, 255, 0.08) !important;
     transform: translateY(-4px) !important;
-}
-
-/* ==========================================================================
-   SCROLL STACK SERVICES
-   ========================================================================== */
-.scroll-stack-wrapper {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 0 !important;
-    position: relative;
-    width: 100%;
-}
-
-.scroll-stack-wrapper .service-card {
-    width: 100%;
-    max-width: 920px;
-    min-height: 340px;
-    margin: 0 auto;
-    background: rgba(13, 9, 23, 0.85);
-    border: 1px solid rgba(139, 61, 255, 0.2);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 48px;
-    padding: 48px 56px;
-    align-items: center;
-    border-radius: 32px;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
-    box-sizing: border-box;
-}
-
-.scroll-stack-wrapper .service-card .service-features {
-    margin-bottom: 0;
-    padding-top: 0;
-    border-top: none;
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
-    padding-left: 32px;
-    height: 100%;
-    justify-content: center;
-}
-
-.scroll-stack-wrapper .service-card .service-desc {
-    margin-bottom: 0;
-}
-
-.scroll-stack-end {
-    width: 100%;
-    height: 1px;
-    margin-top: 40px;
-}
-
-.scroll-stack-wrapper .service-card:hover {
-    box-shadow: 0 30px 70px rgba(139, 61, 255, 0.15), var(--shadow-premium);
-    border-color: rgba(139, 61, 255, 0.4);
-}
-
-/* Light Theme overrides for ScrollStack */
-.theme-light .scroll-stack-wrapper .service-card {
-    background: rgba(255, 255, 255, 0.85) !important;
-    border: 1px solid rgba(139, 61, 255, 0.12) !important;
-    box-shadow: 0 15px 45px rgba(139, 61, 255, 0.04), var(--shadow-light) !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
-}
-
-.theme-light .scroll-stack-wrapper .service-card .service-features {
-    border-left: 1px solid rgba(139, 61, 255, 0.08) !important;
-}
-
-.theme-light .scroll-stack-wrapper .service-card:hover {
-    box-shadow: 0 25px 60px rgba(139, 61, 255, 0.08), var(--shadow-light) !important;
-    border-color: rgba(139, 61, 255, 0.3) !important;
-}
-
-@media (max-width: 992px) {
-    .scroll-stack-wrapper .service-card {
-        grid-template-columns: 1fr;
-        gap: 32px;
-        padding: 40px 32px;
-        min-height: auto;
-    }
-    
-    .scroll-stack-wrapper .service-card .service-features {
-        border-left: none !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-        padding-left: 0;
-        padding-top: 24px;
-    }
-
-    .theme-light .scroll-stack-wrapper .service-card .service-features {
-        border-top: 1px solid rgba(139, 61, 255, 0.08) !important;
-    }
 }
