@@ -1545,6 +1545,9 @@ nav {
 }
 
 @media (max-width: 768px) {
+    .hide-mobile {
+        display: none !important;
+    }
     
     .section-padding {
         padding: 80px 0;
