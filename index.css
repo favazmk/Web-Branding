@@ -1667,12 +1667,88 @@ nav {
         grid-template-columns: 1fr;
     }
     
+    .estimator-layout {
+        gap: 20px;
+    }
+    
+    .estimator-form {
+        gap: 16px;
+    }
+    
     .estimator-services {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .service-label {
+        padding: 10px 14px;
+        font-size: 0.82rem;
+        gap: 8px;
+    }
+    
+    .label-check-indicator {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .estimator-group-title {
+        font-size: 0.95rem;
+        margin-bottom: 8px;
     }
     
     .estimator-inputs {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .estimator-inputs input:first-child {
+        grid-column: span 2;
+    }
+    
+    .form-input {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+    }
+    
+    .btn-whatsapp {
+        padding: 12px 16px !important;
+        font-size: 0.92rem;
+    }
+    
+    .proposal-panel {
+        padding: 20px !important;
+    }
+    
+    .proposal-head {
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .proposal-title {
+        font-size: 1.1rem;
+    }
+    
+    .proposal-meta-list {
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+    
+    .proposal-meta-item {
+        font-size: 0.82rem;
+    }
+    
+    .val-scope {
+        font-size: 0.82rem !important;
+    }
+    
+    .val-price {
+        font-size: 1.1rem !important;
+    }
+    
+    .proposal-terms {
+        padding: 10px 12px;
+        font-size: 0.72rem;
+        margin-bottom: 16px;
     }
     
     .footer-grid {
