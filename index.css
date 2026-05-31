@@ -420,10 +420,22 @@ nav {
     align-items: center;
 }
 
+@font-face {
+    font-family: 'Compressa VF';
+    src: url('https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2') format('woff2');
+    font-weight: 100 900;
+    font-stretch: 5% 200%;
+    font-style: normal;
+}
+
 .hero-title {
+    font-family: 'Compressa VF', 'Outfit', sans-serif;
     font-size: clamp(2.5rem, 5.5vw, 4.5rem);
     line-height: 1.05;
     margin-bottom: 24px;
+    text-transform: uppercase;
+    font-weight: 100;
+    letter-spacing: -0.01em;
 }
 
 .hero-title span {

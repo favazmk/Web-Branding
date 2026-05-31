@@ -604,6 +604,124 @@ Looking forward to bringing this digital transformation to life!`;
     };
     initShapeGrid();
 
+    // --- 5b. Interactive TextPressure Variable Font Title (React Bits Port) ---
+    const initTextPressure = () => {
+        const title = document.querySelector('.hero-title');
+        if (!title) return;
+
+        const spans = [];
+
+        // Helper to recursively wrap text node characters in spans to preserve HTML structure
+        const wrapTextNodes = (element) => {
+            const nodes = Array.from(element.childNodes);
+            nodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    const text = node.textContent;
+                    const chars = text.split('');
+                    const frag = document.createDocumentFragment();
+                    
+                    chars.forEach(char => {
+                        if (char.trim() === '') {
+                            frag.appendChild(document.createTextNode(' '));
+                        } else {
+                            const span = document.createElement('span');
+                            span.className = 'pressure-char';
+                            span.textContent = char;
+                            span.style.display = 'inline-block';
+                            span.style.transition = 'font-variation-settings 0.12s ease-out';
+                            spans.push(span);
+                            frag.appendChild(span);
+                        }
+                    });
+                    
+                    node.parentNode.replaceChild(frag, node);
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    if (node.tagName !== 'BR') {
+                        wrapTextNodes(node);
+                    }
+                }
+            });
+        };
+
+        wrapTextNodes(title);
+
+        // Tracking coordinates
+        const mouse = { x: 0, y: 0 };
+        const cursor = { x: 0, y: 0 };
+        
+        let titleRect = title.getBoundingClientRect();
+        mouse.x = cursor.x = window.innerWidth / 2;
+        mouse.y = cursor.y = titleRect.top + titleRect.height / 2;
+
+        const handleMouseMove = (e) => {
+            cursor.x = e.clientX;
+            cursor.y = e.clientY;
+        };
+
+        const handleTouchMove = (e) => {
+            if (e.touches.length > 0) {
+                cursor.x = e.touches[0].clientX;
+                cursor.y = e.touches[0].clientY;
+            }
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+        const dist = (a, b) => {
+            const dx = b.x - a.x;
+            const dy = b.y - a.y;
+            return Math.sqrt(dx * dx + dy * dy);
+        };
+
+        const getAttr = (distance, maxD, minVal, maxVal) => {
+            const val = maxVal - Math.abs((maxVal * distance) / maxD);
+            return Math.max(minVal, val + minVal);
+        };
+
+        let rafId = null;
+        let lastWidth = window.innerWidth;
+
+        const animate = () => {
+            titleRect = title.getBoundingClientRect();
+            const maxDist = titleRect.width * 0.75;
+
+            // Easing physics
+            mouse.x += (cursor.x - mouse.x) / 15;
+            mouse.y += (cursor.y - mouse.y) / 15;
+
+            spans.forEach(span => {
+                const rect = span.getBoundingClientRect();
+                const charCenter = {
+                    x: rect.x + rect.width / 2,
+                    y: rect.y + rect.height / 2
+                };
+
+                const d = dist(mouse, charCenter);
+
+                // Width ('wdth') axes range: 5 to 200, Weight ('wght') axes range: 100 to 900
+                const wdth = Math.floor(getAttr(d, maxDist, 5, 200));
+                const wght = Math.floor(getAttr(d, maxDist, 100, 900));
+                const italVal = getAttr(d, maxDist, 0, 1).toFixed(2);
+
+                const settings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
+                span.style.fontVariationSettings = settings;
+            });
+
+            rafId = requestAnimationFrame(animate);
+        };
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth !== lastWidth) {
+                lastWidth = window.innerWidth;
+                titleRect = title.getBoundingClientRect();
+            }
+        });
+    };
+    initTextPressure();
+
     // --- 6. Dynamic 3D Tilt Effect (Mouse Hover & Mobile Gyroscope) ---
     const init3DTilt = () => {
         const tiltCards = document.querySelectorAll('.service-card, .portfolio-card, .founder-card-right, .founder-card-left, .visual-canvas');
