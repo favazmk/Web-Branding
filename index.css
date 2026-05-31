@@ -476,65 +476,33 @@ nav {
 
 .hero-stats {
     display: flex;
-    gap: 32px;
+    gap: 48px;
     padding-top: 40px;
     border-top: 1px solid var(--border-glass);
     justify-content: center;
     width: 100%;
-    flex-wrap: wrap;
 }
 
-.stat-card {
-    background: rgba(255, 255, 255, 0.012) !important;
-    border: 1px solid var(--border-glass) !important;
-    border-radius: var(--radius-lg);
-    padding: 20px 28px;
+.stat-item {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
-    min-width: 180px;
-    flex: 1;
-    max-width: 220px;
-    box-shadow: var(--shadow-premium);
 }
 
-.stat-card:hover {
-    background: rgba(139, 61, 255, 0.03) !important;
-    border-color: rgba(139, 61, 255, 0.25) !important;
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px var(--primary-glow);
-}
-
-.gradient-stat-num {
+.stat-num {
     font-family: 'Outfit', sans-serif;
-    font-size: 2.8rem;
-    font-weight: 900;
-    background-image: linear-gradient(to right, #8c52ff, #40ffaa, #ff9ffc, #8c52ff);
-    background-size: 300% 100%;
-    background-clip: text;
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: var(--grad-text);
     -webkit-background-clip: text;
-    color: transparent;
-    animation: flow-gradient-marquee 7s linear infinite;
-}
-
-@keyframes flow-gradient-marquee {
-    0% {
-        background-position: 0% 50%;
-    }
-    100% {
-        background-position: 300% 50%;
-    }
+    -webkit-text-fill-color: transparent;
 }
 
 .stat-label {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     color: var(--text-faded);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-top: 6px;
-    font-weight: 500;
+    margin-top: 4px;
 }
 
 /* Hero Illustration / Visual Mockup */

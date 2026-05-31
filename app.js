@@ -1108,56 +1108,67 @@ Looking forward to bringing this digital transformation to life!`;
     };
     initMobileMenu();
 
-    // --- 9. Dynamic Stat Counter Animation with Deceleration Easing (Repeating Viewport Observer) ---
-    const initCounterAnimation = () => {
-        const counters = document.querySelectorAll('.counter-number');
-        if (counters.length === 0) return;
-        
-        const countUp = (element) => {
+    // --- 9. Hero Stats Count-Up Animation (Intersection Observer) ---
+    const initHeroStatsCountUp = () => {
+        const statsSection = document.querySelector('.hero-stats');
+        const statNums = document.querySelectorAll('.stat-num');
+        if (!statsSection || statNums.length === 0) return;
+
+        let activeAnimations = new Map();
+
+        const animateCount = (element) => {
+            // Cancel any currently running count-up animation for this element to prevent overlapping loops
+            if (activeAnimations.has(element)) {
+                cancelAnimationFrame(activeAnimations.get(element));
+            }
+
             const target = parseInt(element.getAttribute('data-target'), 10);
             const suffix = element.getAttribute('data-suffix') || '';
-            const duration = 2200; // Eased over 2.2 seconds for luxury deceleration
+            const duration = 1800; // 1.8 seconds custom sweep
             const startTime = performance.now();
-            
-            const animateCount = (currentTime) => {
-                const elapsed = currentTime - startTime;
+
+            const updateCount = (now) => {
+                const elapsed = now - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 
-                // Ease-out quadratic progression for organic speed reduction
+                // Ease-out quad deceleration curve for a highly elastic, premium numerical sweep
                 const easeProgress = 1 - Math.pow(1 - progress, 2);
-                const currentVal = Math.floor(easeProgress * target);
                 
-                element.textContent = `${currentVal}${suffix}`;
-                
+                const currentValue = Math.floor(easeProgress * target);
+                element.textContent = currentValue.toLocaleString() + suffix;
+
                 if (progress < 1) {
-                    requestAnimationFrame(animateCount);
+                    const rafId = requestAnimationFrame(updateCount);
+                    activeAnimations.set(element, rafId);
                 } else {
-                    element.textContent = `${target}${suffix}`;
+                    element.textContent = target.toLocaleString() + suffix;
+                    activeAnimations.delete(element);
                 }
             };
-            
-            requestAnimationFrame(animateCount);
+
+            const firstRafId = requestAnimationFrame(updateCount);
+            activeAnimations.set(element, firstRafId);
         };
-        
-        const counterObserver = new IntersectionObserver((entries) => {
+
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                const element = entry.target;
-                const suffix = element.getAttribute('data-suffix') || '';
-                
                 if (entry.isIntersecting) {
-                    if (!element.classList.contains('counted')) {
-                        element.classList.add('counted');
-                        countUp(element);
-                    }
+                    statNums.forEach(num => animateCount(num));
                 } else {
-                    // Reset value when scrolling out of viewport to allow looping playback
-                    element.classList.remove('counted');
-                    element.textContent = `0${suffix}`;
+                    // Reset numbers to 0 instantly when scrolled out, so they sweep upward beautifully on scrolling back
+                    statNums.forEach(num => {
+                        if (activeAnimations.has(num)) {
+                            cancelAnimationFrame(activeAnimations.get(num));
+                            activeAnimations.delete(num);
+                        }
+                        const suffix = num.getAttribute('data-suffix') || '';
+                        num.textContent = "0" + suffix;
+                    });
                 }
             });
-        }, { threshold: 0.1 });
-        
-        counters.forEach(counter => counterObserver.observe(counter));
+        }, { threshold: 0.15 });
+
+        observer.observe(statsSection);
     };
-    initCounterAnimation();
+    initHeroStatsCountUp();
 });
