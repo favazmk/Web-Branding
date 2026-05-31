@@ -322,7 +322,7 @@ nav {
 }
 
 .nav-logo-img, .footer-logo-img {
-    height: 64px;
+    height: 88px;
     display: block;
     width: auto;
     object-fit: contain;
@@ -1823,7 +1823,7 @@ nav {
     }
 
     .nav-logo-img, .footer-logo-img {
-        height: 52px;
+        height: 68px;
     }
 
     /* Mobile scroll case study focused card states */
