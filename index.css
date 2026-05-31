@@ -327,6 +327,13 @@ nav {
     width: auto;
     object-fit: contain;
     transition: var(--transition-smooth);
+    filter: brightness(0) invert(1);
+    opacity: 0.92;
+}
+
+.nav-logo-img:hover, .footer-logo-img:hover {
+    opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(140, 82, 255, 0.45));
 }
 
 .logo-icon {
