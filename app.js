@@ -901,4 +901,154 @@ Looking forward to bringing this digital transformation to life!`;
         });
     };
     initMobileMenu();
+
+    // --- 9. Premium ScrollStack Services Deck Card Stacking (React Bits Variant) ---
+    const initScrollStack = () => {
+        const scroller = document.querySelector('.services-grid');
+        if (!scroller) return;
+
+        scroller.classList.add('scroll-stack-wrapper');
+
+        const cards = Array.from(scroller.querySelectorAll('.service-card'));
+        if (!cards.length) return;
+
+        let endSpacer = scroller.querySelector('.scroll-stack-end');
+        if (!endSpacer) {
+            endSpacer = document.createElement('div');
+            endSpacer.className = 'scroll-stack-end';
+            scroller.appendChild(endSpacer);
+        }
+
+        let cardOffsets = [];
+        let endSpacerOffset = 0;
+        let containerHeight = window.innerHeight;
+        let isMobile = window.innerWidth <= 992;
+
+        const updateOffsets = () => {
+            containerHeight = window.innerHeight;
+            isMobile = window.innerWidth <= 992;
+
+            const itemDistance = isMobile ? 40 : 140;
+
+            cards.forEach(card => {
+                card.style.transform = '';
+                card.style.filter = '';
+                card.style.marginBottom = '';
+            });
+
+            cards.forEach((card, i) => {
+                if (i < cards.length - 1) {
+                    card.style.marginBottom = `${itemDistance}px`;
+                }
+                card.style.transformOrigin = 'top center';
+                card.style.willChange = 'transform, filter';
+                card.style.backfaceVisibility = 'hidden';
+            });
+
+            cardOffsets = cards.map(card => {
+                const rect = card.getBoundingClientRect();
+                return rect.top + window.scrollY;
+            });
+
+            const spacerRect = endSpacer.getBoundingClientRect();
+            endSpacerOffset = spacerRect.top + window.scrollY;
+        };
+
+        window.addEventListener('resize', updateOffsets);
+        updateOffsets();
+
+        const calculateProgress = (scrollTop, start, end) => {
+            if (scrollTop < start) return 0;
+            if (scrollTop > end) return 1;
+            return (scrollTop - start) / (end - start);
+        };
+
+        const parsePercentage = (value, total) => {
+            if (typeof value === 'string' && value.includes('%')) {
+                return (parseFloat(value) / 100) * total;
+            }
+            return parseFloat(value);
+        };
+
+        const lastTransforms = new Map();
+
+        const updateTransforms = () => {
+            const scrollTop = window.scrollY;
+            const itemScale = isMobile ? 0.02 : 0.04;
+            const itemStackDistance = isMobile ? 12 : 25;
+            const baseScale = isMobile ? 0.92 : 0.88;
+            const stackPositionVal = isMobile ? '10%' : '15%';
+            const scaleEndPositionVal = isMobile ? '3%' : '5%';
+            const blurAmountVal = isMobile ? 0.5 : 1.5;
+
+            const stackPositionPx = parsePercentage(stackPositionVal, containerHeight);
+            const scaleEndPositionPx = parsePercentage(scaleEndPositionVal, containerHeight);
+            const endElementTop = endSpacerOffset;
+
+            cards.forEach((card, i) => {
+                const cardTop = cardOffsets[i];
+                const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
+                const triggerEnd = cardTop - scaleEndPositionPx;
+                const pinStart = cardTop - stackPositionPx - itemStackDistance * i;
+                const pinEnd = endElementTop - containerHeight / 2;
+
+                const scaleProgress = calculateProgress(scrollTop, triggerStart, triggerEnd);
+                const targetScale = baseScale + i * itemScale;
+                const scale = 1 - scaleProgress * (1 - targetScale);
+
+                let blur = 0;
+                if (blurAmountVal) {
+                    let topCardIndex = 0;
+                    for (let j = 0; j < cards.length; j++) {
+                        const jCardTop = cardOffsets[j];
+                        const jTriggerStart = jCardTop - stackPositionPx - itemStackDistance * j;
+                        if (scrollTop >= jTriggerStart) {
+                            topCardIndex = j;
+                        }
+                    }
+
+                    if (i < topCardIndex) {
+                        const depthInStack = topCardIndex - i;
+                        blur = Math.max(0, depthInStack * blurAmountVal);
+                    }
+                }
+
+                let translateY = 0;
+                const isPinned = scrollTop >= pinStart && scrollTop <= pinEnd;
+
+                if (isPinned) {
+                    translateY = scrollTop - cardTop + stackPositionPx + itemStackDistance * i;
+                } else if (scrollTop > pinEnd) {
+                    translateY = pinEnd - cardTop + stackPositionPx + itemStackDistance * i;
+                }
+
+                const newTransform = {
+                    translateY: Math.round(translateY * 100) / 100,
+                    scale: Math.round(scale * 1000) / 1000,
+                    blur: Math.round(blur * 100) / 100
+                };
+
+                const lastTransform = lastTransforms.get(i);
+                const hasChanged =
+                    !lastTransform ||
+                    Math.abs(lastTransform.translateY - newTransform.translateY) > 0.1 ||
+                    Math.abs(lastTransform.scale - newTransform.scale) > 0.001 ||
+                    Math.abs(lastTransform.blur - newTransform.blur) > 0.1;
+
+                if (hasChanged) {
+                    card.style.transform = `translate3d(0, ${newTransform.translateY}px, 0) scale(${newTransform.scale})`;
+                    card.style.filter = newTransform.blur > 0 ? `blur(${newTransform.blur}px)` : '';
+                    lastTransforms.set(i, newTransform);
+                }
+            });
+        };
+
+        window.addEventListener('scroll', updateTransforms, { passive: true });
+        updateTransforms();
+
+        window.addEventListener('load', updateOffsets);
+        setTimeout(updateOffsets, 1000);
+        setTimeout(updateTransforms, 1050);
+    };
+    initScrollStack();
 });
