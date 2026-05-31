@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('appeared');
-                observer.unobserve(entry.target); // Stop observing once animated in
+            } else {
+                entry.target.classList.remove('appeared');
             }
         });
     };
