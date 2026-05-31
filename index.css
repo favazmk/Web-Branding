@@ -1833,28 +1833,6 @@ nav {
         min-height: 320px;
         padding: 24px;
     }
-
-    /* Mobile scroll reveal performance optimizations (2D instead of heavy 3D transforms) */
-    .reveal-3d-fold,
-    .reveal-3d-flip-left,
-    .reveal-3d-flip-right,
-    .reveal-3d-pop,
-    .reveal-3d-roll {
-        transform: translateY(30px) !important;
-        transform-origin: center center !important;
-        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        will-change: transform, opacity;
-    }
-    
-    .reveal-3d-fold.appeared,
-    .reveal-3d-flip-left.appeared,
-    .reveal-3d-flip-right.appeared,
-    .reveal-3d-pop.appeared,
-    .reveal-3d-roll.appeared {
-        transform: translateY(0) !important;
-        opacity: 1 !important;
-    }
-
     /* Disable expensive backdrop blur effects on mobile scrolling card components to eliminate lag */
     .glass-card {
         backdrop-filter: none !important;
