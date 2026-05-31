@@ -217,11 +217,6 @@ Looking forward to bringing this digital transformation to life!`;
     const initShapeGrid = () => {
         const canvas = document.getElementById('shapegrid-canvas');
         if (!canvas) return;
-        
-        if (window.innerWidth < 768) {
-            canvas.style.display = 'none';
-            return;
-        }
 
         const ctx = canvas.getContext('2d');
         const heroSection = document.getElementById('home');
@@ -490,10 +485,10 @@ Looking forward to bringing this digital transformation to life!`;
             requestRef = requestAnimationFrame(updateAnimation);
         };
 
-        const handleMouseMove = (event) => {
+        const updateHover = (clientX, clientY) => {
             const rect = canvas.getBoundingClientRect();
-            const mouseX = event.clientX - rect.left;
-            const mouseY = event.clientY - rect.top;
+            const mouseX = clientX - rect.left;
+            const mouseY = clientY - rect.top;
 
             if (isHex) {
                 const colShift = Math.floor(gridOffset.x / hexHoriz);
@@ -517,7 +512,6 @@ Looking forward to bringing this digital transformation to life!`;
                 const halfW = squareSize / 2;
                 const offsetX = ((gridOffset.x % halfW) + halfW) % halfW;
                 const offsetY = ((gridOffset.y % squareSize) + squareSize) % squareSize;
-
                 const adjustedX = mouseX - offsetX;
                 const adjustedY = mouseY - offsetY;
 
@@ -568,6 +562,10 @@ Looking forward to bringing this digital transformation to life!`;
             }
         };
 
+        const handleMouseMove = (event) => {
+            updateHover(event.clientX, event.clientY);
+        };
+
         const handleMouseLeave = () => {
             if (hoveredSquare && hoverTrailAmount > 0) {
                 trailCells.unshift({ ...hoveredSquare });
@@ -576,9 +574,20 @@ Looking forward to bringing this digital transformation to life!`;
             hoveredSquare = null;
         };
 
-        // Attach mouse events to heroSection instead of canvas so canvas can remain pointer-events: none!
+        const handleTouchMove = (event) => {
+            if (event.touches.length > 0) {
+                updateHover(event.touches[0].clientX, event.touches[0].clientY);
+            }
+        };
+
+        // Attach mouse & touch events to heroSection instead of canvas so canvas can remain pointer-events: none!
         heroSection.addEventListener('mousemove', handleMouseMove);
         heroSection.addEventListener('mouseleave', handleMouseLeave);
+        heroSection.addEventListener('touchstart', handleTouchMove, { passive: true });
+        heroSection.addEventListener('touchmove', handleTouchMove, { passive: true });
+        heroSection.addEventListener('touchend', handleMouseLeave, { passive: true });
+        heroSection.addEventListener('touchcancel', handleMouseLeave, { passive: true });
+        
         requestRef = requestAnimationFrame(updateAnimation);
 
         return () => {
@@ -586,6 +595,10 @@ Looking forward to bringing this digital transformation to life!`;
             if (requestRef) cancelAnimationFrame(requestRef);
             heroSection.removeEventListener('mousemove', handleMouseMove);
             heroSection.removeEventListener('mouseleave', handleMouseLeave);
+            heroSection.removeEventListener('touchstart', handleTouchMove);
+            heroSection.removeEventListener('touchmove', handleTouchMove);
+            heroSection.removeEventListener('touchend', handleMouseLeave);
+            heroSection.removeEventListener('touchcancel', handleMouseLeave);
         };
     };
     initShapeGrid();
