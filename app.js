@@ -459,7 +459,10 @@ Looking forward to bringing this digital transformation to life!`;
         };
 
         let requestRef = null;
+        let isVisible = true;
+
         const updateAnimation = () => {
+            if (!isVisible) return;
             const effectiveSpeed = Math.max(speed, 0.1);
             const wrapX = isHex ? hexHoriz * 2 : squareSize;
             const wrapY = isHex ? hexVert : isTri ? squareSize * 2 : squareSize;
@@ -593,9 +596,26 @@ Looking forward to bringing this digital transformation to life!`;
         heroSection.addEventListener('touchend', handleMouseLeave, { passive: true });
         heroSection.addEventListener('touchcancel', handleMouseLeave, { passive: true });
         
-        requestRef = requestAnimationFrame(updateAnimation);
+        // Use IntersectionObserver to completely halt requestAnimationFrame loops when scrolled out of view to save battery and stop iPhone heating!
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isVisible = entry.isIntersecting;
+                if (isVisible) {
+                    if (!requestRef) {
+                        requestRef = requestAnimationFrame(updateAnimation);
+                    }
+                } else {
+                    if (requestRef) {
+                        cancelAnimationFrame(requestRef);
+                        requestRef = null;
+                    }
+                }
+            });
+        }, { threshold: 0.02 });
+        heroObserver.observe(heroSection);
 
         return () => {
+            heroObserver.disconnect();
             window.removeEventListener('resize', resizeCanvas);
             if (requestRef) cancelAnimationFrame(requestRef);
             heroSection.removeEventListener('mousemove', handleMouseMove);
@@ -752,8 +772,10 @@ Looking forward to bringing this digital transformation to life!`;
 
         let rafId = null;
         let lastWidth = window.innerWidth;
+        let isTextPressureVisible = true;
 
         const animate = () => {
+            if (!isTextPressureVisible) return;
             titleRect = title.getBoundingClientRect();
             
             // Check viewport characteristics
@@ -802,7 +824,23 @@ Looking forward to bringing this digital transformation to life!`;
             rafId = requestAnimationFrame(animate);
         };
 
-        animate();
+        // Use IntersectionObserver to stop text pressure calculations when out of view!
+        const textObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isTextPressureVisible = entry.isIntersecting;
+                if (isTextPressureVisible) {
+                    if (!rafId) {
+                        rafId = requestAnimationFrame(animate);
+                    }
+                } else {
+                    if (rafId) {
+                        cancelAnimationFrame(rafId);
+                        rafId = null;
+                    }
+                }
+            });
+        }, { threshold: 0.02 });
+        textObserver.observe(title);
 
         window.addEventListener('resize', () => {
             if (window.innerWidth !== lastWidth) {
