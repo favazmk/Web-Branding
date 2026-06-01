@@ -174,7 +174,8 @@ img {
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--primary);
-    display: inline-flex;
+    display: flex;
+    width: fit-content;
     align-items: center;
     gap: 8px;
     margin-bottom: 16px;
