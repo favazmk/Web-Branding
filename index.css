@@ -231,6 +231,16 @@ img {
     transform: translateY(-5px);
 }
 
+/* Disable transform transitions during active hover to let real-time JS 3D tilt update instantly at 60fps */
+.service-card:hover,
+.portfolio-card:hover,
+.founder-card-left:hover,
+.founder-card-right:hover,
+.service-card:hover .service-icon-box,
+.service-card:hover .service-card-num {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, opacity 0.2s ease !important;
+}
+
 /* --- Premium Buttons --- */
 .btn {
     display: inline-flex;
@@ -1306,6 +1316,13 @@ nav {
     animation: marquee-slide 45s linear infinite;
 }
 
+/* Mathematically perfect trailing gap spacer to completely eliminate the loop reset jump glitch */
+.marquee-track::after {
+    content: '';
+    width: 24px; /* Matches flex gap on desktop */
+    flex-shrink: 0;
+}
+
 .testimonial-marquee:hover .marquee-track {
     animation-play-state: paused;
 }
@@ -1345,6 +1362,10 @@ nav {
     .marquee-track {
         gap: 16px;
         animation: marquee-slide 30s linear infinite;
+    }
+    
+    .marquee-track::after {
+        width: 16px; /* Matches flex gap on mobile */
     }
 }
 
@@ -1425,17 +1446,23 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    align-items: center;
+    text-align: center;
 }
 
 .footer-brand-disc {
     font-size: 0.9rem;
     color: var(--text-gray);
     max-width: 280px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .footer-col {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .footer-col-title {
@@ -1450,22 +1477,26 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    align-items: center;
 }
 
 .footer-menu-link {
     font-size: 0.9rem;
     color: var(--text-gray);
+    transition: var(--transition-smooth);
+    display: inline-block;
 }
 
 .footer-menu-link:hover {
     color: var(--primary);
-    padding-left: 4px;
+    transform: translateY(-2px);
 }
 
 .footer-socials {
     display: flex;
     gap: 16px;
     margin-top: 24px;
+    justify-content: center;
 }
 
 .social-circle {
@@ -1478,6 +1509,7 @@ nav {
     align-items: center;
     justify-content: center;
     color: var(--text-gray);
+    transition: var(--transition-smooth);
 }
 
 .social-circle:hover {
@@ -1491,14 +1523,15 @@ nav {
     font-size: 0.9rem;
     color: var(--text-gray);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     gap: 12px;
     margin-bottom: 16px;
+    text-align: center;
 }
 
 .footer-contact-item svg {
     color: var(--primary);
-    margin-top: 4px;
     flex-shrink: 0;
 }
 
@@ -1506,9 +1539,10 @@ nav {
     padding-top: 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.03);
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
     gap: 16px;
 }
 
@@ -1525,10 +1559,12 @@ nav {
 .legal-link {
     font-size: 0.85rem;
     color: var(--text-faded);
+    transition: var(--transition-smooth);
 }
 
 .legal-link:hover {
     color: var(--primary);
+    transform: translateY(-1px);
 }
 
 /* ==========================================================================

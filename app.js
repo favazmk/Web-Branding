@@ -865,6 +865,17 @@ Looking forward to bringing this digital transformation to life!`;
                 if (mesh) {
                     mesh.style.transform = `translate3d(${rotateY * 0.5}px, ${-rotateX * 0.5}px, -20px)`;
                 }
+
+                // Inner elements 3D parallax inside service cards
+                const icon = card.querySelector('.service-icon-box');
+                if (icon) {
+                    icon.style.transform = `translate3d(${-rotateY * 0.5}px, ${-rotateX * 0.5}px, 20px)`;
+                }
+                
+                const num = card.querySelector('.service-card-num');
+                if (num) {
+                    num.style.transform = `translate3d(${rotateY * 0.3}px, ${rotateX * 0.3}px, 10px)`;
+                }
             });
             
             card.addEventListener('mouseleave', () => {
@@ -877,6 +888,12 @@ Looking forward to bringing this digital transformation to life!`;
                 
                 const mesh = card.querySelector('.visual-mesh');
                 if (mesh) mesh.style.transform = '';
+
+                const icon = card.querySelector('.service-icon-box');
+                if (icon) icon.style.transform = '';
+                
+                const num = card.querySelector('.service-card-num');
+                if (num) num.style.transform = '';
             });
         });
 
@@ -919,6 +936,16 @@ Looking forward to bringing this digital transformation to life!`;
                     if (img) {
                         img.style.transform = `scale(1.08) translate3d(${-rotateY * 0.4}px, ${-rotateX * 0.4}px, 30px)`;
                     }
+
+                    // Mobile service card elements parallax
+                    const icon = card.querySelector('.service-icon-box');
+                    if (icon) {
+                        icon.style.transform = `translate3d(${-rotateY * 0.5}px, ${-rotateX * 0.5}px, 15px)`;
+                    }
+                    const num = card.querySelector('.service-card-num');
+                    if (num) {
+                        num.style.transform = `translate3d(${rotateY * 0.3}px, ${rotateX * 0.3}px, 5px)`;
+                    }
                     touchScheduled = false;
                 });
             };
@@ -933,6 +960,12 @@ Looking forward to bringing this digital transformation to life!`;
                     card.style.boxShadow = '';
                     const img = card.querySelector('.founder-img, .portfolio-img, .hero-visual-img');
                     if (img) img.style.transform = '';
+
+                    const icon = card.querySelector('.service-icon-box');
+                    if (icon) icon.style.transform = '';
+                    
+                    const num = card.querySelector('.service-card-num');
+                    if (num) num.style.transform = '';
                 });
             };
 
@@ -975,6 +1008,16 @@ Looking forward to bringing this digital transformation to life!`;
                         const img = card.querySelector('.founder-img, .portfolio-img, .hero-visual-img');
                         if (img) {
                             img.style.transform = `scale(1.05) translate3d(${-rotateY * 0.3}px, ${-rotateX * 0.3}px, 20px)`;
+                        }
+
+                        // Gyro service card elements parallax
+                        const icon = card.querySelector('.service-icon-box');
+                        if (icon) {
+                            icon.style.transform = `translate3d(${-rotateY * 0.4}px, ${-rotateX * 0.4}px, 10px)`;
+                        }
+                        const num = card.querySelector('.service-card-num');
+                        if (num) {
+                            num.style.transform = `translate3d(${rotateY * 0.2}px, ${rotateX * 0.2}px, 5px)`;
                         }
                     });
                     
