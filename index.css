@@ -22,8 +22,8 @@
     
     /* Text Contrast (Dark Background) */
     --text-white: #ffffff;
-    --text-gray: #a39cb2;
-    --text-faded: #6d6480;
+    --text-gray: #c5c0d0; /* Decreased shade for bright premium legibility */
+    --text-faded: #968eab; /* Decreased shade for clean silver-purple readability */
     
     /* Text Contrast (Light Background) */
     --text-dark: #120626; /* Deep obsidian purple text */
@@ -34,8 +34,8 @@
     --grad-primary: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%); /* Saturated cosmic violet gradient */
     --grad-glow: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
     --grad-dark: linear-gradient(180deg, #10081d 0%, #06020e 100%);
-    --grad-text: linear-gradient(135deg, #ffffff -10%, #c084fc 100%);
-    --grad-neon-text: linear-gradient(135deg, #ffffff 0%, #c084fc 100%);
+    --grad-text: linear-gradient(135deg, #ffffff 40%, #d8b4fe 100%);
+    --grad-neon-text: linear-gradient(135deg, #ffffff 50%, #d8b4fe 100%);
     
     /* Border & Glassmorphic Details */
     --border-glass: rgba(255, 255, 255, 0.06);
@@ -300,9 +300,11 @@ header {
 }
 
 header.scrolled {
-    background: rgba(10, 11, 14, 0.85);
+    background: rgba(13, 9, 21, 0.85);
     backdrop-filter: blur(12px);
-    border-color: var(--border-glass);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(139, 61, 255, 0.15);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25), 0 0 20px rgba(139, 61, 255, 0.05);
 }
 
 nav {
@@ -1852,8 +1854,26 @@ nav {
     }
     
     .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+    }
+    
+    .footer-brand {
+        grid-column: span 2;
+        text-align: center;
+    }
+    
+    .footer-socials {
+        justify-content: center;
+    }
+    
+    .footer-grid > .footer-col:last-child {
+        grid-column: span 2;
+        text-align: center;
+    }
+    
+    .footer-grid > .footer-col:last-child .footer-contact-item {
+        justify-content: center;
     }
     
     .footer-bottom {
@@ -1866,15 +1886,16 @@ nav {
     }
 
     /* Mobile scroll case study focused card states */
-    .portfolio-card.viewport-focused .portfolio-overlay {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    .portfolio-card.viewport-focused .portfolio-img {
-        transform: scale(1.05);
-    }
     .portfolio-overlay {
         padding: 24px;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        background: linear-gradient(0deg, rgba(10, 11, 14, 0.95) 0%, rgba(10, 11, 14, 0.6) 70%, transparent 100%) !important;
+    }
+
+    .reveal-3d-roll {
+        transform: none !important;
+        transition: opacity 0.8s ease-out !important;
     }
 
     /* Mobile founder card layouts */

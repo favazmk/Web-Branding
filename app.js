@@ -59,9 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Currency Configurations
     const currencies = {
-        AED: { symbol: 'AED ', min: 3000, max: 50000, step: 1000, default: 8000 },
-        INR: { symbol: '₹', min: 50000, max: 1000000, step: 10000, default: 150000 },
-        USD: { symbol: '$', min: 1000, max: 20000, step: 500, default: 3500 }
+        AED: { symbol: 'AED ', min: 1000, max: 50000, step: 500, default: 4000 },
+        INR: { symbol: '₹', min: 20000, max: 1000000, step: 5000, default: 80000 },
+        USD: { symbol: '$', min: 300, max: 20000, step: 100, default: 1200 }
     };
 
     // Active Settings
@@ -983,52 +983,7 @@ Looking forward to bringing this digital transformation to life!`;
             });
         }
 
-        // 3. Mobile Scroll Center Highlight Focus (Optimized to prevent layout thrashing)
-        const handleScrollFocus = () => {
-            const viewportCenterY = window.innerHeight / 2;
 
-            // Only run getBoundingClientRect on cards currently visible in viewport to prevent layout thrashing
-            visibleCards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                const cardCenterY = rect.top + (rect.height / 2);
-                
-                // Calculate distance from screen center
-                const distanceToCenter = Math.abs(viewportCenterY - cardCenterY);
-                
-                // Active range when card center is within 18% of screen center
-                const focusRange = window.innerHeight * 0.18;
-                
-                if (distanceToCenter < focusRange) {
-                    card.classList.add('viewport-focused');
-                } else {
-                    card.classList.remove('viewport-focused');
-                }
-            });
-        };
-
-        let scrollFocusScheduled = false;
-        window.addEventListener('scroll', () => {
-            // Only calculate scroll focus highlights on mobile/tablet viewports to save laptop performance
-            if (!window.matchMedia('(max-width: 992px)').matches) return;
-
-            if (scrollFocusScheduled) return;
-            scrollFocusScheduled = true;
-            window.requestAnimationFrame(() => {
-                handleScrollFocus();
-                scrollFocusScheduled = false;
-            });
-        }, { passive: true });
-        
-        // Remove viewport-focused highlights from all elements when resizing to desktop
-        window.addEventListener('resize', () => {
-            if (!window.matchMedia('(max-width: 992px)').matches) {
-                tiltCards.forEach(card => card.classList.remove('viewport-focused'));
-            }
-        });
-        
-        if (window.matchMedia('(max-width: 992px)').matches) {
-            handleScrollFocus(); // Run initially only on mobile/tablet
-        }
     };
     init3DTilt();
 
@@ -1171,4 +1126,75 @@ Looking forward to bringing this digital transformation to life!`;
         observer.observe(statsSection);
     };
     initHeroStatsCountUp();
+
+    // --- 9b. About Skills Graph Animation ---
+    const initAboutSkillsAnimation = () => {
+        const skillsSection = document.querySelector('.about-skills');
+        const skillFills = document.querySelectorAll('.skill-fill');
+        const skillPercents = document.querySelectorAll('.skill-percent');
+        if (!skillsSection || skillFills.length === 0) return;
+
+        let activeSkillAnimations = new Map();
+
+        const animateSkillPercent = (element) => {
+            if (activeSkillAnimations.has(element)) {
+                cancelAnimationFrame(activeSkillAnimations.get(element));
+            }
+
+            const target = parseInt(element.getAttribute('data-target'), 10);
+            const duration = 1500; // Match the 1.5s CSS transition
+            const startTime = performance.now();
+
+            const updatePercent = (now) => {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Deceleration curve
+                const easeProgress = 1 - Math.pow(1 - progress, 2);
+                
+                const currentValue = Math.floor(easeProgress * target);
+                element.textContent = currentValue + '%';
+
+                if (progress < 1) {
+                    const rafId = requestAnimationFrame(updatePercent);
+                    activeSkillAnimations.set(element, rafId);
+                } else {
+                    element.textContent = target + '%';
+                    activeSkillAnimations.delete(element);
+                }
+            };
+
+            const rafId = requestAnimationFrame(updatePercent);
+            activeSkillAnimations.set(element, rafId);
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Set fill widths to trigger CSS transition
+                    skillFills.forEach(fill => {
+                        const pct = fill.getAttribute('data-percent');
+                        fill.style.width = pct + '%';
+                    });
+                    // Sweep numbers
+                    skillPercents.forEach(percent => animateSkillPercent(percent));
+                } else {
+                    // Reset fills and numbers
+                    skillFills.forEach(fill => {
+                        fill.style.width = '0%';
+                    });
+                    skillPercents.forEach(percent => {
+                        if (activeSkillAnimations.has(percent)) {
+                            cancelAnimationFrame(activeSkillAnimations.get(percent));
+                            activeSkillAnimations.delete(percent);
+                        }
+                        percent.textContent = '0%';
+                    });
+                }
+            });
+        }, { threshold: 0.15 });
+
+        observer.observe(skillsSection);
+    };
+    initAboutSkillsAnimation();
 });
