@@ -456,6 +456,14 @@ nav {
     background: var(--grad-text);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-title-line {
+    display: block;
+    white-space: nowrap;
 }
 
 .hero-title span {
