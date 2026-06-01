@@ -25,8 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('appeared');
-            } else {
-                entry.target.classList.remove('appeared');
+                observer.unobserve(entry.target); // Play exactly once to prevent re-triggering stutters on scroll exit
             }
         });
     };
