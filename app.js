@@ -25,7 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('appeared');
-                observer.unobserve(entry.target); // Play exactly once to prevent re-triggering stutters on scroll exit
+            } else {
+                // Keep the appeared class permanently ONLY for the Scope Planner layout to prevent re-triggering glitches,
+                // while letting all other elements re-animate beautifully when scrolling up and down!
+                if (!entry.target.classList.contains('estimator-layout')) {
+                    entry.target.classList.remove('appeared');
+                }
             }
         });
     };
