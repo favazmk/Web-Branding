@@ -223,12 +223,12 @@ Looking forward to bringing this digital transformation to life!`;
         const heroSection = document.getElementById('home');
         
         const direction = 'diagonal'; // up, down, left, right, diagonal
-        const speed = 0.5;
-        const borderColor = '#2F293A'; // As requested
-        const hoverFillColor = 'rgba(139, 61, 255, 0.12)'; // Premium Azza glowing brand violet!
+        const speed = 0.26;
+        const borderColor = '#4c3d67';
+        const hoverFillColor = '#3d254c';
         const squareSize = 40;
         const shape = 'hexagon'; // square, hexagon, circle, triangle
-        const hoverTrailAmount = 4; // Fading hover trail cell count
+        const hoverTrailAmount = 2; // Fading hover trail cell count
 
         let width = canvas.width = heroSection.offsetWidth;
         let height = canvas.height = heroSection.offsetHeight;
@@ -413,8 +413,8 @@ Looking forward to bringing this digital transformation to life!`;
                 height / 2,
                 Math.sqrt(width ** 2 + height ** 2) / 2
             );
-            gradient.addColorStop(0, 'rgba(6, 2, 14, 0)');
-            gradient.addColorStop(1, '#06020e'); // True deep obsidian purple-black
+            gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(1, '#120F17');
 
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, width, height);
