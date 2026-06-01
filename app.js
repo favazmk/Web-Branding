@@ -227,7 +227,7 @@ Looking forward to bringing this digital transformation to life!`;
         const borderColor = '#2F293A'; // As requested
         const hoverFillColor = 'rgba(139, 61, 255, 0.12)'; // Premium Azza glowing brand violet!
         const squareSize = 40;
-        const shape = 'square'; // square, hexagon, circle, triangle
+        const shape = 'hexagon'; // square, hexagon, circle, triangle
         const hoverTrailAmount = 4; // Fading hover trail cell count
 
         let width = canvas.width = heroSection.offsetWidth;
