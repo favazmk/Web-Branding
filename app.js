@@ -874,8 +874,25 @@ Looking forward to bringing this digital transformation to life!`;
 
         tiltCards.forEach(card => visibilityObserver.observe(card));
 
+        // Create the figcaption floating caption elements dynamically for any card with a data-caption
+        tiltCards.forEach(card => {
+            const captionText = card.getAttribute('data-caption');
+            if (captionText) {
+                if (!card.querySelector('.tilted-card-caption')) {
+                    const captionElement = document.createElement('figcaption');
+                    captionElement.className = 'tilted-card-caption';
+                    captionElement.innerText = captionText;
+                    card.appendChild(captionElement);
+                }
+            }
+        });
+
         // 1. Desktop Mouse Move Hover Tilt
         tiltCards.forEach(card => {
+            const captionElement = card.querySelector('.tilted-card-caption');
+            let lastY = 0;
+            let rotateFigcaption = 0;
+
             card.addEventListener('mousemove', (e) => {
                 if (window.matchMedia('(pointer: coarse)').matches) return; // Skip on mobile devices
 
@@ -885,14 +902,20 @@ Looking forward to bringing this digital transformation to life!`;
                 
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
+                const offsetX = e.clientX - rect.left - centerX;
+                const offsetY = e.clientY - rect.top - centerY;
                 
-                const maxRotationX = 8; 
-                const maxRotationY = 8; 
+                const rotateAmplitude = 12; // Controls how much the card tilts (matching TiltedCard rotateAmplitude)
+                const rotateX = (offsetY / centerY) * -rotateAmplitude;
+                const rotateY = (offsetX / centerX) * rotateAmplitude;
                 
-                const rotateX = ((centerY - y) / centerY) * maxRotationX;
-                const rotateY = ((x - centerX) / centerX) * maxRotationY;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                // Calculate vertical velocity for tooltip rotation matching React Bits
+                const velocityY = offsetY - lastY;
+                rotateFigcaption = -velocityY * 0.6;
+                rotateFigcaption = Math.min(Math.max(rotateFigcaption, -15), 15);
+                lastY = offsetY;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
                 
                 const shadowX = -rotateY * 1.5;
                 const shadowY = rotateX * 1.5;
@@ -918,6 +941,18 @@ Looking forward to bringing this digital transformation to life!`;
                 if (num) {
                     num.style.transform = `translate3d(${rotateY * 0.3}px, ${rotateX * 0.3}px, 10px)`;
                 }
+
+                // 3D parallax for case study overlay contents (matching overlayContent)
+                const overlay = card.querySelector('.portfolio-overlay');
+                if (overlay) {
+                    overlay.style.transform = `translate3d(${-rotateY * 0.4}px, ${-rotateX * 0.4}px, 30px)`;
+                }
+
+                // Follow tooltip
+                if (captionElement) {
+                    captionElement.style.opacity = '1';
+                    captionElement.style.transform = `translate3d(${x + 12}px, ${y + 12}px, 50px) rotate(${rotateFigcaption}deg)`;
+                }
             });
             
             card.addEventListener('mouseleave', () => {
@@ -936,36 +971,93 @@ Looking forward to bringing this digital transformation to life!`;
                 
                 const num = card.querySelector('.service-card-num');
                 if (num) num.style.transform = '';
+
+                const overlay = card.querySelector('.portfolio-overlay');
+                if (overlay) overlay.style.transform = '';
+
+                if (captionElement) {
+                    captionElement.style.opacity = '0';
+                    captionElement.style.transform = '';
+                }
             });
         });
 
         // 2. Mobile Touch & Drag 3D Tilt (Silky Tactile Mobile Enhancements)
         tiltCards.forEach(card => {
+            const captionElement = card.querySelector('.tilted-card-caption');
             let touchScheduled = false;
+            let startX = 0;
+            let startY = 0;
+            let isDragging = false;
+            let isVerticalScroll = false;
+            let lastY = 0;
+            let rotateFigcaption = 0;
 
-            const handleTouch = (e) => {
+            const handleTouchStart = (e) => {
                 if (!window.matchMedia('(pointer: coarse)').matches) return;
+                const touch = e.touches[0];
+                startX = touch.pageX;
+                startY = touch.pageY;
+                isDragging = true;
+                isVerticalScroll = false;
                 
                 isTactileActive = true;
                 card.classList.add('active-tilt');
                 
+                updateTilt(touch);
+            };
+
+            const handleTouchMove = (e) => {
+                if (!window.matchMedia('(pointer: coarse)').matches) return;
+                if (!isDragging) return;
                 const touch = e.touches[0];
+                
+                const dx = touch.pageX - startX;
+                const dy = touch.pageY - startY;
+                
+                // If scroll direction is not determined yet, check if vertical swipe is prominent
+                if (!isVerticalScroll && Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 6) {
+                    isVerticalScroll = true;
+                }
+                
+                // If scrolling vertically, let the browser handle vertical page scroll naturally (do NOT preventDefault)
+                if (isVerticalScroll) {
+                    updateTilt(touch);
+                    return;
+                }
+                
+                // If dragging horizontally or gesture is tilt-focused, prevent default to avoid scroll interference
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+                
+                updateTilt(touch);
+            };
+
+            const updateTilt = (touch) => {
                 const rect = card.getBoundingClientRect();
                 
-                // Document-relative page coordinates to prevent coordinate jump glitches during page scrolling
-                const absoluteCardX = rect.left + window.pageXOffset;
-                const absoluteCardY = rect.top + window.pageYOffset;
+                // Document-relative page coordinates to prevent coordinate jump glitches
+                const absoluteCardX = rect.left + (window.scrollX || window.pageXOffset);
+                const absoluteCardY = rect.top + (window.scrollY || window.pageYOffset);
                 const x = Math.min(Math.max(touch.pageX - absoluteCardX, 0), rect.width);
                 const y = Math.min(Math.max(touch.pageY - absoluteCardY, 0), rect.height);
                 
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 
-                const maxRotationX = 12; // Slightly more prominent on direct touch/drag
+                const maxRotationX = 12; // 3D tilt response
                 const maxRotationY = 12;
                 
                 const rotateX = ((centerY - y) / centerY) * maxRotationX;
                 const rotateY = ((x - centerX) / centerX) * maxRotationY;
+
+                // Track touch movement velocity for caption rotation on mobile too
+                const offsetY = y - centerY;
+                const velocityY = offsetY - lastY;
+                rotateFigcaption = -velocityY * 0.6;
+                rotateFigcaption = Math.min(Math.max(rotateFigcaption, -15), 15);
+                lastY = offsetY;
 
                 if (touchScheduled) return;
                 touchScheduled = true;
@@ -991,6 +1083,12 @@ Looking forward to bringing this digital transformation to life!`;
                     if (num) {
                         num.style.transform = `translate3d(${rotateY * 0.3}px, ${rotateX * 0.3}px, 5px)`;
                     }
+
+                    // Mobile follow tooltip (placed slightly higher so the finger doesn't block it)
+                    if (captionElement) {
+                        captionElement.style.opacity = '1';
+                        captionElement.style.transform = `translate3d(${x + 12}px, ${y - 32}px, 50px) rotate(${rotateFigcaption}deg)`;
+                    }
                     touchScheduled = false;
                 });
             };
@@ -998,6 +1096,8 @@ Looking forward to bringing this digital transformation to life!`;
             const resetTouch = () => {
                 if (!window.matchMedia('(pointer: coarse)').matches) return;
                 
+                isDragging = false;
+                isVerticalScroll = false;
                 isTactileActive = false;
                 card.classList.remove('active-tilt');
                 
@@ -1012,65 +1112,26 @@ Looking forward to bringing this digital transformation to life!`;
                     
                     const num = card.querySelector('.service-card-num');
                     if (num) num.style.transform = '';
+
+                    if (captionElement) {
+                        captionElement.style.opacity = '0';
+                        captionElement.style.transform = '';
+                    }
                 });
             };
 
-            card.addEventListener('touchstart', handleTouch, { passive: true });
-            card.addEventListener('touchmove', handleTouch, { passive: true });
-            card.addEventListener('touchend', resetTouch, { passive: true });
-            card.addEventListener('touchcancel', resetTouch, { passive: true });
+            card.addEventListener('touchstart', handleTouchStart, { passive: false });
+            card.addEventListener('touchmove', handleTouchMove, { passive: false });
+            card.addEventListener('touchend', resetTouch, { passive: false });
+            card.addEventListener('touchcancel', resetTouch, { passive: false });
         });
 
-        // 2. Mobile Gyroscope Device Orientation Tilt
+        // 2. Mobile Gyroscope Device Orientation Tilt - Disabled at user request
+        /*
         if (window.DeviceOrientationEvent) {
-            let gyroScheduled = false;
-            window.addEventListener('deviceorientation', (e) => {
-                if (!window.matchMedia('(pointer: coarse)').matches) return; // Only trigger on mobile touchscreens
-                if (isTactileActive) return; // Skip gyro tilt if user is actively touching/dragging
-                
-                const beta = e.beta;   // front-back tilt (-180 to 180)
-                const gamma = e.gamma; // left-right tilt (-90 to 90)
-                
-                if (beta === null || gamma === null) return;
-                
-                if (gyroScheduled) return;
-                gyroScheduled = true;
-                
-                window.requestAnimationFrame(() => {
-                    // Normalizing phone angles based on standard vertical holding context
-                    const normalBeta = Math.min(Math.max(beta - 45, -30), 30);
-                    const normalGamma = Math.min(Math.max(gamma, -30), 30);
-                    
-                    const rotateX = (-normalBeta / 30) * 8; 
-                    const rotateY = (normalGamma / 30) * 8; 
-
-                    visibleCards.forEach(card => {
-                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
-                        
-                        const shadowX = -rotateY * 1.2;
-                        const shadowY = rotateX * 1.2;
-                        card.style.boxShadow = `${shadowX}px ${shadowY}px 25px var(--primary-glow), var(--shadow-premium)`;
-
-                        const img = card.querySelector('.founder-img, .portfolio-img, .hero-visual-img');
-                        if (img) {
-                            img.style.transform = `scale(1.05) translate3d(${-rotateY * 0.3}px, ${-rotateX * 0.3}px, 20px)`;
-                        }
-
-                        // Gyro service card elements parallax
-                        const icon = card.querySelector('.service-icon-box');
-                        if (icon) {
-                            icon.style.transform = `translate3d(${-rotateY * 0.4}px, ${-rotateX * 0.4}px, 10px)`;
-                        }
-                        const num = card.querySelector('.service-card-num');
-                        if (num) {
-                            num.style.transform = `translate3d(${rotateY * 0.2}px, ${rotateX * 0.2}px, 5px)`;
-                        }
-                    });
-                    
-                    gyroScheduled = false;
-                });
-            });
+            // Gyroscope tilt logic disabled to prevent interference with explicit touch gestures
         }
+        */
 
 
     };
@@ -1123,29 +1184,31 @@ Looking forward to bringing this digital transformation to life!`;
         
         const toggleMenu = () => {
             const isActive = navLinks.classList.toggle('active');
+            toggleBtn.classList.toggle('active', isActive);
             
             if (isActive) {
-                menuIcon.style.display = 'none';
-                closeIcon.style.display = 'block';
                 document.body.style.overflow = 'hidden'; // Stop background scrolling
             } else {
-                menuIcon.style.display = 'block';
-                closeIcon.style.display = 'none';
                 document.body.style.overflow = ''; // Resume background scrolling
             }
         };
         
-        toggleBtn.addEventListener('click', toggleMenu);
+        toggleBtn.addEventListener('click', () => {
+            toggleMenu();
+            
+            // Add unique tactile spring scaling and glowing expansion ring tap animation on mobile
+            toggleBtn.classList.add('menu-tap-pulse');
+            toggleBtn.addEventListener('animationend', () => {
+                toggleBtn.classList.remove('menu-tap-pulse');
+            }, { once: true });
+        });
         
         // Auto-close menu when any navigation link is clicked
         const links = navLinks.querySelectorAll('a');
         links.forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
-                if (menuIcon && closeIcon) {
-                    menuIcon.style.display = 'block';
-                    closeIcon.style.display = 'none';
-                }
+                toggleBtn.classList.remove('active');
                 document.body.style.overflow = '';
             });
         });

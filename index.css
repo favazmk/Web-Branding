@@ -231,6 +231,15 @@ img {
     transform: translateY(-5px);
 }
 
+/* Enable native vertical page scrolling while reserving horizontal custom swipe interactions for 3D card tilt */
+.service-card,
+.portfolio-card,
+.founder-card-left,
+.founder-card-right,
+.visual-canvas {
+    touch-action: pan-y;
+}
+
 /* Disable transform transitions during active hover and tactile mobile touch dragging to let real-time JS 3D tilt execute instantly at 60fps/120fps */
 .service-card:hover,
 .service-card:active,
@@ -1775,22 +1784,100 @@ nav {
         display: flex !important;
         align-items: center;
         justify-content: center;
-        background: none;
-        border: none;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
         color: var(--text-white);
         cursor: pointer;
-        padding: 8px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50% !important;
         z-index: 100;
-        transition: var(--transition-smooth);
+        position: relative;
+        transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+        box-shadow: 0 0 0 0px rgba(139, 61, 255, 0);
     }
     
     .menu-toggle:hover {
         color: var(--primary);
+        border-color: rgba(139, 61, 255, 0.25) !important;
+        background: rgba(139, 61, 255, 0.05) !important;
+    }
+
+    .menu-toggle.active {
+        background: rgba(139, 61, 255, 0.15) !important;
+        border-color: rgba(139, 61, 255, 0.45) !important;
+        box-shadow: 0 0 15px var(--primary-glow) !important;
+        color: var(--primary);
+    }
+
+    .menu-toggle svg {
+        position: absolute;
+        transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, color 0.4s ease !important;
+    }
+
+    .menu-toggle .menu-icon {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+
+    .menu-toggle .close-icon {
+        opacity: 0;
+        transform: rotate(-180deg) scale(0);
+    }
+
+    .menu-toggle.active .menu-icon {
+        opacity: 0;
+        transform: rotate(180deg) scale(0);
+    }
+
+    .menu-toggle.active .close-icon {
+        transform: rotate(0deg) scale(1);
+    }
+
+    .menu-toggle.menu-tap-pulse {
+        animation: menuButtonTap 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .menu-toggle.menu-tap-pulse::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 50%;
+        border: 2px solid var(--primary);
+        box-shadow: 0 0 10px var(--primary-glow);
+        animation: menuRingPulse 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        pointer-events: none;
     }
     
     /* Hide desktop 'Get Started' button in navbar on small devices to avoid crowding */
     nav > .btn-primary {
         display: none;
+    }
+}
+
+@keyframes menuButtonTap {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(0.8);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes menuRingPulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.8);
+        opacity: 0;
     }
 }
 
@@ -1833,7 +1920,8 @@ nav {
         padding: 80px 0;
     }
     
-    .portfolio-grid {
+    .portfolio-grid,
+    .services-grid {
         grid-template-columns: 1fr;
     }
     
@@ -2031,7 +2119,6 @@ nav {
 .theme-light .service-card.glass-card:hover {
     border-color: rgba(139, 61, 255, 0.25) !important;
     box-shadow: 0 20px 40px rgba(139, 61, 255, 0.08) !important;
-    transform: translateY(-4px) !important;
 }
 
 .theme-light .service-icon-box {
@@ -2104,4 +2191,33 @@ nav {
     border-color: rgba(139, 61, 255, 0.25) !important;
     box-shadow: 0 20px 40px rgba(139, 61, 255, 0.08) !important;
     transform: translateY(-4px) !important;
+}
+
+/* ==========================================================================
+   TILTED CARD TOOLTIP CAPTION (React Bits Port)
+   ========================================================================== */
+.tilted-card-caption {
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 6px;
+    background-color: var(--text-white) !important;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #12091c !important; /* Premium deep purple-black */
+    opacity: 0;
+    z-index: 99;
+    will-change: transform, opacity;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    transition: opacity 0.3s ease;
+    transform: translateZ(50px);
+}
+
+@media (max-width: 640px) {
+    .tilted-card-caption {
+        font-size: 9px;
+        padding: 4px 8px;
+    }
 }
