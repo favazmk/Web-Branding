@@ -2240,7 +2240,10 @@ nav {
 
 /* Main Pill Body */
 .ag-pill-main {
-    background-color: #1e1332;
+    background-color: rgba(30, 19, 50, 0.75); /* Glass background */
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle glass border */
     border-radius: 2rem;
     box-shadow: 0 10px 30px -10px rgba(100, 60, 180, 0.5);
     position: relative;
@@ -2334,7 +2337,11 @@ nav {
 }
 
 .ag-dropdown-menu {
-    background-color: #141416;
+    background-color: rgba(20, 20, 22, 0.85); /* Glass dropdown background */
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: none;
     border-bottom-left-radius: 1.5rem; /* 24px */
     border-bottom-right-radius: 1.5rem; /* 24px */
     width: 100%;
