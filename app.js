@@ -905,7 +905,7 @@ Looking forward to bringing this digital transformation to life!`;
                 const offsetX = e.clientX - rect.left - centerX;
                 const offsetY = e.clientY - rect.top - centerY;
                 
-                const rotateAmplitude = 12; // Controls how much the card tilts (matching TiltedCard rotateAmplitude)
+                const rotateAmplitude = 6; // Controls how much the card tilts (matching TiltedCard rotateAmplitude)
                 const rotateX = (offsetY / centerY) * -rotateAmplitude;
                 const rotateY = (offsetX / centerX) * rotateAmplitude;
                 
@@ -1046,8 +1046,8 @@ Looking forward to bringing this digital transformation to life!`;
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 
-                const maxRotationX = 12; // 3D tilt response
-                const maxRotationY = 12;
+                const maxRotationX = 6; // 3D tilt response
+                const maxRotationY = 6;
                 
                 const rotateX = ((centerY - y) / centerY) * maxRotationX;
                 const rotateY = ((x - centerX) / centerX) * maxRotationY;
@@ -1085,10 +1085,13 @@ Looking forward to bringing this digital transformation to life!`;
                     }
 
                     // Mobile follow tooltip (placed slightly higher so the finger doesn't block it)
+                    // Disabled tooltip on touch as per user request
+                    /*
                     if (captionElement) {
                         captionElement.style.opacity = '1';
                         captionElement.style.transform = `translate3d(${x + 12}px, ${y - 32}px, 50px) rotate(${rotateFigcaption}deg)`;
                     }
+                    */
                     touchScheduled = false;
                 });
             };
