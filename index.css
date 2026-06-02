@@ -2252,7 +2252,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 4rem; /* 64px */
+    min-height: 5.5rem; /* 88px total height to safely fit the 68px logo */
     padding: 0 1.5rem; /* 24px */
 }
 
