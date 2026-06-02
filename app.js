@@ -947,13 +947,16 @@ Looking forward to bringing this digital transformation to life!`;
                 if (!window.matchMedia('(pointer: coarse)').matches) return;
                 
                 isTactileActive = true;
+                card.classList.add('active-tilt');
                 
                 const touch = e.touches[0];
                 const rect = card.getBoundingClientRect();
                 
-                // Keep touch coordinates inside bounding box limits
-                const x = Math.min(Math.max(touch.clientX - rect.left, 0), rect.width);
-                const y = Math.min(Math.max(touch.clientY - rect.top, 0), rect.height);
+                // Document-relative page coordinates to prevent coordinate jump glitches during page scrolling
+                const absoluteCardX = rect.left + window.pageXOffset;
+                const absoluteCardY = rect.top + window.pageYOffset;
+                const x = Math.min(Math.max(touch.pageX - absoluteCardX, 0), rect.width);
+                const y = Math.min(Math.max(touch.pageY - absoluteCardY, 0), rect.height);
                 
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
@@ -996,6 +999,7 @@ Looking forward to bringing this digital transformation to life!`;
                 if (!window.matchMedia('(pointer: coarse)').matches) return;
                 
                 isTactileActive = false;
+                card.classList.remove('active-tilt');
                 
                 window.requestAnimationFrame(() => {
                     card.style.transform = '';

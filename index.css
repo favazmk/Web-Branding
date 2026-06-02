@@ -231,13 +231,25 @@ img {
     transform: translateY(-5px);
 }
 
-/* Disable transform transitions during active hover to let real-time JS 3D tilt update instantly at 60fps */
+/* Disable transform transitions during active hover and tactile mobile touch dragging to let real-time JS 3D tilt execute instantly at 60fps/120fps */
 .service-card:hover,
+.service-card:active,
+.service-card.active-tilt,
 .portfolio-card:hover,
+.portfolio-card:active,
+.portfolio-card.active-tilt,
 .founder-card-left:hover,
+.founder-card-left:active,
+.founder-card-left.active-tilt,
 .founder-card-right:hover,
+.founder-card-right:active,
+.founder-card-right.active-tilt,
 .service-card:hover .service-icon-box,
-.service-card:hover .service-card-num {
+.service-card:active .service-icon-box,
+.service-card.active-tilt .service-icon-box,
+.service-card:hover .service-card-num,
+.service-card:active .service-card-num,
+.service-card.active-tilt .service-card-num {
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, opacity 0.2s ease !important;
 }
 
@@ -302,20 +314,32 @@ img {
 header {
     position: fixed;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
     z-index: 100;
     transition: var(--transition-smooth);
-    border-bottom: 1px solid transparent;
+    border: 1px solid transparent;
 }
 
 header.scrolled {
-    background: linear-gradient(180deg, rgba(20, 12, 38, 0.6) 0%, rgba(13, 9, 21, 0.85) 100%);
+    top: 20px;
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    background: linear-gradient(180deg, rgba(20, 12, 38, 0.65) 0%, rgba(13, 9, 21, 0.88) 100%);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1.5px solid rgba(139, 61, 255, 0.28);
-    border-radius: 0 0 100% 100% / 0 0 24px 24px; /* Curved design curving downward */
-    box-shadow: 0 10px 35px rgba(139, 61, 255, 0.10), 0 4px 30px rgba(0, 0, 0, 0.25); /* Purple glowing shade */
+    border: 1px solid rgba(139, 61, 255, 0.28);
+    border-radius: 100px; /* Fully curved pill design */
+    box-shadow: 0 12px 40px rgba(139, 61, 255, 0.12), 0 4px 30px rgba(0, 0, 0, 0.35); /* Purple glowing shade */
+}
+
+header.scrolled nav {
+    height: 68px; /* More compact header height in pill format */
+}
+
+header.scrolled .container {
+    padding: 0 32px;
 }
 
 nav {
