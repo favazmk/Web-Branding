@@ -874,6 +874,8 @@ Looking forward to bringing this digital transformation to life!`;
 
         tiltCards.forEach(card => visibilityObserver.observe(card));
 
+        // Tooltips have been disabled per user request
+        /*
         // Create the figcaption floating caption elements dynamically for any card with a data-caption
         tiltCards.forEach(card => {
             const captionText = card.getAttribute('data-caption');
@@ -886,6 +888,7 @@ Looking forward to bringing this digital transformation to life!`;
                 }
             }
         });
+        */
 
         // 1. Desktop Mouse Move Hover Tilt
         tiltCards.forEach(card => {
