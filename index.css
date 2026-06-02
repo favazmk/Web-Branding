@@ -2221,3 +2221,175 @@ nav {
         padding: 4px 8px;
     }
 }
+
+/* ==========================================================================
+   FLOATING PILL MOBILE HEADER
+   ========================================================================== */
+
+/* Main Header Container */
+.ag-pill-header {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    z-index: 999;
+    display: none; /* Desktop hidden */
+}
+
+/* Main Pill Body */
+.ag-pill-main {
+    background-color: #1e1332;
+    border-radius: 2rem;
+    box-shadow: 0 10px 30px -10px rgba(100, 60, 180, 0.5);
+    position: relative;
+    z-index: 20;
+    overflow: hidden;
+}
+
+.ag-pill-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem; /* 64px */
+    padding: 0 1.5rem; /* 24px */
+}
+
+/* Hamburger Button */
+.ag-pill-btn {
+    width: 2.5rem; /* 40px */
+    height: 2.5rem; /* 40px */
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.ag-pill-btn.active {
+    background: rgba(139, 61, 255, 0.15) !important;
+    border-color: rgba(139, 61, 255, 0.45) !important;
+    box-shadow: 0 0 15px var(--primary-glow) !important;
+    color: var(--primary);
+}
+
+.ag-pill-btn svg {
+    position: absolute;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, color 0.4s ease;
+}
+
+.ag-pill-btn .ag-menu-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.ag-pill-btn .ag-close-icon {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0);
+}
+
+.ag-pill-btn.active .ag-menu-icon {
+    opacity: 0;
+    transform: rotate(180deg) scale(0);
+}
+
+.ag-pill-btn.active .ag-close-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.ag-pill-btn.menu-tap-pulse {
+    animation: menuButtonTap 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ag-pill-btn.menu-tap-pulse::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    box-shadow: 0 0 10px var(--primary-glow);
+    animation: menuRingPulse 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    pointer-events: none;
+}
+
+/* Dropdown Container */
+.ag-dropdown-wrapper {
+    position: absolute;
+    top: 2rem; /* 32px */
+    left: 0;
+    width: 100%;
+    padding-top: 3rem; /* 48px */
+    z-index: -10;
+    overflow: hidden;
+}
+
+.ag-dropdown-menu {
+    background-color: #141416;
+    border-bottom-left-radius: 1.5rem; /* 24px */
+    border-bottom-right-radius: 1.5rem; /* 24px */
+    width: 100%;
+    max-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Smooth cinematic container dropdown with a satisfying bottom bounce */
+    transition: max-height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ag-dropdown-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0; /* 32px */
+    gap: 1.5rem; /* 24px */
+}
+
+/* Cinematic 3D Reveal */
+.ag-menu-item {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: perspective(500px) rotateX(-60deg) translateY(-30px) scale(0.9);
+    filter: blur(10px);
+    transform-origin: top center;
+    transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Active state when menu is open */
+#ag-mobile-menu.is-open .ag-menu-item {
+    opacity: 1;
+    transform: perspective(500px) rotateX(0deg) translateY(0) scale(1);
+    filter: blur(0px);
+    transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.2), filter 0.6s ease;
+}
+
+/* Fast cascading delays for the waterfall effect */
+#ag-mobile-menu .ag-menu-item:nth-child(1) { transition-delay: 0.05s; }
+#ag-mobile-menu .ag-menu-item:nth-child(2) { transition-delay: 0.10s; }
+#ag-mobile-menu .ag-menu-item:nth-child(3) { transition-delay: 0.15s; }
+#ag-mobile-menu .ag-menu-item:nth-child(4) { transition-delay: 0.20s; }
+#ag-mobile-menu .ag-menu-item:nth-child(5) { transition-delay: 0.25s; }
+#ag-mobile-menu .ag-menu-item:nth-child(6) { transition-delay: 0.35s; } 
+
+/* Media Query to handle Desktop vs Mobile display */
+@media (max-width: 768px) {
+    .ag-pill-header {
+        display: block;
+    }
+    #main-header {
+        display: none !important;
+    }
+}

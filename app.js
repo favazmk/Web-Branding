@@ -1352,4 +1352,57 @@ Looking forward to bringing this digital transformation to life!`;
         observer.observe(skillsSection);
     };
     initAboutSkillsAnimation();
+
+    // --- 11. Custom Floating Pill Mobile Header ---
+    const initFloatingPillHeader = () => {
+        const btn = document.getElementById('ag-mobile-btn');
+        const menu = document.getElementById('ag-mobile-menu');
+        const iconMenu = document.getElementById('ag-icon-menu');
+        const iconClose = document.getElementById('ag-icon-close');
+        
+        if(!btn || !menu) return; // Guard clause
+
+        let isMenuOpen = false;
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent conflicts
+            isMenuOpen = !isMenuOpen;
+            
+            // Toggle active state for SVG animations and styling
+            btn.classList.toggle('active', isMenuOpen);
+            
+            if (isMenuOpen) {
+                menu.style.maxHeight = menu.scrollHeight + "px";
+                menu.classList.add('is-open'); 
+            } else {
+                menu.style.maxHeight = "0px";
+                menu.classList.remove('is-open'); 
+            }
+            
+            // Add unique tactile spring scaling and glowing expansion ring tap animation on mobile
+            btn.classList.add('menu-tap-pulse');
+            btn.addEventListener('animationend', () => {
+                btn.classList.remove('menu-tap-pulse');
+            }, { once: true });
+        });
+
+        // Close on outside click
+        document.addEventListener('click', (event) => {
+            const header = document.getElementById('ag-custom-header');
+            if (isMenuOpen && header && !header.contains(event.target)) {
+                btn.click();
+            }
+        });
+
+        // Close when a link is clicked
+        const links = menu.querySelectorAll('.ag-menu-item');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) {
+                    btn.click();
+                }
+            });
+        });
+    };
+    initFloatingPillHeader();
 });

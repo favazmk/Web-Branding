@@ -15,6 +15,39 @@
 </head>
 <body>
 
+    <!-- Floating Pill Mobile Header (Custom) -->
+    <header id="ag-custom-header" class="ag-pill-header">
+        
+        <!-- Main Pill -->
+        <div class="ag-pill-main">
+            <div class="ag-pill-content">
+                <!-- Logo Here -->
+                <a href="#" aria-label="The Web Branding Home" style="display: flex; align-items: center;">
+                    <img src="logo.png" alt="The Web Branding Logo" style="height: 32px;">
+                </a>
+
+                <!-- Hamburger Button -->
+                <button id="ag-mobile-btn" class="ag-pill-btn" aria-label="Toggle mobile menu">
+                    <svg id="ag-icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ag-menu-icon"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    <svg id="ag-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ag-close-icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Hidden Dropdown Container (Behind the pill) -->
+        <div class="ag-dropdown-wrapper">
+            <div id="ag-mobile-menu" class="ag-dropdown-menu">
+                <div class="ag-dropdown-content">
+                    <a href="#about" class="ag-menu-item">About</a>
+                    <a href="#services" class="ag-menu-item">Services</a>
+                    <a href="#portfolio" class="ag-menu-item">Portfolio</a>
+                    <a href="#estimator" class="ag-menu-item">Project Planner</a>
+                    <a href="#testimonials" class="ag-menu-item">Reviews</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <!-- Header & Navigation -->
     <header id="main-header">
         <div class="container">
@@ -32,10 +65,7 @@
                     <li class="mobile-only-cta" style="margin-top: 10px; width: 100%;"><a href="#estimator" class="btn btn-primary" style="width: 100%; display: inline-flex; justify-content: center; text-align: center;">Get Started</a></li>
                 </ul>
                 
-                <button class="menu-toggle" id="menu-toggle-btn" aria-label="Toggle mobile menu" style="display: none;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="menu-icon"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="close-icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
+                <!-- Old mobile menu button removed in favor of floating pill -->
                 
                 <a href="#estimator" class="btn btn-primary" aria-label="Start Your Project">Get Started</a>
             </nav>
