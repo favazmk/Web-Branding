@@ -2345,27 +2345,33 @@ nav {
     left: 0;
     width: 100%;
     z-index: -10;
-    overflow: hidden;
+    /* overflow removed so shadow doesn't get clipped into square corners */
 }
 
 .ag-dropdown-menu {
     background: linear-gradient(180deg, rgba(35, 15, 65, 0.96) 0%, rgba(18, 8, 32, 0.98) 100%);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1.5px solid rgba(139, 61, 255, 0.25);
+    border: 1.5px solid transparent; /* Transparent when closed */
     border-top: none; /* Connects smoothly to the pill */
     border-bottom-left-radius: 2rem; /* 32px */
     border-bottom-right-radius: 2rem; /* 32px */
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    box-shadow: 0 12px 40px rgba(139, 61, 255, 0.16), 0 4px 30px rgba(0, 0, 0, 0.40);
+    box-shadow: none; /* Hidden when closed */
     width: 100%;
     max-height: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden; /* Moved here so children are clipped, but its own shadow isn't */
     /* Smooth cinematic container dropdown with a satisfying bottom bounce */
-    transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Sped up the reveal time from 0.8s */
+    transition: max-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.ag-pill-header.menu-open .ag-dropdown-menu {
+    border-color: rgba(139, 61, 255, 0.25);
+    box-shadow: 0 12px 40px rgba(139, 61, 255, 0.16), 0 4px 30px rgba(0, 0, 0, 0.40);
 }
 
 .ag-dropdown-content {
