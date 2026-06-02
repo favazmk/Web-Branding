@@ -2240,12 +2240,12 @@ nav {
 
 /* Main Pill Body */
 .ag-pill-main {
-    background-color: rgba(30, 19, 50, 0.75); /* Glass background */
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle glass border */
-    border-radius: 2rem;
-    box-shadow: 0 10px 30px -10px rgba(100, 60, 180, 0.5);
+    background: linear-gradient(180deg, rgba(35, 15, 65, 0.94) 0%, rgba(18, 8, 32, 0.98) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(139, 61, 255, 0.35); /* Vibrant purple border */
+    border-radius: 100px; /* Fully curved pill design */
+    box-shadow: 0 12px 40px rgba(139, 61, 255, 0.16), 0 4px 30px rgba(0, 0, 0, 0.40); /* Powerful violet glow */
     position: relative;
     z-index: 20;
     overflow: hidden;
@@ -2337,13 +2337,14 @@ nav {
 }
 
 .ag-dropdown-menu {
-    background-color: rgba(20, 20, 22, 0.85); /* Glass dropdown background */
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-top: none;
-    border-bottom-left-radius: 1.5rem; /* 24px */
-    border-bottom-right-radius: 1.5rem; /* 24px */
+    background: linear-gradient(180deg, rgba(35, 15, 65, 0.96) 0%, rgba(18, 8, 32, 0.98) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(139, 61, 255, 0.25);
+    border-top: none; /* Connects smoothly to the pill */
+    border-bottom-left-radius: 2rem; /* 32px */
+    border-bottom-right-radius: 2rem; /* 32px */
+    box-shadow: 0 12px 40px rgba(139, 61, 255, 0.16);
     width: 100%;
     max-height: 0;
     display: flex;
