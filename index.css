@@ -250,7 +250,14 @@ img {
 .service-card:hover .service-card-num,
 .service-card:active .service-card-num,
 .service-card.active-tilt .service-card-num {
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, opacity 0.2s ease !important;
+    transition: transform 0s !important;
+}
+
+/* Prevent CSS hover translateY from colliding with JS 3D tilts */
+.service-card.glass-card:hover,
+.founder-card-left:hover,
+.founder-card-right:hover {
+    transform: none;
 }
 
 /* --- Premium Buttons --- */
@@ -326,12 +333,12 @@ header.scrolled {
     top: 20px;
     width: calc(100% - 40px);
     max-width: 1200px;
-    background: linear-gradient(180deg, rgba(20, 12, 38, 0.65) 0%, rgba(13, 9, 21, 0.88) 100%);
+    background: linear-gradient(180deg, rgba(35, 15, 65, 0.94) 0%, rgba(18, 8, 32, 0.98) 100%);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(139, 61, 255, 0.28);
+    border: 1.5px solid rgba(139, 61, 255, 0.35); /* More vibrant purple border */
     border-radius: 100px; /* Fully curved pill design */
-    box-shadow: 0 12px 40px rgba(139, 61, 255, 0.12), 0 4px 30px rgba(0, 0, 0, 0.35); /* Purple glowing shade */
+    box-shadow: 0 12px 40px rgba(139, 61, 255, 0.16), 0 4px 30px rgba(0, 0, 0, 0.40); /* Powerful violet glow */
 }
 
 header.scrolled nav {
