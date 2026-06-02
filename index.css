@@ -2249,14 +2249,27 @@ nav {
     position: relative;
     z-index: 20;
     overflow: hidden;
+    transition: border-radius 0.3s, border-bottom-color 0.3s, box-shadow 0.3s;
+}
+
+/* Seamless Dropdown Morphs */
+.ag-pill-header.menu-open .ag-pill-main {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-color: transparent;
+    box-shadow: none; /* Remove bottom shadow so it doesn't cast on the dropdown */
 }
 
 .ag-pill-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    min-height: 5.5rem; /* 88px total height to safely fit the 68px logo */
+    height: 4rem; /* 64px - Decreased height per request */
     padding: 0 1.5rem; /* 24px */
+}
+
+.ag-pill-content .nav-logo-img {
+    height: 40px; /* Scaled down logo so header can be smaller */
 }
 
 /* Hamburger Button */
@@ -2328,10 +2341,9 @@ nav {
 /* Dropdown Container */
 .ag-dropdown-wrapper {
     position: absolute;
-    top: 2rem; /* 32px */
+    top: 4rem; /* Starts exactly at the bottom of the 4rem pill */
     left: 0;
     width: 100%;
-    padding-top: 3rem; /* 48px */
     z-index: -10;
     overflow: hidden;
 }
@@ -2344,7 +2356,9 @@ nav {
     border-top: none; /* Connects smoothly to the pill */
     border-bottom-left-radius: 2rem; /* 32px */
     border-bottom-right-radius: 2rem; /* 32px */
-    box-shadow: 0 12px 40px rgba(139, 61, 255, 0.16);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: 0 12px 40px rgba(139, 61, 255, 0.16), 0 4px 30px rgba(0, 0, 0, 0.40);
     width: 100%;
     max-height: 0;
     display: flex;

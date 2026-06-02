@@ -1371,13 +1371,17 @@ Looking forward to bringing this digital transformation to life!`;
             e.stopPropagation(); // Prevent conflicts
             isMenuOpen = !isMenuOpen;
             
+            const header = document.getElementById('ag-custom-header');
+            
             // Toggle active state for SVG animations and styling
             btn.classList.toggle('active', isMenuOpen);
             
             if (isMenuOpen) {
+                if (header) header.classList.add('menu-open');
                 menu.style.maxHeight = menu.scrollHeight + "px";
                 menu.classList.add('is-open'); 
             } else {
+                if (header) header.classList.remove('menu-open');
                 menu.style.maxHeight = "0px";
                 menu.classList.remove('is-open'); 
             }
