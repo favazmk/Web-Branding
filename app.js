@@ -46,152 +46,157 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 3. Interactive Project Estimator & Scope Calculator ---
-    const serviceInputs = document.querySelectorAll('.service-checkbox');
-    const budgetRange = document.getElementById('budget-range');
-    const currencySelect = document.getElementById('currency-select');
-    const contactName = document.getElementById('client-name');
-    const contactEmail = document.getElementById('client-email');
-    const contactPhone = document.getElementById('client-phone');
-    
-    // Display Elements
-    const budgetValue = document.getElementById('display-budget-val');
-    const summaryServices = document.getElementById('summary-services');
-    const summaryScope = document.getElementById('summary-scope');
-    const summaryTimeline = document.getElementById('summary-timeline');
-    const summaryFinalBudget = document.getElementById('summary-final-budget');
-    const submitBtn = document.getElementById('submit-estimator-btn');
-    
-    // Currency Configurations
-    const currencies = {
-        AED: { symbol: 'AED ', min: 1000, max: 50000, step: 500, default: 4000 },
-        INR: { symbol: '₹', min: 20000, max: 1000000, step: 5000, default: 80000 },
-        USD: { symbol: '$', min: 300, max: 20000, step: 100, default: 1200 }
-    };
-
-    // Active Settings
-    let currentCurrency = 'AED';
-    
-    // Base pricing values per service (standard multipliers in USD)
-    const baseServiceCosts = {
-        webdev: 1500,
-        marketing: 1000,
-        videoprod: 1200,
-        branding: 800
-    };
-
-    // Initialize Currency Settings
-    const initCurrency = () => {
-        currentCurrency = currencySelect.value;
-        const config = currencies[currentCurrency];
+    const initEstimator = () => {
+        const currencySelect = document.getElementById('currency-select');
+        const projectForm = document.getElementById('project-estimator-form');
         
-        budgetRange.min = config.min;
-        budgetRange.max = config.max;
-        budgetRange.step = config.step;
-        budgetRange.value = config.default;
+        if (!currencySelect || !projectForm) return;
+
+        const serviceInputs = document.querySelectorAll('.service-checkbox');
+        const budgetRange = document.getElementById('budget-range');
+        const contactName = document.getElementById('client-name');
+        const contactEmail = document.getElementById('client-email');
+        const contactPhone = document.getElementById('client-phone');
         
-        updateEstimator();
-    };
-
-    // Calculate Scope & Timeline
-    const updateEstimator = () => {
-        const config = currencies[currentCurrency];
-        const budget = parseInt(budgetRange.value, 10);
+        // Display Elements
+        const budgetValue = document.getElementById('display-budget-val');
+        const summaryServices = document.getElementById('summary-services');
+        const summaryScope = document.getElementById('summary-scope');
+        const summaryTimeline = document.getElementById('summary-timeline');
+        const summaryFinalBudget = document.getElementById('summary-final-budget');
+        const submitBtn = document.getElementById('submit-estimator-btn');
         
-        // Formatted Budget
-        budgetValue.textContent = config.symbol + budget.toLocaleString();
-        summaryFinalBudget.textContent = config.symbol + budget.toLocaleString();
+        // Currency Configurations
+        const currencies = {
+            AED: { symbol: 'AED ', min: 1000, max: 50000, step: 500, default: 4000 },
+            INR: { symbol: '₹', min: 20000, max: 1000000, step: 5000, default: 80000 },
+            USD: { symbol: '$', min: 300, max: 20000, step: 100, default: 1200 }
+        };
 
-        // 1. Gather Selected Services
-        let activeServices = [];
-        let totalUSDServiceWeight = 0;
+        // Active Settings
+        let currentCurrency = 'AED';
+        
+        // Base pricing values per service (standard multipliers in USD)
+        const baseServiceCosts = {
+            webdev: 1500,
+            marketing: 1000,
+            videoprod: 1200,
+            branding: 800
+        };
 
-        serviceInputs.forEach(input => {
-            if (input.checked) {
-                activeServices.push(input.dataset.name);
-                totalUSDServiceWeight += baseServiceCosts[input.value];
+        // Initialize Currency Settings
+        const initCurrency = () => {
+            currentCurrency = currencySelect.value;
+            const config = currencies[currentCurrency];
+            
+            budgetRange.min = config.min;
+            budgetRange.max = config.max;
+            budgetRange.step = config.step;
+            budgetRange.value = config.default;
+            
+            updateEstimator();
+        };
+
+        // Calculate Scope & Timeline
+        const updateEstimator = () => {
+            const config = currencies[currentCurrency];
+            const budget = parseInt(budgetRange.value, 10);
+            
+            // Formatted Budget
+            budgetValue.textContent = config.symbol + budget.toLocaleString();
+            summaryFinalBudget.textContent = config.symbol + budget.toLocaleString();
+
+            // 1. Gather Selected Services
+            let activeServices = [];
+            let totalUSDServiceWeight = 0;
+
+            serviceInputs.forEach(input => {
+                if (input.checked) {
+                    activeServices.push(input.dataset.name);
+                    totalUSDServiceWeight += baseServiceCosts[input.value];
+                }
+            });
+
+            // Update active service display list
+            if (activeServices.length === 0) {
+                summaryServices.textContent = 'None Selected';
+                summaryScope.textContent = 'Please select a service';
+                summaryTimeline.textContent = '--';
+                submitBtn.disabled = true;
+                return;
             }
-        });
 
-        // Update active service display list
-        if (activeServices.length === 0) {
-            summaryServices.textContent = 'None Selected';
-            summaryScope.textContent = 'Please select a service';
-            summaryTimeline.textContent = '--';
-            submitBtn.disabled = true;
-            return;
-        }
+            submitBtn.disabled = false;
+            summaryServices.textContent = activeServices.join(', ');
 
-        submitBtn.disabled = false;
-        summaryServices.textContent = activeServices.join(', ');
+            // 2. Convert current budget to base USD value to normalize calculations
+            let conversionRateToUSD = 1;
+            if (currentCurrency === 'AED') conversionRateToUSD = 1 / 3.67;
+            if (currentCurrency === 'INR') conversionRateToUSD = 1 / 83.5;
+            
+            const budgetInUSD = budget * conversionRateToUSD;
+            
+            // Define Quality Tier / Scope level based on budget comparison to base cost
+            let scopeTier = 'Standard';
+            let timeline = '2-3 Weeks';
 
-        // 2. Convert current budget to base USD value to normalize calculations
-        let conversionRateToUSD = 1;
-        if (currentCurrency === 'AED') conversionRateToUSD = 1 / 3.67;
-        if (currentCurrency === 'INR') conversionRateToUSD = 1 / 83.5;
-        
-        const budgetInUSD = budget * conversionRateToUSD;
-        
-        // Define Quality Tier / Scope level based on budget comparison to base cost
-        let scopeTier = 'Standard';
-        let timeline = '2-3 Weeks';
+            const budgetRatio = budgetInUSD / Math.max(500, totalUSDServiceWeight);
 
-        const budgetRatio = budgetInUSD / Math.max(500, totalUSDServiceWeight);
+            if (budgetRatio < 0.8) {
+                scopeTier = 'Essential (Lean Setup)';
+                timeline = '1-2 Weeks';
+            } else if (budgetRatio >= 0.8 && budgetRatio < 1.5) {
+                scopeTier = 'Growth (Standard Pro)';
+                timeline = '3-4 Weeks';
+            } else if (budgetRatio >= 1.5 && budgetRatio < 2.5) {
+                scopeTier = 'Enterprise (Premium Custom)';
+                timeline = '5-6 Weeks';
+            } else {
+                scopeTier = 'Vanguard Elite (Bespoke 3D & Advanced Systems)';
+                timeline = '8-10 Weeks';
+            }
 
-        if (budgetRatio < 0.8) {
-            scopeTier = 'Essential (Lean Setup)';
-            timeline = '1-2 Weeks';
-        } else if (budgetRatio >= 0.8 && budgetRatio < 1.5) {
-            scopeTier = 'Growth (Standard Pro)';
-            timeline = '3-4 Weeks';
-        } else if (budgetRatio >= 1.5 && budgetRatio < 2.5) {
-            scopeTier = 'Enterprise (Premium Custom)';
-            timeline = '5-6 Weeks';
-        } else {
-            scopeTier = 'Vanguard Elite (Bespoke 3D & Advanced Systems)';
-            timeline = '8-10 Weeks';
-        }
+            summaryScope.textContent = scopeTier;
+            summaryTimeline.textContent = timeline;
+        };
 
-        summaryScope.textContent = scopeTier;
-        summaryTimeline.textContent = timeline;
-    };
+        // Listeners for Estimator
+        currencySelect.addEventListener('change', initCurrency);
+        budgetRange.addEventListener('input', updateEstimator);
+        serviceInputs.forEach(input => input.addEventListener('change', updateEstimator));
 
-    // Listeners for Estimator
-    currencySelect.addEventListener('change', initCurrency);
-    budgetRange.addEventListener('input', updateEstimator);
-    serviceInputs.forEach(input => input.addEventListener('change', updateEstimator));
+        // Initial setup
+        initCurrency();
 
-    // Initial setup
-    initCurrency();
+        // --- 4. Submit Lead Proposal Form ---
+        const handleEstimatorSubmit = (e) => {
+            e.preventDefault();
+            
+            const name = contactName.value.trim();
+            const email = contactEmail.value.trim();
+            const phone = contactPhone.value.trim();
+            const config = currencies[currentCurrency];
+            const budget = parseInt(budgetRange.value, 10);
+            
+            if (!name) {
+                alert('Please provide your name so we can address you.');
+                return;
+            }
 
-    // --- 4. Submit Lead Proposal Form ---
-    const handleEstimatorSubmit = (e) => {
-        e.preventDefault();
-        
-        const name = contactName.value.trim();
-        const email = contactEmail.value.trim();
-        const phone = contactPhone.value.trim();
-        const config = currencies[currentCurrency];
-        const budget = parseInt(budgetRange.value, 10);
-        
-        if (!name) {
-            alert('Please provide your name so we can address you.');
-            return;
-        }
+            // Package all active selections
+            let selectedServicesList = [];
+            serviceInputs.forEach(input => {
+                if (input.checked) selectedServicesList.push(input.dataset.name);
+            });
 
-        // Package all active selections
-        let selectedServicesList = [];
-        serviceInputs.forEach(input => {
-            if (input.checked) selectedServicesList.push(input.dataset.name);
-        });
+            const servicesString = selectedServicesList.join(', ');
+            const finalBudgetString = config.symbol + budget.toLocaleString();
+            const scope = summaryScope.textContent;
+            const timeline = summaryTimeline.textContent;
 
-        const servicesString = selectedServicesList.join(', ');
-        const finalBudgetString = config.symbol + budget.toLocaleString();
-        const scope = summaryScope.textContent;
-        const timeline = summaryTimeline.textContent;
-
-        // Build a highly professional proposal brief message
-        const message = `Hi Hashir & The Web Branding Team,
-        
+            // Build a highly professional proposal brief message
+            const message = `Hi Hashir & The Web Branding Team,
+            
 I just generated a custom project proposal brief on your website and would love to align:
 
 💼 Client Details:
@@ -207,16 +212,18 @@ ${phone ? `• Phone: ${phone}` : ''}
 
 Looking forward to bringing this digital transformation to life!`;
 
-        // Encode and redirect to WhatsApp API (Dubai Office Contact by default)
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappNumber = '971544357023'; // Dubai agency number from live CTAs
-        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-        
-        // Open WhatsApp in a new tab
-        window.open(whatsappURL, '_blank');
-    };
+            // Encode and redirect to WhatsApp API (Dubai Office Contact by default)
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappNumber = '971544357023'; // Dubai agency number from live CTAs
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        };
 
-    document.getElementById('project-estimator-form').addEventListener('submit', handleEstimatorSubmit);
+        projectForm.addEventListener('submit', handleEstimatorSubmit);
+    };
+    initEstimator();
 
     // --- 5. Interactive 3D ShapeGrid Backdrop (Azza Duality Style) ---
     const initShapeGrid = () => {
