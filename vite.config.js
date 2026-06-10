@@ -7,6 +7,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         campaign: resolve(__dirname, 'campaign.html'),
+        marketing: resolve(__dirname, 'digital-marketing.html'),
       },
     },
   },
