@@ -1419,4 +1419,78 @@ Looking forward to bringing this digital transformation to life!`;
         });
     };
     initFloatingPillHeader();
+
+    // --- Interactive Mascot Flying Logic ---
+    const initMascot = () => {
+        const mascotContainer = document.querySelector('.mascot-container');
+        if (!mascotContainer) return;
+
+        // Reset CSS for JS positioning
+        mascotContainer.style.bottom = 'auto';
+        mascotContainer.style.right = 'auto';
+        mascotContainer.style.transition = 'top 0.8s cubic-bezier(0.25, 1, 0.5, 1), left 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+
+        const updateMascotPosition = () => {
+            // Default bottom-right corner
+            const defaultX = window.innerWidth - 120;
+            const defaultY = window.innerHeight - 150;
+            
+            // Elements to track
+            const targets = document.querySelectorAll('.section-title, .industry-card, .service-card, .portfolio-card');
+            const centerY = window.innerHeight / 2;
+            
+            let closestTarget = null;
+            let minDistance = Infinity;
+
+            targets.forEach(target => {
+                const rect = target.getBoundingClientRect();
+                if (rect.width > 0 && rect.height > 0) {
+                    const targetCenterY = rect.top + rect.height / 2;
+                    const distance = Math.abs(centerY - targetCenterY);
+                    
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestTarget = target;
+                    }
+                }
+            });
+
+            // If a target is near the center, fly to it
+            if (closestTarget && minDistance < 250) {
+                const rect = closestTarget.getBoundingClientRect();
+                // Sit on top-right of the element
+                let targetX = rect.right - 80; 
+                let targetY = rect.top - 90; 
+                
+                // Keep within screen bounds
+                targetX = Math.max(20, Math.min(targetX, window.innerWidth - 120));
+                targetY = Math.max(20, Math.min(targetY, window.innerHeight - 150));
+
+                mascotContainer.style.left = `${targetX}px`;
+                mascotContainer.style.top = `${targetY}px`;
+            } else {
+                // Fly back to default
+                mascotContainer.style.left = `${defaultX}px`;
+                mascotContainer.style.top = `${defaultY}px`;
+            }
+        };
+
+        // Initial setup
+        setTimeout(updateMascotPosition, 100);
+
+        // Throttle scroll events
+        let isScrolling = false;
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    updateMascotPosition();
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        });
+
+        window.addEventListener('resize', updateMascotPosition);
+    };
+    initMascot();
 });
