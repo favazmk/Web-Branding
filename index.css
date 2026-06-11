@@ -8,8 +8,8 @@
 /* --- Custom Variables & Tokens --- */
 :root {
     /* Azza-inspired Cosmic Duality Palette (Luxury White & Violet Brand Colors) */
-    --bg-dark: #06020e; /* True deep obsidian purple-black background */
-    --bg-slate: #10081d; /* Rich dark slate/purple background */
+    --bg-dark: transparent; /* Changed to allow mesh body gradient */
+    --bg-slate: rgba(16, 8, 29, 0.3); /* Transparent slate overlay */
     
     --bg-light: #f4f3f6; /* Pristine Azza-inspired light violet-grey */
     --bg-card-light: #ffffff; /* Crisp white card background */
