@@ -255,6 +255,49 @@
             border-color: var(--primary);
             background: rgba(139, 61, 255, 0.05);
         }
+        
+        /* Industry Image Card (For sections with background images) */
+        .industry-image-card {
+            background: var(--bg-glass);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 220px;
+            transition: var(--transition-smooth);
+            will-change: transform;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            border: none;
+        }
+        .industry-image-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            transition: opacity var(--transition-smooth);
+        }
+        .industry-image-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+        .industry-image-card:hover {
+            transform: translateY(-8px);
+        }
+        .industry-image-card:hover::before {
+            opacity: 0;
+        }
         .industry-title {
             font-family: 'Outfit', sans-serif;
             font-size: 1.2rem;
@@ -660,47 +703,47 @@
                 </div>
                 
                 <div class="industry-grid">
-                    <div class="industry-card" style="--bg-image: url('mockup_fashion.png');">
+                    <div class="industry-image-card" style="--bg-image: url('mockup_fashion.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Fashion</h3>
                         <div class="industry-price" style="visibility: hidden;">-</div>
                         <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_hospitality.png');">
+                    <div class="industry-image-card" style="--bg-image: url('mockup_hospitality.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Restaurant</h3>
                         <div class="industry-price" style="visibility: hidden;">-</div>
                         <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_realestate.png');">
+                    <div class="industry-image-card" style="--bg-image: url('mockup_realestate.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Corporate</h3>
                         <div class="industry-price" style="visibility: hidden;">-</div>
                         <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_medical.png');">
+                    <div class="industry-image-card" style="--bg-image: url('mockup_medical.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Medical</h3>
                         <div class="industry-price" style="visibility: hidden;">-</div>
                         <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_construction.png');">
+                    <div class="industry-image-card" style="--bg-image: url('mockup_construction.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Construction</h3>
                         <div class="industry-price" style="visibility: hidden;">-</div>
                         <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_electronics.png');">
+                    <div class="industry-image-card" style="--bg-image: url('mockup_electronics.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Technology</h3>
                         <div class="industry-price" style="visibility: hidden;">-</div>
                         <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_supermarket.png');">
+                    <div class="industry-image-card" style="--bg-image: url('mockup_supermarket.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Retail</h3>
                         <div class="industry-price" style="visibility: hidden;">-</div>
                         <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_beauty.png');">
+                    <div class="industry-image-card" style="--bg-image: url('mockup_beauty.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Beauty</h3>
                         <div class="industry-price" style="visibility: hidden;">-</div>
                         <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_repair.png');">
+                    <div class="industry-image-card" style="--bg-image: url('mockup_repair.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Service</h3>
                         <div class="industry-price" style="visibility: hidden;">-</div>
                         <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
