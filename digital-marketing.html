@@ -44,7 +44,7 @@
         }
         .hero-title-campaign {
             font-family: 'Outfit', sans-serif;
-            font-size: 3.5rem;
+            font-size: clamp(1.5rem, 5vw, 3rem); /* 24px on mobile, up to 48px on desktop */
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 20px;
@@ -541,7 +541,6 @@
         @media (max-width: 768px) {
             .industry-grid { grid-template-columns: 1fr; }
             .project-slide { flex: 0 0 300px; }
-            .hero-title-campaign { font-size: 2.5rem; }
             .campaign-hero { padding: 40px 0; }
             .addons-glass-container { padding: 40px 0; }
             .addon-glass-card { padding: 30px 20px; }
@@ -626,8 +625,8 @@
                         <div class="hero-pill">Special OFFERS</div>
                         
                         <!-- Heading from Wireframe -->
-                        <h1 class="hero-title-campaign" style="font-size: clamp(3rem, 5vw, 4.5rem); line-height: 1.2; text-transform: none;">
-                            Social Media Management<br>from <span style="display: inline-block; background: #e11d48; color: white; padding: 5px 20px; border-radius: 12px; margin: 10px 0; font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2.5rem, 4vw, 3.5rem); box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);">999 AED</span><br>onwards
+                        <h1 class="hero-title-campaign" style="line-height: 1.2; text-transform: none;">
+                            Social Media Management<br>from <span style="display: inline-block; background: #e11d48; color: white; padding: 5px 20px; border-radius: 12px; margin: 10px 0; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 1.1em; box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);">999 AED</span><br>onwards
                         </h1>
                         
                         <div style="display: flex; gap: 15px; margin-top: 30px;">
