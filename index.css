@@ -199,7 +199,7 @@ img {
 }
 
 .section-title {
-    font-size: clamp(1.5rem, 3vw, 1.875rem); /* 24px - 30px */
+    font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1.1;
     margin-bottom: 20px;
     background: var(--grad-text);
@@ -1932,10 +1932,6 @@ nav {
         font-size: clamp(2rem, 8vw, 3rem); /* 32px - 48px */
         line-height: 1.1;
         margin-bottom: 18px;
-    }
-    
-    .section-title {
-        font-size: clamp(1.25rem, 4vw, 1.5rem); /* 20px - 24px */
     }
     
     .hero-stats {
