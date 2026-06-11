@@ -292,12 +292,15 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.5;
+            opacity: 0.85;
             transition: var(--transition-smooth);
+            filter: grayscale(100%);
+            will-change: transform, filter;
         }
         .project-slide:hover .project-placeholder-img {
-            opacity: 0.8;
+            opacity: 1;
             transform: scale(1.05);
+            filter: grayscale(0%);
         }
 
         /* Footer CTA */
@@ -627,15 +630,15 @@
                 </div>
                 
                 <div class="projects-slider">
-                    <div class="project-slide">
+                    <a href="https://jamrealestate.ae" target="_blank" class="project-slide" style="display: block;">
                         <img src="portfolio-1.jpg" alt="Project 1" class="project-placeholder-img">
-                    </div>
-                    <div class="project-slide">
+                    </a>
+                    <a href="https://voguevenue.ae" target="_blank" class="project-slide" style="display: block;">
                         <img src="portfolio-2.jpg" alt="Project 2" class="project-placeholder-img">
-                    </div>
-                    <div class="project-slide">
+                    </a>
+                    <a href="https://finefeichidxb.com" target="_blank" class="project-slide" style="display: block;">
                         <img src="portfolio-3.jpg" alt="Project 3" class="project-placeholder-img">
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
