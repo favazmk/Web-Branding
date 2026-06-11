@@ -44,7 +44,7 @@
         }
         .hero-title-campaign {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(1.5rem, 6vw, 2rem); /* 24px - 32px */
+            font-size: clamp(2.5rem, 6vw, 4.5rem); /* Desktop: up to 72px */
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 20px;
@@ -397,6 +397,7 @@
         @media (max-width: 768px) {
             .industry-grid { grid-template-columns: 1fr; }
             .project-slide { flex: 0 0 300px; }
+            .hero-title-campaign { font-size: clamp(2rem, 8vw, 3rem); } /* Mobile: 32px - 48px */
             .campaign-hero { padding: 40px 0; }
             .pricing-card { padding: 30px 20px; }
             .projects-track { --track-shift: -1920px; }
