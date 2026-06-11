@@ -1547,4 +1547,45 @@ Looking forward to bringing this digital transformation to life!`;
         });
     };
     initMascot();
+
+    // --- 7. Additional Form Handlers (Lead & Audit Forms) ---
+    const handleGenericFormSubmit = (e, title) => {
+        e.preventDefault();
+        const form = e.target;
+        const name = form.querySelector('[name="name"]')?.value || '';
+        const phone = form.querySelector('[name="phone"]')?.value || '';
+        const email = form.querySelector('[name="email"]')?.value || '';
+        const company = form.querySelector('[name="company"]')?.value || '';
+        const service = form.querySelector('[name="service"]')?.value || '';
+        const messageInput = form.querySelector('[name="message"]')?.value || '';
+
+        let message = `Hi Hashir & The Web Branding Team,\n\nI would like to request a ${title}.\n\n💼 *My Details:*\n• Name: ${name}\n• Phone: ${phone}\n`;
+        
+        if (email) message += `• Email / Website: ${email}\n`;
+        if (company) message += `• Company: ${company}\n`;
+        if (service) message += `• Interested In: ${service}\n`;
+        if (messageInput) message += `\n💬 *Additional Notes:*\n${messageInput}\n`;
+
+        message += `\nLooking forward to hearing from you!`;
+
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappNumber = '971544387023';
+        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+        window.open(whatsappURL, '_blank');
+    };
+
+    const marketingLeadForm = document.getElementById('marketing-lead-form');
+    if (marketingLeadForm) {
+        marketingLeadForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Digital Marketing Audit'));
+    }
+
+    const marketingAuditForm = document.getElementById('marketing-audit-form');
+    if (marketingAuditForm) {
+        marketingAuditForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Free Marketing Consultation'));
+    }
+
+    const campaignLeadForm = document.getElementById('campaign-lead-form');
+    if (campaignLeadForm) {
+        campaignLeadForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Website Quote'));
+    }
 });
