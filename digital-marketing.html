@@ -439,6 +439,7 @@
             display: flex;
             width: max-content;
             gap: 20px;
+            --track-shift: -2520px;
             animation: scroll-marquee 45s linear infinite;
             padding: 20px 0;
             will-change: transform;
@@ -453,7 +454,7 @@
         }
         @keyframes scroll-marquee {
             0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-50%, 0, 0); }
+            100% { transform: translate3d(var(--track-shift), 0, 0); }
         }
 
         .project-slide {
@@ -545,6 +546,7 @@
             .addons-glass-container { padding: 40px 0; }
             .addon-glass-card { padding: 30px 20px; }
             .pricing-card { padding: 30px 20px; }
+            .projects-track { --track-shift: -1920px; }
         }
     </style>
 </head>

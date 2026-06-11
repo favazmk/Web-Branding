@@ -307,6 +307,7 @@
             width: max-content;
             gap: 20px;
             padding-bottom: 20px;
+            --track-shift: -2520px;
             animation: scroll-marquee 45s linear infinite;
             will-change: transform;
         }
@@ -320,7 +321,7 @@
         }
         @keyframes scroll-marquee {
             0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-50%, 0, 0); }
+            100% { transform: translate3d(var(--track-shift), 0, 0); }
         }
         .project-slide {
             flex: 0 0 400px;
@@ -401,6 +402,7 @@
             .hero-title-campaign { font-size: 2.5rem; }
             .campaign-hero { padding: 40px 0; }
             .pricing-card { padding: 30px 20px; }
+            .projects-track { --track-shift: -1920px; }
         }
     </style>
 </head>
