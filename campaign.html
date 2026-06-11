@@ -307,14 +307,20 @@
             width: max-content;
             gap: 20px;
             padding-bottom: 20px;
-            animation: scroll-marquee 30s linear infinite;
+            animation: scroll-marquee 45s linear infinite;
+            will-change: transform;
+        }
+        .projects-track::after {
+            content: '';
+            width: 20px;
+            flex-shrink: 0;
         }
         .projects-track:hover {
             animation-play-state: paused;
         }
         @keyframes scroll-marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-50% - 10px)); }
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
         }
         .project-slide {
             flex: 0 0 400px;

@@ -247,6 +247,7 @@
             border-radius: 50%;
             filter: blur(80px);
             z-index: 0;
+            will-change: transform, opacity;
             animation: floatGlow 10s infinite alternate;
         }
 
@@ -438,15 +439,21 @@
             display: flex;
             width: max-content;
             gap: 20px;
-            animation: scroll-marquee 30s linear infinite;
+            animation: scroll-marquee 45s linear infinite;
             padding: 20px 0;
+            will-change: transform;
+        }
+        .projects-track::after {
+            content: '';
+            width: 20px;
+            flex-shrink: 0;
         }
         .projects-track:hover {
             animation-play-state: paused;
         }
         @keyframes scroll-marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-50% - 10px)); } /* -50% because track has 2 identical sets */
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
         }
 
         .project-slide {
