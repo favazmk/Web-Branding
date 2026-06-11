@@ -250,14 +250,12 @@
             justify-content: space-between;
             min-height: 180px;
             transition: var(--transition-smooth);
-            will-change: transform, filter;
-            filter: grayscale(100%) opacity(0.85);
+            will-change: transform;
         }
         .industry-card:hover {
             border-color: var(--primary);
             background: rgba(139, 61, 255, 0.05);
             transform: translateY(-8px);
-            filter: grayscale(0%) opacity(1);
         }
         .industry-title {
             font-family: 'Outfit', sans-serif;
@@ -296,15 +294,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.85;
             transition: var(--transition-smooth);
-            filter: grayscale(100%);
-            will-change: transform, filter;
+            will-change: transform;
         }
         .project-slide:hover .project-placeholder-img {
-            opacity: 1;
             transform: scale(1.05);
-            filter: grayscale(0%);
         }
 
         /* Footer CTA */
