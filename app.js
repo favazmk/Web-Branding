@@ -1496,6 +1496,10 @@ Looking forward to bringing this digital transformation to life!`;
                 });
                 isScrolling = true;
             }
+            // Hide bubble on scroll
+            if (bubble && bubble.classList.contains('show')) {
+                bubble.classList.remove('show');
+            }
         });
 
         window.addEventListener('resize', updateMascotPosition);
@@ -1504,6 +1508,13 @@ Looking forward to bringing this digital transformation to life!`;
         const bubble = document.createElement('div');
         bubble.className = 'mascot-bubble';
         mascotContainer.appendChild(bubble);
+        
+        // Hide bubble when clicking elsewhere
+        document.addEventListener('click', (e) => {
+            if (!mascotContainer.contains(e.target) && bubble.classList.contains('show')) {
+                bubble.classList.remove('show');
+            }
+        });
 
         let bubbleTimeout;
         mascotContainer.removeAttribute('onclick'); // Remove any HTML inline onclick

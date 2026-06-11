@@ -2466,7 +2466,7 @@ nav {
 
 @media (max-width: 768px) {
     .mascot-container {
-        transform: scale(0.65);
+        animation: mascot-float-mobile 3s ease-in-out infinite;
         transform-origin: bottom right;
     }
 }
@@ -2477,7 +2477,7 @@ nav {
     bottom: 110%;
     right: -10px;
     background: white;
-    color: var(--bg-dark);
+    color: #05010a;
     padding: 12px 18px;
     border-radius: 16px;
     border-bottom-right-radius: 4px;
@@ -2617,8 +2617,13 @@ nav {
 }
 
 @keyframes mascot-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+    0%, 100% { transform: scale(1) translateY(0); }
+    50% { transform: scale(1) translateY(-15px); }
+}
+
+@keyframes mascot-float-mobile {
+    0%, 100% { transform: scale(0.65) translateY(0); }
+    50% { transform: scale(0.65) translateY(-23px); }
 }
 
 @keyframes mascot-shadow {
