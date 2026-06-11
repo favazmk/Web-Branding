@@ -2421,3 +2421,137 @@ nav {
         display: none !important;
     }
 }
+
+/* --- Interactive Mascot --- */
+.mascot-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    cursor: pointer;
+    animation: mascot-float 3s ease-in-out infinite;
+}
+
+.mascot {
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mascot-container:hover .mascot {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+.mascot-container:active .mascot {
+    transform: scale(0.9) translateY(10px);
+}
+
+.mascot-head {
+    width: 100px;
+    height: 80px;
+    background: linear-gradient(145deg, #b066ff, #8b3dff);
+    border-radius: 35px;
+    box-shadow: -5px 5px 15px rgba(0,0,0,0.3), inset 5px 5px 10px rgba(255,255,255,0.4), inset -5px -5px 15px rgba(0,0,0,0.2);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.mascot-screen {
+    width: 75px;
+    height: 50px;
+    background: linear-gradient(145deg, #2a2a35, #15151a);
+    border-radius: 20px;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.8), 0 2px 4px rgba(255,255,255,0.2);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+}
+
+.mascot-screen::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 100px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(-15deg);
+    border-radius: 50%;
+}
+
+.mascot-eye {
+    width: 16px;
+    height: 18px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 10px #fff, 0 0 20px #b066ff;
+    animation: mascot-blink 4s infinite;
+    transition: transform 0.2s;
+}
+
+.mascot-container:hover .mascot-eye {
+    transform: scaleY(1.2) scaleX(1.1);
+    background: #ffbbf1;
+    box-shadow: 0 0 10px #ffbbf1, 0 0 20px #ff66d9;
+}
+
+.mascot-body {
+    width: 45px;
+    height: 40px;
+    background: linear-gradient(145deg, #9b4dff, #7a2be0);
+    border-radius: 0 0 20px 20px;
+    margin: -15px auto 0;
+    position: relative;
+    z-index: 1;
+    box-shadow: inset -3px -3px 8px rgba(0,0,0,0.3), 0 5px 10px rgba(0,0,0,0.3);
+}
+
+.mascot-arm {
+    width: 15px;
+    height: 25px;
+    background: #8b3dff;
+    border-radius: 10px;
+    position: absolute;
+    top: 5px;
+    box-shadow: inset -2px -2px 5px rgba(0,0,0,0.2);
+}
+.mascot-arm.left { left: -8px; transform: rotate(20deg); }
+.mascot-arm.right { right: -8px; transform: rotate(-20deg); }
+
+.mascot-container:hover .mascot-arm.left {
+    animation: mascot-wave 0.5s infinite alternate;
+}
+
+.mascot-shadow {
+    width: 60px;
+    height: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 50%;
+    margin: 10px auto 0;
+    animation: mascot-shadow 3s ease-in-out infinite;
+}
+
+@keyframes mascot-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes mascot-shadow {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(0.8); opacity: 0.2; }
+}
+
+@keyframes mascot-blink {
+    0%, 94%, 98%, 100% { transform: scaleY(1); }
+    96% { transform: scaleY(0.1); }
+}
+
+@keyframes mascot-wave {
+    0% { transform: rotate(20deg) translateY(0); }
+    100% { transform: rotate(100deg) translateY(-5px); }
+}
