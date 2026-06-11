@@ -267,36 +267,88 @@
             margin-bottom: 15px;
         }
 
-        /* Projects Slider Placeholder */
-        .projects-slider {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            padding-bottom: 20px;
-            scroll-snap-type: x mandatory;
-        }
-        .project-slide {
-            flex: 0 0 400px;
-            aspect-ratio: 4/3;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            scroll-snap-align: start;
-            position: relative;
+        /* Projects Marquee & Instagram Hover Effect */
+        .projects-marquee {
             overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            width: 100vw;
+            left: 50%;
+            transform: translateX(-50%);
         }
-        .project-placeholder-img {
+        .projects-track {
+            display: inline-flex;
+            gap: 20px;
+            animation: scroll-marquee 30s linear infinite;
+            padding: 20px 0;
+        }
+        .projects-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes scroll-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-50% - 10px)); } /* -50% because track has 2 identical sets */
+        }
+
+        .project-slide {
+            flex: 0 0 auto;
+            width: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            display: block;
+        }
+
+        .ig-project-card {
+            height: 400px;
+            width: 320px;
+        }
+
+        .ig-img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition-smooth);
-            will-change: transform;
+            height: auto;
+            display: block;
+            transition: transform 3s ease-in-out;
         }
-        .project-slide:hover .project-placeholder-img {
-            transform: scale(1.05);
+
+        .ig-project-card:hover .ig-img {
+            transform: translateY(calc(-100% + 400px));
+        }
+        
+        .project-overlay-custom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 20px 20px;
+            background: linear-gradient(to top, rgba(5,1,10,0.9) 0%, rgba(5,1,10,0) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: var(--transition-smooth);
+            pointer-events: none;
+        }
+        .ig-project-card:hover .project-overlay-custom {
+            opacity: 0;
+        }
+        .project-cat {
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .project-title {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
         }
 
         /* Footer CTA */
@@ -625,16 +677,124 @@
                     <h2 class="section-title">Our Projects</h2>
                 </div>
                 
-                <div class="projects-slider">
-                    <a href="https://www.instagram.com/kenz__trading?igsh=MWh2NjFkZG04dnRpMQ==" target="_blank" class="project-slide" style="display: block;">
-                        <img src="ig-1.jpg" alt="Kenz Trading" class="project-placeholder-img">
-                    </a>
-                    <a href="https://voguevenue.ae" target="_blank" class="project-slide" style="display: block;">
-                        <img src="portfolio-2.jpg" alt="Project 2" class="project-placeholder-img">
-                    </a>
-                    <a href="https://finefeichidxb.com" target="_blank" class="project-slide" style="display: block;">
-                        <img src="portfolio-3.jpg" alt="Project 3" class="project-placeholder-img">
-                    </a>
+                <div class="projects-marquee">
+                    <div class="projects-track">
+                        <!-- Set 1 -->
+                        <a href="https://www.instagram.com/kenz__trading?igsh=MWh2NjFkZG04dnRpMQ==" target="_blank" class="project-slide ig-project-card">
+                            <img src="kenz.jpg" alt="Kenz Trading" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Trading</span>
+                                <h3 class="project-title">Kenz Trading</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/theleatherdoctorabudhabi?igsh=aHJyOGN2cDMyOTJt" target="_blank" class="project-slide ig-project-card">
+                            <img src="leather.jpg" alt="The Leather Doctor" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Services</span>
+                                <h3 class="project-title">The Leather Doctor</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/shadesbespoketailors?igsh=dDN2NHhoamxzNTR3" target="_blank" class="project-slide ig-project-card">
+                            <img src="shades.jpg" alt="Shades Bespoke Tailors" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Fashion</span>
+                                <h3 class="project-title">Shades Tailors</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/800grills_?igsh=b3Q0aGx0bWd0dHBj" target="_blank" class="project-slide ig-project-card">
+                            <img src="grills.jpg" alt="800 Grills" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">F&B</span>
+                                <h3 class="project-title">800 Grills</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/indusjewellers?igsh=cDM4NG5zbzUyOWNk" target="_blank" class="project-slide ig-project-card">
+                            <img src="indus.jpg" alt="Indus Jewellers" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Jewellery</span>
+                                <h3 class="project-title">Indus Jewellers</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/magicmirrorbs?igsh=MXN4eDZ1YXhpdnAyYQ==" target="_blank" class="project-slide ig-project-card">
+                            <img src="magic.jpg" alt="Magic Mirror" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Beauty</span>
+                                <h3 class="project-title">Magic Mirror</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/alrashad_commercial?igsh=MThwZjZ3emQ1NHVx" target="_blank" class="project-slide ig-project-card">
+                            <img src="alrashad.jpg" alt="Al Rashad Commercial" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Corporate</span>
+                                <h3 class="project-title">Al Rashad</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/navratnajewellery_uae?igsh=MW84bGdpYXczM21kdQ==" target="_blank" class="project-slide ig-project-card">
+                            <img src="navratna.jpg" alt="Navratna Jewellery" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Jewellery</span>
+                                <h3 class="project-title">Navratna Jewellery</h3>
+                            </div>
+                        </a>
+
+                        <!-- Set 2 (Duplicate for infinite scroll) -->
+                        <a href="https://www.instagram.com/kenz__trading?igsh=MWh2NjFkZG04dnRpMQ==" target="_blank" class="project-slide ig-project-card">
+                            <img src="kenz.jpg" alt="Kenz Trading" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Trading</span>
+                                <h3 class="project-title">Kenz Trading</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/theleatherdoctorabudhabi?igsh=aHJyOGN2cDMyOTJt" target="_blank" class="project-slide ig-project-card">
+                            <img src="leather.jpg" alt="The Leather Doctor" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Services</span>
+                                <h3 class="project-title">The Leather Doctor</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/shadesbespoketailors?igsh=dDN2NHhoamxzNTR3" target="_blank" class="project-slide ig-project-card">
+                            <img src="shades.jpg" alt="Shades Bespoke Tailors" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Fashion</span>
+                                <h3 class="project-title">Shades Tailors</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/800grills_?igsh=b3Q0aGx0bWd0dHBj" target="_blank" class="project-slide ig-project-card">
+                            <img src="grills.jpg" alt="800 Grills" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">F&B</span>
+                                <h3 class="project-title">800 Grills</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/indusjewellers?igsh=cDM4NG5zbzUyOWNk" target="_blank" class="project-slide ig-project-card">
+                            <img src="indus.jpg" alt="Indus Jewellers" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Jewellery</span>
+                                <h3 class="project-title">Indus Jewellers</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/magicmirrorbs?igsh=MXN4eDZ1YXhpdnAyYQ==" target="_blank" class="project-slide ig-project-card">
+                            <img src="magic.jpg" alt="Magic Mirror" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Beauty</span>
+                                <h3 class="project-title">Magic Mirror</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/alrashad_commercial?igsh=MThwZjZ3emQ1NHVx" target="_blank" class="project-slide ig-project-card">
+                            <img src="alrashad.jpg" alt="Al Rashad Commercial" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Corporate</span>
+                                <h3 class="project-title">Al Rashad</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/navratnajewellery_uae?igsh=MW84bGdpYXczM21kdQ==" target="_blank" class="project-slide ig-project-card">
+                            <img src="navratna.jpg" alt="Navratna Jewellery" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Jewellery</span>
+                                <h3 class="project-title">Navratna Jewellery</h3>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
