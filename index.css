@@ -61,7 +61,14 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
-    background-color: var(--bg-dark);
+    background-color: #05010a; /* Deepest purple/black */
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(139, 61, 255, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(200, 0, 255, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 70% 10%, rgba(100, 0, 255, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 20% 90%, rgba(255, 0, 128, 0.15) 0%, transparent 50%);
+    background-attachment: fixed;
+    background-size: cover;
     color: var(--text-white);
     overflow-x: hidden;
 }
@@ -215,13 +222,15 @@ img {
 
 /* --- Glassmorphic Premium Card Token --- */
 .glass-card {
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px) saturate(200%);
+    -webkit-backdrop-filter: blur(20px) saturate(200%);
     border-radius: var(--radius-lg);
     padding: 40px;
-    box-shadow: var(--shadow-premium);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255,255,255,0.02);
     transition: var(--transition-smooth);
 }
 
