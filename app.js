@@ -1430,6 +1430,7 @@ Looking forward to bringing this digital transformation to life!`;
         mascotContainer.style.right = 'auto';
         mascotContainer.style.transition = 'top 0.8s cubic-bezier(0.25, 1, 0.5, 1), left 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
 
+        let currentClosestTarget = null;
         const updateMascotPosition = () => {
             // Default bottom-right corner
             const defaultX = window.innerWidth - 120;
@@ -1462,6 +1463,12 @@ Looking forward to bringing this digital transformation to life!`;
                 let targetX = rect.right - 80; 
                 let targetY = rect.top - 90; 
                 
+                // On mobile, center the mascot above the card
+                if (window.innerWidth < 768) {
+                    targetX = rect.left + (rect.width / 2) - 45; // Center horizontally
+                    targetY = rect.top - 70; // Slightly closer vertically due to scale down
+                }
+                
                 // Keep within screen bounds
                 targetX = Math.max(20, Math.min(targetX, window.innerWidth - 120));
                 targetY = Math.max(20, Math.min(targetY, window.innerHeight - 150));
@@ -1473,6 +1480,7 @@ Looking forward to bringing this digital transformation to life!`;
                 mascotContainer.style.left = `${defaultX}px`;
                 mascotContainer.style.top = `${defaultY}px`;
             }
+            currentClosestTarget = closestTarget;
         };
 
         // Initial setup
@@ -1491,6 +1499,41 @@ Looking forward to bringing this digital transformation to life!`;
         });
 
         window.addEventListener('resize', updateMascotPosition);
+
+        // Add speech bubble
+        const bubble = document.createElement('div');
+        bubble.className = 'mascot-bubble';
+        mascotContainer.appendChild(bubble);
+
+        let bubbleTimeout;
+        mascotContainer.removeAttribute('onclick'); // Remove any HTML inline onclick
+        
+        mascotContainer.addEventListener('click', () => {
+            clearTimeout(bubbleTimeout);
+            let pitch = "Hello! I'm here to help you build something amazing. Click Book Now to chat!";
+            
+            if (currentClosestTarget) {
+                const text = currentClosestTarget.innerText.toLowerCase();
+                const className = currentClosestTarget.className.toLowerCase();
+                
+                if (text.includes('marketing') || text.includes('seo') || className.includes('service')) {
+                    pitch = "Want to 10x your traffic? Let's talk about our Digital Marketing strategies!";
+                } else if (text.includes('fashion') || text.includes('commerce') || text.includes('store')) {
+                    pitch = "Ready to sell online? I can set up a high-converting E-Commerce store for you!";
+                } else if (className.includes('portfolio') || text.includes('real estate') || text.includes('portal')) {
+                    pitch = "Need a premium platform? Our custom web apps are lightning fast and secure!";
+                } else if (className.includes('industry')) {
+                    pitch = `Love what you see? We can build a complete solution for just AED 2999!`;
+                }
+            }
+            
+            bubble.innerText = pitch;
+            bubble.classList.add('show');
+            
+            bubbleTimeout = setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 5000);
+        });
     };
     initMascot();
 });
