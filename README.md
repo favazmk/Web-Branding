@@ -1,40 +1,66 @@
-# Web Branding
+# The Web Branding
 
-A premium, state-of-the-art web branding platform designed with high-end modern aesthetics, dynamic user experience, and robust architecture.
+A premium, state-of-the-art web branding platform designed with high-end modern aesthetics, dynamic user experiences, and a robust hybrid React/Vite architecture.
 
 ---
 
-## 🚀 Key Features
+## 🔗 Live Link
+*Currently running locally at:* [http://localhost:5173/](http://localhost:5173/) *(Staging/Production URL coming soon)*
 
-* **Vibrant Visual Identity:** Seamlessly curated color palettes, elegant glassmorphism effects, and premium typography.
-* **Responsive Layout:** Designed to scale beautifully across mobile, tablet, and desktop environments.
-* **Micro-Animations:** Fluid, interactive transitions to captivate user attention.
+---
+
+## 📸 Screenshots / Demos
+*(Pending user-provided screenshots — please upload them to `/public/` or `/assets/` and we will link them here)*
+
+---
+
+## 📝 Project Description
+The Web Branding is a highly premium digital presence platform representing a web branding agency. It includes high-performance service portfolios, interactive custom estimate tools, and a dynamic Team section featuring realistic 3D ID badges that swing, rotate, and respond to mouse drag gestures. 
+
+This project transitions seamlessly between vanilla static pages (for raw speed) and a WebGL-based React environment (for advanced interactive features), ensuring top-tier search engine optimization (SEO) and user engagement.
+
+---
+
+## 🛠️ Tech Stack
+*   **Core:** HTML5, CSS3 (Vanilla), JavaScript (ES6+)
+*   **Frameworks & Bundlers:** React 18, React DOM, Vite 5
+*   **3D Graphics & Physics:** Three.js, `@react-three/fiber` (R3F), `@react-three/drei`, `@react-three/rapier` (3D Physics engine), `meshline` (ribbon geometry)
+*   **Aesthetics:** Glassmorphism, CSS Custom Properties (Theming), Custom SVG Micro-Animations
+
+---
+
+## ✨ Key Features
+*   **Interactive 3D Physics Lanyards:** Drag, swing, and toss realistic 3D employee ID badges with physics-calculated drag inertia and natural rope joints.
+*   **Dynamic Badge Generation:** Employee details, avatars, roles, barcodes, and QR codes are drawn dynamically onto the 3D model's texture atlas at runtime.
+*   **Glassmorphic Design Language:** Premium obsidian themes, glowing background ambient orbs, and clean cards.
+*   **Zero-Delay Mobile Menus:** Custom cascading dropdown menus optimized to expand and contract with native easing curves.
+*   **Unified Estimation Engine:** Integrated interactive cost slider and project scope calculator.
+*   **Work In Progress Gateways:** Custom placeholder pages matching the exact aesthetics and canvas background animation of the main site.
+
+---
+
+## 🚀 Local Setup & Run Instructions
+
+Ensure you have [Node.js](https://nodejs.org/) installed, then run the following commands:
+
+```bash
+# Clone the repository and navigate to the project directory
+cd "Web Branding"
+
+# Install all standard and WebGL dependencies
+npm install --legacy-peer-deps
+
+# Start the Vite local development server
+npm run dev
+
+# Compile and minify the application for production build
+npm run build
+```
 
 ---
 
 ## 🔒 Security Policy
-
 This project enforces strict security safeguards to prevent credential leakage.
-
-> [!IMPORTANT]
-> **Environment Variables Safety Guideline**
-> * **Never** commit `.env` or `.env.*` files containing secret keys, tokens, or API credentials.
-> * A pre-configured `.gitignore` handles standard secret file exclusions automatically.
-> * Always check `git status` or run verification checks before pushing changes.
-
----
-
-## 🛠️ Development & Git Guidelines
-
-We maintain a clean and trackable commit history using industry standard conventions.
-
-### Branch Naming Convention
-* **Features:** `feat/feature-name` (e.g. `feat/palette-generator`)
-* **Bug Fixes:** `fix/issue-description` (e.g. `fix/navigation-spacing`)
-
-### Commit Messages (Conventional Commits)
-Format: `<type>(<scope>): <description>`
-* `feat`: A new feature (e.g. `feat(ui): add glassmorphism hero banner`)
-* `fix`: A bug fix (e.g. `fix(colors): resolve high-contrast text accessibility`)
-* `docs`: Documentation updates (e.g. `docs(readme): add security guidelines`)
-* `chore`: Maintenance tasks (e.g. `chore(git): initialize repository and gitignore`)
+*   **Never** commit `.env` or `.env.*` files containing secret keys, tokens, or API credentials.
+*   A pre-configured `.gitignore` handles standard secret file exclusions automatically.
+*   Always check `git status` or run verification checks before pushing changes.

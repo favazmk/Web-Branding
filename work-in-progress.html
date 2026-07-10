@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work In Progress | The Web Branding</title>
+    
+    <!-- Meta Tags for Elite SEO -->
+    <meta name="description" content="This page is a work in progress. We are building a premium, bespoke digital experience for this service.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Styling System -->
+    <link rel="stylesheet" href="index.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    <style>
+        /* Custom layout adjustments for WIP page */
+        .wip-hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+            padding-bottom: 60px;
+        }
+        
+        .wip-card {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            padding: 60px 45px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            border-color: rgba(139, 61, 255, 0.25);
+            box-shadow: 0 24px 80px rgba(139, 61, 255, 0.15);
+            animation: wipFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .wip-icon-box {
+            width: 80px;
+            height: 80px;
+            background: rgba(139, 61, 255, 0.1);
+            border: 1.5px solid rgba(139, 61, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            margin: 0 auto 30px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(139, 61, 255, 0.2);
+        }
+        
+        .wip-icon-box svg {
+            animation: wipSpin 4s linear infinite;
+        }
+        
+        .wip-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        
+        .wip-desc {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+        
+        .wip-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        @keyframes wipSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes wipFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .wip-card {
+                padding: 40px 24px;
+            }
+            .wip-actions a {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Pill Mobile Header (Custom) -->
+    <header id="ag-custom-header" class="ag-pill-header">
+        <div class="ag-pill-main">
+            <div class="ag-pill-content">
+                <a href="index.html#home" aria-label="The Web Branding Home" style="display: flex; align-items: center;">
+                    <img src="logo.png" alt="The Web Branding Logo" class="nav-logo-img">
+                </a>
+                <button id="ag-mobile-btn" class="ag-pill-btn" aria-label="Toggle mobile menu">
+                    <svg id="ag-icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ag-menu-icon"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    <svg id="ag-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ag-close-icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+        <div class="ag-dropdown-wrapper">
+            <div id="ag-mobile-menu" class="ag-dropdown-menu">
+                <div class="ag-dropdown-content">
+                    <a href="work-in-progress.html" class="ag-menu-item">Digital Marketing</a>
+                    <a href="work-in-progress.html" class="ag-menu-item">Website Development</a>
+                    <a href="work-in-progress.html" class="ag-menu-item">Video Production</a>
+                    <a href="work-in-progress.html" class="ag-menu-item">Branding and Designing</a>
+                    <a href="index.html#estimator" class="ag-menu-item btn btn-primary" style="margin-top: 10px; width: 80%; text-align: center; border-radius: 9999px;">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Header & Navigation -->
+    <header id="main-header">
+        <div class="container">
+            <nav>
+                <a href="index.html#home" class="logo" aria-label="The Web Branding Home">
+                    <img src="logo.png" alt="The Web Branding Logo" class="nav-logo-img">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="work-in-progress.html" class="nav-link">Digital Marketing</a></li>
+                    <li><a href="work-in-progress.html" class="nav-link">Website Development</a></li>
+                    <li><a href="work-in-progress.html" class="nav-link">Video Production</a></li>
+                    <li><a href="work-in-progress.html" class="nav-link">Branding and Designing</a></li>
+                    <li class="mobile-only-cta" style="margin-top: 10px; width: 100%;"><a href="index.html#estimator" class="btn btn-primary" style="width: 100%; display: inline-flex; justify-content: center; text-align: center;">Get Started</a></li>
+                </ul>
+                <a href="index.html#estimator" class="btn btn-primary" aria-label="Start Your Project">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main>
+        
+        <!-- Glowing Ambient Background Drops -->
+        <div class="glow-wrapper">
+            <div class="glow-orb orb-primary"></div>
+            <div class="glow-orb orb-secondary" style="bottom: 10%; right: 10%;"></div>
+        </div>
+
+        <!-- WIP Section -->
+        <section class="wip-hero" id="home">
+            <canvas id="shapegrid-canvas" class="shapegrid-canvas"></canvas>
+            
+            <div class="container">
+                <div class="wip-card glass-card">
+                    <div class="wip-icon-box">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                        </svg>
+                    </div>
+                    
+                    <h1 class="wip-title">
+                        Work In<br>
+                        <span class="gradient-text">Progress</span>
+                    </h1>
+                    
+                    <p class="wip-desc">
+                        Our strategists and developers are busy crafting a premium, bespoke digital experience for this service. We are committed to launching it soon with high-end capabilities.
+                    </p>
+                    
+                    <div class="wip-actions">
+                        <a href="index.html" class="btn btn-secondary">
+                            <span>Back to Homepage</span>
+                        </a>
+                        <a href="https://wa.me/971544387023?text=Hi%20The%20Web%20Branding%2C%20I'd%20like%20to%20know%20more%20about%20your%20services!" class="btn btn-whatsapp" target="_blank">
+                            <span>Inquire via WhatsApp</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer-main">
+        <div class="container">
+            <div class="footer-bottom" style="border-top: none; padding-top: 0; margin-top: 0; text-align: center;">
+                <p class="copyright">&copy; <span id="current-year">2026</span> The Web Branding. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="/app.js"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
