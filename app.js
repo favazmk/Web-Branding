@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('main-header');
     
     const handleScroll = () => {
+        if (!header) return;
         if (window.scrollY > 50) {
             header.classList.add('scrolled');
         } else {
@@ -15,8 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Run initially in case of refresh
+    if (header) {
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Run initially in case of refresh
+    }
 
     // --- 2. Scroll Reveal Animations (Intersection Observer) ---
     const animatedElements = document.querySelectorAll('.fade-in-up, .reveal-3d-fold, .reveal-3d-flip-left, .reveal-3d-flip-right, .reveal-3d-pop, .reveal-3d-roll');
