@@ -8,6 +8,6 @@ function removeMascotClick(file) {
 }
 
 removeMascotClick('index.html');
-removeMascotClick('campaign.html');
+removeMascotClick('web-development-services.html');
 removeMascotClick('digital-marketing.html');
 console.log('Removed inline mascot onclick');

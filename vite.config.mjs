@@ -9,7 +9,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        campaign: resolve(__dirname, 'campaign.html'),
+        'web-development-services': resolve(__dirname, 'web-development-services.html'),
         marketing: resolve(__dirname, 'digital-marketing.html'),
         wip: resolve(__dirname, 'work-in-progress.html'),
       },
