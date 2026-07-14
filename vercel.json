@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/campaign.html",
+      "destination": "/web-development-services.html",
+      "permanent": true
+    },
+    {
+      "source": "/campaign",
+      "destination": "/web-development-services.html",
+      "permanent": true
+    }
+  ]
+}

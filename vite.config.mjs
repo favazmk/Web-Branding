@@ -12,6 +12,7 @@ export default defineConfig({
         'web-development-services': resolve(__dirname, 'web-development-services.html'),
         marketing: resolve(__dirname, 'digital-marketing.html'),
         wip: resolve(__dirname, 'work-in-progress.html'),
+        campaign: resolve(__dirname, 'campaign.html'),
       },
     },
   },
