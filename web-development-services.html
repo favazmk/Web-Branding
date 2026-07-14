@@ -704,141 +704,69 @@
         @media (max-width: 768px) {
             .benefits-grid { grid-template-columns: 1fr; }
         }
+        
+        .highlight-badge {
+            background: #e11d48;
+            color: #fff;
+            padding: 4px 16px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(225, 29, 72, 0.6);
+            display: inline-block;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Floating Pill Mobile Header (Custom) -->
-    <header id="ag-custom-header" class="ag-pill-header">
-        
-        <!-- Main Pill -->
-        <div class="ag-pill-main">
-            <div class="ag-pill-content">
-                <!-- Logo Here -->
-                <a href="index.html#home" aria-label="The Web Branding Home" style="display: flex; align-items: center;">
-                    <img src="logo.png" alt="The Web Branding Logo" class="nav-logo-img">
-                </a>
-
-                <!-- Hamburger Button -->
-                <button id="ag-mobile-btn" class="ag-pill-btn" aria-label="Toggle mobile menu">
-                    <svg id="ag-icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ag-menu-icon"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                    <svg id="ag-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ag-close-icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Hidden Dropdown Container (Behind the pill) -->
-        <div class="ag-dropdown-wrapper">
-            <div id="ag-mobile-menu" class="ag-dropdown-menu">
-                <div class="ag-dropdown-content">
-                    <a href="digital-marketing.html" class="ag-menu-item">Digital Marketing</a>
-                    <a href="web-development-services.html" class="ag-menu-item">Website Development</a>
-                    <a href="work-in-progress.html" class="ag-menu-item">Video Production</a>
-                    <a href="work-in-progress.html" class="ag-menu-item">Branding and Designing</a>
-                    <a href="https://wa.me/971544387023" class="ag-menu-item btn btn-primary" style="margin-top: 10px; width: 80%; text-align: center; border-radius: 9999px;">Call Now</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Header & Navigation -->
-    <header id="main-header">
-        <div class="container">
-            <nav>
-                <a href="index.html#home" class="logo" aria-label="The Web Branding Home">
-                    <img src="logo.png" alt="The Web Branding Logo" class="nav-logo-img">
-                </a>
-                
-                <ul class="nav-links">
-                    <li><a href="digital-marketing.html" class="nav-link">Digital Marketing</a></li>
-                    <li><a href="web-development-services.html" class="nav-link">Website Development</a></li>
-                    <li><a href="work-in-progress.html" class="nav-link">Video Production</a></li>
-                    <li><a href="work-in-progress.html" class="nav-link">Branding and Designing</a></li>
-                </ul>
-                
-                <a href="https://wa.me/971544387023" class="btn btn-primary" aria-label="Start Your Project">Call Now</a>
-            </nav>
+    <!-- Redesigned Minimal Header (No Navigation for traffic tracking) -->
+    <header style="padding: 20px 0; background: transparent; position: absolute; top: 0; left: 0; width: 100%; z-index: 1000;">
+        <div class="container" style="display: flex; justify-content: center; align-items: center;">
+            <img src="logo.png" alt="The Web Branding Logo" style="height: 50px;">
         </div>
     </header>
 
     <main style="padding-top: 80px;">
         
-        <!-- Section 1: Hero with Form -->
-        <section class="campaign-hero" id="home">
+        <!-- Section 1: Hero -->
+        <section class="campaign-hero" id="home" style="padding-top: 140px; padding-bottom: 80px; text-align: center;">
             <!-- Glowing Orbs -->
             <div class="glow-wrapper" style="opacity: 0.5;">
-                <div class="glow-orb orb-primary" style="top: -20%; left: -10%;"></div>
-                <div class="glow-orb orb-secondary" style="bottom: -20%; right: -10%;"></div>
+                <div class="glow-orb orb-primary" style="top: -20%; left: 50%; transform: translateX(-50%);"></div>
             </div>
 
-            <div class="container">
-                <div class="hero-grid">
+            <div class="container" style="max-width: 800px; margin: 0 auto;">
+                <div class="hero-left-content fade-in-up" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div class="hero-pill" style="margin-bottom: 20px;">Special OFFERS</div>
                     
-                    <div class="hero-left-content fade-in-up">
-                        <div class="hero-pill">Special OFFERS</div>
-                        
-                        <!-- Heading from Wireframe -->
-                        <h1 class="hero-title-campaign" style="line-height: 1.2; text-transform: none;">
-                            Launch your Business website in 15 days
-                        </h1>
-                        
-                        <!-- Details from the 1st version -->
-                        <p class="hero-subtitle-campaign" style="margin-top: 20px;">
-                            Build trust from day one with a professional website featuring WhatsApp, lead forms, analytics, social media setup, and free hosting & domain for 1 year.
-                        </p>
-                        
-                        <div class="hero-features">
-                            <div class="hero-feature">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                Location - Dubai
-                            </div>
-                            <div class="hero-feature">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                24/7 Support
-                            </div>
-                            <div class="hero-feature">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                                Fast Delivery
-                            </div>
+                    <!-- Heading with 15 Days Highlighted -->
+                    <h1 class="hero-title-campaign" style="line-height: 1.3; text-transform: none; font-size: clamp(2.5rem, 6vw, 4rem); font-family: 'Outfit', sans-serif;">
+                        Launch your Business website <span class="highlight-badge">in 15 days</span>
+                    </h1>
+                    
+                    <!-- Details -->
+                    <p class="hero-subtitle-campaign" style="margin-top: 20px; max-width: 650px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                        Build trust from day one with a professional website featuring WhatsApp, lead forms, analytics, social media setup, and free hosting & domain for 1 year.
+                    </p>
+                    
+                    <div class="hero-features" style="justify-content: center; margin-top: 10px;">
+                        <div class="hero-feature">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Location - Dubai
                         </div>
-
-                        <div style="display: flex; gap: 10px; margin-top: 30px; flex-wrap: wrap;">
-                            <a href="#campaign-lead-form" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Get consultation Today</a>
-                            <a href="https://wa.me/971544387023?text=I%20want%20to%20chat%20about%20launching%20a%20business%20website" target="_blank" class="btn btn-whatsapp">WhatsApp</a>
-                            <a href="https://wa.me/971544387023?text=I'd%20like%20to%20talk%20to%20a%20web%20design%20expert" target="_blank" class="btn btn-secondary">Talk to expert</a>
+                        <div class="hero-feature">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            24/7 Support
+                        </div>
+                        <div class="hero-feature">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            Fast Delivery
                         </div>
                     </div>
 
-                    <div class="hero-right-content fade-in-up delay-100">
-
-                        
-                        <!-- Form from the 1st version -->
-                        <div class="lead-form-card">
-                            <h3>Get a Free Quote</h3>
-                            <form id="campaign-lead-form">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="name" placeholder="Name" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="email" placeholder="Email / Website">
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" name="service" required>
-                                        <option value="" disabled selected>Select Service</option>
-                                        <option value="Landing Page">Landing Page</option>
-                                        <option value="Corporate Website">Corporate Website</option>
-                                        <option value="E-Commerce">E-Commerce</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" name="message" placeholder="Message" rows="3"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Request</button>
-                            </form>
-                        </div>
+                    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 30px; flex-wrap: wrap;">
+                        <a href="https://wa.me/971544387023?text=Hi,%20I'm%20interested%20in%20launching%20our%20website%20in%2015%20days." target="_blank" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Get Consultation Today</a>
+                        <a href="https://wa.me/971544387023?text=I%20want%20to%20chat%20about%20launching%20a%20business%20website" target="_blank" class="btn btn-whatsapp">WhatsApp</a>
+                        <a href="tel:+971544387023" class="btn btn-secondary">Talk to expert</a>
                     </div>
                 </div>
             </div>
@@ -847,23 +775,31 @@
         <!-- Section 2: Trusted Brands -->
         <section class="brands-marquee">
             <div class="container" style="text-align: center; margin-bottom: 20px;">
-                <span class="section-tag" style="margin: 0 auto; justify-content: center;">Trusted by Top Brands in UAE & Across the World</span>
+                <span class="section-tag" style="margin: 0 auto; justify-content: center; text-align: center; line-height: 1.6; display: inline-block;">Trusted by Top Brands in UAE<br>& Across the World</span>
             </div>
             <div style="width: 100%; overflow: hidden; position: relative;">
                 <!-- Duplicated for seamless scrolling -->
                 <div class="marquee-content">
-                    <span>LOGO 1</span><span>&bull;</span>
-                    <span>LOGO 2</span><span>&bull;</span>
-                    <span>LOGO 3</span><span>&bull;</span>
-                    <span>LOGO 4</span><span>&bull;</span>
-                    <span>LOGO 5</span><span>&bull;</span>
-                    <span>LOGO 6</span><span>&bull;</span>
-                    <span>LOGO 1</span><span>&bull;</span>
-                    <span>LOGO 2</span><span>&bull;</span>
-                    <span>LOGO 3</span><span>&bull;</span>
-                    <span>LOGO 4</span><span>&bull;</span>
-                    <span>LOGO 5</span><span>&bull;</span>
-                    <span>LOGO 6</span>
+                    <span>EMAAR</span><span>&bull;</span>
+                    <span>DAMAC</span><span>&bull;</span>
+                    <span>SOBHA DEVELOPERS</span><span>&bull;</span>
+                    <span>AL HABTOOR</span><span>&bull;</span>
+                    <span>DUBAI HOLDING</span><span>&bull;</span>
+                    <span>DANUBE PROPERTIES</span><span>&bull;</span>
+                    <span>NAKHEEL</span><span>&bull;</span>
+                    <span>AZIZI DEVELOPMENTS</span><span>&bull;</span>
+                    <span>DIFC</span><span>&bull;</span>
+                    <span>DEYAAR</span><span>&bull;</span>
+                    <span>EMAAR</span><span>&bull;</span>
+                    <span>DAMAC</span><span>&bull;</span>
+                    <span>SOBHA DEVELOPERS</span><span>&bull;</span>
+                    <span>AL HABTOOR</span><span>&bull;</span>
+                    <span>DUBAI HOLDING</span><span>&bull;</span>
+                    <span>DANUBE PROPERTIES</span><span>&bull;</span>
+                    <span>NAKHEEL</span><span>&bull;</span>
+                    <span>AZIZI DEVELOPMENTS</span><span>&bull;</span>
+                    <span>DIFC</span><span>&bull;</span>
+                    <span>DEYAAR</span>
                 </div>
             </div>
         </section>
@@ -982,49 +918,37 @@
                 <div class="industry-grid">
                     <div class="industry-card" style="--bg-image: url('mockup_hospitality.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Hospitality & Hotels<br>Retail & Fashion</h3>
-                        <div class="industry-price" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">AED 999</div>
-                        <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
                     <div class="industry-card" style="--bg-image: url('mockup_realestate.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Real Estate</h3>
-                        <div class="industry-price" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">AED 999</div>
-                        <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
                     <div class="industry-card" style="--bg-image: url('mockup_event.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Event Management</h3>
-                        <div class="industry-price" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">AED 999</div>
-                        <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
                     <div class="industry-card" style="--bg-image: url('mockup_education.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Education / Coaching</h3>
-                        <div class="industry-price" style="visibility: hidden;">-</div>
-                        <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
                     <div class="industry-card" style="--bg-image: url('mockup_medical.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Clinics / Hospitals</h3>
-                        <div class="industry-price" style="visibility: hidden;">-</div>
-                        <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
                     <div class="industry-card" style="--bg-image: url('mockup_repair.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">MEP / Repair</h3>
-                        <div class="industry-price" style="visibility: hidden;">-</div>
-                        <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
                     <div class="industry-card" style="--bg-image: url('mockup_logistics.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Logistics</h3>
-                        <div class="industry-price" style="visibility: hidden;">-</div>
-                        <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
                     <div class="industry-card" style="--bg-image: url('mockup_construction.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Construction / Interior Design</h3>
-                        <div class="industry-price" style="visibility: hidden;">-</div>
-                        <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
                     <div class="industry-card" style="--bg-image: url('mockup_supermarket.png');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Supermarket</h3>
-                        <div class="industry-price" style="visibility: hidden;">-</div>
-                        <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;">Book Now</a>
                     </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 45px;">
+                    <a href="https://wa.me/971544387023?text=I%20want%20to%20get%20a%20free%20consultation%20for%20our%20business%20website." target="_blank" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; color: #fff; padding: 14px 40px; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 10px;">
+                        Book Now
+                    </a>
                 </div>
             </div>
         </section>
@@ -1138,9 +1062,50 @@
                     <p style="color: #c5c0d0; margin: 0; font-size: 1.1rem;">We build custom, high-converting online stores tailored to scale your brand.</p>
                 </div>
                 <div>
-                    <a href="#projects" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 10px;">
-                        See Our Works
+                    <a href="#ecommerce" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 10px;">
+                        See E-Commerce Tiers
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8b: E-Commerce Showcase -->
+        <section class="section-padding" id="ecommerce">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 40px; position: relative;">
+                    <!-- Small Mascot Decor SVG -->
+                    <div style="display: inline-block; margin-bottom: 15px;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8B3DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    </div>
+                    <h2 class="section-title">E Commerce</h2>
+                </div>
+                
+                <div class="industry-grid">
+                    <div class="industry-card" style="--bg-image: url('mockup_fashion.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Fashion & Apparels</h3>
+                        <div class="industry-price" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); font-size: 1.1rem; margin-top: 5px; font-weight: bold; background: rgba(139, 61, 255, 0.2); padding: 2px 8px; border-radius: 4px; display: inline-block;">AED 2999</div>
+                        <a href="https://wa.me/971544387023?text=I'm%20interested%20in%20an%20E-commerce%20Fashion%20Store." target="_blank" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none; margin-top: 15px;">Book Now</a>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_jewellery.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Jewellery store</h3>
+                        <a href="https://wa.me/971544387023?text=I'm%20interested%20in%20an%20E-commerce%20Jewellery%20Store." target="_blank" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none; margin-top: 15px;">Book Now</a>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_beauty.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Beauty & Cosmetics</h3>
+                        <a href="https://wa.me/971544387023?text=I'm%20interested%20in%20an%20E-commerce%20Beauty%20Store." target="_blank" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none; margin-top: 15px;">Book Now</a>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_electronics.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Electronics & Gadgets</h3>
+                        <a href="https://wa.me/971544387023?text=I'm%20interested%20in%20an%20E-commerce%20Electronics%20Store." target="_blank" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none; margin-top: 15px;">Book Now</a>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_abaya.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Abaya</h3>
+                        <a href="https://wa.me/971544387023?text=I'm%20interested%20in%20an%20E-commerce%20Abaya%20Store." target="_blank" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none; margin-top: 15px;">Book Now</a>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_perfume.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Perfume</h3>
+                        <a href="https://wa.me/971544387023?text=I'm%20interested%20in%20an%20E-commerce%20Perfume%20Store." target="_blank" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none; margin-top: 15px;">Book Now</a>
+                    </div>
                 </div>
             </div>
         </section>
