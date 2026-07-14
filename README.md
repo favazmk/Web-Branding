@@ -5,7 +5,8 @@ A premium, state-of-the-art web branding platform designed with high-end modern 
 ---
 
 ## 🔗 Live Link
-*Currently running locally at:* [http://localhost:5173/](http://localhost:5173/) *(Staging/Production URL coming soon)*
+*Live site running at:* [https://web-branding-three.vercel.app/](https://web-branding-three.vercel.app/)
+*(Local dev server URL: http://localhost:5173/)*
 
 ---
 
