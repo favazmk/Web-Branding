@@ -556,14 +556,26 @@
 </head>
 <body>
 
-    <!-- Redesigned Minimal Header (No Navigation for traffic tracking) -->
-    <header style="padding: 20px 0; background: transparent; position: absolute; top: 0; left: 0; width: 100%; z-index: 1000;">
-        <div class="container" style="display: flex; justify-content: center; align-items: center;">
-            <img src="logo.png" alt="The Web Branding Logo" style="height: 50px;">
+    <!-- Redesigned Minimal Header (Navigation restricted to current page anchors only) -->
+    <header id="main-header" style="position: sticky; top: 0; background: rgba(12, 5, 23, 0.85); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000; padding: 15px 0;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="#home" class="logo" style="display: flex; align-items: center;">
+                <img src="logo.png" alt="The Web Branding Logo" style="height: 40px;">
+            </a>
+            
+            <ul class="nav-links" style="display: flex; gap: 25px; list-style: none; margin: 0; padding: 0;">
+                <li><a href="#home" class="nav-link" style="color: #c5c0d0; text-decoration: none; font-size: 0.95rem; font-weight: 500;">Home</a></li>
+                <li><a href="#packages" class="nav-link" style="color: #c5c0d0; text-decoration: none; font-size: 0.95rem; font-weight: 500;">Packages</a></li>
+                <li><a href="#addons" class="nav-link" style="color: #c5c0d0; text-decoration: none; font-size: 0.95rem; font-weight: 500;">Addons</a></li>
+                <li><a href="#industries" class="nav-link" style="color: #c5c0d0; text-decoration: none; font-size: 0.95rem; font-weight: 500;">Industries</a></li>
+                <li><a href="#projects" class="nav-link" style="color: #c5c0d0; text-decoration: none; font-size: 0.95rem; font-weight: 500;">Our Works</a></li>
+            </ul>
+            
+            <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; color: #fff; padding: 8px 20px; font-size: 0.9rem;">Call Now</a>
         </div>
     </header>
 
-    <main style="padding-top: 80px;">
+    <main style="padding-top: 0;">
         
         <!-- Section 1: Hero with Form -->
         <section class="campaign-hero" id="home">
@@ -591,30 +603,30 @@
                     </div>
 
                     <div class="hero-right-content fade-in-up delay-100">
-
-                        
-                        <!-- Form from the wireframe -->
-                        <div class="lead-form-card">
-                            <h3>Get a Free Audit</h3>
+                        <!-- Form from the wireframe (Decreased Size) -->
+                        <div class="lead-form-card" style="padding: 20px; border-radius: 16px; background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08);">
+                            <h3 style="font-size: 1.3rem; margin-bottom: 15px; text-align: center; color: #fff; font-family: 'Outfit', sans-serif;">Get a Free Audit</h3>
                             <form id="marketing-lead-form">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="name" placeholder="Name" required>
+                                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                    <div style="flex: 1;">
+                                        <input type="text" class="form-control" name="name" placeholder="Name" required style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required>
+                                <div class="form-group" style="margin-bottom: 10px;">
+                                    <input type="text" class="form-control" name="email" placeholder="Email / Website" style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="email" placeholder="Email / Website">
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" name="service" required>
+                                <div class="form-group" style="margin-bottom: 15px;">
+                                    <select class="form-control" name="service" required style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
                                         <option value="" disabled selected>Select Service</option>
                                         <option value="Social Media Management">Social Media Management</option>
                                         <option value="Paid Ads (Meta/Google)">Paid Ads (Meta/Google)</option>
                                         <option value="SEO">SEO</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Request</button>
+                                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 0.95rem; background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Submit Request</button>
                             </form>
                         </div>
                     </div>

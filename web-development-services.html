@@ -718,55 +718,104 @@
 </head>
 <body>
 
-    <!-- Redesigned Minimal Header (No Navigation for traffic tracking) -->
-    <header style="padding: 20px 0; background: transparent; position: absolute; top: 0; left: 0; width: 100%; z-index: 1000;">
-        <div class="container" style="display: flex; justify-content: center; align-items: center;">
-            <img src="logo.png" alt="The Web Branding Logo" style="height: 50px;">
+    <!-- Redesigned Minimal Header (Navigation restricted to current page anchors only) -->
+    <header id="main-header" style="position: sticky; top: 0; background: rgba(12, 5, 23, 0.85); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000; padding: 15px 0;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="#home" class="logo" style="display: flex; align-items: center;">
+                <img src="logo.png" alt="The Web Branding Logo" style="height: 40px;">
+            </a>
+            
+            <ul class="nav-links" style="display: flex; gap: 25px; list-style: none; margin: 0; padding: 0;">
+                <li><a href="#home" class="nav-link" style="color: #c5c0d0; text-decoration: none; font-size: 0.95rem; font-weight: 500;">Home</a></li>
+                <li><a href="#packages" class="nav-link" style="color: #c5c0d0; text-decoration: none; font-size: 0.95rem; font-weight: 500;">Packages</a></li>
+                <li><a href="#compare" class="nav-link" style="color: #c5c0d0; text-decoration: none; font-size: 0.95rem; font-weight: 500;">Goals Matcher</a></li>
+                <li><a href="#ecommerce" class="nav-link" style="color: #c5c0d0; text-decoration: none; font-size: 0.95rem; font-weight: 500;">E-Commerce</a></li>
+                <li><a href="#industries" class="nav-link" style="color: #c5c0d0; text-decoration: none; font-size: 0.95rem; font-weight: 500;">Industries</a></li>
+                <li><a href="#process" class="nav-link" style="color: #c5c0d0; text-decoration: none; font-size: 0.95rem; font-weight: 500;">Process</a></li>
+            </ul>
+            
+            <a href="https://wa.me/971544387023" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; color: #fff; padding: 8px 20px; font-size: 0.9rem;">Call Now</a>
         </div>
     </header>
 
-    <main style="padding-top: 80px;">
+    <main style="padding-top: 0;">
         
         <!-- Section 1: Hero -->
-        <section class="campaign-hero" id="home" style="padding-top: 140px; padding-bottom: 80px; text-align: center;">
+        <section class="campaign-hero" id="home" style="padding-top: 80px; padding-bottom: 80px;">
             <!-- Glowing Orbs -->
             <div class="glow-wrapper" style="opacity: 0.5;">
-                <div class="glow-orb orb-primary" style="top: -20%; left: 50%; transform: translateX(-50%);"></div>
+                <div class="glow-orb orb-primary" style="top: -20%; left: -10%;"></div>
+                <div class="glow-orb orb-secondary" style="bottom: -20%; right: -10%;"></div>
             </div>
 
-            <div class="container" style="max-width: 800px; margin: 0 auto;">
-                <div class="hero-left-content fade-in-up" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <div class="hero-pill" style="margin-bottom: 20px;">Special OFFERS</div>
+            <div class="container">
+                <div class="hero-grid">
                     
-                    <!-- Heading with 15 Days Highlighted -->
-                    <h1 class="hero-title-campaign" style="line-height: 1.3; text-transform: none; font-size: clamp(2.5rem, 6vw, 4rem); font-family: 'Outfit', sans-serif;">
-                        Launch your Business website <span class="highlight-badge">in 15 days</span>
-                    </h1>
-                    
-                    <!-- Details -->
-                    <p class="hero-subtitle-campaign" style="margin-top: 20px; max-width: 650px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                        Build trust from day one with a professional website featuring WhatsApp, lead forms, analytics, social media setup, and free hosting & domain for 1 year.
-                    </p>
-                    
-                    <div class="hero-features" style="justify-content: center; margin-top: 10px;">
-                        <div class="hero-feature">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            Location - Dubai
+                    <div class="hero-left-content fade-in-up" style="text-align: left; display: flex; flex-direction: column; align-items: flex-start;">
+                        <div class="hero-pill" style="margin-bottom: 20px;">Special OFFERS</div>
+                        
+                        <!-- Heading with 15 Days Highlighted -->
+                        <h1 class="hero-title-campaign" style="line-height: 1.25; text-transform: none; font-size: clamp(2.2rem, 5vw, 3.8rem); font-family: 'Outfit', sans-serif; text-align: left; margin-bottom: 15px;">
+                            Launch your Business website <span class="highlight-badge">in 15 days</span>
+                        </h1>
+                        
+                        <!-- Details -->
+                        <p class="hero-subtitle-campaign" style="margin-top: 10px; max-width: 550px; text-align: left; line-height: 1.6; margin-bottom: 20px;">
+                            Build trust from day one with a professional website featuring WhatsApp, lead forms, analytics, social media setup, and free hosting & domain for 1 year.
+                        </p>
+                        
+                        <div class="hero-features" style="justify-content: flex-start; margin-top: 5px; margin-bottom: 25px;">
+                            <div class="hero-feature">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                Location - Dubai
+                            </div>
+                            <div class="hero-feature">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                24/7 Support
+                            </div>
+                            <div class="hero-feature">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                Fast Delivery
+                            </div>
                         </div>
-                        <div class="hero-feature">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            24/7 Support
-                        </div>
-                        <div class="hero-feature">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                            Fast Delivery
+
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="#campaign-lead-form" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Get Consultation Today</a>
+                            <a href="https://wa.me/971544387023?text=I%20want%20to%20chat%20about%20launching%20a%20business%20website" target="_blank" class="btn btn-whatsapp">WhatsApp</a>
+                            <a href="tel:+971544387023" class="btn btn-secondary">Talk to expert</a>
                         </div>
                     </div>
 
-                    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 30px; flex-wrap: wrap;">
-                        <a href="https://wa.me/971544387023?text=Hi,%20I'm%20interested%20in%20launching%20our%20website%20in%2015%20days." target="_blank" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Get Consultation Today</a>
-                        <a href="https://wa.me/971544387023?text=I%20want%20to%20chat%20about%20launching%20a%20business%20website" target="_blank" class="btn btn-whatsapp">WhatsApp</a>
-                        <a href="tel:+971544387023" class="btn btn-secondary">Talk to expert</a>
+                    <div class="hero-right-content fade-in-up delay-100">
+                        <!-- Form from the 1st version (Decreased Size) -->
+                        <div class="lead-form-card" style="padding: 20px; border-radius: 16px; background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08);">
+                            <h3 style="font-size: 1.3rem; margin-bottom: 15px; text-align: center; color: #fff; font-family: 'Outfit', sans-serif;">Get a Free Quote</h3>
+                            <form id="campaign-lead-form">
+                                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                    <div style="flex: 1;">
+                                        <input type="text" class="form-control" name="name" placeholder="Name" required style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 10px;">
+                                    <input type="text" class="form-control" name="email" placeholder="Email / Website" style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 10px;">
+                                    <select class="form-control" name="service" required style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
+                                        <option value="" disabled selected>Select Service</option>
+                                        <option value="Landing Page">Landing Page</option>
+                                        <option value="Corporate Website">Corporate Website</option>
+                                        <option value="E-Commerce">E-Commerce</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 15px;">
+                                    <textarea class="form-control" name="message" placeholder="Message" rows="2" style="padding: 10px 12px; font-size: 0.9rem; height: auto;"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 0.95rem; background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Submit Request</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
