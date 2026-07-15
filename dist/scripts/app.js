@@ -1513,12 +1513,33 @@ Looking forward to bringing this digital transformation to life!`;
         // Reset CSS for JS positioning
         mascotContainer.style.bottom = 'auto';
         mascotContainer.style.right = 'auto';
-        mascotContainer.style.transition = 'top 0.8s cubic-bezier(0.25, 1, 0.5, 1), left 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
 
         let currentClosestTarget = null;
         const updateMascotPosition = () => {
             const ceoBot = document.getElementById('ceo-sales-bot');
             const isCeoBotVisible = ceoBot && ceoBot.classList.contains('visible');
+            const heroSection = document.getElementById('home');
+            const heroTarget = document.querySelector('.mascot-hero-target');
+            
+            // Check if we are currently scrolled inside the hero section
+            let inHero = false;
+            if (heroSection) {
+                const rect = heroSection.getBoundingClientRect();
+                if (rect.bottom > 100) {
+                    inHero = true;
+                }
+            }
+
+            if (inHero && heroTarget) {
+                mascotContainer.classList.add('in-hero');
+                const targetRect = heroTarget.getBoundingClientRect();
+                mascotContainer.style.left = `${targetRect.left}px`;
+                mascotContainer.style.top = `${targetRect.top}px`;
+                currentClosestTarget = heroTarget;
+                return;
+            }
+
+            mascotContainer.classList.remove('in-hero');
 
             // Default bottom-right corner
             let defaultX = window.innerWidth - 120;
@@ -1589,6 +1610,56 @@ Looking forward to bringing this digital transformation to life!`;
             }
             currentClosestTarget = closestTarget;
         };
+
+        // --- Mascot Video Mouse Scrub Control ---
+        const video = mascotContainer.querySelector('#mascot-video');
+        if (video) {
+            let prevX = null;
+            let targetTime = 0;
+            let isSeeking = false;
+            let pendingSeek = false;
+
+            video.addEventListener('loadedmetadata', () => {
+                targetTime = video.currentTime;
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (prevX === null) {
+                    prevX = e.clientX;
+                    return;
+                }
+
+                const delta = e.clientX - prevX;
+                prevX = e.clientX;
+
+                if (!video.duration) return;
+
+                const sensitivity = 0.8;
+                const timeOffset = (delta / window.innerWidth) * sensitivity * video.duration;
+                
+                targetTime = Math.max(0, Math.min(video.duration, targetTime + timeOffset));
+                
+                performSeek();
+            });
+
+            function performSeek() {
+                if (isSeeking) {
+                    pendingSeek = true;
+                    return;
+                }
+
+                isSeeking = true;
+                video.currentTime = targetTime;
+            }
+
+            video.addEventListener('seeked', () => {
+                isSeeking = false;
+                if (pendingSeek) {
+                    pendingSeek = false;
+                    performSeek();
+                }
+            });
+        }
 
         // Initial setup
         setTimeout(updateMascotPosition, 100);
