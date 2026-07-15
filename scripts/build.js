@@ -1,33 +1,50 @@
 const fs = require('fs');
 const path = require('path');
 
-const distDir = path.join(__dirname, 'dist');
+const rootDir = path.join(__dirname, '..');
+const distDir = path.join(rootDir, 'dist');
+
 if (!fs.existsSync(distDir)) {
     fs.mkdirSync(distDir);
 }
 
 // Copy all static root files
-const files = fs.readdirSync(__dirname);
+const files = fs.readdirSync(rootDir);
 files.forEach(file => {
     const ext = path.extname(file).toLowerCase();
     if (['.html', '.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.svg', '.ico', '.xlsx'].includes(ext)) {
-        fs.copyFileSync(path.join(__dirname, file), path.join(distDir, file));
+        fs.copyFileSync(path.join(rootDir, file), path.join(distDir, file));
         console.log(`Copied ${file} to dist/`);
     }
 });
 
-// Copy clients directory if it exists
-const clientsDir = path.join(__dirname, 'clients');
-if (fs.existsSync(clientsDir) && fs.lstatSync(clientsDir).isDirectory()) {
-    const distClientsDir = path.join(distDir, 'clients');
-    if (!fs.existsSync(distClientsDir)) {
-        fs.mkdirSync(distClientsDir);
+// Recursively copy a directory
+function copyDirSync(src, dest) {
+    if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+    const entries = fs.readdirSync(src, { withFileTypes: true });
+    for (const entry of entries) {
+        const srcPath = path.join(src, entry.name);
+        const destPath = path.join(dest, entry.name);
+        if (entry.isDirectory()) {
+            copyDirSync(srcPath, destPath);
+        } else {
+            fs.copyFileSync(srcPath, destPath);
+        }
     }
-    const clientFiles = fs.readdirSync(clientsDir);
-    clientFiles.forEach(file => {
-        fs.copyFileSync(path.join(clientsDir, file), path.join(distClientsDir, file));
-        console.log(`Copied client logo ${file} to dist/clients/`);
-    });
+}
+
+// Copy assets directory if it exists
+const assetsDir = path.join(rootDir, 'assets');
+if (fs.existsSync(assetsDir) && fs.lstatSync(assetsDir).isDirectory()) {
+    copyDirSync(assetsDir, path.join(distDir, 'assets'));
+    console.log(`Copied assets/ to dist/assets/`);
+}
+
+// Copy scripts directory (for app.js etc.)
+const scriptsDir = path.join(rootDir, 'scripts');
+if (fs.existsSync(scriptsDir) && fs.lstatSync(scriptsDir).isDirectory()) {
+    copyDirSync(scriptsDir, path.join(distDir, 'scripts'));
+    console.log(`Copied scripts/ to dist/scripts/`);
 }
 
 console.log("Static build completed successfully!");
