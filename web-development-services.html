@@ -640,7 +640,39 @@
         }
 
         @media (max-width: 992px) {
-            .compare-layout { grid-template-columns: 1fr; gap: 30px; }
+            .compare-layout { grid-template-columns: 1fr; gap: 20px; }
+            .compare-options { gap: 12px; }
+            .compare-package-card {
+                padding: 24px;
+                border-radius: 16px;
+                background: rgba(255, 255, 255, 0.02);
+                border-color: rgba(139, 61, 255, 0.2);
+                margin-top: 8px;
+                margin-bottom: 16px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+            .compare-pkg-title {
+                font-size: 1.4rem;
+            }
+            .compare-pkg-icon-wrap {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 16px;
+            }
+            .compare-pkg-icon-wrap svg {
+                width: 20px;
+                height: 20px;
+            }
+            .btn-consultation {
+                width: 100%;
+                justify-content: space-between;
+                padding: 10px 10px 10px 20px;
+                font-size: 0.9rem;
+            }
+            .btn-consultation-arrow {
+                width: 30px;
+                height: 30px;
+            }
         }
 
         /* Process Grid & Benefits Styles */
@@ -1498,6 +1530,40 @@
                 
                 // Show corresponding card
                 document.getElementById(`compare-card-${index}`).classList.add('active');
+            }
+
+            function initMobileCompareAccordion() {
+                const isMobile = window.innerWidth <= 992;
+                const optionsContainer = document.querySelector('.compare-options');
+                const displayContainer = document.querySelector('.compare-display');
+                const pills = document.querySelectorAll('.compare-opt-pill');
+                const cards = document.querySelectorAll('.compare-package-card');
+                
+                if (!optionsContainer || !displayContainer || pills.length === 0 || cards.length === 0) return;
+                
+                if (isMobile) {
+                    // Move each card directly after its corresponding pill
+                    pills.forEach((pill, index) => {
+                        const card = document.getElementById(`compare-card-${index}`);
+                        if (card) {
+                            // Insert card directly after the pill
+                            pill.parentNode.insertBefore(card, pill.nextSibling);
+                        }
+                    });
+                } else {
+                    // Move cards back into the display container
+                    cards.forEach((card, index) => {
+                        displayContainer.appendChild(card);
+                    });
+                }
+            }
+
+            // Run on load and resize
+            window.addEventListener('resize', initMobileCompareAccordion);
+            document.addEventListener('DOMContentLoaded', initMobileCompareAccordion);
+            // Run immediately in case script loads after DOM is ready
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                initMobileCompareAccordion();
             }
         </script>
 
