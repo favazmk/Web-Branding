@@ -107,7 +107,9 @@
 
         <!-- Hero Section -->
         <section class="hero" id="home">
-            <canvas id="shapegrid-canvas" class="shapegrid-canvas"></canvas>
+            <div id="dot-grid-container" class="dot-grid">
+                <canvas id="dot-grid-canvas" class="dot-grid__canvas"></canvas>
+            </div>
             <div class="container">
                 <div class="hero-grid">
 
@@ -1160,6 +1162,8 @@
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 
-    </body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="./scripts/dotgrid.js"></script>
+</body>
 
 </html>

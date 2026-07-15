@@ -2780,3 +2780,24 @@ nav {
     .project-slide { flex: 0 0 300px; }
     .projects-track { --track-shift: -2800px; }
 }
+
+/* DotGrid Component Background */
+.dot-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* behind hero content */
+  pointer-events: none; /* Let clicks pass through to canvas if needed, or bind events to window */
+}
+
+.dot-grid__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
