@@ -2683,40 +2683,86 @@ nav {
     @media (max-width: 992px) {
         .campaign-hero .hero-grid {
             grid-template-columns: 1fr !important;
-            gap: 30px;
+            gap: 0 !important;
+        }
+        .campaign-hero .hero-left-content {
+            text-align: center !important;
+            align-items: center !important;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px 20px 0 0;
+            backdrop-filter: blur(10px);
+        }
+        .campaign-hero .hero-subtitle-campaign {
+            max-width: 100% !important;
+            text-align: center !important;
+        }
+        .campaign-hero .hero-title-campaign {
+            text-align: center !important;
+        }
+        .campaign-hero .hero-features {
+            justify-content: center !important;
+        }
+        .campaign-hero .hero-left-content > div[style*="display: flex"]:last-child {
+            justify-content: center !important;
+        }
+        .campaign-hero .hero-right-content {
+            width: 100%;
         }
         .campaign-hero .lead-form-card {
             max-width: 100%;
+            border-radius: 0 0 20px 20px !important;
+            border-top: none !important;
+            background: rgba(139, 61, 255, 0.04) !important;
+            border: 1px solid rgba(139, 61, 255, 0.15) !important;
+            border-top: none !important;
         }
     }
     @media (max-width: 768px) {
         .campaign-hero .hero-grid {
             grid-template-columns: 1fr !important;
-            gap: 25px;
+            gap: 0 !important;
         }
         .campaign-hero {
-            padding: 30px 0 40px !important;
+            padding: 20px 0 40px !important;
         }
         .campaign-hero .hero-title-campaign {
-            font-size: clamp(2rem, 8vw, 3rem) !important;
+            font-size: clamp(1.8rem, 7vw, 2.8rem) !important;
+            text-align: center !important;
         }
         .campaign-hero .hero-subtitle-campaign {
-            font-size: 1rem;
+            font-size: 0.95rem;
             max-width: 100% !important;
+            text-align: center !important;
+        }
+        .campaign-hero .hero-left-content {
+            padding: 24px 16px;
         }
         .campaign-hero .lead-form-card {
-            padding: 20px;
+            padding: 20px 16px;
             max-width: 100%;
         }
         .campaign-hero .lead-form-card h3 {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
         }
         .campaign-hero .lead-form-card form > div[style*="display: flex"] {
             flex-direction: column !important;
         }
         .campaign-hero .hero-features {
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
+            align-items: center;
+        }
+        .campaign-hero .hero-left-content > div[style*="display: flex"]:last-child {
+            justify-content: center !important;
+            width: 100%;
+        }
+        .campaign-hero .hero-left-content > div[style*="display: flex"]:last-child .btn {
+            flex: 1;
+            text-align: center;
+            font-size: 0.85rem;
+            padding: 10px 12px;
         }
     }
 
