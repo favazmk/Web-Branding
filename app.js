@@ -1700,8 +1700,8 @@ Looking forward to bringing this digital transformation to life!`;
         marketingAuditForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Free Marketing Consultation'));
     }
 
-    const campaignLeadForm = document.getElementById('campaign-lead-form');
-    if (campaignLeadForm) {
-        campaignLeadForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Website Quote'));
-    }
+    // const campaignLeadForm = document.getElementById('campaign-lead-form');
+    // if (campaignLeadForm) {
+    //     campaignLeadForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Website Quote'));
+    // }
 });
