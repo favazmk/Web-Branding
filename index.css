@@ -2694,7 +2694,7 @@ nav {
     display: flex;
     width: max-content;
     gap: 20px;
-    --track-shift: -3600px; /* Adjust based on slides */
+    --track-shift: -4200px; /* 10 slides * 420px (400px + 20px gap) */
     animation: scroll-marquee 60s linear infinite;
     padding: 20px 0;
     will-change: transform;
@@ -2703,9 +2703,6 @@ nav {
     content: '';
     width: 20px;
     flex-shrink: 0;
-}
-.projects-track:hover {
-    animation-play-state: paused;
 }
 @keyframes scroll-marquee {
     0% { transform: translate3d(0, 0, 0); }
@@ -2778,5 +2775,5 @@ nav {
 
 @media (max-width: 768px) {
     .project-slide { flex: 0 0 300px; }
-    .projects-track { --track-shift: -2800px; }
+    .projects-track { --track-shift: -3200px; /* 10 slides * 320px */ }
 }
