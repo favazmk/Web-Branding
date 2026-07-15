@@ -2680,6 +2680,46 @@ nav {
         text-align: left;
     }
 
+    @media (max-width: 992px) {
+        .campaign-hero .hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 30px;
+        }
+        .campaign-hero .lead-form-card {
+            max-width: 100%;
+        }
+    }
+    @media (max-width: 768px) {
+        .campaign-hero .hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 25px;
+        }
+        .campaign-hero {
+            padding: 30px 0 40px !important;
+        }
+        .campaign-hero .hero-title-campaign {
+            font-size: clamp(2rem, 8vw, 3rem) !important;
+        }
+        .campaign-hero .hero-subtitle-campaign {
+            font-size: 1rem;
+            max-width: 100% !important;
+        }
+        .campaign-hero .lead-form-card {
+            padding: 20px;
+            max-width: 100%;
+        }
+        .campaign-hero .lead-form-card h3 {
+            font-size: 1.25rem;
+        }
+        .campaign-hero .lead-form-card form > div[style*="display: flex"] {
+            flex-direction: column !important;
+        }
+        .campaign-hero .hero-features {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+
 /* Projects Marquee & Hover Effect (Ported from Digital Marketing) */
 .projects-marquee {
     overflow: hidden;
