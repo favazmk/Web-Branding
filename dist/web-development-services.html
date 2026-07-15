@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Development Offers | The Web Branding</title>
+    
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="./index.css">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+    <style>
+        /* Campaign specific styles */
+        .campaign-hero {
+            background: transparent;
+            padding-top: 100px;
+            padding-bottom: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .campaign-hero .hero-grid {
+            display: grid;
+            grid-template-columns: 7fr 3fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .hero-left-content {
+            color: #fff;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-pill {
+            background: rgba(139, 61, 255, 0.2);
+            border: 1px solid rgba(139, 61, 255, 0.4);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .hero-title-campaign {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem); /* Desktop: up to 72px */
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: clamp(1.5rem, 3vw, 1.875rem); /* 24px - 30px */
+        }
+        .hero-subtitle-campaign {
+            font-size: 1.2rem;
+            color: #c5c0d0;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+        .hero-features {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            flex-wrap: wrap;
+        }
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hero-feature svg {
+            color: #c084fc;
+        }
+        
+        .lead-form-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .lead-form-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #8b3dff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        select.form-control {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 35px;
+        }
+        select.form-control option {
+            background: #10081d;
+            color: #fff;
+        }
+        .price-badge {
+            display: inline-block;
+            background: #e11d48;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        /* Marquee */
+        .brands-marquee {
+            padding: 20px 0;
+            background: transparent;
+            border-bottom: 1px solid var(--border-glass);
+            overflow: hidden;
+            display: block;
+        }
+        .marquee-content {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            animation: scroll 20s linear infinite;
+            white-space: nowrap;
+        }
+        .marquee-content span {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-faded);
+            opacity: 0.4;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Pricing Cards */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .pricing-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 61, 255, 0.3);
+            box-shadow: 0 15px 30px rgba(139, 61, 255, 0.1);
+        }
+        .pricing-card.popular {
+            background: linear-gradient(135deg, #7b2cbf 0%, #b300ff 100%);
+            color: #ffffff;
+            border-color: #d8b4fe;
+            transform: scale(1.05);
+            z-index: 2;
+            box-shadow: 0 20px 40px rgba(179, 0, 255, 0.3);
+        }
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            color: #5A2C89;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .pkg-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .pkg-price {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 5px;
+        }
+        .pkg-price span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-faded);
+        }
+        .pkg-features {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .pkg-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+        .pkg-feature svg {
+            color: #c084fc;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        /* Industry Grid */
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .industry-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 220px;
+            transition: var(--transition-smooth);
+            will-change: transform;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            border: none;
+        }
+        .industry-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            transition: opacity var(--transition-smooth);
+        }
+        .industry-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+        .industry-card:hover {
+            transform: translateY(-8px);
+        }
+        .industry-card:hover::before {
+            opacity: 0;
+        }
+        .industry-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .industry-price {
+            color: var(--accent-blue);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* Auto-scrolling Marquee */
+        .projects-marquee {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            position: relative;
+        }
+        .projects-track {
+            display: flex;
+            width: max-content;
+            gap: 20px;
+            padding-bottom: 20px;
+            --track-shift: -2520px;
+            animation: scroll-marquee 45s linear infinite;
+            will-change: transform;
+        }
+        .projects-track::after {
+            content: '';
+            width: 20px;
+            flex-shrink: 0;
+        }
+        .projects-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes scroll-marquee {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(var(--track-shift), 0, 0); }
+        }
+        .project-slide {
+            flex: 0 0 400px;
+            aspect-ratio: 4/3;
+            display: block;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .project-slide:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .project-placeholder-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .project-slide:hover .project-placeholder-img {
+            transform: scale(1.05);
+        }
+        .project-overlay-custom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(0deg, rgba(10,11,14,0.95) 0%, rgba(10,11,14,0.7) 50%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+        }
+        .project-slide:hover .project-overlay-custom {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .project-cat {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+        }
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            background: #05010a;
+            padding: 80px 0;
+            text-align: center;
+            border-top: 1px solid rgba(139, 61, 255, 0.3);
+        }
+
+        @media (max-width: 992px) {
+            .campaign-hero .hero-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .pricing-card.popular { transform: scale(1); }
+            .pricing-card.popular:hover { transform: translateY(-5px); }
+            .industry-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-cta .container { grid-template-columns: 1fr !important; text-align: center !important; }
+            .footer-cta .container .fade-in-up { display: flex; flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 768px) {
+            .industry-grid { grid-template-columns: 1fr; }
+            .project-slide { flex: 0 0 300px; }
+            .hero-title-campaign { font-size: clamp(2rem, 8vw, 3rem); } /* Mobile: 32px - 48px */
+            .section-title { font-size: clamp(1.25rem, 4vw, 1.5rem); } /* Mobile: 20px - 24px */
+            .campaign-hero { padding: 40px 0; }
+            .pricing-card { padding: 30px 20px; }
+            .projects-track { --track-shift: -1920px; }
+        }
+
+        /* CEO Floating Sales Bot */
+        .ceo-bot {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ceo-bot.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+            animation: float-bob 4s ease-in-out infinite;
+        }
+        @keyframes float-bob {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        .ceo-bot-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #8B3DFF;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(139, 61, 255, 0.4);
+            background: #1e0b36;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .ceo-bot-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .ceo-bot-bubble {
+            background: rgba(25, 12, 45, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            padding: 12px 18px;
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            max-width: 250px;
+            color: #ffffff;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        .ceo-bot-bubble .ceo-title {
+            font-weight: 700;
+            color: #8B3DFF;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .ceo-bot-bubble p {
+            margin: 0 0 8px 0;
+            color: #e5e7eb;
+            line-height: 1.4;
+        }
+        .ceo-bot-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .ceo-bot-btn {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+        .ceo-bot-btn.btn-chat {
+            background: #25d366;
+            color: #ffffff;
+        }
+        .ceo-bot-btn.btn-chat:hover {
+            background: #20ba5a;
+        }
+        .ceo-bot-btn.btn-call {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .ceo-bot-btn.btn-call:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Still Comparing Section (Interactive Matcher) */
+        .interactive-compare-section {
+            background: radial-gradient(circle at top right, rgba(123, 44, 191, 0.15), transparent 60%);
+            position: relative;
+        }
+        .compare-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            align-items: start;
+            margin-top: 40px;
+        }
+        .compare-options {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .compare-opt-pill {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-align: left;
+            position: relative;
+        }
+        .compare-opt-pill:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .compare-opt-pill.active {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #8B3DFF;
+            box-shadow: 0 0 20px rgba(139, 61, 255, 0.15);
+        }
+        .compare-icon-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d8b4fe;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        .compare-opt-pill.active .compare-icon-circle {
+            background: rgba(139, 61, 255, 0.15);
+            color: #8B3DFF;
+        }
+        .compare-opt-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+        .compare-package-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        .compare-package-card.active {
+            display: block;
+        }
+        .compare-pkg-icon-wrap {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: #8B3DFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 20px rgba(139, 61, 255, 0.3);
+        }
+        .compare-pkg-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+        .compare-pkg-desc {
+            font-size: 1rem;
+            color: #c5c0d0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .btn-consultation {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            background: #ffffff;
+            color: #0c0517;
+            padding: 12px 12px 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .btn-consultation:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            background: #f3f4f6;
+        }
+        .btn-consultation-arrow {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #8B3DFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        .btn-consultation:hover .btn-consultation-arrow {
+            transform: translateX(4px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 992px) {
+            .compare-layout { grid-template-columns: 1fr; gap: 30px; }
+        }
+
+        /* Process Grid & Benefits Styles */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        @media (max-width: 992px) {
+            .process-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 576px) {
+            .process-grid { grid-template-columns: 1fr; }
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 45px;
+        }
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        .benefit-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(139, 61, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        .benefit-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: rgba(139, 61, 255, 0.1);
+            color: #8B3DFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .benefit-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+        .benefit-card p {
+            color: #c5c0d0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+        /* Theme Light Specifics for Benefit Cards */
+        .theme-light .benefit-card {
+            background: #ffffff !important;
+            border: 1px solid rgba(139, 61, 255, 0.1) !important;
+            box-shadow: 0 10px 20px rgba(139, 61, 255, 0.02) !important;
+        }
+        .theme-light .benefit-card:hover {
+            border-color: rgba(139, 61, 255, 0.3) !important;
+            box-shadow: 0 15px 30px rgba(139, 61, 255, 0.06) !important;
+        }
+        .theme-light .benefit-card h3 {
+            color: #120626 !important;
+        }
+        .theme-light .benefit-card p {
+            color: #4d445e !important;
+        }
+        @media (max-width: 992px) {
+            .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .benefits-grid { grid-template-columns: 1fr; }
+        }
+        
+        .highlight-badge {
+            background: #e11d48;
+            color: #fff;
+            padding: 4px 16px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(225, 29, 72, 0.6);
+            display: inline-block;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Pill Mobile Header (Custom) -->
+    <header id="ag-custom-header" class="ag-pill-header">
+        <!-- Main Pill -->
+        <div class="ag-pill-main">
+            <div class="ag-pill-content">
+                <!-- Logo Here -->
+                <a href="#home" aria-label="The Web Branding Home" style="display: flex; align-items: center;">
+                    <img src="./assets/logo.png" alt="The Web Branding Logo" class="nav-logo-img">
+                </a>
+
+                <!-- Hamburger Button -->
+                <button id="ag-mobile-btn" class="ag-pill-btn" aria-label="Toggle mobile menu">
+                    <svg id="ag-icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ag-menu-icon"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    <svg id="ag-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ag-close-icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Hidden Dropdown Container (Behind the pill) -->
+        <div class="ag-dropdown-wrapper">
+            <div id="ag-mobile-menu" class="ag-dropdown-menu">
+                <div class="ag-dropdown-content">
+                    <a href="#home" class="ag-menu-item">Home</a>
+                    <a href="#packages" class="ag-menu-item">Packages</a>
+                    <a href="#industries" class="ag-menu-item">Industries</a>
+                    <a href="#projects" class="ag-menu-item">Works</a>
+                    <a href="#ecommerce" class="ag-menu-item">E-Commerce</a>
+                    <a href="#compare" class="ag-menu-item">Goals Matcher</a>
+                    <a href="#process" class="ag-menu-item">Process</a>
+                    <a href="https://wa.me/971585577182" class="ag-menu-item btn btn-primary" style="margin-top: 10px; width: 80%; text-align: center; border-radius: 9999px;">WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Header & Navigation -->
+    <header id="main-header">
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo" aria-label="The Web Branding Home">
+                    <img src="./assets/logo.png" alt="The Web Branding Logo" class="nav-logo-img">
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#packages" class="nav-link">Packages</a></li>
+                    <li><a href="#industries" class="nav-link">Industries</a></li>
+                    <li><a href="#projects" class="nav-link">Works</a></li>
+                    <li><a href="#process" class="nav-link">Process</a></li>
+                </ul>
+                
+                <a href="https://wa.me/971585577182" class="btn btn-primary" aria-label="Start Your Project">WhatsApp</a>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: 80px;">
+        
+        <!-- Section 1: Hero -->
+        <section class="campaign-hero" id="home" style="padding-top: 80px; padding-bottom: 80px;">
+            <!-- Glowing Orbs -->
+            <div class="glow-wrapper" style="opacity: 0.5;">
+                <div class="glow-orb orb-primary" style="top: -20%; left: -10%;"></div>
+                <div class="glow-orb orb-secondary" style="bottom: -20%; right: -10%;"></div>
+            </div>
+
+            <div class="container">
+                <div class="hero-grid">
+                    
+                    <div class="hero-left-content fade-in-up" style="text-align: left; display: flex; flex-direction: column; align-items: flex-start;">
+                        <div class="hero-pill" style="margin-bottom: 20px;">Special OFFERS</div>
+                        
+                        <!-- Heading with 15 Days Highlighted -->
+                        <h1 class="hero-title-campaign" style="line-height: 1.25; text-transform: none; font-size: clamp(2.2rem, 5vw, 3.8rem); font-family: 'Outfit', sans-serif; text-align: left; margin-bottom: 15px;">
+                            Launch your Business website <span class="highlight-badge">in 15 days</span>
+                        </h1>
+                        
+                        <!-- Details -->
+                        <p class="hero-subtitle-campaign" style="margin-top: 10px; max-width: 550px; text-align: left; line-height: 1.6; margin-bottom: 20px;">
+                            Build trust from day one with a professional website featuring WhatsApp, lead forms, analytics, social media setup, and free hosting & domain for 1 year.
+                        </p>
+                        
+                        <div class="hero-features" style="justify-content: flex-start; margin-top: 5px; margin-bottom: 25px;">
+                            <div class="hero-feature">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                Location - Dubai
+                            </div>
+                            <div class="hero-feature">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                24/7 Support
+                            </div>
+                            <div class="hero-feature">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                Fast Delivery
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="#campaign-lead-form" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Get Consultation Today</a>
+                            <a href="https://wa.me/971585577182?text=I%20want%20to%20chat%20about%20launching%20a%20business%20website" target="_blank" class="btn btn-whatsapp">WhatsApp</a>
+                            <a href="tel:+971544387023" class="btn btn-secondary">Talk to expert</a>
+                        </div>
+                    </div>
+
+                    <div class="hero-right-content fade-in-up delay-100">
+                        <!-- Form from the 1st version (Decreased Size) -->
+                        <div class="lead-form-card" style="padding: 20px; border-radius: 16px; background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08);">
+                            <h3 style="font-size: 1.3rem; margin-bottom: 15px; text-align: center; color: #fff; font-family: 'Outfit', sans-serif;">Get a Free Quote</h3>
+                            <form id="campaign-lead-form">
+                                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                    <div style="flex: 1;">
+                                        <input type="text" class="form-control" name="name" placeholder="Name" required style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required pattern="[+]?[0-9\s\-()]{7,20}" style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 10px;">
+                                    <input type="email" class="form-control" name="email" placeholder="Email Address" required style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 10px;">
+                                    <select class="form-control" name="service" required style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
+                                        <option value="" disabled selected>Select Website Service</option>
+                                        <option value="Single-Page Landing Page">Single-Page Landing Page</option>
+                                        <option value="Corporate / Business Website">Corporate / Business Website</option>
+                                        <option value="E-Commerce Online Store">E-Commerce Online Store</option>
+                                        <option value="Custom Web Application">Custom Web Application</option>
+                                        <option value="Headless CMS / JAMstack Website">Headless CMS / JAMstack Website</option>
+                                        <option value="UI/UX Prototype & Wireframing">UI/UX Prototype & Wireframing</option>
+                                        <option value="Website Maintenance & Support">Website Maintenance & Support</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 15px;">
+                                    <textarea class="form-control" name="message" placeholder="Message (Optional)" rows="2" style="padding: 10px 12px; font-size: 0.9rem; height: auto;"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 0.95rem; background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Submit Request</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- Section 2: Trusted Brands -->
+        <section class="brands-marquee" style="background: #ffffff; padding: 25px 0; border-bottom: 1px solid var(--border-glass);">
+            <style>
+                .brands-layout {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    max-width: 1600px;
+                    margin: 0 auto;
+                    overflow: hidden;
+                    position: relative;
+                }
+                .brands-heading-side {
+                    flex: 0 0 auto;
+                    padding: 0 30px 0 5vw;
+                    background: #ffffff;
+                    z-index: 2;
+                    border-right: 1px solid rgba(0,0,0,0.05);
+                }
+                .brands-marquee-side {
+                    flex: 1;
+                    overflow: hidden;
+                    position: relative;
+                    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+                    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+                }
+                
+                .marquee-client-logo {
+                    height: 40px;
+                    width: auto;
+                    object-fit: contain;
+                    opacity: 0.6;
+                    filter: grayscale(100%);
+                    transition: all 0.3s ease;
+                }
+                .marquee-client-logo:hover {
+                    opacity: 1;
+                    filter: grayscale(0%);
+                    transform: scale(1.05);
+                }
+                .inline-marquee-content {
+                    display: flex;
+                    gap: 50px;
+                    align-items: center;
+                    animation: scroll-inline 50s linear infinite;
+                    white-space: nowrap;
+                    width: max-content;
+                    padding: 0 25px;
+                }
+                
+                @keyframes scroll-inline {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                }
+
+                @media (max-width: 900px) {
+                    .brands-layout {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 20px;
+                    }
+                    .brands-heading-side {
+                        border-right: none;
+                        padding: 0 5vw;
+                        width: 100%;
+                    }
+                    .brands-marquee-side {
+                        width: 100%;
+                    }
+                    .marquee-client-logo {
+                        height: 35px;
+                    }
+                    .inline-marquee-content {
+                        gap: 30px;
+                    }
+                }
+            </style>
+            <div class="brands-layout">
+                <!-- Left Heading -->
+                <div class="brands-heading-side">
+                    <span class="section-tag no-dot" style="color: #8B3DFF; line-height: 1.5; font-size: 0.95rem; font-weight: 700; display: block; margin: 0; padding: 0; text-align: left; letter-spacing: 1.5px; text-transform: uppercase;">
+                        TRUSTED BY TOP BRANDS IN UAE<br>& ACROSS THE WORLD
+                    </span>
+                </div>
+                <!-- Right Marquee -->
+                <div class="brands-marquee-side">
+                    <div class="inline-marquee-content">
+
+                        <!-- Group 1 -->
+                        <img src="./assets/clients/logo_0.png" alt="Client 0" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_1.png" alt="Client 1" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_10.png" alt="Client 10" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_11.png" alt="Client 11" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_12.png" alt="Client 12" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_13.png" alt="Client 13" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_2.webp" alt="Client 2" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_3.webp" alt="Client 3" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_4.png" alt="Client 4" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_5.webp" alt="Client 5" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_6.png" alt="Client 6" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_7.png" alt="Client 7" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_8.png" alt="Client 8" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_9.png" alt="Client 9" class="marquee-client-logo">
+                        
+                        <!-- Group 2 -->
+                        <img src="./assets/clients/logo_0.png" alt="Client 0" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_1.png" alt="Client 1" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_10.png" alt="Client 10" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_11.png" alt="Client 11" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_12.png" alt="Client 12" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_13.png" alt="Client 13" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_2.webp" alt="Client 2" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_3.webp" alt="Client 3" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_4.png" alt="Client 4" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_5.webp" alt="Client 5" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_6.png" alt="Client 6" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_7.png" alt="Client 7" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_8.png" alt="Client 8" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_9.png" alt="Client 9" class="marquee-client-logo">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Quick Consult Banner -->
+        <section class="section-padding" style="padding: 40px 0; background: linear-gradient(90deg, rgba(139, 61, 255, 0.05), rgba(139, 61, 255, 0.05)); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                <div style="text-align: left;">
+                    <h2 class="section-title" style="margin-bottom: 10px; font-size: clamp(1.5rem, 3vw, 2.2rem); text-align: left;">Finalize your suitable website package in 10 min</h2>
+                    <p style="color: #c5c0d0; margin: 0;">Speak directly with our digital transformation specialists now.</p>
+                </div>
+                <div>
+                    <a href="tel:+971544387023" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; display: inline-flex; align-items: center; gap: 10px; color: #fff;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        Call Our Specialized Team
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Packages -->
+        <section class="section-padding theme-light" style="background: var(--bg-slate);" id="packages">
+            <div class="container">
+                <div style="text-align: center;">
+                    <h2 class="section-title">WEBSITE PACKAGES</h2>
+                </div>
+                
+                <div class="pricing-grid">
+                    <!-- Corporate Starter -->
+                    <div id="pkg-starter" class="pricing-card">
+                        <h3 class="pkg-title">Corporate Starter</h3>
+                        <p style="color: var(--text-faded); font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px;">5 Page Corporate Website</p>
+                        <div class="pkg-price"><span>AED</span> 4,999</div>
+                        <div class="pkg-features">
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 5 Custom Designed Pages</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Mobile Responsive Design</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> WordPress CMS Setup</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Contact Form & WhatsApp</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Basic SEO & Analytics Setup</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> SSL, Speed Optimization</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Free Domain & Hosting (1 Yr)</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 2 Business Email Accounts</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 1 Month Technical Support</div>
+                        </div>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Corporate%20Starter%20Package%20(AED%204,999)" target="_blank" class="btn btn-whatsapp" style="width: 100%;">Book Now</a>
+                    </div>
+
+                    <!-- Corporate Professional -->
+                    <div id="pkg-professional" class="pricing-card popular">
+                        <div class="popular-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            Most Popular
+                        </div>
+                        <h3 class="pkg-title" style="color: white;">Corporate Professional</h3>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px;">10 Page Website</p>
+                        <div class="pkg-price" style="color: white;"><span>AED</span> 7,499</div>
+                        <div class="pkg-features">
+                            <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Everything in Starter</strong></div>
+                            <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 10 Custom Designed Pages</div>
+                            <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Blog Module Integration</div>
+                            <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Advanced UI/UX Elements</div>
+                            <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Lead Generation Forms</div>
+                            <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Live Chat Integration</div>
+                            <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> On-Page SEO Optimization</div>
+                            <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 5 Business Email Accounts</div>
+                            <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 3 Months Technical Support</div>
+                        </div>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Corporate%20Professional%20Package%20(AED%207,499)" target="_blank" class="btn btn-primary" style="width: 100%; background: #fff; color: #5A2C89;">Book Now</a>
+                    </div>
+
+                    <!-- Corporate Enterprise -->
+                    <div id="pkg-enterprise" class="pricing-card">
+                        <h3 class="pkg-title">Corporate Enterprise</h3>
+                        <p style="color: var(--text-faded); font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px;">30 Page Website</p>
+                        <div class="pkg-price"><span>AED</span> 9,999</div>
+                        <div class="pkg-features">
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Everything in Professional</strong></div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 30 Custom Designed Pages</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Premium UI/UX Design</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Multi-language Ready</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Booking/Appointment Form</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Basic CRM Integration</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Advanced Speed Optimization</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 10 Business Email Accounts</div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 6 Months Technical Support</div>
+                        </div>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Corporate%20Enterprise%20Package%20(AED%209,999)" target="_blank" class="btn btn-whatsapp" style="width: 100%;">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Portfolio Offer Banner -->
+        <section class="section-padding" style="padding: 60px 0; background: linear-gradient(135deg, rgba(139, 61, 255, 0.08) 0%, rgba(139, 61, 255, 0.08) 100%); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div class="container" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <span class="section-tag center no-dot" style="margin-bottom: 15px; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; border-radius: 50px; padding: 5px 15px;">Limited Time Offer</span>
+                <h2 class="section-title" style="margin-bottom: 20px; font-size: clamp(1.8rem, 4vw, 2.8rem);">Are you an influencer or Business owner?</h2>
+                <p style="color: #c5c0d0; font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    We build your premium, custom-designed portfolio website in just <strong>7 days</strong> from only <strong>AED 4,499</strong> onwards. Showcase your work and brand professionally.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <a href="https://wa.me/971585577182?text=I'm%20an%20influencer/business%20owner%20interested%20in%20a%20portfolio%20website%20starting%20from%20AED%204,499." target="_blank" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Get Started Now</a>
+                    <a href="https://wa.me/971585577182?text=I'd%20like%20to%20learn%20more%20about%20your%20portfolio%20website%20services." target="_blank" class="btn btn-whatsapp">WhatsApp Consultation</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Our Industries -->
+        <section class="section-padding" id="industries">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <span class="section-tag center no-dot" style="background: rgba(37, 211, 102, 0.1); color: #25D366; border-radius: 50px; padding: 5px 15px;">Fast Delivery in 7 Days</span>
+                    <h2 class="section-title">Get a Free Consultation</h2>
+                </div>
+                
+                <div class="industry-grid">
+                    <div class="industry-card" style="--bg-image: url('mockup_hospitality.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Hospitality & Hotels<br>Retail & Fashion</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_realestate.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Real Estate</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_event.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Event Management</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_education.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Education / Coaching</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_medical.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Clinics / Hospitals</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_repair.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">MEP / Repair</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_logistics.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Logistics</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_construction.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Construction / Interior Design</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_supermarket.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Supermarket</h3>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 45px;">
+                    <a href="https://wa.me/971585577182?text=I%20want%20to%20get%20a%20free%20consultation%20for%20our%20business%20website." target="_blank" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; color: #fff; padding: 14px 40px; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 10px;">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- Section 7: Our Works -->
+        <section class="section-padding theme-light" style="background: var(--bg-slate); border-top: 1px solid var(--border-glass); overflow: hidden;" id="projects">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h2 class="section-title">Our Works</h2>
+                </div>
+            </div>
+            
+                <div class="projects-marquee fade-in-up">
+                    <div class="projects-track">
+
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">1Point360</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="360 New Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">360 New</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-bandhan-psi-vercel-app-2026-07-15-14_50_05.webp" alt="Bandhan Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Bandhan</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-esglobal-hashirnisam-2026-07-15-15_13_24.webp" alt="ES Global Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">ES Global</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-mice-media-vercel-app-2026-07-15-14_56_15.webp" alt="Mice Media Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Mice Media</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-netexfreight-2026-07-15-14_50_52.webp" alt="Netex Freight Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Netex Freight</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-rashicafenew-hashirnisam-2026-07-15-15_15_46.webp" alt="Rashi Cafe Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Rashi Cafe</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-silvanglobal-2026-07-15-15_14_21.webp" alt="Silvan Global Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Silvan Global</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-specsstores-hashirnisam-2026-07-15-15_16_40.webp" alt="Specs Stores Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Specs Stores</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-v2ebl-hashirnisam-2026-07-15-15_11_37.webp" alt="V2EBL Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">V2EBL</h3>
+                            </div>
+                        </a>
+
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">1Point360</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="360 New Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">360 New</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-bandhan-psi-vercel-app-2026-07-15-14_50_05.webp" alt="Bandhan Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Bandhan</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-esglobal-hashirnisam-2026-07-15-15_13_24.webp" alt="ES Global Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">ES Global</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-mice-media-vercel-app-2026-07-15-14_56_15.webp" alt="Mice Media Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Mice Media</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-netexfreight-2026-07-15-14_50_52.webp" alt="Netex Freight Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Netex Freight</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-rashicafenew-hashirnisam-2026-07-15-15_15_46.webp" alt="Rashi Cafe Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Rashi Cafe</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-silvanglobal-2026-07-15-15_14_21.webp" alt="Silvan Global Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Silvan Global</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-specsstores-hashirnisam-2026-07-15-15_16_40.webp" alt="Specs Stores Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">Specs Stores</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="project-slide ig-project-card">
+                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-v2ebl-hashirnisam-2026-07-15-15_11_37.webp" alt="V2EBL Web Design" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Web Development</span>
+                                <h3 class="project-title">V2EBL</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+        </section>
+
+        <!-- Section 8: E-commerce Promo Banner -->
+        <section class="section-padding" style="padding: 60px 0; background: linear-gradient(135deg, rgba(139, 61, 255, 0.05) 0%, rgba(139, 61, 255, 0.05) 100%); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px;">
+                <div style="text-align: left;">
+                    <h2 class="section-title" style="margin-bottom: 10px; font-size: clamp(1.5rem, 3vw, 2.2rem); text-align: left; text-transform: none;">Are you planning to launch your ecommerce website?</h2>
+                    <p style="color: #c5c0d0; margin: 0; font-size: 1.1rem;">We build custom, high-converting online stores tailored to scale your brand.</p>
+                </div>
+                <div>
+                    <a href="#ecommerce" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 10px;">
+                        See E-Commerce Tiers
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8b: E-Commerce Showcase -->
+        <section class="section-padding" id="ecommerce">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 40px; position: relative;">
+                    <!-- Small Mascot Decor SVG -->
+                    <div style="display: inline-block; margin-bottom: 15px;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8B3DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    </div>
+                    <h2 class="section-title">E Commerce</h2>
+                </div>
+                
+                <div class="industry-grid">
+                    <div class="industry-card" style="--bg-image: url('mockup_fashion.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Fashion & Apparels</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_jewellery.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Jewellery store</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_beauty.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Beauty & Cosmetics</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_electronics.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Electronics & Gadgets</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_abaya.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Abaya</h3>
+                    </div>
+                    <div class="industry-card" style="--bg-image: url('mockup_perfume.png');">
+                        <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Perfume</h3>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20an%20E-commerce%20Store." target="_blank" class="btn btn-primary" style="padding: 14px 40px; font-size: 1.05rem;">Book Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Still Comparing? Goal-matching widget -->
+        <!-- Section 6: Choose the Package That Matches Your Goals -->
+        <section class="section-padding interactive-compare-section" id="compare">
+            <div class="container" style="max-width: 1000px;">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h2 class="section-title" style="font-size: clamp(1.8rem, 4vw, 2.5rem); text-transform: none;">Choose the Package That Matches Your Goals</h2>
+                </div>
+
+                <div class="compare-layout">
+                    <!-- Left: Stacking Options -->
+                    <div class="compare-options">
+                        <!-- Option 1 -->
+                        <div class="compare-opt-pill active" onclick="selectCompareOption(0)">
+                            <div class="compare-icon-circle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </div>
+                            <span class="compare-opt-text">Establish a strong personel online presence.</span>
+                        </div>
+
+                        <!-- Option 2 -->
+                        <div class="compare-opt-pill" onclick="selectCompareOption(1)">
+                            <div class="compare-icon-circle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            </div>
+                            <span class="compare-opt-text">Convert more visitors into customers.</span>
+                        </div>
+
+                        <!-- Option 3 -->
+                        <div class="compare-opt-pill" onclick="selectCompareOption(2)">
+                            <div class="compare-icon-circle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            </div>
+                            <span class="compare-opt-text">Showcase your products or services professionally.</span>
+                        </div>
+
+                        <!-- Option 4 -->
+                        <div class="compare-opt-pill" onclick="selectCompareOption(3)">
+                            <div class="compare-icon-circle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            </div>
+                            <span class="compare-opt-text">Improve your brand credibility.</span>
+                        </div>
+
+                        <!-- Option 5 -->
+                        <div class="compare-opt-pill" onclick="selectCompareOption(4)">
+                            <div class="compare-icon-circle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                            </div>
+                            <span class="compare-opt-text">Build a website ready for future growth.</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Package Cards -->
+                    <div class="compare-display">
+                        <!-- Card 1 -->
+                        <div id="compare-card-0" class="compare-package-card active">
+                            <div class="compare-pkg-icon-wrap">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </div>
+                            <h3 class="compare-pkg-title">Portfolio Website</h3>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 10px;">AED 4,499</div>
+                            <p class="compare-pkg-desc">Showcase your personal brand, bio, projects, and connect directly with social media integrations in 7 days.</p>
+                            <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Portfolio%20Website%20Package%20(AED%204,499)%20to%20establish%20a%20strong%20personal%20presence." target="_blank" class="btn-consultation">
+                                <span>Book a free consultation</span>
+                                <span class="btn-consultation-arrow">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </span>
+                            </a>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div id="compare-card-1" class="compare-package-card">
+                            <div class="compare-pkg-icon-wrap">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            </div>
+                            <h3 class="compare-pkg-title">Corporate Professional Website</h3>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 10px;">AED 7,499</div>
+                            <p class="compare-pkg-desc">Includes advanced UI elements, blog module integration, live chat, lead generation forms, and 3 months technical support.</p>
+                            <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Corporate%20Professional%20Package%20(AED%207,499)%20to%20convert%20more%20visitors." target="_blank" class="btn-consultation">
+                                <span>Book a free consultation</span>
+                                <span class="btn-consultation-arrow">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </span>
+                            </a>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div id="compare-card-2" class="compare-package-card">
+                            <div class="compare-pkg-icon-wrap">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            </div>
+                            <h3 class="compare-pkg-title">Portfolio Website</h3>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 10px;">AED 4,499</div>
+                            <p class="compare-pkg-desc">A custom-designed, fast-loading showcase website optimized to highlight your projects, gallery, or services.</p>
+                            <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Portfolio%20Website%20Package%20(AED%204,499)%20to%20showcase%20products/services." target="_blank" class="btn-consultation">
+                                <span>Book a free consultation</span>
+                                <span class="btn-consultation-arrow">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </span>
+                            </a>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div id="compare-card-3" class="compare-package-card">
+                            <div class="compare-pkg-icon-wrap">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            </div>
+                            <h3 class="compare-pkg-title">Corporate Starter Website</h3>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 10px;">AED 4,999</div>
+                            <p class="compare-pkg-desc">5 custom designed responsive pages with WordPress CMS, contact form, WhatsApp integration, basic SEO, and free hosting & domain for 1 year.</p>
+                            <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Corporate%20Starter%20Package%20(AED%204,999)%20to%20improve%20brand%20credibility." target="_blank" class="btn-consultation">
+                                <span>Book a free consultation</span>
+                                <span class="btn-consultation-arrow">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </span>
+                            </a>
+                        </div>
+
+                        <!-- Card 5 -->
+                        <div id="compare-card-4" class="compare-package-card">
+                            <div class="compare-pkg-icon-wrap">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                            </div>
+                            <h3 class="compare-pkg-title">Corporate Enterprise Website</h3>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 10px;">AED 9,999</div>
+                            <p class="compare-pkg-desc">30 custom designed pages, premium UI/UX, multi-language support, booking engine, CRM integration, advanced speed optimization, and 6 months technical support.</p>
+                            <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Corporate%20Enterprise%20Package%20(AED%209,999)%20for%20future%20growth." target="_blank" class="btn-consultation">
+                                <span>Book a free consultation</span>
+                                <span class="btn-consultation-arrow">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            function selectCompareOption(index) {
+                // Remove active classes from all options
+                const options = document.querySelectorAll('.compare-opt-pill');
+                options.forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to clicked option
+                options[index].classList.add('active');
+                
+                // Hide all package cards
+                const cards = document.querySelectorAll('.compare-package-card');
+                cards.forEach(card => card.classList.remove('active'));
+                
+                // Show corresponding card
+                document.getElementById(`compare-card-${index}`).classList.add('active');
+            }
+        </script>
+
+        <!-- Section 9: Our Process -->
+        <section class="section-padding theme-light" style="background: var(--bg-slate); border-top: 1px solid var(--border-glass);" id="process">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 50px;">
+                    <span class="section-tag center no-dot" style="margin-bottom: 15px; border-radius: 50px; padding: 5px 15px;">How We Deliver</span>
+                    <h2 class="section-title">Our Process</h2>
+                </div>
+
+                <div class="process-grid">
+                    <!-- Step 1 -->
+                    <div class="benefit-card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">1</div>
+                        <h3>Choose Package</h3>
+                        <p style="text-align: center;">Select the perfect starter, professional, or custom plan for your business goals.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="benefit-card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">2</div>
+                        <h3>Share Details</h3>
+                        <p style="text-align: center;">Provide your logo, brand guidelines, content, and references to our dev team.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="benefit-card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">3</div>
+                        <h3>Development</h3>
+                        <p style="text-align: center;">We build and optimize your website with mobile responsiveness, SEO, and speed.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="benefit-card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">4</div>
+                        <h3>Approval & Launch</h3>
+                        <p style="text-align: center;">Review the final version, approve, and we launch it live with your free domain.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Why WebBranding -->
+        <section class="section-padding" style="border-top: 1px solid var(--border-glass);" id="why-webbranding">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 50px;">
+                    <span class="section-tag center no-dot" style="margin-bottom: 15px; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; border-radius: 50px; padding: 5px 15px;">Why Choose Us</span>
+                    <h2 class="section-title">Why WebBranding?</h2>
+                </div>
+
+                <div class="benefits-grid">
+                    <!-- Benefit 1 -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        </div>
+                        <h3>Stunning modern design</h3>
+                        <p>Every website is custom built from scratch tailored specifically for your brand identity and target audience.</p>
+                    </div>
+
+                    <!-- Benefit 2 -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                        </div>
+                        <h3>Free Domain & Hosting</h3>
+                        <p>We provide a premium domain and super-fast, secure cloud hosting absolutely free for the first full year.</p>
+                    </div>
+
+                    <!-- Benefit 3 -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        </div>
+                        <h3>Chatbots, Forms & CRM</h3>
+                        <p>Includes WhatsApp chatbot integrations, responsive lead generation forms, and automated CRM lead syncing.</p>
+                    </div>
+
+                    <!-- Benefit 4 -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                        </div>
+                        <h3>Advanced Web Analytics</h3>
+                        <p>Track every single visitor action with professional Google Analytics integration and Meta Pixel setup.</p>
+                    </div>
+
+                    <!-- Benefit 5 -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </div>
+                        <h3>Social Profile Setup</h3>
+                        <p>We build and launch matching brand pages on Facebook, Instagram, LinkedIn, and Google Business Map free of charge.</p>
+                    </div>
+
+                    <!-- Benefit 6 -->
+                    <div class="benefit-card">
+                        <div class="benefit-icon-box">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        </div>
+                        <h3>Support & Maintenance</h3>
+                        <p>Enjoy peace of mind with 3 months of completely free dedicated technical support and post-launch maintenance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Final CTA & Footer -->
+        <section class="footer-cta" id="offer">
+            <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; text-align: left;">
+                <div class="fade-in-up">
+                    <span class="section-tag" style="margin-left: 0;">Book your free consultation today</span>
+                    <h2 class="section-title" style="color: #fff; margin-bottom: 20px;">Just a call<br>for your dream website</h2>
+                    <p style="color: #c5c0d0; margin-bottom: 30px; font-size: 1.1rem; max-width: 400px;">
+                        Don't wait for the competition to move first. Get a premium website to generate more leads and acquire more customers.
+                    </p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="tel:+971544387023" class="btn btn-primary" style="background: #fff; color: #5A2C89;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            Call Now
+                        </a>
+                        <a href="https://wa.me/971585577182" class="btn btn-whatsapp">WhatsApp</a>
+                    </div>
+                </div>
+                
+                <div class="fade-in-up delay-200">
+                    <!-- Right side image mockup placeholder -->
+                    <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                        <img src="./assets/desktop_mockup.png" alt="Website Mockup" style="border-radius: 10px; width: 100%;">
+                        <div style="position: absolute; bottom: -20px; left: -20px; width: 100px; height: 150px; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden;">
+                             <img src="./assets/mobile_mockup.png" alt="Mobile Mockup" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer-main">
+        <div class="container">
+            <div class="footer-grid">
+
+                <div class="footer-brand">
+                    <a href="#" class="logo" style="margin-bottom: 8px; display: inline-block;">
+                        <img src="./assets/logo.png" alt="The Web Branding Logo" class="footer-logo-img">
+                    </a>
+                    <p class="footer-brand-disc">
+                        A full-service digital transformation agency. Combining strategy-led designs with high-impact marketing to grow brands in Dubai, India, and globally.
+                    </p>
+
+                    <div class="footer-socials">
+                        <a href="https://linkedin.com" target="_blank" class="social-circle" aria-label="LinkedIn"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg></a>
+                        <a href="https://www.instagram.com/thewebbranding/?hl=en" target="_blank" class="social-circle" aria-label="Instagram"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg></a>
+                        <a href="https://x.com" target="_blank" class="social-circle" aria-label="X (Twitter)"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <span class="footer-col-title">Navigation</span>
+                    <ul class="footer-menu">
+                        <li><a href="#packages" class="footer-menu-link">Website Packages</a></li>
+                        <li><a href="#industries" class="footer-menu-link">Industries</a></li>
+                        <li><a href="#projects" class="footer-menu-link">Portfolio</a></li>
+                        <li><a href="#process" class="footer-menu-link">Our Process</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <span class="footer-col-title">Key Information</span>
+                    <ul class="footer-menu">
+                        <li><a href="#ecommerce" class="footer-menu-link">E-Commerce Setup</a></li>
+                        <li><a href="#compare" class="footer-menu-link">Interactive Proposal</a></li>
+                        <li><a href="https://hashirnisam.com" target="_blank" class="footer-menu-link">Founder's Site</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <span class="footer-col-title">Get in Touch</span>
+                    <div class="footer-contact-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <span>info@thewebbranding.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <span>Abuhail Centre, 3 22A St,<br>Hor Al Anz East, Dubai, UAE</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">&copy; <span id="current-year">2026</span> The Web Branding. Rebuilt for High Performance.</p>
+                <div class="footer-legal-links">
+                    <a href="#" class="legal-link">Privacy Policy</a>
+                    <a href="#" class="legal-link">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="./scripts/app.js"></script>
+
+    <!-- Interactive Mascot -->
+    <div class="mascot-container">
+        <div class="mascot">
+            <div class="mascot-head">
+                <div class="mascot-screen">
+                    <div class="mascot-eye left"></div>
+                    <div class="mascot-eye right"></div>
+                </div>
+            </div>
+            <div class="mascot-body">
+                <div class="mascot-arm left"></div>
+                <div class="mascot-arm right"></div>
+            </div>
+        </div>
+        <div class="mascot-shadow"></div>
+    </div>
+
+    <!-- CEO Floating Sales Bot (Bottom Left) -->
+    <div id="ceo-sales-bot" class="ceo-bot">
+        <div class="ceo-bot-avatar">
+            <img src="./assets/founder.png" alt="Hashir Nisam">
+        </div>
+        <div class="ceo-bot-bubble">
+            <div class="ceo-title">Hashir Nisam</div>
+            <p>Ready to launch your website in 15 days? Let's discuss your project.</p>
+            <div class="ceo-bot-actions">
+                <a href="https://wa.me/971585577182?text=Hi%20Hashir,%20I%20want%20to%20discuss%20our%20website%20project." target="_blank" class="ceo-bot-btn btn-chat">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.62.963 3.4 1.47 5.358 1.471 5.53 0 10.029-4.505 10.032-10.04.001-2.68-1.036-5.197-2.924-7.086-1.887-1.889-4.399-2.928-7.085-2.929-5.537 0-10.039 4.504-10.042 10.041-.001 1.884.492 3.722 1.428 5.34L1.737 21.8l6.115-1.606zM17.47 14.39c-.3-.149-1.777-.878-2.027-.971-.25-.091-.432-.136-.613.136-.181.272-.703.878-.862 1.058-.16.179-.318.2-.618.05-1.92-.953-3.08-1.93-4.225-3.89-.3-.513.3-.476.858-1.587.091-.182.046-.34-.023-.477-.069-.136-.613-1.477-.84-2.023-.222-.534-.447-.461-.613-.47l-.523-.01c-.181 0-.476.068-.726.34-.25.272-.953.931-.953 2.27s.976 2.632 1.112 2.813c.136.18 1.92 2.93 4.652 4.114.65.28 1.157.447 1.554.573.653.208 1.248.179 1.717.11.523-.078 1.777-.726 2.027-1.385.25-.658.25-1.226.175-1.385-.075-.159-.272-.25-.572-.399z"/></svg>
+                    WhatsApp
+                </a>
+                <a href="tel:+971544387023" class="ceo-bot-btn btn-call">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Call
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CEO bot scroll logic
+        window.addEventListener('scroll', () => {
+            const ceoBot = document.getElementById('ceo-sales-bot');
+            const heroSection = document.getElementById('home');
+            if (ceoBot && heroSection) {
+                const heroHeight = heroSection.offsetHeight;
+                if (window.scrollY > heroHeight - 100) {
+                    ceoBot.classList.add('visible');
+                } else {
+                    ceoBot.classList.remove('visible');
+                }
+            }
+        });
+    </script>
+
+    </body>
+</html>

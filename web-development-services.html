@@ -306,89 +306,6 @@
             margin-bottom: 15px;
         }
 
-        /* Auto-scrolling Marquee */
-        .projects-marquee {
-            overflow: hidden;
-            white-space: nowrap;
-            width: 100%;
-            position: relative;
-        }
-        .projects-track {
-            display: flex;
-            width: max-content;
-            gap: 20px;
-            padding-bottom: 20px;
-            --track-shift: -2520px;
-            animation: scroll-marquee 45s linear infinite;
-            will-change: transform;
-        }
-        .projects-track::after {
-            content: '';
-            width: 20px;
-            flex-shrink: 0;
-        }
-        .projects-track:hover {
-            animation-play-state: paused;
-        }
-        @keyframes scroll-marquee {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(var(--track-shift), 0, 0); }
-        }
-        .project-slide {
-            flex: 0 0 400px;
-            aspect-ratio: 4/3;
-            display: block;
-            position: relative;
-            overflow: hidden;
-            border: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        .project-slide:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        .project-placeholder-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        .project-slide:hover .project-placeholder-img {
-            transform: scale(1.05);
-        }
-        .project-overlay-custom {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 30px;
-            background: linear-gradient(0deg, rgba(10,11,14,0.95) 0%, rgba(10,11,14,0.7) 50%, transparent 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 2;
-        }
-        .project-slide:hover .project-overlay-custom {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .project-cat {
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent-blue);
-            margin-bottom: 8px;
-        }
-        .project-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            margin: 0;
-        }
 
         /* Footer CTA */
         .footer-cta {
@@ -409,12 +326,10 @@
         }
         @media (max-width: 768px) {
             .industry-grid { grid-template-columns: 1fr; }
-            .project-slide { flex: 0 0 300px; }
             .hero-title-campaign { font-size: clamp(2rem, 8vw, 3rem); } /* Mobile: 32px - 48px */
             .section-title { font-size: clamp(1.25rem, 4vw, 1.5rem); } /* Mobile: 20px - 24px */
             .campaign-hero { padding: 40px 0; }
             .pricing-card { padding: 30px 20px; }
-            .projects-track { --track-shift: -1920px; }
         }
 
         /* CEO Floating Sales Bot */
@@ -1181,70 +1096,70 @@
                     <div class="projects-track">
 
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">1Point360</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="360 New Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="360 New Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">360 New</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-bandhan-psi-vercel-app-2026-07-15-14_50_05.webp" alt="Bandhan Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-bandhan-psi-vercel-app-2026-07-15-14_50_05.webp" alt="Bandhan Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Bandhan</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-esglobal-hashirnisam-2026-07-15-15_13_24.webp" alt="ES Global Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-esglobal-hashirnisam-2026-07-15-15_13_24.webp" alt="ES Global Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">ES Global</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-mice-media-vercel-app-2026-07-15-14_56_15.webp" alt="Mice Media Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-mice-media-vercel-app-2026-07-15-14_56_15.webp" alt="Mice Media Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Mice Media</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-netexfreight-2026-07-15-14_50_52.webp" alt="Netex Freight Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-netexfreight-2026-07-15-14_50_52.webp" alt="Netex Freight Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Netex Freight</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-rashicafenew-hashirnisam-2026-07-15-15_15_46.webp" alt="Rashi Cafe Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-rashicafenew-hashirnisam-2026-07-15-15_15_46.webp" alt="Rashi Cafe Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Rashi Cafe</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-silvanglobal-2026-07-15-15_14_21.webp" alt="Silvan Global Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-silvanglobal-2026-07-15-15_14_21.webp" alt="Silvan Global Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Silvan Global</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-specsstores-hashirnisam-2026-07-15-15_16_40.webp" alt="Specs Stores Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-specsstores-hashirnisam-2026-07-15-15_16_40.webp" alt="Specs Stores Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Specs Stores</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-v2ebl-hashirnisam-2026-07-15-15_11_37.webp" alt="V2EBL Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-v2ebl-hashirnisam-2026-07-15-15_11_37.webp" alt="V2EBL Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">V2EBL</h3>
@@ -1252,70 +1167,70 @@
                         </a>
 
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">1Point360</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="360 New Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="360 New Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">360 New</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-bandhan-psi-vercel-app-2026-07-15-14_50_05.webp" alt="Bandhan Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-bandhan-psi-vercel-app-2026-07-15-14_50_05.webp" alt="Bandhan Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Bandhan</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-esglobal-hashirnisam-2026-07-15-15_13_24.webp" alt="ES Global Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-esglobal-hashirnisam-2026-07-15-15_13_24.webp" alt="ES Global Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">ES Global</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-mice-media-vercel-app-2026-07-15-14_56_15.webp" alt="Mice Media Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-mice-media-vercel-app-2026-07-15-14_56_15.webp" alt="Mice Media Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Mice Media</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-netexfreight-2026-07-15-14_50_52.webp" alt="Netex Freight Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-netexfreight-2026-07-15-14_50_52.webp" alt="Netex Freight Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Netex Freight</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-rashicafenew-hashirnisam-2026-07-15-15_15_46.webp" alt="Rashi Cafe Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-rashicafenew-hashirnisam-2026-07-15-15_15_46.webp" alt="Rashi Cafe Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Rashi Cafe</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-silvanglobal-2026-07-15-15_14_21.webp" alt="Silvan Global Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-silvanglobal-2026-07-15-15_14_21.webp" alt="Silvan Global Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Silvan Global</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-specsstores-hashirnisam-2026-07-15-15_16_40.webp" alt="Specs Stores Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-specsstores-hashirnisam-2026-07-15-15_16_40.webp" alt="Specs Stores Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">Specs Stores</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-v2ebl-hashirnisam-2026-07-15-15_11_37.webp" alt="V2EBL Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-v2ebl-hashirnisam-2026-07-15-15_11_37.webp" alt="V2EBL Web Design" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Web Development</span>
                                 <h3 class="project-title">V2EBL</h3>

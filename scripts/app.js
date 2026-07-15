@@ -1543,8 +1543,8 @@ Looking forward to bringing this digital transformation to life!`;
                 mascotContainer.style.pointerEvents = 'auto';
             }
             
-            // Elements to track
-            const targets = document.querySelectorAll('.section-title, .industry-card, .service-card, .portfolio-card');
+            // Elements to track (Disabled to keep mascot in fixed bottom corner)
+            const targets = []; // document.querySelectorAll('.section-title, .industry-card, .service-card, .portfolio-card');
             const centerY = window.innerHeight / 2;
             
             let closestTarget = null;
