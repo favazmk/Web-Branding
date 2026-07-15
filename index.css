@@ -2838,7 +2838,8 @@ nav {
     transition: transform 3s ease-in-out;
 }
 
-.ig-project-card:hover .ig-img {
+.ig-project-card:hover .ig-img,
+.ig-project-card.scrolling-active .ig-img {
     transform: translateY(calc(-100% + 400px));
 }
 
@@ -2856,7 +2857,8 @@ nav {
     pointer-events: none;
     z-index: 2;
 }
-.ig-project-card:hover .project-overlay-custom {
+.ig-project-card:hover .project-overlay-custom,
+.ig-project-card.scrolling-active .project-overlay-custom {
     opacity: 0;
 }
 .project-cat {

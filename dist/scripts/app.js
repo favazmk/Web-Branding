@@ -1756,4 +1756,37 @@ Looking forward to bringing this digital transformation to life!`;
     if (campaignLeadForm) {
         campaignLeadForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Website Quote'));
     }
+
+    // --- Mobile Portfolio Slide Scroll-on-Tap Logic ---
+    const initMobilePortfolioTapScroll = () => {
+        const cards = document.querySelectorAll('.ig-project-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                const href = card.getAttribute('href');
+                if (href === '#' || href === '') {
+                    e.preventDefault();
+                }
+                
+                // Toggle scrolling-active class on mobile viewport only
+                if (window.innerWidth <= 768) {
+                    const isActive = card.classList.contains('scrolling-active');
+                    
+                    // Remove active class from all other cards to reset them
+                    cards.forEach(c => {
+                        if (c !== card) {
+                            c.classList.remove('scrolling-active');
+                        }
+                    });
+                    
+                    if (isActive) {
+                        card.classList.remove('scrolling-active');
+                    } else {
+                        card.classList.add('scrolling-active');
+                    }
+                }
+            });
+        });
+    };
+    initMobilePortfolioTapScroll();
 });
