@@ -858,7 +858,8 @@
                         <!-- Form from the 1st version (Decreased Size) -->
                         <div class="lead-form-card" style="padding: 20px; border-radius: 16px; background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08);">
                             <h3 style="font-size: 1.3rem; margin-bottom: 15px; text-align: center; color: #fff; font-family: 'Outfit', sans-serif;">Get a Free Quote</h3>
-                            <form id="campaign-lead-form">
+                            <form id="campaign-lead-form" action="https://formsubmit.co/teamwebbranding@gmail.com" method="POST" target="invisible-iframe">
+                                <input type="hidden" name="_captcha" value="false">
                                 <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                                     <div style="flex: 1;">
                                         <input type="text" class="form-control" name="name" placeholder="Name" required style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
@@ -1662,5 +1663,7 @@
             }
         });
     </script>
+
+    <iframe name="invisible-iframe" style="display:none;"></iframe>
 </body>
 </html>

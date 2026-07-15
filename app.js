@@ -218,8 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- 4. Submit Lead Proposal Form ---
         const handleEstimatorSubmit = (e) => {
-            e.preventDefault();
-            
             const name = contactName.value.trim();
             const email = contactEmail.value.trim();
             const phone = contactPhone.value.trim();
@@ -227,14 +225,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const budget = parseInt(budgetRange.value, 10);
             
             if (!name) {
+                e.preventDefault();
                 showToast('Please enter your name.', 'error');
                 return;
             }
             if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                e.preventDefault();
                 showToast('Please enter a valid email address.', 'error');
                 return;
             }
             if (!phone || !/^[+]?[0-9\s\-()]{7,20}$/.test(phone)) {
+                e.preventDefault();
                 showToast('Please enter a valid phone number (8-15 digits).', 'error');
                 return;
             }
@@ -268,34 +269,23 @@ ${phone ? `• Phone: ${phone}` : ''}
 
 Looking forward to bringing this digital transformation to life!`;
 
-            // Submit proposal silently via FormSubmit AJAX API using JSON
-            fetch('https://formsubmit.co/ajax/teamwebbranding@gmail.com', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    _subject: "Custom Project Proposal - " + name,
-                    message: message
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("FormSubmit Response:", data);
-                showToast("Thank you! Your custom proposal request has been submitted successfully.", "success");
+            // Populate hidden inputs for FormSubmit native post
+            try {
+                document.getElementById('est-hidden-name').value = name;
+                document.getElementById('est-hidden-email').value = email;
+                document.getElementById('est-hidden-phone').value = phone;
+                document.getElementById('est-hidden-message').value = message;
+            } catch(err) {
+                console.error("Error setting hidden fields:", err);
+            }
+
+            showToast("Thank you! Your custom proposal request has been submitted successfully.", "success");
+            setTimeout(() => {
                 try {
                     projectForm.reset();
-                } catch(e) {}
-            })
-            .catch(error => {
-                console.error("FormSubmit Error:", error);
-                showToast("Something went wrong, please try again or contact us directly!", "error");
-                alert("Submission failed. Please contact us directly at teamwebbranding@gmail.com");
-            });
+                    updateEstimator();
+                } catch(err) {}
+            }, 100);
         };
 
         projectForm.addEventListener('submit', handleEstimatorSubmit);
@@ -1662,7 +1652,6 @@ Looking forward to bringing this digital transformation to life!`;
 
     // --- 7. Additional Form Handlers (Lead & Audit Forms) ---
     const handleGenericFormSubmit = (e, title) => {
-        e.preventDefault();
         const form = e.target;
         const name = form.querySelector('[name="name"]')?.value || '';
         const phone = form.querySelector('[name="phone"]')?.value || '';
@@ -1671,62 +1660,34 @@ Looking forward to bringing this digital transformation to life!`;
         const service = form.querySelector('[name="service"]')?.value || '';
         const messageInput = form.querySelector('[name="message"]')?.value || '';
 
-        let message = `Hi Hashir & The Web Branding Team,\n\nI would like to request a ${title}.\n\n💼 *My Details:*\n• Name: ${name}\n• Phone: ${phone}\n`;
-        
-        if (email) message += `• Email / Website: ${email}\n`;
-        if (company) message += `• Company: ${company}\n`;
-        if (service) message += `• Interested In: ${service}\n`;
-        if (messageInput) message += `\n💬 *Additional Notes:*\n${messageInput}\n`;
-
-        message += `\nLooking forward to hearing from you!`;
-
         if (!name) {
+            e.preventDefault();
             showToast("Please enter your name.", "error");
             return;
         }
         if (!phone || !/^[+]?[0-9\s\-()]{7,20}$/.test(phone)) {
+            e.preventDefault();
             showToast("Please enter a valid phone number (8-15 digits).", "error");
             return;
         }
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            e.preventDefault();
             showToast("Please enter a valid email address.", "error");
             return;
         }
         if (form.querySelector('[name="service"]') && !service) {
+            e.preventDefault();
             showToast("Please select a service from the dropdown.", "error");
             return;
         }
 
-        // Submit form silently via FormSubmit AJAX API using JSON
-        fetch('https://formsubmit.co/ajax/teamwebbranding@gmail.com', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                name: name,
-                phone: phone,
-                email: email,
-                company: company,
-                service: service,
-                _subject: title + " Request - " + name,
-                message: message
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("FormSubmit Response:", data);
-            showToast("Thank you! Your request has been submitted successfully.", "success");
+        // Show toast immediately and reset natively
+        showToast("Thank you! Your request has been submitted successfully.", "success");
+        setTimeout(() => {
             try {
                 form.reset();
             } catch(e) {}
-        })
-        .catch(error => {
-            console.error("FormSubmit Error:", error);
-            showToast("Something went wrong, please try again or contact us directly!", "error");
-            alert("Submission failed. Please contact us directly at teamwebbranding@gmail.com");
-        });
+        }, 100);
     };
 
     const marketingLeadForm = document.getElementById('marketing-lead-form');
