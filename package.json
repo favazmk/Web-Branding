@@ -1,7 +1,7 @@
 {
-  "name": "the-web-branding-static",
+  "name": "web-branding",
   "version": "1.0.0",
   "scripts": {
-    "build": "node build.js"
+    "build": "node scripts/build.js"
   }
 }
