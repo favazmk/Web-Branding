@@ -2499,15 +2499,36 @@ nav {
 }
 
 .mascot-container.in-hero {
-    width: 320px;
-    height: 320px;
+    width: 360px;
+    height: 360px;
     animation: none; /* Disable float animation when in hero */
+}
+.mascot-container.in-hero .mascot {
+    transform: scale(2.4);
+    transform-origin: center center;
+}
+.mascot-container.in-hero .mascot-shadow {
+    transform: scale(2.4);
+    transform-origin: center center;
+}
+
+.mascot-container.in-hero:hover .mascot {
+    transform: scale(2.6) rotate(-3deg);
 }
 
 @media (max-width: 992px) {
     .mascot-container.in-hero {
-        width: 200px;
-        height: 200px;
+        width: 220px;
+        height: 220px;
+    }
+    .mascot-container.in-hero .mascot {
+        transform: scale(1.5);
+    }
+    .mascot-container.in-hero .mascot-shadow {
+        transform: scale(1.5);
+    }
+    .mascot-container.in-hero:hover .mascot {
+        transform: scale(1.6) rotate(-3deg);
     }
 }
 
@@ -2522,8 +2543,8 @@ nav {
 }
 
 .mascot-hero-target {
-    width: 320px;
-    height: 320px;
+    width: 360px;
+    height: 360px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2533,9 +2554,9 @@ nav {
 
 @media (max-width: 992px) {
     .mascot-hero-target {
-        width: 200px;
-        height: 200px;
-        margin: 40px auto 0;
+        width: 220px;
+        height: 220px;
+        margin: 20px auto;
     }
 }
 
@@ -2740,6 +2761,15 @@ nav {
         gap: 50px;
         align-items: center;
         text-align: left;
+    }
+
+    .campaign-hero .hero-right-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 20px !important;
+        width: 100% !important;
     }
 
     @media (max-width: 992px) {
