@@ -2704,8 +2704,20 @@ nav {
         .campaign-hero .hero-features {
             justify-content: center !important;
         }
-        .campaign-hero .hero-left-content > div[style*="display: flex"]:last-child {
-            justify-content: center !important;
+        .campaign-hero .campaign-hero-buttons {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            width: 100% !important;
+            gap: 12px !important;
+        }
+        .campaign-hero .campaign-hero-buttons .btn {
+            width: 100% !important;
+            text-align: center !important;
+            box-sizing: border-box !important;
+            padding: 14px 20px !important;
+            font-size: 0.95rem !important;
+            border-radius: 50px !important;
+            display: block !important;
         }
         .campaign-hero .hero-right-content {
             width: 100%;
@@ -2754,15 +2766,21 @@ nav {
             gap: 8px;
             align-items: center;
         }
-        .campaign-hero .hero-left-content > div[style*="display: flex"]:last-child {
-            justify-content: center !important;
-            width: 100%;
+        .campaign-hero .campaign-hero-buttons {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            width: 100% !important;
+            gap: 12px !important;
+            margin-top: 10px;
         }
-        .campaign-hero .hero-left-content > div[style*="display: flex"]:last-child .btn {
-            flex: 1;
-            text-align: center;
-            font-size: 0.85rem;
-            padding: 10px 12px;
+        .campaign-hero .campaign-hero-buttons .btn {
+            width: 100% !important;
+            text-align: center !important;
+            box-sizing: border-box !important;
+            padding: 14px 20px !important;
+            font-size: 0.95rem !important;
+            border-radius: 50px !important;
+            display: block !important;
         }
     }
 
