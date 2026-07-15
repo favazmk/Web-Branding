@@ -1643,7 +1643,7 @@ Looking forward to bringing this digital transformation to life!`;
             const rotateY = (deltaX / window.innerWidth) * maxHeadRotate;
             const rotateX = -(deltaY / window.innerHeight) * maxHeadRotate;
             
-            mascotHead.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+            mascotHead.style.transform = `translateZ(20px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
         });
 
         window.addEventListener('mouseleave', () => {
@@ -1652,7 +1652,7 @@ Looking forward to bringing this digital transformation to life!`;
                 eye.style.setProperty('--eye-y', '0px');
             });
             if (mascotHead) {
-                mascotHead.style.transform = 'rotateY(0deg) rotateX(0deg)';
+                mascotHead.style.transform = 'translateZ(20px) rotateY(0deg) rotateX(0deg)';
             }
         });
 

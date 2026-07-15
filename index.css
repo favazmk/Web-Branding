@@ -2627,6 +2627,8 @@ nav {
     justify-content: center;
     align-items: center;
     z-index: 2;
+    transform: translateZ(20px);
+    transform-style: preserve-3d;
 }
 
 .mascot-screen {
@@ -2680,6 +2682,7 @@ nav {
     position: relative;
     z-index: 1;
     box-shadow: inset -3px -3px 8px rgba(0,0,0,0.3), 0 5px 10px rgba(0,0,0,0.3);
+    transform: translateZ(-10px);
 }
 
 .mascot-arm {
