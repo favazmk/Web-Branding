@@ -1611,55 +1611,48 @@ Looking forward to bringing this digital transformation to life!`;
             currentClosestTarget = closestTarget;
         };
 
-        // --- Mascot Video Mouse Scrub Control ---
-        const video = mascotContainer.querySelector('#mascot-video');
-        if (video) {
-            let prevX = null;
-            let targetTime = 0;
-            let isSeeking = false;
-            let pendingSeek = false;
+        // --- Mascot Face Mouse-Tracking Logic ---
+        const mascotHead = mascotContainer.querySelector('.mascot-head');
+        const mascotEyes = mascotContainer.querySelectorAll('.mascot-eye');
 
-            video.addEventListener('loadedmetadata', () => {
-                targetTime = video.currentTime;
+        window.addEventListener('mousemove', (e) => {
+            if (!mascotHead) return;
+            
+            const rect = mascotHead.getBoundingClientRect();
+            const headCenterX = rect.left + rect.width / 2;
+            const headCenterY = rect.top + rect.height / 2;
+            
+            const deltaX = e.clientX - headCenterX;
+            const deltaY = e.clientY - headCenterY;
+            const distance = Math.hypot(deltaX, deltaY);
+            
+            const angle = Math.atan2(deltaY, deltaX);
+            
+            // Translate eyes inside the screen (max 5px translation)
+            const maxEyeDist = 5;
+            const eyeX = Math.cos(angle) * Math.min(maxEyeDist, distance / 20);
+            const eyeY = Math.sin(angle) * Math.min(maxEyeDist, distance / 20);
+            
+            mascotEyes.forEach(eye => {
+                eye.style.transform = `translate(${eyeX}px, ${eyeY}px)`;
             });
+            
+            // Rotate the mascot head slightly in 3D to face the cursor (max 15 degrees)
+            const maxHeadRotate = 15;
+            const rotateY = (deltaX / window.innerWidth) * maxHeadRotate;
+            const rotateX = -(deltaY / window.innerHeight) * maxHeadRotate;
+            
+            mascotHead.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+        });
 
-            window.addEventListener('mousemove', (e) => {
-                if (prevX === null) {
-                    prevX = e.clientX;
-                    return;
-                }
-
-                const delta = e.clientX - prevX;
-                prevX = e.clientX;
-
-                if (!video.duration) return;
-
-                const sensitivity = 0.8;
-                const timeOffset = (delta / window.innerWidth) * sensitivity * video.duration;
-                
-                targetTime = Math.max(0, Math.min(video.duration, targetTime + timeOffset));
-                
-                performSeek();
+        window.addEventListener('mouseleave', () => {
+            mascotEyes.forEach(eye => {
+                eye.style.transform = 'translate(0, 0)';
             });
-
-            function performSeek() {
-                if (isSeeking) {
-                    pendingSeek = true;
-                    return;
-                }
-
-                isSeeking = true;
-                video.currentTime = targetTime;
+            if (mascotHead) {
+                mascotHead.style.transform = 'rotateY(0deg) rotateX(0deg)';
             }
-
-            video.addEventListener('seeked', () => {
-                isSeeking = false;
-                if (pendingSeek) {
-                    pendingSeek = false;
-                    performSeek();
-                }
-            });
-        }
+        });
 
         // Initial setup
         setTimeout(updateMascotPosition, 100);
@@ -1939,37 +1932,4 @@ Looking forward to bringing this digital transformation to life!`;
         });
     };
     initCustomSelects();
-
-    // --- Mobile Portfolio Slide Scroll-on-Tap Logic ---
-    const initMobilePortfolioTapScroll = () => {
-        const cards = document.querySelectorAll('.ig-project-card');
-        
-        cards.forEach(card => {
-            card.addEventListener('click', (e) => {
-                const href = card.getAttribute('href');
-                if (href === '#' || href === '') {
-                    e.preventDefault();
-                }
-                
-                // Toggle scrolling-active class on mobile viewport only
-                if (window.innerWidth <= 768) {
-                    const isActive = card.classList.contains('scrolling-active');
-                    
-                    // Remove active class from all other cards to reset them
-                    cards.forEach(c => {
-                        if (c !== card) {
-                            c.classList.remove('scrolling-active');
-                        }
-                    });
-                    
-                    if (isActive) {
-                        card.classList.remove('scrolling-active');
-                    } else {
-                        card.classList.add('scrolling-active');
-                    }
-                }
-            });
-        });
-    };
-    initMobilePortfolioTapScroll();
 });
