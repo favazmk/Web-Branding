@@ -2680,3 +2680,103 @@ nav {
         text-align: left;
     }
 }
+
+/* Projects Marquee & Hover Effect (Ported from Digital Marketing) */
+.projects-marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.projects-track {
+    display: flex;
+    width: max-content;
+    gap: 20px;
+    --track-shift: -3600px; /* Adjust based on slides */
+    animation: scroll-marquee 60s linear infinite;
+    padding: 20px 0;
+    will-change: transform;
+}
+.projects-track::after {
+    content: '';
+    width: 20px;
+    flex-shrink: 0;
+}
+.projects-track:hover {
+    animation-play-state: paused;
+}
+@keyframes scroll-marquee {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(var(--track-shift), 0, 0); }
+}
+
+.project-slide {
+    flex: 0 0 auto;
+    width: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    cursor: pointer;
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    display: block;
+}
+
+.ig-project-card {
+    height: 400px;
+    width: 320px;
+}
+
+.ig-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 3s ease-in-out;
+}
+
+.ig-project-card:hover .ig-img {
+    transform: translateY(calc(-100% + 400px));
+}
+
+.project-overlay-custom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 80px 20px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: var(--transition-smooth);
+    pointer-events: none;
+    z-index: 2;
+}
+.ig-project-card:hover .project-overlay-custom {
+    opacity: 0;
+}
+.project-cat {
+    color: var(--accent-blue);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+.project-title {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+}
+
+@media (max-width: 768px) {
+    .project-slide { flex: 0 0 300px; }
+    .projects-track { --track-shift: -2800px; }
+}
