@@ -1435,9 +1435,31 @@ Looking forward to bringing this digital transformation to life!`;
 
         let currentClosestTarget = null;
         const updateMascotPosition = () => {
+            const ceoBot = document.getElementById('ceo-sales-bot');
+            const isCeoBotVisible = ceoBot && ceoBot.classList.contains('visible');
+
             // Default bottom-right corner
-            const defaultX = window.innerWidth - 120;
-            const defaultY = window.innerHeight - 150;
+            let defaultX = window.innerWidth - 120;
+            let defaultY = window.innerHeight - 150;
+
+            if (ceoBot) {
+                // Sit on top of CEO bot avatar on bottom-left
+                defaultX = 15;
+                defaultY = window.innerHeight - 170;
+
+                // Bind mascot visibility to CEO bot visibility status
+                if (isCeoBotVisible) {
+                    mascotContainer.style.opacity = '1';
+                    mascotContainer.style.pointerEvents = 'auto';
+                } else {
+                    mascotContainer.style.opacity = '0';
+                    mascotContainer.style.pointerEvents = 'none';
+                }
+            } else {
+                // Standard visibility for pages without CEO bot
+                mascotContainer.style.opacity = '1';
+                mascotContainer.style.pointerEvents = 'auto';
+            }
             
             // Elements to track
             const targets = document.querySelectorAll('.section-title, .industry-card, .service-card, .portfolio-card');
