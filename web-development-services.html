@@ -316,7 +316,13 @@
         }
 
         @media (max-width: 992px) {
-            .campaign-hero .hero-grid { grid-template-columns: 1fr; }
+            .campaign-hero .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .lead-form-card {
+                max-width: 100%;
+            }
             .pricing-grid { grid-template-columns: 1fr; }
             .pricing-card.popular { transform: scale(1); }
             .pricing-card.popular:hover { transform: translateY(-5px); }
@@ -325,11 +331,46 @@
             .footer-cta .container .fade-in-up { display: flex; flex-direction: column; align-items: center; }
         }
         @media (max-width: 768px) {
+            .campaign-hero {
+                padding: 30px 0 40px;
+            }
+            .campaign-hero .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            .hero-title-campaign {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+            .hero-subtitle-campaign {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+            .lead-form-card {
+                padding: 20px;
+                max-width: 100%;
+            }
+            .lead-form-card h3 {
+                font-size: 1.25rem;
+            }
+            .form-row {
+                flex-direction: column;
+            }
+            .section-title {
+                font-size: clamp(1.25rem, 4vw, 1.5rem);
+            }
             .industry-grid { grid-template-columns: 1fr; }
-            .hero-title-campaign { font-size: clamp(2rem, 8vw, 3rem); } /* Mobile: 32px - 48px */
-            .section-title { font-size: clamp(1.25rem, 4vw, 1.5rem); } /* Mobile: 20px - 24px */
-            .campaign-hero { padding: 40px 0; }
             .pricing-card { padding: 30px 20px; }
+            .hero-features {
+                flex-direction: column;
+                gap: 10px;
+            }
+            /* Override inline flex on the name/phone row */
+            .lead-form-card form > div[style*="display: flex"] {
+                flex-direction: column !important;
+            }
+            .hero-subtitle-campaign {
+                max-width: 100% !important;
+            }
         }
 
         /* CEO Floating Sales Bot */
