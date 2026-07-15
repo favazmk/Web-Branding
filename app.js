@@ -218,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- 4. Submit Lead Proposal Form ---
         const handleEstimatorSubmit = (e) => {
+            e.preventDefault();
             const name = contactName.value.trim();
             const email = contactEmail.value.trim();
             const phone = contactPhone.value.trim();
@@ -269,23 +270,40 @@ ${phone ? `• Phone: ${phone}` : ''}
 
 Looking forward to bringing this digital transformation to life!`;
 
-            // Populate hidden inputs for FormSubmit native post
-            try {
-                document.getElementById('est-hidden-name').value = name;
-                document.getElementById('est-hidden-email').value = email;
-                document.getElementById('est-hidden-phone').value = phone;
-                document.getElementById('est-hidden-message').value = message;
-            } catch(err) {
-                console.error("Error setting hidden fields:", err);
-            }
-
-            showToast("Thank you! Your custom proposal request has been submitted successfully.", "success");
-            setTimeout(() => {
-                try {
-                    projectForm.reset();
-                    updateEstimator();
-                } catch(err) {}
-            }, 100);
+            // Submit via Web3Forms API
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    access_key: "cbb2e47c-db82-422e-ab1c-2cecf1464b94",
+                    subject: "New Custom Project Proposal - " + name,
+                    from_name: name,
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    message: message
+                })
+            })
+            .then(async (response) => {
+                let json = await response.json();
+                if (response.status == 200) {
+                    showToast("Thank you! Your custom proposal request has been submitted successfully.", "success");
+                    try {
+                        projectForm.reset();
+                        updateEstimator();
+                    } catch(err) {}
+                } else {
+                    console.log(response);
+                    showToast("Something went wrong, please contact us directly!", "error");
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                showToast("Something went wrong, please contact us directly!", "error");
+            });
         };
 
         projectForm.addEventListener('submit', handleEstimatorSubmit);
@@ -1652,6 +1670,7 @@ Looking forward to bringing this digital transformation to life!`;
 
     // --- 7. Additional Form Handlers (Lead & Audit Forms) ---
     const handleGenericFormSubmit = (e, title) => {
+        e.preventDefault();
         const form = e.target;
         const name = form.querySelector('[name="name"]')?.value || '';
         const phone = form.querySelector('[name="phone"]')?.value || '';
@@ -1681,13 +1700,39 @@ Looking forward to bringing this digital transformation to life!`;
             return;
         }
 
-        // Show toast immediately and reset natively
-        showToast("Thank you! Your request has been submitted successfully.", "success");
-        setTimeout(() => {
-            try {
-                form.reset();
-            } catch(e) {}
-        }, 100);
+        // Submit via Web3Forms API
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                access_key: "cbb2e47c-db82-422e-ab1c-2cecf1464b94",
+                subject: title + " Request - " + name,
+                from_name: name,
+                name: name,
+                phone: phone,
+                email: email,
+                company: company,
+                service: service,
+                message: message
+            })
+        })
+        .then(async (response) => {
+            let json = await response.json();
+            if (response.status == 200) {
+                showToast("Thank you! Your request has been submitted successfully.", "success");
+                try { form.reset(); } catch(e) {}
+            } else {
+                console.log(response);
+                showToast("Something went wrong, please contact us directly!", "error");
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            showToast("Something went wrong, please contact us directly!", "error");
+        });
     };
 
     const marketingLeadForm = document.getElementById('marketing-lead-form');
@@ -1700,8 +1745,8 @@ Looking forward to bringing this digital transformation to life!`;
         marketingAuditForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Free Marketing Consultation'));
     }
 
-    // const campaignLeadForm = document.getElementById('campaign-lead-form');
-    // if (campaignLeadForm) {
-    //     campaignLeadForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Website Quote'));
-    // }
+    const campaignLeadForm = document.getElementById('campaign-lead-form');
+    if (campaignLeadForm) {
+        campaignLeadForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Website Quote'));
+    }
 });

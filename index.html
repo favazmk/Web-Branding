@@ -587,7 +587,7 @@
                 <div class="estimator-layout glass-card reveal-3d-fold">
 
                     <!-- Form Controls -->
-                    <form class="estimator-form" id="project-estimator-form" action="https://formsubmit.co/teamwebbranding@gmail.com" method="POST" target="invisible-iframe">
+                    <form class="estimator-form" id="project-estimator-form">
 
                         <!-- Services Checklist -->
                         <div>
@@ -653,13 +653,7 @@
                                     class="form-input" required>
                                 <input type="tel" id="client-phone" placeholder="Phone Number"
                                     class="form-input" required pattern="[+]?[0-9\s\-()]{7,20}">
-                                <!-- Hidden fields for FormSubmit native iframe post -->
-                                <input type="hidden" name="name" id="est-hidden-name">
-                                <input type="hidden" name="email" id="est-hidden-email">
-                                <input type="hidden" name="phone" id="est-hidden-phone">
-                                <input type="hidden" name="message" id="est-hidden-message">
-                                <input type="hidden" name="_subject" value="Custom Project Proposal">
-                                <input type="hidden" name="_captcha" value="false">
+                                
                             </div>
                         </div>
 
@@ -1066,7 +1060,6 @@
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 
-    <iframe name="invisible-iframe" style="display:none;"></iframe>
-</body>
+    </body>
 
 </html>
