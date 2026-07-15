@@ -4,6 +4,51 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     
+    // --- Custom Toast Warning/Success System (Agency Themed) ---
+    const showToast = (message, type = 'success') => {
+        const existingToast = document.getElementById('twb-toast');
+        if (existingToast) existingToast.remove();
+
+        const toast = document.createElement('div');
+        toast.id = 'twb-toast';
+        toast.style.position = 'fixed';
+        toast.style.bottom = '30px';
+        toast.style.right = '30px';
+        toast.style.zIndex = '100000';
+        toast.style.background = 'linear-gradient(135deg, rgba(35, 15, 65, 0.95) 0%, rgba(15, 8, 30, 0.98) 100%)';
+        toast.style.border = type === 'success' ? '1.5px solid rgba(0, 229, 255, 0.5)' : '1.5px solid rgba(225, 29, 72, 0.5)';
+        toast.style.boxShadow = type === 'success' ? '0 10px 30px rgba(0, 229, 255, 0.15)' : '0 10px 30px rgba(225, 29, 72, 0.15)';
+        toast.style.borderRadius = '12px';
+        toast.style.padding = '18px 24px';
+        toast.style.color = '#fff';
+        toast.style.fontFamily = "'Inter', sans-serif";
+        toast.style.fontSize = '1rem';
+        toast.style.display = 'flex';
+        toast.style.alignItems = 'center';
+        toast.style.gap = '12px';
+        toast.style.transform = 'translateY(100px)';
+        toast.style.opacity = '0';
+        toast.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+
+        const iconSvg = type === 'success' 
+            ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`
+            : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
+
+        toast.innerHTML = `${iconSvg} <span style="font-weight: 500;">${message}</span>`;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.transform = 'translateY(0)';
+            toast.style.opacity = '1';
+        }, 50);
+
+        setTimeout(() => {
+            toast.style.transform = 'translateY(100px)';
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 400);
+        }, 4000);
+    };
+    
     // --- 1. Header Scroll Effect ---
     const header = document.getElementById('main-header');
     
@@ -182,7 +227,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const budget = parseInt(budgetRange.value, 10);
             
             if (!name) {
-                alert('Please provide your name so we can address you.');
+                showToast('Please enter your name.', 'error');
+                return;
+            }
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast('Please enter a valid email address.', 'error');
+                return;
+            }
+            if (!phone || !/^[+]?[0-9]{8,15}$/.test(phone)) {
+                showToast('Please enter a valid phone number (8-15 digits).', 'error');
                 return;
             }
 
@@ -232,11 +285,12 @@ Looking forward to bringing this digital transformation to life!`;
             })
             .then(response => response.json())
             .then(data => {
-                alert("Thank you! Your custom proposal request has been submitted successfully.");
+                showToast("Thank you! Your custom proposal request has been submitted successfully.", "success");
+                projectForm.reset();
             })
             .catch(error => {
                 console.error(error);
-                alert("Something went wrong, please try again or contact us directly!");
+                showToast("Something went wrong, please try again or contact us directly!", "error");
             });
         };
 
@@ -1622,6 +1676,23 @@ Looking forward to bringing this digital transformation to life!`;
 
         message += `\nLooking forward to hearing from you!`;
 
+        if (!name) {
+            showToast("Please enter your name.", "error");
+            return;
+        }
+        if (!phone || !/^[+]?[0-9]{8,15}$/.test(phone)) {
+            showToast("Please enter a valid phone number (8-15 digits).", "error");
+            return;
+        }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showToast("Please enter a valid email address.", "error");
+            return;
+        }
+        if (form.querySelector('[name="service"]') && !service) {
+            showToast("Please select a service from the dropdown.", "error");
+            return;
+        }
+
         // Submit form silently via FormSubmit AJAX API
         fetch('https://formsubmit.co/ajax/sales@thewebbranding.com', {
             method: 'POST',
@@ -1641,12 +1712,12 @@ Looking forward to bringing this digital transformation to life!`;
         })
         .then(response => response.json())
         .then(data => {
-            alert("Thank you! Your request has been submitted successfully.");
+            showToast("Thank you! Your request has been submitted successfully.", "success");
             form.reset();
         })
         .catch(error => {
             console.error(error);
-            alert("Something went wrong, please try again or contact us directly!");
+            showToast("Something went wrong, please try again or contact us directly!", "error");
         });
     };
 
