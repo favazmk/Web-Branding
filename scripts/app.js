@@ -1505,7 +1505,168 @@ Looking forward to bringing this digital transformation to life!`;
     };
     initFloatingPillHeader();
 
-    // --- Interactive Mascot Flying Logic Removed ---
+    // --- Interactive Mascot Flying Logic ---
+    const initMascot = () => {
+        const mascotContainer = document.querySelector('.mascot-container');
+        if (!mascotContainer) return;
+
+        // Reset CSS for JS positioning
+        mascotContainer.style.bottom = 'auto';
+        mascotContainer.style.right = 'auto';
+        mascotContainer.style.transition = 'top 0.8s cubic-bezier(0.25, 1, 0.5, 1), left 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+
+        let currentClosestTarget = null;
+        const updateMascotPosition = () => {
+            const ceoBot = document.getElementById('ceo-sales-bot');
+            const isCeoBotVisible = ceoBot && ceoBot.classList.contains('visible');
+
+            // Default bottom-right corner
+            let defaultX = window.innerWidth - 120;
+            let defaultY = window.innerHeight - 150;
+
+            if (ceoBot) {
+                // Sit on top of CEO bot avatar on bottom-left
+                defaultX = 15;
+                defaultY = window.innerHeight - 215;
+
+                // Bind mascot visibility to CEO bot visibility status
+                if (isCeoBotVisible) {
+                    mascotContainer.style.opacity = '1';
+                    mascotContainer.style.pointerEvents = 'auto';
+                } else {
+                    mascotContainer.style.opacity = '0';
+                    mascotContainer.style.pointerEvents = 'none';
+                }
+            } else {
+                // Standard visibility for pages without CEO bot
+                mascotContainer.style.opacity = '1';
+                mascotContainer.style.pointerEvents = 'auto';
+            }
+            
+            // Elements to track
+            const targets = document.querySelectorAll('.section-title, .industry-card, .service-card, .portfolio-card');
+            const centerY = window.innerHeight / 2;
+            
+            let closestTarget = null;
+            let minDistance = Infinity;
+
+            targets.forEach(target => {
+                const rect = target.getBoundingClientRect();
+                if (rect.width > 0 && rect.height > 0) {
+                    const targetCenterY = rect.top + rect.height / 2;
+                    const distance = Math.abs(centerY - targetCenterY);
+                    
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestTarget = target;
+                    }
+                }
+            });
+
+            // If a target is near the center, fly to it
+            if (closestTarget && minDistance < 250) {
+                const rect = closestTarget.getBoundingClientRect();
+                // Sit on top-right of the element
+                let targetX = rect.right - 80; 
+                let targetY = rect.top - 90; 
+                
+                // On mobile, center the mascot above the card
+                if (window.innerWidth < 768) {
+                    targetX = rect.left + (rect.width / 2) - 45; // Center horizontally
+                    targetY = rect.top - 70; // Slightly closer vertically due to scale down
+                }
+                
+                // Keep within screen bounds
+                targetX = Math.max(20, Math.min(targetX, window.innerWidth - 120));
+                targetY = Math.max(20, Math.min(targetY, window.innerHeight - 150));
+
+                mascotContainer.style.left = `${targetX}px`;
+                mascotContainer.style.top = `${targetY}px`;
+            } else {
+                // Fly back to default
+                mascotContainer.style.left = `${defaultX}px`;
+                mascotContainer.style.top = `${defaultY}px`;
+            }
+            currentClosestTarget = closestTarget;
+        };
+
+        // Initial setup
+        setTimeout(updateMascotPosition, 100);
+
+        // Throttle scroll events
+        let isScrolling = false;
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    updateMascotPosition();
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+            // Hide bubble on scroll
+            if (bubble && bubble.classList.contains('show')) {
+                bubble.classList.remove('show');
+            }
+        });
+
+        window.addEventListener('resize', updateMascotPosition);
+
+        // Add speech bubble
+        const bubble = document.createElement('div');
+        bubble.className = 'mascot-bubble';
+        mascotContainer.appendChild(bubble);
+        
+        // Hide bubble when clicking elsewhere
+        document.addEventListener('click', (e) => {
+            if (!mascotContainer.contains(e.target) && bubble.classList.contains('show')) {
+                bubble.classList.remove('show');
+            }
+        });
+
+        let bubbleTimeout;
+        mascotContainer.removeAttribute('onclick'); // Remove any HTML inline onclick
+        
+        mascotContainer.addEventListener('click', () => {
+            clearTimeout(bubbleTimeout);
+            let pitch = "Hello! I'm here to help you build something amazing. Click Book Now to chat!";
+            
+            if (currentClosestTarget) {
+                const text = currentClosestTarget.innerText.toLowerCase();
+                const className = currentClosestTarget.className.toLowerCase();
+                
+                if (text.includes('marketing') || text.includes('seo') || className.includes('service')) {
+                    pitch = "Want to 10x your traffic? Let's talk about our Digital Marketing strategies!";
+                } else if (text.includes('fashion') || text.includes('commerce') || text.includes('store')) {
+                    pitch = "Ready to sell online? I can set up a high-converting E-Commerce store for you!";
+                } else if (className.includes('portfolio') || text.includes('real estate') || text.includes('portal')) {
+                    pitch = "Need a premium platform? Our custom web apps are lightning fast and secure!";
+                } else if (className.includes('industry')) {
+                    pitch = `Love what you see? We can build a complete solution for just AED 4,499!`;
+                }
+            }
+            
+            bubble.innerText = pitch;
+            
+            // Adjust bubble direction based on mascot screen position
+            const rect = mascotContainer.getBoundingClientRect();
+            if (rect.left < window.innerWidth / 2) {
+                // Mascot on left half: Bubble grows towards right
+                bubble.classList.remove('bubble-right');
+                bubble.classList.add('bubble-left');
+            } else {
+                // Mascot on right half: Bubble grows towards left
+                bubble.classList.remove('bubble-left');
+                bubble.classList.add('bubble-right');
+            }
+            
+            bubble.classList.add('show');
+            
+            bubbleTimeout = setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 5000);
+        });
+    };
+    initMascot();
 
     // --- 7. Additional Form Handlers (Lead & Audit Forms) ---
     const handleGenericFormSubmit = (e, title) => {
