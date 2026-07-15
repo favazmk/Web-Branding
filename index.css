@@ -2880,3 +2880,101 @@ nav {
     .project-slide { flex: 0 0 300px; }
     .projects-track { --track-shift: -3200px; /* 10 slides * 320px */ }
 }
+
+/* Custom Select Dropdown Styling */
+.custom-select-container {
+    position: relative;
+    width: 100%;
+    user-select: none;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+}
+
+.custom-select-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 45px;
+    box-sizing: border-box;
+}
+
+.custom-select-trigger:hover,
+.custom-select-container.open .custom-select-trigger {
+    border-color: #8b3dff;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 10px rgba(139, 61, 255, 0.25);
+}
+
+.custom-select-trigger span.placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.custom-select-arrow {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid rgba(255, 255, 255, 0.6);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+    transform: rotate(45deg);
+    margin-top: -3px;
+    margin-right: 4px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.custom-select-container.open .custom-select-arrow {
+    transform: rotate(-135deg);
+    margin-top: 3px;
+    border-color: #8b3dff;
+}
+
+.custom-select-options {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: rgba(20, 10, 35, 0.98);
+    border: 1px solid rgba(139, 61, 255, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 15px rgba(139, 61, 255, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 9999;
+    overflow: hidden;
+    backdrop-filter: blur(15px);
+}
+
+.custom-select-container.open .custom-select-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.custom-select-option {
+    padding: 12px 16px;
+    color: #e5e7eb;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.custom-select-option:hover {
+    background: rgba(139, 61, 255, 0.18);
+    color: #ffffff;
+    padding-left: 22px; /* Micro-animation */
+}
+
+.custom-select-option.selected {
+    background: #8b3dff;
+    color: #ffffff;
+    font-weight: 600;
+}
