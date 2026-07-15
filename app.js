@@ -1559,7 +1559,7 @@ Looking forward to bringing this digital transformation to life!`;
                 } else if (className.includes('portfolio') || text.includes('real estate') || text.includes('portal')) {
                     pitch = "Need a premium platform? Our custom web apps are lightning fast and secure!";
                 } else if (className.includes('industry')) {
-                    pitch = `Love what you see? We can build a complete solution for just AED 2999!`;
+                    pitch = `Love what you see? We can build a complete solution for just AED 4,499!`;
                 }
             }
             
