@@ -1679,6 +1679,13 @@ Looking forward to bringing this digital transformation to life!`;
         const service = form.querySelector('[name="service"]')?.value || '';
         const messageInput = form.querySelector('[name="message"]')?.value || '';
 
+        let message = `Hi Hashir & The Web Branding Team,\n\nI would like to request a ${title}.\n\n💼 *My Details:*\n• Name: ${name}\n• Phone: ${phone}\n`;
+        if (email) message += `• Email / Website: ${email}\n`;
+        if (company) message += `• Company: ${company}\n`;
+        if (service) message += `• Interested In: ${service}\n`;
+        if (messageInput) message += `\n💬 *Additional Notes:*\n${messageInput}\n`;
+        message += `\nLooking forward to hearing from you!`;
+
         if (!name) {
             e.preventDefault();
             showToast("Please enter your name.", "error");
