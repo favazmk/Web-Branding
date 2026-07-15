@@ -657,7 +657,7 @@
                                         <input type="text" class="form-control" name="name" placeholder="Name" required style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
                                     </div>
                                     <div style="flex: 1;">
-                                        <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required pattern="[+]?[0-9]{8,15}" style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
+                                        <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required pattern="[+]?[0-9\s\-()]{7,20}" style="padding: 10px 12px; font-size: 0.9rem; height: auto;">
                                     </div>
                                 </div>
                                 <div class="form-group" style="margin-bottom: 10px;">
@@ -1045,7 +1045,7 @@
                                 <input type="text" class="form-control" name="name" placeholder="Name" required>
                             </div>
                             <div class="form-group">
-                                <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required pattern="[+]?[0-9]{8,15}">
+                                <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required pattern="[+]?[0-9\s\-()]{7,20}">
                             </div>
                             <div class="form-group">
                                 <input type="email" class="form-control" name="email" placeholder="Email Address" required>

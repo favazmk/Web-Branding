@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 showToast('Please enter a valid email address.', 'error');
                 return;
             }
-            if (!phone || !/^[+]?[0-9]{8,15}$/.test(phone)) {
+            if (!phone || !/^[+]?[0-9\s\-()]{7,20}$/.test(phone)) {
                 showToast('Please enter a valid phone number (8-15 digits).', 'error');
                 return;
             }
@@ -1678,7 +1678,7 @@ Looking forward to bringing this digital transformation to life!`;
             showToast("Please enter your name.", "error");
             return;
         }
-        if (!phone || !/^[+]?[0-9]{8,15}$/.test(phone)) {
+        if (!phone || !/^[+]?[0-9\s\-()]{7,20}$/.test(phone)) {
             showToast("Please enter a valid phone number (8-15 digits).", "error");
             return;
         }
