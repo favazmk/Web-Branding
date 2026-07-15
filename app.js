@@ -268,28 +268,26 @@ ${phone ? `• Phone: ${phone}` : ''}
 
 Looking forward to bringing this digital transformation to life!`;
 
-            // Submit proposal silently via FormSubmit AJAX API
+            // Submit proposal silently via FormSubmit AJAX API using FormData
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('_subject', "Custom Project Proposal - " + name);
+            formData.append('message', message);
+
             fetch('https://formsubmit.co/ajax/sales@thewebbranding.com', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    _subject: "Custom Project Proposal - " + name,
-                    message: message
-                })
+                body: formData
             })
             .then(response => response.json())
             .then(data => {
+                console.log("FormSubmit Response:", data);
                 showToast("Thank you! Your custom proposal request has been submitted successfully.", "success");
                 projectForm.reset();
             })
             .catch(error => {
-                console.error(error);
+                console.error("FormSubmit Error:", error);
                 showToast("Something went wrong, please try again or contact us directly!", "error");
             });
         };
@@ -1693,30 +1691,28 @@ Looking forward to bringing this digital transformation to life!`;
             return;
         }
 
-        // Submit form silently via FormSubmit AJAX API
+        // Submit form silently via FormSubmit AJAX API using FormData
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('phone', phone);
+        formData.append('email', email);
+        formData.append('company', company);
+        formData.append('service', service);
+        formData.append('_subject', title + " Request - " + name);
+        formData.append('message', message);
+
         fetch('https://formsubmit.co/ajax/sales@thewebbranding.com', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                name: name,
-                phone: phone,
-                email: email,
-                company: company,
-                service: service,
-                _subject: title + " Request - " + name,
-                message: message
-            })
+            body: formData
         })
         .then(response => response.json())
         .then(data => {
+            console.log("FormSubmit Response:", data);
             showToast("Thank you! Your request has been submitted successfully.", "success");
             form.reset();
         })
         .catch(error => {
-            console.error(error);
+            console.error("FormSubmit Error:", error);
             showToast("Something went wrong, please try again or contact us directly!", "error");
         });
     };
