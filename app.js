@@ -1564,6 +1564,19 @@ Looking forward to bringing this digital transformation to life!`;
             }
             
             bubble.innerText = pitch;
+            
+            // Adjust bubble direction based on mascot screen position
+            const rect = mascotContainer.getBoundingClientRect();
+            if (rect.left < window.innerWidth / 2) {
+                // Mascot on left half: Bubble grows towards right
+                bubble.classList.remove('bubble-right');
+                bubble.classList.add('bubble-left');
+            } else {
+                // Mascot on right half: Bubble grows towards left
+                bubble.classList.remove('bubble-left');
+                bubble.classList.add('bubble-right');
+            }
+            
             bubble.classList.add('show');
             
             bubbleTimeout = setTimeout(() => {
