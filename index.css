@@ -519,27 +519,6 @@ nav {
     align-items: center;
 }
 
-@media (min-width: 993px) {
-    .hero-grid {
-        display: grid;
-        grid-template-columns: 1.15fr 0.85fr;
-        gap: 60px;
-        text-align: left;
-        align-items: center;
-    }
-    .hero-content {
-        text-align: left;
-        align-items: flex-start;
-        margin: 0;
-        max-width: 100%;
-    }
-    .hero-actions {
-        justify-content: flex-start;
-    }
-    .hero-stats {
-        margin: 0;
-    }
-}
 
 @font-face {
     font-family: 'Compressa VF';
@@ -2499,36 +2478,36 @@ nav {
 }
 
 .mascot-container.in-hero {
-    width: 200px;
-    height: 200px;
+    width: 120px;
+    height: 120px;
     animation: none; /* Disable float animation when in hero */
 }
 .mascot-container.in-hero .mascot {
-    transform: scale(1.4);
+    transform: scale(1.1);
     transform-origin: center center;
 }
 .mascot-container.in-hero .mascot-shadow {
-    transform: scale(1.4);
+    transform: scale(1.1);
     transform-origin: center center;
 }
 
 .mascot-container.in-hero:hover .mascot {
-    transform: scale(1.5) rotate(-3deg);
+    transform: scale(1.2) rotate(-3deg);
 }
 
 @media (max-width: 992px) {
     .mascot-container.in-hero {
-        width: 160px;
-        height: 160px;
+        width: 100px;
+        height: 100px;
     }
     .mascot-container.in-hero .mascot {
-        transform: scale(1.1);
+        transform: scale(0.9);
     }
     .mascot-container.in-hero .mascot-shadow {
-        transform: scale(1.1);
+        transform: scale(0.9);
     }
     .mascot-container.in-hero:hover .mascot {
-        transform: scale(1.2) rotate(-3deg);
+        transform: scale(1.0) rotate(-3deg);
     }
 }
 
@@ -2543,8 +2522,8 @@ nav {
 }
 
 .mascot-hero-target {
-    width: 200px;
-    height: 200px;
+    width: 120px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2554,8 +2533,8 @@ nav {
 
 @media (max-width: 992px) {
     .mascot-hero-target {
-        width: 160px;
-        height: 160px;
+        width: 100px;
+        height: 100px;
         margin: 20px auto;
     }
 }
@@ -2767,12 +2746,30 @@ nav {
     }
 
     .campaign-hero .hero-right-content {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 20px !important;
+        position: relative !important;
         width: 100% !important;
+    }
+
+    .campaign-hero .mascot-hero-target {
+        position: absolute !important;
+        top: -130px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 120px !important;
+        height: 120px !important;
+        z-index: 10 !important;
+    }
+
+    @media (max-width: 992px) {
+        .campaign-hero .mascot-hero-target {
+            position: relative !important;
+            top: 0 !important;
+            left: 0 !important;
+            transform: none !important;
+            margin: 20px auto !important;
+            width: 100px !important;
+            height: 100px !important;
+        }
     }
 
     @media (max-width: 992px) {
