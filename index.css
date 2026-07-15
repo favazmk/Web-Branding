@@ -1280,10 +1280,10 @@ nav {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--border-glass);
     border-radius: var(--radius-md);
-    padding: 18px 24px;
+    padding: 22px 28px;
     font-family: 'Inter', sans-serif;
     color: var(--text-white);
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     outline: none;
     transition: var(--transition-smooth);
 }
