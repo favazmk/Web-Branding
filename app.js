@@ -268,21 +268,20 @@ ${phone ? `• Phone: ${phone}` : ''}
 
 Looking forward to bringing this digital transformation to life!`;
 
-            // Submit proposal silently via FormSubmit AJAX API using URLSearchParams
-            const params = new URLSearchParams();
-            params.append('name', name);
-            params.append('email', email);
-            params.append('phone', phone);
-            params.append('_subject', "Custom Project Proposal - " + name);
-            params.append('message', message);
-
+            // Submit proposal silently via FormSubmit AJAX API using JSON
             fetch('https://formsubmit.co/ajax/teamwebbranding@gmail.com', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: params
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    _subject: "Custom Project Proposal - " + name,
+                    message: message
+                })
             })
             .then(response => response.json())
             .then(data => {
@@ -1698,23 +1697,22 @@ Looking forward to bringing this digital transformation to life!`;
             return;
         }
 
-        // Submit form silently via FormSubmit AJAX API using URLSearchParams
-        const params = new URLSearchParams();
-        params.append('name', name);
-        params.append('phone', phone);
-        params.append('email', email);
-        params.append('company', company);
-        params.append('service', service);
-        params.append('_subject', title + " Request - " + name);
-        params.append('message', message);
-
+        // Submit form silently via FormSubmit AJAX API using JSON
         fetch('https://formsubmit.co/ajax/teamwebbranding@gmail.com', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: params
+            body: JSON.stringify({
+                name: name,
+                phone: phone,
+                email: email,
+                company: company,
+                service: service,
+                _subject: title + " Request - " + name,
+                message: message
+            })
         })
         .then(response => response.json())
         .then(data => {
