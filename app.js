@@ -1445,7 +1445,7 @@ Looking forward to bringing this digital transformation to life!`;
             if (ceoBot) {
                 // Sit on top of CEO bot avatar on bottom-left
                 defaultX = 15;
-                defaultY = window.innerHeight - 170;
+                defaultY = window.innerHeight - 215;
 
                 // Bind mascot visibility to CEO bot visibility status
                 if (isCeoBotVisible) {
