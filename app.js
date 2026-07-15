@@ -276,7 +276,7 @@ Looking forward to bringing this digital transformation to life!`;
             params.append('_subject', "Custom Project Proposal - " + name);
             params.append('message', message);
 
-            fetch('https://formsubmit.co/ajax/sales@thewebbranding.com', {
+            fetch('https://formsubmit.co/ajax/teamwebbranding@gmail.com', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -295,7 +295,7 @@ Looking forward to bringing this digital transformation to life!`;
             .catch(error => {
                 console.error("FormSubmit Error:", error);
                 showToast("Something went wrong, please try again or contact us directly!", "error");
-                alert("Submission failed. Please contact us directly at sales@thewebbranding.com");
+                alert("Submission failed. Please contact us directly at teamwebbranding@gmail.com");
             });
         };
 
@@ -1708,7 +1708,7 @@ Looking forward to bringing this digital transformation to life!`;
         params.append('_subject', title + " Request - " + name);
         params.append('message', message);
 
-        fetch('https://formsubmit.co/ajax/sales@thewebbranding.com', {
+        fetch('https://formsubmit.co/ajax/teamwebbranding@gmail.com', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -1727,7 +1727,7 @@ Looking forward to bringing this digital transformation to life!`;
         .catch(error => {
             console.error("FormSubmit Error:", error);
             showToast("Something went wrong, please try again or contact us directly!", "error");
-            alert("Submission failed. Please contact us directly at sales@thewebbranding.com");
+            alert("Submission failed. Please contact us directly at teamwebbranding@gmail.com");
         });
     };
 
