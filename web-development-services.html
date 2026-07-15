@@ -418,18 +418,19 @@
             gap: 12px;
             opacity: 0;
             pointer-events: none;
-            transform: translateY(20px) rotate(0deg);
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s ease-out;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .ceo-bot.visible {
             opacity: 1;
             pointer-events: auto;
+            transform: translateY(0);
             animation: float-bob 4s ease-in-out infinite;
         }
         @keyframes float-bob {
-            0% { transform: translateY(0px) rotate(var(--tilt, 0deg)); }
-            50% { transform: translateY(-8px) rotate(var(--tilt, 0deg)); }
-            100% { transform: translateY(0px) rotate(var(--tilt, 0deg)); }
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
         }
         .ceo-bot-avatar {
             width: 60px;
@@ -1526,25 +1527,26 @@
     </main>
 
     <script type="module" src="app.js"></script>
-    <!-- Interactive Mascot -->
-    <div class="mascot-container">
-        <div class="mascot">
-            <div class="mascot-head">
-                <div class="mascot-screen">
-                    <div class="mascot-eye left"></div>
-                    <div class="mascot-eye right"></div>
-                </div>
-            </div>
-            <div class="mascot-body">
-                <div class="mascot-arm left"></div>
-                <div class="mascot-arm right"></div>
-            </div>
-        </div>
-        <div class="mascot-shadow"></div>
-    </div>
 
     <!-- CEO Floating Sales Bot (Bottom Left) -->
     <div id="ceo-sales-bot" class="ceo-bot">
+        <!-- Interactive Mascot sitting on top of the CEO bot -->
+        <div class="mascot-container" style="position: absolute; bottom: 85px; left: -15px; right: auto; width: 90px; height: 100px; cursor: pointer; z-index: 1001; pointer-events: auto;">
+            <div class="mascot" style="transform: scale(0.7); transform-origin: bottom center;">
+                <div class="mascot-head">
+                    <div class="mascot-screen">
+                        <div class="mascot-eye left"></div>
+                        <div class="mascot-eye right"></div>
+                    </div>
+                </div>
+                <div class="mascot-body">
+                    <div class="mascot-arm left"></div>
+                    <div class="mascot-arm right"></div>
+                </div>
+            </div>
+            <div class="mascot-shadow" style="transform: scale(0.7); transform-origin: bottom center;"></div>
+        </div>
+
         <div class="ceo-bot-avatar">
             <img src="/founder.png" alt="Hashir Nisam">
         </div>
@@ -1566,31 +1568,16 @@
 
     <script>
         // CEO bot scroll logic
-        let lastScrollY = window.scrollY;
         window.addEventListener('scroll', () => {
             const ceoBot = document.getElementById('ceo-sales-bot');
             const heroSection = document.getElementById('home');
             if (ceoBot && heroSection) {
                 const heroHeight = heroSection.offsetHeight;
-                const currentScrollY = window.scrollY;
-                if (currentScrollY > heroHeight - 100) {
+                if (window.scrollY > heroHeight - 100) {
                     ceoBot.classList.add('visible');
-                    
-                    // Add interactive scroll tilt effect
-                    const diff = currentScrollY - lastScrollY;
-                    const tilt = Math.max(Math.min(diff * 0.15, 8), -8);
-                    ceoBot.style.setProperty('--tilt', `${tilt}deg`);
-                    
-                    // Smoothly reset back when scrolling stops
-                    clearTimeout(ceoBot.scrollTimeout);
-                    ceoBot.scrollTimeout = setTimeout(() => {
-                        ceoBot.style.setProperty('--tilt', '0deg');
-                    }, 150);
                 } else {
                     ceoBot.classList.remove('visible');
-                    ceoBot.style.setProperty('--tilt', '0deg');
                 }
-                lastScrollY = currentScrollY;
             }
         });
     </script>
