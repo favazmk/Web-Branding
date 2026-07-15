@@ -576,6 +576,19 @@
             font-weight: 600;
             color: #e5e7eb;
         }
+        .compare-opt-chevron {
+            margin-left: auto;
+            color: rgba(255, 255, 255, 0.4);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.3s ease;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .compare-opt-pill.active .compare-opt-chevron {
+            transform: rotate(-180deg);
+            color: #8B3DFF;
+        }
         .compare-package-card {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -657,6 +670,7 @@
         @media (max-width: 992px) {
             .compare-layout { grid-template-columns: 1fr; gap: 20px; }
             .compare-options { gap: 12px; }
+            .compare-opt-chevron { display: flex; }
             .compare-package-card {
                 padding: 24px;
                 border-radius: 16px;
@@ -1574,6 +1588,16 @@
                 
                 if (!optionsContainer || !displayContainer || pills.length === 0 || cards.length === 0) return;
                 
+                // Add chevron dynamically to each pill if not already present
+                pills.forEach(pill => {
+                    if (!pill.querySelector('.compare-opt-chevron')) {
+                        const chevron = document.createElement('div');
+                        chevron.className = 'compare-opt-chevron';
+                        chevron.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+                        pill.appendChild(chevron);
+                    }
+                });
+
                 if (isMobile) {
                     // Move each card directly after its corresponding pill
                     pills.forEach((pill, index) => {
