@@ -215,13 +215,29 @@ ${phone ? `• Phone: ${phone}` : ''}
 
 Looking forward to bringing this digital transformation to life!`;
 
-            // Open email client with prefilled proposal
-            const emailAddress = 'sales@thewebbranding.com';
-            const subject = encodeURIComponent("Custom Project Proposal");
-            const mailtoURL = `mailto:${emailAddress}?subject=${subject}&body=${encodedMessage}`;
-            
-            // Open Mail Client
-            window.location.href = mailtoURL;
+            // Submit proposal silently via FormSubmit AJAX API
+            fetch('https://formsubmit.co/ajax/sales@thewebbranding.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    _subject: "Custom Project Proposal - " + name,
+                    message: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("Thank you! Your custom proposal request has been submitted successfully.");
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Something went wrong, please try again or contact us directly!");
+            });
         };
 
         projectForm.addEventListener('submit', handleEstimatorSubmit);
@@ -1606,11 +1622,32 @@ Looking forward to bringing this digital transformation to life!`;
 
         message += `\nLooking forward to hearing from you!`;
 
-        const encodedMessage = encodeURIComponent(message);
-        const emailAddress = 'sales@thewebbranding.com';
-        const subjectTitle = encodeURIComponent(title + " Request");
-        const mailtoURL = `mailto:${emailAddress}?subject=${subjectTitle}&body=${encodedMessage}`;
-        window.location.href = mailtoURL;
+        // Submit form silently via FormSubmit AJAX API
+        fetch('https://formsubmit.co/ajax/sales@thewebbranding.com', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                phone: phone,
+                email: email,
+                company: company,
+                service: service,
+                _subject: title + " Request - " + name,
+                message: message
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Thank you! Your request has been submitted successfully.");
+            form.reset();
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Something went wrong, please try again or contact us directly!");
+        });
     };
 
     const marketingLeadForm = document.getElementById('marketing-lead-form');
