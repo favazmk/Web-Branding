@@ -893,48 +893,128 @@
             </div>
         </section>
 
+        
         <!-- Section 2: Trusted Brands -->
-        <section class="brands-marquee" style="background: #ffffff;">
-            <div class="container" style="text-align: center; margin-bottom: 20px;">
-                <span class="section-tag center no-dot" style="line-height: 1.4; font-size: 1.1rem; flex-direction: column;">Trusted by Top Brands in UAE<br>& Across the World</span>
-            </div>
-            <div style="width: 100%; overflow: hidden; position: relative;">
-                <!-- Duplicated for seamless scrolling -->
-                <style>
-                    .marquee-client-logo { height: 60px; width: auto; object-fit: contain; opacity: 0.7; filter: grayscale(100%); transition: all 0.3s ease; }
-                    .marquee-client-logo:hover { opacity: 1; filter: grayscale(0%); transform: scale(1.05); }
-                </style>
-                <div class="marquee-content">
-                    <img src="./assets/clients/logo_0.png" alt="Cedar Cosmetics" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_1.png" alt="Vogue Venue" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_2.webp" alt="Rashid Ali Hassan Cafeteria" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_3.webp" alt="Silvan Global" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_4.png" alt="Ray Sports UAE" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_5.webp" alt="The Specs Store" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_6.png" alt="Brod" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_7.png" alt="Indus Jewellers" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_8.png" alt="Magic Mirror Beauty Salon" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_9.png" alt="The Leather Doctor" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_10.png" alt="Desert Fresh Market" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_11.png" alt="Extragram Jewels" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_12.png" alt="Diora Jewellery" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_13.png" alt="Zawaya" class="marquee-client-logo">
-                    
-                    <!-- Duplicated for seamless scrolling -->
-                    <img src="./assets/clients/logo_0.png" alt="Cedar Cosmetics" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_1.png" alt="Vogue Venue" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_2.webp" alt="Rashid Ali Hassan Cafeteria" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_3.webp" alt="Silvan Global" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_4.png" alt="Ray Sports UAE" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_5.webp" alt="The Specs Store" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_6.png" alt="Brod" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_7.png" alt="Indus Jewellers" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_8.png" alt="Magic Mirror Beauty Salon" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_9.png" alt="The Leather Doctor" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_10.png" alt="Desert Fresh Market" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_11.png" alt="Extragram Jewels" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_12.png" alt="Diora Jewellery" class="marquee-client-logo">
-                    <img src="./assets/clients/logo_13.png" alt="Zawaya" class="marquee-client-logo">
+        <section class="brands-marquee" style="background: #ffffff; padding: 25px 0; border-bottom: 1px solid var(--border-glass);">
+            <style>
+                .brands-layout {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    max-width: 1600px;
+                    margin: 0 auto;
+                    overflow: hidden;
+                    position: relative;
+                }
+                .brands-heading-side {
+                    flex: 0 0 auto;
+                    padding: 0 30px 0 5vw;
+                    background: #ffffff;
+                    z-index: 2;
+                    border-right: 1px solid rgba(0,0,0,0.05);
+                }
+                .brands-marquee-side {
+                    flex: 1;
+                    overflow: hidden;
+                    position: relative;
+                    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+                    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+                }
+                
+                .marquee-client-logo {
+                    height: 40px;
+                    width: auto;
+                    object-fit: contain;
+                    opacity: 0.6;
+                    filter: grayscale(100%);
+                    transition: all 0.3s ease;
+                }
+                .marquee-client-logo:hover {
+                    opacity: 1;
+                    filter: grayscale(0%);
+                    transform: scale(1.05);
+                }
+                .inline-marquee-content {
+                    display: flex;
+                    gap: 50px;
+                    align-items: center;
+                    animation: scroll-inline 50s linear infinite;
+                    white-space: nowrap;
+                    width: max-content;
+                    padding: 0 25px;
+                }
+                
+                @keyframes scroll-inline {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                }
+
+                @media (max-width: 900px) {
+                    .brands-layout {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 20px;
+                    }
+                    .brands-heading-side {
+                        border-right: none;
+                        padding: 0 5vw;
+                        width: 100%;
+                    }
+                    .brands-marquee-side {
+                        width: 100%;
+                    }
+                    .marquee-client-logo {
+                        height: 35px;
+                    }
+                    .inline-marquee-content {
+                        gap: 30px;
+                    }
+                }
+            </style>
+            <div class="brands-layout">
+                <!-- Left Heading -->
+                <div class="brands-heading-side">
+                    <span class="section-tag no-dot" style="color: #8B3DFF; line-height: 1.5; font-size: 0.95rem; font-weight: 700; display: block; margin: 0; padding: 0; text-align: left; letter-spacing: 1.5px; text-transform: uppercase;">
+                        TRUSTED BY TOP BRANDS IN UAE<br>& ACROSS THE WORLD
+                    </span>
+                </div>
+                <!-- Right Marquee -->
+                <div class="brands-marquee-side">
+                    <div class="inline-marquee-content">
+
+                        <!-- Group 1 -->
+                        <img src="./assets/clients/logo_0.png" alt="Client 0" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_1.png" alt="Client 1" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_10.png" alt="Client 10" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_11.png" alt="Client 11" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_12.png" alt="Client 12" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_13.png" alt="Client 13" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_2.webp" alt="Client 2" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_3.webp" alt="Client 3" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_4.png" alt="Client 4" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_5.webp" alt="Client 5" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_6.png" alt="Client 6" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_7.png" alt="Client 7" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_8.png" alt="Client 8" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_9.png" alt="Client 9" class="marquee-client-logo">
+                        
+                        <!-- Group 2 -->
+                        <img src="./assets/clients/logo_0.png" alt="Client 0" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_1.png" alt="Client 1" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_10.png" alt="Client 10" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_11.png" alt="Client 11" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_12.png" alt="Client 12" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_13.png" alt="Client 13" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_2.webp" alt="Client 2" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_3.webp" alt="Client 3" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_4.png" alt="Client 4" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_5.webp" alt="Client 5" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_6.png" alt="Client 6" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_7.png" alt="Client 7" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_8.png" alt="Client 8" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_9.png" alt="Client 9" class="marquee-client-logo">
+
+                    </div>
                 </div>
             </div>
         </section>
