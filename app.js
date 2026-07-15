@@ -215,13 +215,13 @@ ${phone ? `• Phone: ${phone}` : ''}
 
 Looking forward to bringing this digital transformation to life!`;
 
-            // Encode and redirect to WhatsApp API (Dubai Office Contact by default)
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappNumber = '971585577182'; // Dubai agency number from live CTAs
-            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            // Open email client with prefilled proposal
+            const emailAddress = 'sales@thewebbranding.com';
+            const subject = encodeURIComponent("Custom Project Proposal");
+            const mailtoURL = `mailto:${emailAddress}?subject=${subject}&body=${encodedMessage}`;
             
-            // Open WhatsApp in a new tab
-            window.open(whatsappURL, '_blank');
+            // Open Mail Client
+            window.location.href = mailtoURL;
         };
 
         projectForm.addEventListener('submit', handleEstimatorSubmit);
@@ -1607,9 +1607,10 @@ Looking forward to bringing this digital transformation to life!`;
         message += `\nLooking forward to hearing from you!`;
 
         const encodedMessage = encodeURIComponent(message);
-        const whatsappNumber = '971585577182';
-        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-        window.open(whatsappURL, '_blank');
+        const emailAddress = 'sales@thewebbranding.com';
+        const subjectTitle = encodeURIComponent(title + " Request");
+        const mailtoURL = `mailto:${emailAddress}?subject=${subjectTitle}&body=${encodedMessage}`;
+        window.location.href = mailtoURL;
     };
 
     const marketingLeadForm = document.getElementById('marketing-lead-form');
