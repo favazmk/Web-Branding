@@ -198,6 +198,16 @@ img {
     box-shadow: 0 0 10px var(--primary);
 }
 
+.section-tag.no-dot::before {
+    display: none;
+}
+
+.section-tag.center {
+    margin: 0 auto;
+    justify-content: center;
+    text-align: center;
+}
+
 .section-title {
     font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1.1;
