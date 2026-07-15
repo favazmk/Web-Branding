@@ -2605,6 +2605,7 @@ nav {
 .mascot {
     position: relative;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
 }
 
 .mascot-container:hover .mascot {
@@ -2665,7 +2666,7 @@ nav {
 }
 
 .mascot-container:hover .mascot-eye {
-    transform: scaleY(1.2) scaleX(1.1);
+    transform: translate(var(--eye-x, 0px), var(--eye-y, 0px)) scaleY(1.2) scaleX(1.1);
     background: #ffbbf1;
     box-shadow: 0 0 10px #ffbbf1, 0 0 20px #ff66d9;
 }
@@ -2722,8 +2723,8 @@ nav {
 }
 
 @keyframes mascot-blink {
-    0%, 94%, 98%, 100% { transform: scaleY(1); }
-    96% { transform: scaleY(0.1); }
+    0%, 94%, 98%, 100% { transform: translate(var(--eye-x, 0px), var(--eye-y, 0px)) scaleY(1); }
+    96% { transform: translate(var(--eye-x, 0px), var(--eye-y, 0px)) scaleY(0.1); }
 }
 
 @keyframes mascot-wave {

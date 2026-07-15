@@ -1634,7 +1634,8 @@ Looking forward to bringing this digital transformation to life!`;
             const eyeY = Math.sin(angle) * Math.min(maxEyeDist, distance / 20);
             
             mascotEyes.forEach(eye => {
-                eye.style.transform = `translate(${eyeX}px, ${eyeY}px)`;
+                eye.style.setProperty('--eye-x', `${eyeX}px`);
+                eye.style.setProperty('--eye-y', `${eyeY}px`);
             });
             
             // Rotate the mascot head slightly in 3D to face the cursor (max 15 degrees)
@@ -1647,7 +1648,8 @@ Looking forward to bringing this digital transformation to life!`;
 
         window.addEventListener('mouseleave', () => {
             mascotEyes.forEach(eye => {
-                eye.style.transform = 'translate(0, 0)';
+                eye.style.setProperty('--eye-x', '0px');
+                eye.style.setProperty('--eye-y', '0px');
             });
             if (mascotHead) {
                 mascotHead.style.transform = 'rotateY(0deg) rotateX(0deg)';
