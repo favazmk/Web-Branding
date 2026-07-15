@@ -268,27 +268,34 @@ ${phone ? `• Phone: ${phone}` : ''}
 
 Looking forward to bringing this digital transformation to life!`;
 
-            // Submit proposal silently via FormSubmit AJAX API using FormData
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('email', email);
-            formData.append('phone', phone);
-            formData.append('_subject', "Custom Project Proposal - " + name);
-            formData.append('message', message);
+            // Submit proposal silently via FormSubmit AJAX API using URLSearchParams
+            const params = new URLSearchParams();
+            params.append('name', name);
+            params.append('email', email);
+            params.append('phone', phone);
+            params.append('_subject', "Custom Project Proposal - " + name);
+            params.append('message', message);
 
             fetch('https://formsubmit.co/ajax/sales@thewebbranding.com', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json'
+                },
+                body: params
             })
             .then(response => response.json())
             .then(data => {
                 console.log("FormSubmit Response:", data);
                 showToast("Thank you! Your custom proposal request has been submitted successfully.", "success");
-                projectForm.reset();
+                try {
+                    projectForm.reset();
+                } catch(e) {}
             })
             .catch(error => {
                 console.error("FormSubmit Error:", error);
                 showToast("Something went wrong, please try again or contact us directly!", "error");
+                alert("Submission failed. Please contact us directly at sales@thewebbranding.com");
             });
         };
 
@@ -1691,29 +1698,36 @@ Looking forward to bringing this digital transformation to life!`;
             return;
         }
 
-        // Submit form silently via FormSubmit AJAX API using FormData
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('phone', phone);
-        formData.append('email', email);
-        formData.append('company', company);
-        formData.append('service', service);
-        formData.append('_subject', title + " Request - " + name);
-        formData.append('message', message);
+        // Submit form silently via FormSubmit AJAX API using URLSearchParams
+        const params = new URLSearchParams();
+        params.append('name', name);
+        params.append('phone', phone);
+        params.append('email', email);
+        params.append('company', company);
+        params.append('service', service);
+        params.append('_subject', title + " Request - " + name);
+        params.append('message', message);
 
         fetch('https://formsubmit.co/ajax/sales@thewebbranding.com', {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            },
+            body: params
         })
         .then(response => response.json())
         .then(data => {
             console.log("FormSubmit Response:", data);
             showToast("Thank you! Your request has been submitted successfully.", "success");
-            form.reset();
+            try {
+                form.reset();
+            } catch(e) {}
         })
         .catch(error => {
             console.error("FormSubmit Error:", error);
             showToast("Something went wrong, please try again or contact us directly!", "error");
+            alert("Submission failed. Please contact us directly at sales@thewebbranding.com");
         });
     };
 
