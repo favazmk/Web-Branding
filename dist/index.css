@@ -1540,6 +1540,7 @@ nav {
     display: grid;
     grid-template-columns: repeat(4, auto);
     justify-content: center;
+    align-items: center;
     gap: 80px;
     margin-bottom: 60px;
 }
