@@ -10,7 +10,7 @@
     
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.webp">
     <style>
         /* Campaign specific styles */
         .campaign-hero {
@@ -18,7 +18,8 @@
             padding-top: 100px;
             padding-bottom: 80px;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            z-index: 10;
         }
         .campaign-hero .hero-grid {
             display: grid;
@@ -287,12 +288,18 @@
             background-size: cover;
             background-position: center;
             z-index: -2;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
         }
         .industry-card:hover {
-            transform: translateY(-8px);
+            transform: translate3d(0, -8px, 0);
+            box-shadow: 0 15px 30px rgba(139, 61, 255, 0.25);
         }
         .industry-card:hover::before {
             opacity: 0;
+        }
+        .industry-card:hover::after {
+            transform: scale(1.1);
         }
         .industry-title {
             font-family: 'Outfit', sans-serif;
@@ -306,89 +313,6 @@
             margin-bottom: 15px;
         }
 
-        /* Auto-scrolling Marquee */
-        .projects-marquee {
-            overflow: hidden;
-            white-space: nowrap;
-            width: 100%;
-            position: relative;
-        }
-        .projects-track {
-            display: flex;
-            width: max-content;
-            gap: 20px;
-            padding-bottom: 20px;
-            --track-shift: -2520px;
-            animation: scroll-marquee 45s linear infinite;
-            will-change: transform;
-        }
-        .projects-track::after {
-            content: '';
-            width: 20px;
-            flex-shrink: 0;
-        }
-        .projects-track:hover {
-            animation-play-state: paused;
-        }
-        @keyframes scroll-marquee {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(var(--track-shift), 0, 0); }
-        }
-        .project-slide {
-            flex: 0 0 400px;
-            aspect-ratio: 4/3;
-            display: block;
-            position: relative;
-            overflow: hidden;
-            border: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        .project-slide:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        .project-placeholder-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        .project-slide:hover .project-placeholder-img {
-            transform: scale(1.05);
-        }
-        .project-overlay-custom {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 30px;
-            background: linear-gradient(0deg, rgba(10,11,14,0.95) 0%, rgba(10,11,14,0.7) 50%, transparent 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 2;
-        }
-        .project-slide:hover .project-overlay-custom {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .project-cat {
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent-blue);
-            margin-bottom: 8px;
-        }
-        .project-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            margin: 0;
-        }
 
         /* Footer CTA */
         .footer-cta {
@@ -399,7 +323,13 @@
         }
 
         @media (max-width: 992px) {
-            .campaign-hero .hero-grid { grid-template-columns: 1fr; }
+            .campaign-hero .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .lead-form-card {
+                max-width: 100%;
+            }
             .pricing-grid { grid-template-columns: 1fr; }
             .pricing-card.popular { transform: scale(1); }
             .pricing-card.popular:hover { transform: translateY(-5px); }
@@ -408,13 +338,74 @@
             .footer-cta .container .fade-in-up { display: flex; flex-direction: column; align-items: center; }
         }
         @media (max-width: 768px) {
+            .campaign-hero {
+                padding: 30px 0 40px;
+            }
+            .campaign-hero .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            .hero-title-campaign {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+            .hero-subtitle-campaign {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+            .lead-form-card {
+                padding: 20px;
+                max-width: 100%;
+            }
+            .lead-form-card h3 {
+                font-size: 1.25rem;
+            }
+            .form-row {
+                flex-direction: column;
+            }
+            .section-title {
+                font-size: clamp(1.25rem, 4vw, 1.5rem);
+            }
             .industry-grid { grid-template-columns: 1fr; }
-            .project-slide { flex: 0 0 300px; }
-            .hero-title-campaign { font-size: clamp(2rem, 8vw, 3rem); } /* Mobile: 32px - 48px */
-            .section-title { font-size: clamp(1.25rem, 4vw, 1.5rem); } /* Mobile: 20px - 24px */
-            .campaign-hero { padding: 40px 0; }
             .pricing-card { padding: 30px 20px; }
-            .projects-track { --track-shift: -1920px; }
+            .hero-features {
+                flex-direction: column;
+                gap: 10px;
+            }
+            /* Override inline flex on the name/phone row */
+            .lead-form-card form > div[style*="display: flex"] {
+                flex-direction: column !important;
+            }
+            .hero-subtitle-campaign {
+                max-width: 100% !important;
+            }
+            /* CEO Bot Mobile Styling */
+            .ceo-bot {
+                bottom: 15px !important;
+                left: 15px !important;
+                gap: 8px !important;
+            }
+            .ceo-bot-avatar {
+                width: 45px !important;
+                height: 45px !important;
+            }
+            .ceo-bot-bubble {
+                max-width: 190px !important;
+                padding: 10px 12px !important;
+                border-radius: 12px !important;
+                border-bottom-left-radius: 4px !important;
+            }
+            .ceo-bot-bubble .ceo-title {
+                font-size: 0.7rem !important;
+            }
+            .ceo-bot-bubble p {
+                font-size: 0.75rem !important;
+                margin-bottom: 6px !important;
+                line-height: 1.3 !important;
+            }
+            .ceo-bot-btn {
+                font-size: 0.7rem !important;
+                padding: 4px 8px !important;
+            }
         }
 
         /* CEO Floating Sales Bot */
@@ -541,13 +532,21 @@
             border-radius: 16px;
             padding: 18px 24px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            will-change: transform;
             text-align: left;
             position: relative;
         }
         .compare-opt-pill:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(139, 61, 255, 0.3);
+            transform: translate3d(4px, 0, 0);
+            box-shadow: 0 5px 15px rgba(139, 61, 255, 0.05);
+        }
+        .compare-opt-pill:hover .compare-icon-circle {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(139, 61, 255, 0.1);
+            color: #8B3DFF;
         }
         .compare-opt-pill.active {
             background: rgba(255, 255, 255, 0.05);
@@ -575,6 +574,14 @@
             font-size: 1.1rem;
             font-weight: 600;
             color: #e5e7eb;
+            flex-grow: 1;
+        }
+        .compare-chevron-arrow {
+            display: none;
+            color: #8B3DFF;
+            transition: transform 0.3s ease;
+            margin-left: auto;
+            flex-shrink: 0;
         }
         .compare-package-card {
             background: rgba(255, 255, 255, 0.04);
@@ -655,7 +662,40 @@
         }
 
         @media (max-width: 992px) {
-            .compare-layout { grid-template-columns: 1fr; gap: 30px; }
+            .compare-layout { 
+                grid-template-columns: 1fr; 
+                gap: 15px; 
+            }
+            .compare-display {
+                display: none !important;
+            }
+            .compare-chevron-arrow {
+                display: flex !important;
+            }
+            .compare-opt-pill.active .compare-chevron-arrow {
+                transform: rotate(180deg);
+            }
+            .compare-package-card {
+                padding: 25px 20px !important;
+                border-radius: 16px !important;
+                margin: 5px 0 15px 0 !important;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
+                width: 100% !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            }
+            .compare-opt-text {
+                font-size: 0.95rem !important;
+            }
+            .compare-icon-circle {
+                width: 38px !important;
+                height: 38px !important;
+                border-radius: 8px !important;
+            }
+            .compare-opt-pill {
+                padding: 14px 18px !important;
+                border-radius: 12px !important;
+                gap: 12px !important;
+            }
         }
 
         /* Process Grid & Benefits Styles */
@@ -683,13 +723,15 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 20px;
             padding: 30px;
-            transition: all 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            will-change: transform;
             text-align: left;
         }
         .benefit-card:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(139, 61, 255, 0.2);
-            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(139, 61, 255, 0.35);
+            transform: translate3d(0, -6px, 0) scale(1.01);
+            box-shadow: 0 15px 30px rgba(139, 61, 255, 0.15);
         }
         .benefit-icon-box {
             width: 44px;
@@ -701,6 +743,11 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
+        }
+        .benefit-card:hover .benefit-icon-box {
+            transform: scale(1.12) rotate(5deg);
+            background: rgba(139, 61, 255, 0.2);
         }
         .benefit-card h3 {
             font-family: 'Outfit', sans-serif;
@@ -737,6 +784,17 @@
             .benefits-grid { grid-template-columns: 1fr; }
         }
         
+        .theme-light .pricing-card:not(.popular) {
+            background: #ffffff !important;
+            border: 1px solid rgba(139, 61, 255, 0.1) !important;
+            box-shadow: 0 10px 20px rgba(139, 61, 255, 0.02) !important;
+            z-index: 2;
+        }
+        .theme-light .pricing-card:not(.popular):hover {
+            border-color: rgba(139, 61, 255, 0.3) !important;
+            box-shadow: 0 15px 30px rgba(139, 61, 255, 0.06) !important;
+        }
+        
         .highlight-badge {
             background: #e11d48;
             color: #fff;
@@ -745,6 +803,235 @@
             box-shadow: 0 0 15px rgba(225, 29, 72, 0.6);
             display: inline-block;
             white-space: nowrap;
+        }
+        
+        .bg-grid-pattern {
+            position: relative;
+        }
+        .bg-grid-pattern::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(139, 61, 255, 0.25) 2px, transparent 2px);
+            background-size: 40px 40px;
+            -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
+            mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
+            z-index: 0;
+            pointer-events: none;
+            animation: panGrid 40s linear infinite;
+        }
+        
+        @keyframes panGrid {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+
+        /* Zigzag Process Section */
+        .process-zigzag-wrapper {
+            position: relative;
+            padding: 20px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .zigzag-svg-container {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            transform: translateY(-50%);
+            z-index: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .process-zigzag-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            gap: 25px;
+        }
+        
+        .process-step-wrapper {
+            position: relative;
+            width: 22%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: translateZ(0);
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+        }
+        
+        /* Alternating heights to form zigzag */
+        .process-step-wrapper:nth-child(1) { margin-top: 100px; }
+        .process-step-wrapper:nth-child(2) { margin-top: 0px; }
+        .process-step-wrapper:nth-child(3) { margin-top: 100px; }
+        .process-step-wrapper:nth-child(4) { margin-top: 0px; }
+        
+        .step-glow-number {
+            position: absolute;
+            top: -110px;
+            font-size: 8.5rem;
+            font-weight: 900;
+            color: #8B3DFF;
+            opacity: 0.9;
+            text-shadow: none;
+            z-index: 1;
+            user-select: none;
+            letter-spacing: -5px;
+        }
+        
+        .theme-light .process-step-wrapper .benefit-card {
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.3) !important; 
+            backdrop-filter: blur(6px) !important;
+            -webkit-backdrop-filter: blur(6px) !important;
+            border: 2px solid rgba(255, 255, 255, 0.7) !important;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 35px 20px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+            width: 100%;
+            border-radius: 16px;
+            transition: all 0.3s ease !important;
+        }
+
+        .process-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 10px;
+        }
+        
+        .process-accordion-arrow {
+            display: none;
+            color: #8B3DFF;
+            transition: transform 0.3s ease;
+        }
+        
+        .process-card-body {
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-light .process-step-wrapper .benefit-card:hover {
+            background: rgba(255, 255, 255, 0.5) !important;
+            border-color: rgba(255, 255, 255, 0.9) !important;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+        }
+        
+        @media (max-width: 900px) {
+            .process-zigzag-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 90px;
+                position: relative;
+            }
+            .process-zigzag-container::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0px;
+                border-left: 2px dashed rgba(139, 61, 255, 0.6);
+                z-index: 0;
+            }
+            .process-step-wrapper {
+                width: 90%;
+                z-index: 1;
+            }
+            .process-step-wrapper:nth-child(n) {
+                margin-top: 0;
+            }
+            
+            /* Alternate numbers left and right */
+            .process-step-wrapper:nth-child(odd) .step-glow-number {
+                font-size: 5rem;
+                line-height: 1;
+                top: -2.5rem;
+                left: 10px;
+                transform: none;
+            }
+            .process-step-wrapper:nth-child(even) .step-glow-number {
+                font-size: 5rem;
+                line-height: 1;
+                top: -2.5rem;
+                left: auto;
+                right: 10px;
+                transform: none;
+            }
+
+            /* Accordion Mode on Mobile */
+            .theme-light .process-step-wrapper .benefit-card {
+                display: block !important;
+                text-align: left !important;
+                padding: 15px 20px !important;
+                cursor: pointer;
+                user-select: none;
+                transition: all 0.3s ease !important;
+            }
+            .theme-light .process-step-wrapper .benefit-card .step-badge {
+                display: none !important;
+            }
+            .process-card-header {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                width: 100% !important;
+            }
+            .theme-light .process-step-wrapper .benefit-card h3 {
+                margin: 0 !important;
+                font-size: 1.25rem !important;
+                font-weight: 700 !important;
+                color: #120626 !important;
+            }
+            .process-accordion-arrow {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+            }
+            .process-card-body {
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                margin-top: 0;
+                transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+            }
+            
+            /* Active accordion state */
+            .theme-light .process-step-wrapper .benefit-card.active .process-card-body {
+                max-height: 150px;
+                opacity: 1;
+                margin-top: 12px;
+            }
+            .theme-light .process-step-wrapper .benefit-card.active .process-accordion-arrow {
+                transform: rotate(180deg);
+            }
+            .theme-light .process-step-wrapper .benefit-card p {
+                font-size: 0.95rem !important;
+                margin: 0 !important;
+                text-align: left !important;
+                color: #4d445e !important;
+            }
+            
+            .zigzag-svg-container {
+                display: none; 
+            }
+        }
+
+        .bg-grid-pattern > * {
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
@@ -757,7 +1044,7 @@
             <div class="ag-pill-content">
                 <!-- Logo Here -->
                 <a href="#home" aria-label="The Web Branding Home" style="display: flex; align-items: center;">
-                    <img src="./assets/logo.png" alt="The Web Branding Logo" class="nav-logo-img">
+                    <img src="./assets/logo.webp" alt="The Web Branding Logo" class="nav-logo-img">
                 </a>
 
                 <!-- Hamburger Button -->
@@ -776,8 +1063,6 @@
                     <a href="#packages" class="ag-menu-item">Packages</a>
                     <a href="#industries" class="ag-menu-item">Industries</a>
                     <a href="#projects" class="ag-menu-item">Works</a>
-                    <a href="#ecommerce" class="ag-menu-item">E-Commerce</a>
-                    <a href="#compare" class="ag-menu-item">Goals Matcher</a>
                     <a href="#process" class="ag-menu-item">Process</a>
                     <a href="https://wa.me/971585577182" class="ag-menu-item btn btn-primary" style="margin-top: 10px; width: 80%; text-align: center; border-radius: 9999px;">WhatsApp</a>
                 </div>
@@ -790,7 +1075,7 @@
         <div class="container">
             <nav>
                 <a href="#home" class="logo" aria-label="The Web Branding Home">
-                    <img src="./assets/logo.png" alt="The Web Branding Logo" class="nav-logo-img">
+                    <img src="./assets/logo.webp" alt="The Web Branding Logo" class="nav-logo-img">
                 </a>
                 
                 <ul class="nav-links">
@@ -847,7 +1132,7 @@
                             </div>
                         </div>
 
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <div class="campaign-hero-buttons" style="display: flex; gap: 10px; flex-wrap: wrap;">
                             <a href="#campaign-lead-form" class="btn btn-primary" style="background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Get Consultation Today</a>
                             <a href="https://wa.me/971585577182?text=I%20want%20to%20chat%20about%20launching%20a%20business%20website" target="_blank" class="btn btn-whatsapp">WhatsApp</a>
                             <a href="tel:+971544387023" class="btn btn-secondary">Talk to expert</a>
@@ -896,7 +1181,7 @@
 
         
         <!-- Section 2: Trusted Brands -->
-        <section class="brands-marquee" style="background: #ffffff; padding: 25px 0; border-bottom: 1px solid var(--border-glass);">
+        <section class="brands-marquee bg-grid-pattern" style="background: #ffffff; padding: 25px 0; border-bottom: 1px solid var(--border-glass);">
             <style>
                 .brands-layout {
                     display: flex;
@@ -972,7 +1257,7 @@
                     }
                 }
             </style>
-            <div class="brands-layout">
+            <div class="brands-layout fade-in-up">
                 <!-- Left Heading -->
                 <div class="brands-heading-side">
                     <span class="section-tag no-dot" style="color: #8B3DFF; line-height: 1.5; font-size: 0.95rem; font-weight: 700; display: block; margin: 0; padding: 0; text-align: left; letter-spacing: 1.5px; text-transform: uppercase;">
@@ -984,36 +1269,36 @@
                     <div class="inline-marquee-content">
 
                         <!-- Group 1 -->
-                        <img src="./assets/clients/logo_0.png" alt="Client 0" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_1.png" alt="Client 1" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_10.png" alt="Client 10" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_11.png" alt="Client 11" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_12.png" alt="Client 12" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_13.png" alt="Client 13" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_0.webp" alt="Client 0" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_1.webp" alt="Client 1" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_10.webp" alt="Client 10" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_11.webp" alt="Client 11" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_12.webp" alt="Client 12" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_13.webp" alt="Client 13" class="marquee-client-logo">
                         <img src="./assets/clients/logo_2.webp" alt="Client 2" class="marquee-client-logo">
                         <img src="./assets/clients/logo_3.webp" alt="Client 3" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_4.png" alt="Client 4" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_4.webp" alt="Client 4" class="marquee-client-logo">
                         <img src="./assets/clients/logo_5.webp" alt="Client 5" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_6.png" alt="Client 6" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_7.png" alt="Client 7" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_8.png" alt="Client 8" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_9.png" alt="Client 9" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_6.webp" alt="Client 6" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_7.webp" alt="Client 7" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_8.webp" alt="Client 8" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_9.webp" alt="Client 9" class="marquee-client-logo">
                         
                         <!-- Group 2 -->
-                        <img src="./assets/clients/logo_0.png" alt="Client 0" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_1.png" alt="Client 1" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_10.png" alt="Client 10" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_11.png" alt="Client 11" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_12.png" alt="Client 12" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_13.png" alt="Client 13" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_0.webp" alt="Client 0" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_1.webp" alt="Client 1" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_10.webp" alt="Client 10" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_11.webp" alt="Client 11" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_12.webp" alt="Client 12" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_13.webp" alt="Client 13" class="marquee-client-logo">
                         <img src="./assets/clients/logo_2.webp" alt="Client 2" class="marquee-client-logo">
                         <img src="./assets/clients/logo_3.webp" alt="Client 3" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_4.png" alt="Client 4" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_4.webp" alt="Client 4" class="marquee-client-logo">
                         <img src="./assets/clients/logo_5.webp" alt="Client 5" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_6.png" alt="Client 6" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_7.png" alt="Client 7" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_8.png" alt="Client 8" class="marquee-client-logo">
-                        <img src="./assets/clients/logo_9.png" alt="Client 9" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_6.webp" alt="Client 6" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_7.webp" alt="Client 7" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_8.webp" alt="Client 8" class="marquee-client-logo">
+                        <img src="./assets/clients/logo_9.webp" alt="Client 9" class="marquee-client-logo">
 
                     </div>
                 </div>
@@ -1022,7 +1307,7 @@
 
         <!-- Section 2: Quick Consult Banner -->
         <section class="section-padding" style="padding: 40px 0; background: linear-gradient(90deg, rgba(139, 61, 255, 0.05), rgba(139, 61, 255, 0.05)); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <div class="container fade-in-up" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
                 <div style="text-align: left;">
                     <h2 class="section-title" style="margin-bottom: 10px; font-size: clamp(1.5rem, 3vw, 2.2rem); text-align: left;">Finalize your suitable website package in 10 min</h2>
                     <p style="color: #c5c0d0; margin: 0;">Speak directly with our digital transformation specialists now.</p>
@@ -1037,15 +1322,15 @@
         </section>
 
         <!-- Section 3: Packages -->
-        <section class="section-padding theme-light" style="background: var(--bg-slate);" id="packages">
+        <section class="section-padding theme-light bg-grid-pattern" style="background: var(--bg-slate);" id="packages">
             <div class="container">
-                <div style="text-align: center;">
+                <div style="text-align: center;" class="fade-in-up">
                     <h2 class="section-title">WEBSITE PACKAGES</h2>
                 </div>
                 
                 <div class="pricing-grid">
                     <!-- Corporate Starter -->
-                    <div id="pkg-starter" class="pricing-card">
+                    <div id="pkg-starter" class="pricing-card reveal-3d-pop">
                         <h3 class="pkg-title">Corporate Starter</h3>
                         <p style="color: var(--text-faded); font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px;">5 Page Corporate Website</p>
                         <div class="pkg-price"><span>AED</span> 4,999</div>
@@ -1064,7 +1349,7 @@
                     </div>
 
                     <!-- Corporate Professional -->
-                    <div id="pkg-professional" class="pricing-card popular">
+                    <div id="pkg-professional" class="pricing-card popular reveal-3d-pop delay-100">
                         <div class="popular-badge">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                             Most Popular
@@ -1087,7 +1372,7 @@
                     </div>
 
                     <!-- Corporate Enterprise -->
-                    <div id="pkg-enterprise" class="pricing-card">
+                    <div id="pkg-enterprise" class="pricing-card reveal-3d-pop delay-200">
                         <h3 class="pkg-title">Corporate Enterprise</h3>
                         <p style="color: var(--text-faded); font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px;">30 Page Website</p>
                         <div class="pkg-price"><span>AED</span> 9,999</div>
@@ -1110,7 +1395,7 @@
 
         <!-- Section 4: Portfolio Offer Banner -->
         <section class="section-padding" style="padding: 60px 0; background: linear-gradient(135deg, rgba(139, 61, 255, 0.08) 0%, rgba(139, 61, 255, 0.08) 100%); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <div class="container" style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <div class="container reveal-3d-fold" style="text-align: center; max-width: 800px; margin: 0 auto;">
                 <span class="section-tag center no-dot" style="margin-bottom: 15px; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; border-radius: 50px; padding: 5px 15px;">Limited Time Offer</span>
                 <h2 class="section-title" style="margin-bottom: 20px; font-size: clamp(1.8rem, 4vw, 2.8rem);">Are you an influencer or Business owner?</h2>
                 <p style="color: #c5c0d0; font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
@@ -1126,37 +1411,37 @@
         <!-- Section 5: Our Industries -->
         <section class="section-padding" id="industries">
             <div class="container">
-                <div style="text-align: center; margin-bottom: 40px;">
+                <div style="text-align: center; margin-bottom: 40px;" class="fade-in-up">
                     <span class="section-tag center no-dot" style="background: rgba(37, 211, 102, 0.1); color: #25D366; border-radius: 50px; padding: 5px 15px;">Fast Delivery in 7 Days</span>
                     <h2 class="section-title">Get a Free Consultation</h2>
                 </div>
                 
                 <div class="industry-grid">
-                    <div class="industry-card" style="--bg-image: url('mockup_hospitality.png');">
+                    <div class="industry-card reveal-3d-pop" style="--bg-image: url('assets/mockup_hospitality.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Hospitality & Hotels<br>Retail & Fashion</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_realestate.png');">
+                    <div class="industry-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_realestate.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Real Estate</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_event.png');">
+                    <div class="industry-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_event.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Event Management</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_education.png');">
+                    <div class="industry-card reveal-3d-pop" style="--bg-image: url('assets/mockup_education.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Education / Coaching</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_medical.png');">
+                    <div class="industry-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_medical.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Clinics / Hospitals</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_repair.png');">
+                    <div class="industry-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_repair.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">MEP / Repair</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_logistics.png');">
+                    <div class="industry-card reveal-3d-pop" style="--bg-image: url('assets/mockup_logistics.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Logistics</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_construction.png');">
+                    <div class="industry-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_construction.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Construction / Interior Design</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_supermarket.png');">
+                    <div class="industry-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_supermarket.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Supermarket</h3>
                     </div>
                 </div>
@@ -1170,173 +1455,157 @@
         </section>
 
         
-        <!-- Section 7: Our Works -->
-        <section class="section-padding theme-light" style="background: var(--bg-slate); border-top: 1px solid var(--border-glass); overflow: hidden;" id="projects">
+        <section class="section-padding theme-light bg-grid-pattern" style="background: var(--bg-slate); border-top: 1px solid var(--border-glass); overflow: hidden;" id="projects">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 40px;">
                     <h2 class="section-title">Our Works</h2>
                 </div>
-            </div>
-            
-                <div class="projects-marquee fade-in-up">
+                
+                <div class="projects-marquee">
                     <div class="projects-track">
 
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Business Consultancy" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
+                                <span class="project-cat">Business Consultancy</span>
                                 <h3 class="project-title">1Point360</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="360 New Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="Wellness Pools & Hydrotherm" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
-                                <h3 class="project-title">360 New</h3>
+                                <span class="project-cat">Luxury Wellness</span>
+                                <h3 class="project-title">Wellness Pools</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-bandhan-psi-vercel-app-2026-07-15-14_50_05.webp" alt="Bandhan Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-bandhan-psi-vercel-app-2026-07-15-14_50_05.webp" alt="Bandhan Contracting & Maintenance" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
+                                <span class="project-cat">Construction & Maintenance</span>
                                 <h3 class="project-title">Bandhan</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-esglobal-hashirnisam-2026-07-15-15_13_24.webp" alt="ES Global Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-esglobal-hashirnisam-2026-07-15-15_13_24.webp" alt="ES Global Engineering" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
+                                <span class="project-cat">Engineering & Infrastructure</span>
                                 <h3 class="project-title">ES Global</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-mice-media-vercel-app-2026-07-15-14_56_15.webp" alt="Mice Media Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-mice-media-vercel-app-2026-07-15-14_56_15.webp" alt="MICE Media Event Management" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
-                                <h3 class="project-title">Mice Media</h3>
+                                <span class="project-cat">Event Management</span>
+                                <h3 class="project-title">MICE Media</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-netexfreight-2026-07-15-14_50_52.webp" alt="Netex Freight Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-netexfreight-2026-07-15-14_50_52.webp" alt="Netex Freight Logistics" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
+                                <span class="project-cat">Logistics & Freight</span>
                                 <h3 class="project-title">Netex Freight</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-rashicafenew-hashirnisam-2026-07-15-15_15_46.webp" alt="Rashi Cafe Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-rashicafenew-hashirnisam-2026-07-15-15_15_46.webp" alt="Rashid Ali Hassan Cafeteria" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
-                                <h3 class="project-title">Rashi Cafe</h3>
+                                <span class="project-cat">Restaurant & Cafeteria</span>
+                                <h3 class="project-title">Rashid Ali Hassan</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-silvanglobal-2026-07-15-15_14_21.webp" alt="Silvan Global Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-silvanglobal-2026-07-15-15_14_21.webp" alt="Silvan Global Building Materials" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
+                                <span class="project-cat">Building Materials & Interiors</span>
                                 <h3 class="project-title">Silvan Global</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-specsstores-hashirnisam-2026-07-15-15_16_40.webp" alt="Specs Stores Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-specsstores-hashirnisam-2026-07-15-15_16_40.webp" alt="The Specs Store Optical" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
-                                <h3 class="project-title">Specs Stores</h3>
+                                <span class="project-cat">Optical & Eye Care</span>
+                                <h3 class="project-title">The Specs Store</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-v2ebl-hashirnisam-2026-07-15-15_11_37.webp" alt="V2EBL Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-v2ebl-hashirnisam-2026-07-15-15_11_37.webp" alt="EBL Emirati Leather Footwear" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
-                                <h3 class="project-title">V2EBL</h3>
+                                <span class="project-cat">E-commerce & Leather</span>
+                                <h3 class="project-title">EBL</h3>
                             </div>
                         </a>
 
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Business Consultancy" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
+                                <span class="project-cat">Business Consultancy</span>
                                 <h3 class="project-title">1Point360</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="360 New Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="Wellness Pools & Hydrotherm" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
-                                <h3 class="project-title">360 New</h3>
+                                <span class="project-cat">Luxury Wellness</span>
+                                <h3 class="project-title">Wellness Pools</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-bandhan-psi-vercel-app-2026-07-15-14_50_05.webp" alt="Bandhan Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-bandhan-psi-vercel-app-2026-07-15-14_50_05.webp" alt="Bandhan Contracting & Maintenance" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
+                                <span class="project-cat">Construction & Maintenance</span>
                                 <h3 class="project-title">Bandhan</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-esglobal-hashirnisam-2026-07-15-15_13_24.webp" alt="ES Global Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-esglobal-hashirnisam-2026-07-15-15_13_24.webp" alt="ES Global Engineering" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
+                                <span class="project-cat">Engineering & Infrastructure</span>
                                 <h3 class="project-title">ES Global</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-mice-media-vercel-app-2026-07-15-14_56_15.webp" alt="Mice Media Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-mice-media-vercel-app-2026-07-15-14_56_15.webp" alt="MICE Media Event Management" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
-                                <h3 class="project-title">Mice Media</h3>
+                                <span class="project-cat">Event Management</span>
+                                <h3 class="project-title">MICE Media</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-netexfreight-2026-07-15-14_50_52.webp" alt="Netex Freight Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-netexfreight-2026-07-15-14_50_52.webp" alt="Netex Freight Logistics" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
+                                <span class="project-cat">Logistics & Freight</span>
                                 <h3 class="project-title">Netex Freight</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-rashicafenew-hashirnisam-2026-07-15-15_15_46.webp" alt="Rashi Cafe Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-rashicafenew-hashirnisam-2026-07-15-15_15_46.webp" alt="Rashid Ali Hassan Cafeteria" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
-                                <h3 class="project-title">Rashi Cafe</h3>
+                                <span class="project-cat">Restaurant & Cafeteria</span>
+                                <h3 class="project-title">Rashid Ali Hassan</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-silvanglobal-2026-07-15-15_14_21.webp" alt="Silvan Global Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-silvanglobal-2026-07-15-15_14_21.webp" alt="Silvan Global Building Materials" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
+                                <span class="project-cat">Building Materials & Interiors</span>
                                 <h3 class="project-title">Silvan Global</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-specsstores-hashirnisam-2026-07-15-15_16_40.webp" alt="Specs Stores Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-specsstores-hashirnisam-2026-07-15-15_16_40.webp" alt="The Specs Store Optical" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
-                                <h3 class="project-title">Specs Stores</h3>
+                                <span class="project-cat">Optical & Eye Care</span>
+                                <h3 class="project-title">The Specs Store</h3>
                             </div>
                         </a>
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/Works new/screencapture-v2ebl-hashirnisam-2026-07-15-15_11_37.webp" alt="V2EBL Web Design" class="ig-img">
+                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-v2ebl-hashirnisam-2026-07-15-15_11_37.webp" alt="EBL Emirati Leather Footwear" class="ig-img">
                             <div class="project-overlay-custom">
-                                <span class="project-cat">Web Development</span>
-                                <h3 class="project-title">V2EBL</h3>
+                                <span class="project-cat">E-commerce & Leather</span>
+                                <h3 class="project-title">EBL</h3>
                             </div>
                         </a>
                     </div>
-                </div>
-        </section>
-
-        <!-- Section 8: E-commerce Promo Banner -->
-        <section class="section-padding" style="padding: 60px 0; background: linear-gradient(135deg, rgba(139, 61, 255, 0.05) 0%, rgba(139, 61, 255, 0.05) 100%); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px;">
-                <div style="text-align: left;">
-                    <h2 class="section-title" style="margin-bottom: 10px; font-size: clamp(1.5rem, 3vw, 2.2rem); text-align: left; text-transform: none;">Are you planning to launch your ecommerce website?</h2>
-                    <p style="color: #c5c0d0; margin: 0; font-size: 1.1rem;">We build custom, high-converting online stores tailored to scale your brand.</p>
-                </div>
-                <div>
-                    <a href="#ecommerce" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 10px;">
-                        See E-Commerce Tiers
-                    </a>
                 </div>
             </div>
         </section>
@@ -1344,7 +1613,7 @@
         <!-- Section 8b: E-Commerce Showcase -->
         <section class="section-padding" id="ecommerce">
             <div class="container">
-                <div style="text-align: center; margin-bottom: 40px; position: relative;">
+                <div style="text-align: center; margin-bottom: 40px; position: relative;" class="fade-in-up">
                     <!-- Small Mascot Decor SVG -->
                     <div style="display: inline-block; margin-bottom: 15px;">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8B3DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
@@ -1353,22 +1622,22 @@
                 </div>
                 
                 <div class="industry-grid">
-                    <div class="industry-card" style="--bg-image: url('mockup_fashion.png');">
+                    <div class="industry-card reveal-3d-pop" style="--bg-image: url('assets/mockup_fashion.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Fashion & Apparels</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_jewellery.png');">
+                    <div class="industry-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_jewellery.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Jewellery store</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_beauty.png');">
+                    <div class="industry-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_beauty.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Beauty & Cosmetics</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_electronics.png');">
+                    <div class="industry-card reveal-3d-pop" style="--bg-image: url('assets/mockup_electronics.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Electronics & Gadgets</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_abaya.png');">
+                    <div class="industry-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_abaya.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Abaya</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('mockup_perfume.png');">
+                    <div class="industry-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_perfume.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Perfume</h3>
                     </div>
                 </div>
@@ -1383,11 +1652,11 @@
         <!-- Section 6: Choose the Package That Matches Your Goals -->
         <section class="section-padding interactive-compare-section" id="compare">
             <div class="container" style="max-width: 1000px;">
-                <div style="text-align: center; margin-bottom: 40px;">
+                <div style="text-align: center; margin-bottom: 40px;" class="fade-in-up">
                     <h2 class="section-title" style="font-size: clamp(1.8rem, 4vw, 2.5rem); text-transform: none;">Choose the Package That Matches Your Goals</h2>
                 </div>
 
-                <div class="compare-layout">
+                <div class="compare-layout fade-in-up">
                     <!-- Left: Stacking Options -->
                     <div class="compare-options">
                         <!-- Option 1 -->
@@ -1396,6 +1665,9 @@
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                             </div>
                             <span class="compare-opt-text">Establish a strong personel online presence.</span>
+                            <span class="compare-chevron-arrow">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </span>
                         </div>
 
                         <!-- Option 2 -->
@@ -1404,6 +1676,9 @@
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                             </div>
                             <span class="compare-opt-text">Convert more visitors into customers.</span>
+                            <span class="compare-chevron-arrow">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </span>
                         </div>
 
                         <!-- Option 3 -->
@@ -1412,6 +1687,9 @@
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                             </div>
                             <span class="compare-opt-text">Showcase your products or services professionally.</span>
+                            <span class="compare-chevron-arrow">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </span>
                         </div>
 
                         <!-- Option 4 -->
@@ -1420,6 +1698,9 @@
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                             </div>
                             <span class="compare-opt-text">Improve your brand credibility.</span>
+                            <span class="compare-chevron-arrow">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </span>
                         </div>
 
                         <!-- Option 5 -->
@@ -1428,6 +1709,9 @@
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                             </div>
                             <span class="compare-opt-text">Build a website ready for future growth.</span>
+                            <span class="compare-chevron-arrow">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </span>
                         </div>
                     </div>
 
@@ -1519,57 +1803,166 @@
 
         <script>
             function selectCompareOption(index) {
+                const isMobile = window.innerWidth <= 992;
+                const clickedPill = document.querySelectorAll('.compare-opt-pill')[index];
+                const isActive = clickedPill.classList.contains('active');
+                
                 // Remove active classes from all options
                 const options = document.querySelectorAll('.compare-opt-pill');
                 options.forEach(opt => opt.classList.remove('active'));
-                
-                // Add active class to clicked option
-                options[index].classList.add('active');
                 
                 // Hide all package cards
                 const cards = document.querySelectorAll('.compare-package-card');
                 cards.forEach(card => card.classList.remove('active'));
                 
-                // Show corresponding card
+                if (isMobile && isActive) {
+                    // On mobile, if we click an already active pill, it closes (leaves all collapsed)
+                    return;
+                }
+                
+                // Add active class to clicked option and corresponding card
+                clickedPill.classList.add('active');
                 document.getElementById(`compare-card-${index}`).classList.add('active');
+            }
+
+            function adjustCompareLayout() {
+                const isMobile = window.innerWidth <= 992;
+                const optionsContainer = document.querySelector('.compare-options');
+                const displayContainer = document.querySelector('.compare-display');
+                
+                if (!optionsContainer || !displayContainer) return;
+                
+                const pills = document.querySelectorAll('.compare-opt-pill');
+                pills.forEach((pill, index) => {
+                    const card = document.getElementById(`compare-card-${index}`);
+                    if (!card) return;
+                    
+                    if (isMobile) {
+                        // In mobile, insert card right after its pill
+                        pill.parentNode.insertBefore(card, pill.nextSibling);
+                    } else {
+                        // In desktop, move card back to display container
+                        displayContainer.appendChild(card);
+                    }
+                });
+            }
+
+            // Run on load, resize and immediately
+            window.addEventListener('DOMContentLoaded', () => {
+                adjustCompareLayout();
+                selectCompareOption(0);
+            });
+            window.addEventListener('resize', adjustCompareLayout);
+            adjustCompareLayout();
+
+            function toggleProcessStep(card) {
+                if (window.innerWidth > 900) return;
+                
+                const isActive = card.classList.contains('active');
+                
+                // Close all cards first (single-open accordion)
+                const allCards = document.querySelectorAll('.process-step-wrapper .benefit-card');
+                allCards.forEach(c => c.classList.remove('active'));
+                
+                if (!isActive) {
+                    card.classList.add('active');
+                }
             }
         </script>
 
         <!-- Section 9: Our Process -->
-        <section class="section-padding theme-light" style="background: var(--bg-slate); border-top: 1px solid var(--border-glass);" id="process">
+        <section class="section-padding theme-light bg-grid-pattern" style="background: var(--bg-slate); border-top: 1px solid var(--border-glass);" id="process">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 50px;">
                     <span class="section-tag center no-dot" style="margin-bottom: 15px; border-radius: 50px; padding: 5px 15px;">How We Deliver</span>
                     <h2 class="section-title">Our Process</h2>
                 </div>
 
-                <div class="process-grid">
-                    <!-- Step 1 -->
-                    <div class="benefit-card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">1</div>
-                        <h3>Choose Package</h3>
-                        <p style="text-align: center;">Select the perfect starter, professional, or custom plan for your business goals.</p>
+                <div class="process-zigzag-wrapper">
+                    <!-- SVG Zigzag Line Background -->
+                    <div class="zigzag-svg-container" style="height: 250px;">
+                        <svg width="100%" height="100%" viewBox="0 0 1000 250" preserveAspectRatio="none">
+                            <path d="M 0,175 L 220,175 L 260,75 L 480,75 L 520,175 L 740,175 L 780,75 L 1000,75" stroke="rgba(139, 61, 255, 0.6)" stroke-width="3" fill="none" vector-effect="non-scaling-stroke" stroke-linejoin="round" />
+                        </svg>
                     </div>
+                    
+                    <div class="process-zigzag-container">
+                        <!-- Step 1 -->
+                        <div class="process-step-wrapper fade-in-up">
+                            <div class="step-glow-number">01</div>
+                            <div class="benefit-card" onclick="toggleProcessStep(this)">
+                                <div class="step-badge" style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                </div>
+                                <div class="process-card-header">
+                                    <h3>Choose Package</h3>
+                                    <span class="process-accordion-arrow">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </span>
+                                </div>
+                                <div class="process-card-body">
+                                    <p style="text-align: center;">Select the perfect starter, professional, or custom plan for your business goals.</p>
+                                </div>
+                            </div>
+                        </div>
 
-                    <!-- Step 2 -->
-                    <div class="benefit-card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">2</div>
-                        <h3>Share Details</h3>
-                        <p style="text-align: center;">Provide your logo, brand guidelines, content, and references to our dev team.</p>
+                        <!-- Step 2 -->
+                        <div class="process-step-wrapper fade-in-up" style="transition-delay: 0.1s;">
+                            <div class="step-glow-number">02</div>
+                            <div class="benefit-card" onclick="toggleProcessStep(this)">
+                                <div class="step-badge" style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                </div>
+                                <div class="process-card-header">
+                                    <h3>Share Details</h3>
+                                    <span class="process-accordion-arrow">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </span>
+                                </div>
+                                <div class="process-card-body">
+                                    <p style="text-align: center;">Provide your logo, brand guidelines, content, and references to our dev team.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="process-step-wrapper fade-in-up" style="transition-delay: 0.2s;">
+                            <div class="step-glow-number">03</div>
+                            <div class="benefit-card" onclick="toggleProcessStep(this)">
+                                <div class="step-badge" style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                                </div>
+                                <div class="process-card-header">
+                                    <h3>Development</h3>
+                                    <span class="process-accordion-arrow">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </span>
+                                </div>
+                                <div class="process-card-body">
+                                    <p style="text-align: center;">We build and optimize your website with mobile responsiveness, SEO, and speed.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="process-step-wrapper fade-in-up" style="transition-delay: 0.3s;">
+                            <div class="step-glow-number">04</div>
+                            <div class="benefit-card" onclick="toggleProcessStep(this)">
+                                <div class="step-badge" style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+                                </div>
+                                <div class="process-card-header">
+                                    <h3>Approval & Launch</h3>
+                                    <span class="process-accordion-arrow">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </span>
+                                </div>
+                                <div class="process-card-body">
+                                    <p style="text-align: center;">Review the final version, approve, and we launch it live with your free domain.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Step 3 -->
-                    <div class="benefit-card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">3</div>
-                        <h3>Development</h3>
-                        <p style="text-align: center;">We build and optimize your website with mobile responsiveness, SEO, and speed.</p>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="benefit-card" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">4</div>
-                        <h3>Approval & Launch</h3>
-                        <p style="text-align: center;">Review the final version, approve, and we launch it live with your free domain.</p>
                     </div>
                 </div>
             </div>
@@ -1578,14 +1971,14 @@
         <!-- Section 10: Why WebBranding -->
         <section class="section-padding" style="border-top: 1px solid var(--border-glass);" id="why-webbranding">
             <div class="container">
-                <div style="text-align: center; margin-bottom: 50px;">
+                <div style="text-align: center; margin-bottom: 50px;" class="fade-in-up">
                     <span class="section-tag center no-dot" style="margin-bottom: 15px; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; border-radius: 50px; padding: 5px 15px;">Why Choose Us</span>
                     <h2 class="section-title">Why WebBranding?</h2>
                 </div>
 
                 <div class="benefits-grid">
                     <!-- Benefit 1 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         </div>
@@ -1594,7 +1987,7 @@
                     </div>
 
                     <!-- Benefit 2 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop delay-100">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
                         </div>
@@ -1603,7 +1996,7 @@
                     </div>
 
                     <!-- Benefit 3 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop delay-200">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                         </div>
@@ -1612,7 +2005,7 @@
                     </div>
 
                     <!-- Benefit 4 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z"></path></svg>
                         </div>
@@ -1621,7 +2014,7 @@
                     </div>
 
                     <!-- Benefit 5 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop delay-100">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                         </div>
@@ -1630,7 +2023,7 @@
                     </div>
 
                     <!-- Benefit 6 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop delay-200">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                         </div>
@@ -1662,9 +2055,9 @@
                 <div class="fade-in-up delay-200">
                     <!-- Right side image mockup placeholder -->
                     <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
-                        <img src="./assets/desktop_mockup.png" alt="Website Mockup" style="border-radius: 10px; width: 100%;">
+                        <img src="./assets/desktop_mockup.webp" alt="Website Mockup" style="border-radius: 10px; width: 100%;">
                         <div style="position: absolute; bottom: -20px; left: -20px; width: 100px; height: 150px; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden;">
-                             <img src="./assets/mobile_mockup.png" alt="Mobile Mockup" style="width: 100%; height: 100%; object-fit: cover;">
+                             <img src="./assets/mobile_mockup.webp" alt="Mobile Mockup" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                     </div>
                 </div>
@@ -1681,7 +2074,7 @@
 
                 <div class="footer-brand">
                     <a href="#" class="logo" style="margin-bottom: 8px; display: inline-block;">
-                        <img src="./assets/logo.png" alt="The Web Branding Logo" class="footer-logo-img">
+                        <img src="./assets/logo.webp" alt="The Web Branding Logo" class="footer-logo-img">
                     </a>
                     <p class="footer-brand-disc">
                         A full-service digital transformation agency. Combining strategy-led designs with high-impact marketing to grow brands in Dubai, India, and globally.
@@ -1766,7 +2159,7 @@
     <!-- CEO Floating Sales Bot (Bottom Left) -->
     <div id="ceo-sales-bot" class="ceo-bot">
         <div class="ceo-bot-avatar">
-            <img src="./assets/founder.png" alt="Hashir Nisam">
+            <img src="./assets/founder.webp" alt="Hashir Nisam">
         </div>
         <div class="ceo-bot-bubble">
             <div class="ceo-title">Hashir Nisam</div>

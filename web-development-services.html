@@ -288,12 +288,18 @@
             background-size: cover;
             background-position: center;
             z-index: -2;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
         }
         .industry-card:hover {
-            transform: translateY(-8px);
+            transform: translate3d(0, -8px, 0);
+            box-shadow: 0 15px 30px rgba(139, 61, 255, 0.25);
         }
         .industry-card:hover::before {
             opacity: 0;
+        }
+        .industry-card:hover::after {
+            transform: scale(1.1);
         }
         .industry-title {
             font-family: 'Outfit', sans-serif;
@@ -526,13 +532,21 @@
             border-radius: 16px;
             padding: 18px 24px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            will-change: transform;
             text-align: left;
             position: relative;
         }
         .compare-opt-pill:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(139, 61, 255, 0.3);
+            transform: translate3d(4px, 0, 0);
+            box-shadow: 0 5px 15px rgba(139, 61, 255, 0.05);
+        }
+        .compare-opt-pill:hover .compare-icon-circle {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(139, 61, 255, 0.1);
+            color: #8B3DFF;
         }
         .compare-opt-pill.active {
             background: rgba(255, 255, 255, 0.05);
@@ -709,13 +723,15 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 20px;
             padding: 30px;
-            transition: all 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            will-change: transform;
             text-align: left;
         }
         .benefit-card:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(139, 61, 255, 0.2);
-            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(139, 61, 255, 0.35);
+            transform: translate3d(0, -6px, 0) scale(1.01);
+            box-shadow: 0 15px 30px rgba(139, 61, 255, 0.15);
         }
         .benefit-icon-box {
             width: 44px;
@@ -727,6 +743,11 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
+        }
+        .benefit-card:hover .benefit-icon-box {
+            transform: scale(1.12) rotate(5deg);
+            background: rgba(139, 61, 255, 0.2);
         }
         .benefit-card h3 {
             font-family: 'Outfit', sans-serif;
@@ -1236,7 +1257,7 @@
                     }
                 }
             </style>
-            <div class="brands-layout">
+            <div class="brands-layout fade-in-up">
                 <!-- Left Heading -->
                 <div class="brands-heading-side">
                     <span class="section-tag no-dot" style="color: #8B3DFF; line-height: 1.5; font-size: 0.95rem; font-weight: 700; display: block; margin: 0; padding: 0; text-align: left; letter-spacing: 1.5px; text-transform: uppercase;">
@@ -1286,7 +1307,7 @@
 
         <!-- Section 2: Quick Consult Banner -->
         <section class="section-padding" style="padding: 40px 0; background: linear-gradient(90deg, rgba(139, 61, 255, 0.05), rgba(139, 61, 255, 0.05)); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <div class="container fade-in-up" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
                 <div style="text-align: left;">
                     <h2 class="section-title" style="margin-bottom: 10px; font-size: clamp(1.5rem, 3vw, 2.2rem); text-align: left;">Finalize your suitable website package in 10 min</h2>
                     <p style="color: #c5c0d0; margin: 0;">Speak directly with our digital transformation specialists now.</p>
@@ -1303,13 +1324,13 @@
         <!-- Section 3: Packages -->
         <section class="section-padding theme-light bg-grid-pattern" style="background: var(--bg-slate);" id="packages">
             <div class="container">
-                <div style="text-align: center;">
+                <div style="text-align: center;" class="fade-in-up">
                     <h2 class="section-title">WEBSITE PACKAGES</h2>
                 </div>
                 
                 <div class="pricing-grid">
                     <!-- Corporate Starter -->
-                    <div id="pkg-starter" class="pricing-card">
+                    <div id="pkg-starter" class="pricing-card reveal-3d-pop">
                         <h3 class="pkg-title">Corporate Starter</h3>
                         <p style="color: var(--text-faded); font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px;">5 Page Corporate Website</p>
                         <div class="pkg-price"><span>AED</span> 4,999</div>
@@ -1328,7 +1349,7 @@
                     </div>
 
                     <!-- Corporate Professional -->
-                    <div id="pkg-professional" class="pricing-card popular">
+                    <div id="pkg-professional" class="pricing-card popular reveal-3d-pop delay-100">
                         <div class="popular-badge">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                             Most Popular
@@ -1351,7 +1372,7 @@
                     </div>
 
                     <!-- Corporate Enterprise -->
-                    <div id="pkg-enterprise" class="pricing-card">
+                    <div id="pkg-enterprise" class="pricing-card reveal-3d-pop delay-200">
                         <h3 class="pkg-title">Corporate Enterprise</h3>
                         <p style="color: var(--text-faded); font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px;">30 Page Website</p>
                         <div class="pkg-price"><span>AED</span> 9,999</div>
@@ -1374,7 +1395,7 @@
 
         <!-- Section 4: Portfolio Offer Banner -->
         <section class="section-padding" style="padding: 60px 0; background: linear-gradient(135deg, rgba(139, 61, 255, 0.08) 0%, rgba(139, 61, 255, 0.08) 100%); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <div class="container" style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <div class="container reveal-3d-fold" style="text-align: center; max-width: 800px; margin: 0 auto;">
                 <span class="section-tag center no-dot" style="margin-bottom: 15px; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; border-radius: 50px; padding: 5px 15px;">Limited Time Offer</span>
                 <h2 class="section-title" style="margin-bottom: 20px; font-size: clamp(1.8rem, 4vw, 2.8rem);">Are you an influencer or Business owner?</h2>
                 <p style="color: #c5c0d0; font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
@@ -1390,37 +1411,37 @@
         <!-- Section 5: Our Industries -->
         <section class="section-padding" id="industries">
             <div class="container">
-                <div style="text-align: center; margin-bottom: 40px;">
+                <div style="text-align: center; margin-bottom: 40px;" class="fade-in-up">
                     <span class="section-tag center no-dot" style="background: rgba(37, 211, 102, 0.1); color: #25D366; border-radius: 50px; padding: 5px 15px;">Fast Delivery in 7 Days</span>
                     <h2 class="section-title">Get a Free Consultation</h2>
                 </div>
                 
                 <div class="industry-grid">
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_hospitality.webp');">
+                    <div class="industry-card reveal-3d-pop" style="--bg-image: url('assets/mockup_hospitality.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Hospitality & Hotels<br>Retail & Fashion</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_realestate.webp');">
+                    <div class="industry-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_realestate.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Real Estate</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_event.webp');">
+                    <div class="industry-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_event.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Event Management</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_education.webp');">
+                    <div class="industry-card reveal-3d-pop" style="--bg-image: url('assets/mockup_education.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Education / Coaching</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_medical.webp');">
+                    <div class="industry-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_medical.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Clinics / Hospitals</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_repair.webp');">
+                    <div class="industry-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_repair.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">MEP / Repair</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_logistics.webp');">
+                    <div class="industry-card reveal-3d-pop" style="--bg-image: url('assets/mockup_logistics.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Logistics</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_construction.webp');">
+                    <div class="industry-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_construction.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Construction / Interior Design</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_supermarket.webp');">
+                    <div class="industry-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_supermarket.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Supermarket</h3>
                     </div>
                 </div>
@@ -1592,7 +1613,7 @@
         <!-- Section 8b: E-Commerce Showcase -->
         <section class="section-padding" id="ecommerce">
             <div class="container">
-                <div style="text-align: center; margin-bottom: 40px; position: relative;">
+                <div style="text-align: center; margin-bottom: 40px; position: relative;" class="fade-in-up">
                     <!-- Small Mascot Decor SVG -->
                     <div style="display: inline-block; margin-bottom: 15px;">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8B3DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
@@ -1601,22 +1622,22 @@
                 </div>
                 
                 <div class="industry-grid">
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_fashion.webp');">
+                    <div class="industry-card reveal-3d-pop" style="--bg-image: url('assets/mockup_fashion.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Fashion & Apparels</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_jewellery.webp');">
+                    <div class="industry-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_jewellery.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Jewellery store</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_beauty.webp');">
+                    <div class="industry-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_beauty.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Beauty & Cosmetics</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_electronics.webp');">
+                    <div class="industry-card reveal-3d-pop" style="--bg-image: url('assets/mockup_electronics.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Electronics & Gadgets</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_abaya.webp');">
+                    <div class="industry-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_abaya.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Abaya</h3>
                     </div>
-                    <div class="industry-card" style="--bg-image: url('assets/mockup_perfume.webp');">
+                    <div class="industry-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_perfume.webp');">
                         <h3 class="industry-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Perfume</h3>
                     </div>
                 </div>
@@ -1631,11 +1652,11 @@
         <!-- Section 6: Choose the Package That Matches Your Goals -->
         <section class="section-padding interactive-compare-section" id="compare">
             <div class="container" style="max-width: 1000px;">
-                <div style="text-align: center; margin-bottom: 40px;">
+                <div style="text-align: center; margin-bottom: 40px;" class="fade-in-up">
                     <h2 class="section-title" style="font-size: clamp(1.8rem, 4vw, 2.5rem); text-transform: none;">Choose the Package That Matches Your Goals</h2>
                 </div>
 
-                <div class="compare-layout">
+                <div class="compare-layout fade-in-up">
                     <!-- Left: Stacking Options -->
                     <div class="compare-options">
                         <!-- Option 1 -->
@@ -1950,14 +1971,14 @@
         <!-- Section 10: Why WebBranding -->
         <section class="section-padding" style="border-top: 1px solid var(--border-glass);" id="why-webbranding">
             <div class="container">
-                <div style="text-align: center; margin-bottom: 50px;">
+                <div style="text-align: center; margin-bottom: 50px;" class="fade-in-up">
                     <span class="section-tag center no-dot" style="margin-bottom: 15px; background: rgba(139, 61, 255, 0.1); color: #8B3DFF; border-radius: 50px; padding: 5px 15px;">Why Choose Us</span>
                     <h2 class="section-title">Why WebBranding?</h2>
                 </div>
 
                 <div class="benefits-grid">
                     <!-- Benefit 1 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         </div>
@@ -1966,7 +1987,7 @@
                     </div>
 
                     <!-- Benefit 2 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop delay-100">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
                         </div>
@@ -1975,7 +1996,7 @@
                     </div>
 
                     <!-- Benefit 3 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop delay-200">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                         </div>
@@ -1984,7 +2005,7 @@
                     </div>
 
                     <!-- Benefit 4 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z"></path></svg>
                         </div>
@@ -1993,7 +2014,7 @@
                     </div>
 
                     <!-- Benefit 5 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop delay-100">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                         </div>
@@ -2002,7 +2023,7 @@
                     </div>
 
                     <!-- Benefit 6 -->
-                    <div class="benefit-card">
+                    <div class="benefit-card reveal-3d-pop delay-200">
                         <div class="benefit-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                         </div>

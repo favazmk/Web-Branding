@@ -1822,4 +1822,116 @@ Looking forward to bringing this digital transformation to life!`;
     if (campaignLeadForm) {
         campaignLeadForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Website Quote'));
     }
+
+    // --- 8. Beautiful Custom Select Dropdowns ---
+    const initCustomSelects = () => {
+        const selectElements = document.querySelectorAll('select.form-control');
+        
+        selectElements.forEach(select => {
+            if (select.nextElementSibling && select.nextElementSibling.classList.contains('custom-select-container')) {
+                return;
+            }
+            
+            // Hide native select
+            select.style.display = 'none';
+            
+            // Create wrapper
+            const container = document.createElement('div');
+            container.className = 'custom-select-container';
+            
+            // Create trigger
+            const trigger = document.createElement('div');
+            trigger.className = 'custom-select-trigger';
+            
+            const triggerSpan = document.createElement('span');
+            const placeholderOption = select.querySelector('option[disabled]') || select.firstElementChild;
+            
+            // Show placeholder or selected value
+            if (select.selectedIndex >= 0 && !select.options[select.selectedIndex].disabled) {
+                triggerSpan.textContent = select.options[select.selectedIndex].text;
+            } else {
+                triggerSpan.textContent = placeholderOption ? placeholderOption.text : 'Select Option';
+                triggerSpan.classList.add('placeholder');
+            }
+            
+            const arrow = document.createElement('div');
+            arrow.className = 'custom-select-arrow';
+            
+            trigger.appendChild(triggerSpan);
+            trigger.appendChild(arrow);
+            container.appendChild(trigger);
+            
+            // Create options panel
+            const optionsContainer = document.createElement('div');
+            optionsContainer.className = 'custom-select-options';
+            
+            Array.from(select.options).forEach(opt => {
+                if (opt.disabled) return;
+                
+                const optDiv = document.createElement('div');
+                optDiv.className = 'custom-select-option';
+                optDiv.textContent = opt.text;
+                optDiv.dataset.value = opt.value;
+                
+                if (select.value === opt.value) {
+                    optDiv.classList.add('selected');
+                }
+                
+                optDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    select.value = opt.value;
+                    triggerSpan.textContent = opt.text;
+                    triggerSpan.classList.remove('placeholder');
+                    
+                    optionsContainer.querySelectorAll('.custom-select-option').forEach(el => el.classList.remove('selected'));
+                    optDiv.classList.add('selected');
+                    
+                    container.classList.remove('open');
+                    select.dispatchEvent(new Event('change'));
+                });
+                
+                optionsContainer.appendChild(optDiv);
+            });
+            
+            container.appendChild(optionsContainer);
+            select.parentNode.insertBefore(container, select.nextSibling);
+            
+            // Open on trigger click
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.querySelectorAll('.custom-select-container').forEach(el => {
+                    if (el !== container) el.classList.remove('open');
+                });
+                container.classList.toggle('open');
+            });
+        });
+        
+        // Close dropdowns on outside clicks
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.custom-select-container').forEach(el => {
+                el.classList.remove('open');
+            });
+        });
+
+        // Listen for form reset events to update custom select indicators
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('reset', () => {
+                setTimeout(() => {
+                    form.querySelectorAll('select.form-control').forEach(select => {
+                        const container = select.nextElementSibling;
+                        if (container && container.classList.contains('custom-select-container')) {
+                            const triggerSpan = container.querySelector('.custom-select-trigger span');
+                            const placeholderOption = select.querySelector('option[disabled]') || select.firstElementChild;
+                            if (triggerSpan && placeholderOption) {
+                                triggerSpan.textContent = placeholderOption.text;
+                                triggerSpan.classList.add('placeholder');
+                            }
+                            container.querySelectorAll('.custom-select-option').forEach(el => el.classList.remove('selected'));
+                        }
+                    });
+                }, 0);
+            });
+        });
+    };
+    initCustomSelects();
 });
