@@ -1659,6 +1659,12 @@
                 <div class="compare-layout fade-in-up">
                     <!-- Left: Stacking Options -->
                     <div class="compare-options">
+                        <!-- Clickable Hint -->
+                        <div class="compare-hint-badge" onclick="cycleCompareOptions()" onmouseover="this.style.background='rgba(139, 61, 255, 0.12)'; this.style.borderColor='rgba(139, 61, 255, 0.5)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(139, 61, 255, 0.06)'; this.style.borderColor='rgba(139, 61, 255, 0.25)'; this.style.transform='translateY(0)';" style="display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--secondary); font-size: 0.9rem; font-weight: 600; padding: 10px 16px; background: rgba(139, 61, 255, 0.06); border: 1px dashed rgba(139, 61, 255, 0.25); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; margin-bottom: 8px; user-select: none; width: 100%;">
+                            <span style="font-size: 1.1rem; display: inline-block; animation: pulse 1.5s infinite;">💡</span>
+                            <span>Click any goal to view matching package (Try it)</span>
+                        </div>
+
                         <!-- Option 1 -->
                         <div class="compare-opt-pill active" onclick="selectCompareOption(0)">
                             <div class="compare-icon-circle">
@@ -1825,6 +1831,18 @@
                 document.getElementById(`compare-card-${index}`).classList.add('active');
             }
 
+            function cycleCompareOptions() {
+                const pills = document.querySelectorAll('.compare-opt-pill');
+                let activeIndex = -1;
+                pills.forEach((pill, idx) => {
+                    if (pill.classList.contains('active')) {
+                        activeIndex = idx;
+                    }
+                });
+                const nextIndex = (activeIndex + 1) % pills.length;
+                selectCompareOption(nextIndex);
+            }
+
             function adjustCompareLayout() {
                 const isMobile = window.innerWidth <= 992;
                 const optionsContainer = document.querySelector('.compare-options');
@@ -1833,9 +1851,15 @@
                 if (!optionsContainer || !displayContainer) return;
                 
                 const pills = document.querySelectorAll('.compare-opt-pill');
+                let hasActive = false;
+                
                 pills.forEach((pill, index) => {
                     const card = document.getElementById(`compare-card-${index}`);
                     if (!card) return;
+                    
+                    if (pill.classList.contains('active')) {
+                        hasActive = true;
+                    }
                     
                     if (isMobile) {
                         // In mobile, insert card right after its pill
@@ -1845,6 +1869,11 @@
                         displayContainer.appendChild(card);
                     }
                 });
+                
+                // Enforce that on desktop, at least one option is always active/opened (defaulting to the first one)
+                if (!isMobile && !hasActive) {
+                    selectCompareOption(0);
+                }
             }
 
             // Run on load, resize and immediately
@@ -1852,7 +1881,9 @@
                 adjustCompareLayout();
                 selectCompareOption(0);
             });
-            window.addEventListener('resize', adjustCompareLayout);
+            window.addEventListener('resize', () => {
+                adjustCompareLayout();
+            });
             adjustCompareLayout();
 
             function toggleProcessStep(card) {
