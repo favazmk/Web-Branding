@@ -180,7 +180,7 @@ img {
     font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--primary);
+    color: var(--text-white);
     display: flex;
     width: fit-content;
     align-items: center;
@@ -1538,8 +1538,9 @@ nav {
 
 .footer-grid {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr;
-    gap: 48px;
+    grid-template-columns: repeat(4, auto);
+    justify-content: center;
+    gap: 80px;
     margin-bottom: 60px;
 }
 
