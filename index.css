@@ -2901,14 +2901,15 @@ nav {
         }
     }
 
-/* Projects Marquee & Hover Effect (Ported from Digital Marketing) */
+/* Projects Marquee & Hover Effect */
 .projects-marquee {
     overflow: hidden;
     white-space: nowrap;
     position: relative;
     width: 100vw;
-    left: 50%;
-    transform: translateX(-50%);
+    /* Use margin-left instead of left+transform so the animation's transform
+       on .projects-track doesn't conflict with/override the positioning */
+    margin-left: calc(50% - 50vw);
 }
 .projects-track {
     display: flex;
