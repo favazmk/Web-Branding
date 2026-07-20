@@ -290,11 +290,7 @@ Looking forward to bringing this digital transformation to life!`;
             .then(async (response) => {
                 let json = await response.json();
                 if (response.status == 200) {
-                    showToast("Thank you! Your custom proposal request has been submitted successfully.", "success");
-                    try {
-                        projectForm.reset();
-                        updateEstimator();
-                    } catch(err) {}
+                    window.location.href = "thankyou.html";
                 } else {
                     console.log(response);
                     showToast("Something went wrong, please contact us directly!", "error");
@@ -1795,8 +1791,7 @@ Looking forward to bringing this digital transformation to life!`;
         .then(async (response) => {
             let json = await response.json();
             if (response.status == 200) {
-                showToast("Thank you! Your request has been submitted successfully.", "success");
-                try { form.reset(); } catch(e) {}
+                window.location.href = "thankyou.html";
             } else {
                 console.log(response);
                 showToast("Something went wrong, please contact us directly!", "error");
