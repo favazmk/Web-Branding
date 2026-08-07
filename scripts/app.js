@@ -3,7 +3,33 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
+    // --- Lead Source Tracking ---
+    // Identifies which page a lead came from, so ad spend on the isolated
+    // landing pages can be measured separately from homepage traffic.
+    // The value rides along to thankyou.html, which fires the conversion event.
+    const getLeadSource = () => {
+        const path = window.location.pathname.toLowerCase();
+        // Order matters: the ads landing page must be tested before the
+        // main-site page, since 'web-development-services' also contains
+        // the substring 'web-development'.
+        if (path.includes('web-development-services')) return 'web-development-landing';
+        if (path.includes('digital-marketing')) return 'digital-marketing-landing';
+        if (path.includes('web-development')) return 'web-development-page';
+        return 'homepage';
+    };
+
+    // Hands the source off to the thank-you page via the URL. The conversion
+    // event is pushed there rather than here, because a dataLayer.push
+    // immediately followed by a redirect is often lost before GTM can fire.
+    const redirectToThankYou = (formName) => {
+        const params = new URLSearchParams({
+            src: getLeadSource(),
+            form: formName
+        });
+        window.location.href = 'thankyou.html?' + params.toString();
+    };
+
     // --- Custom Toast Warning/Success System (Agency Themed) ---
     const showToast = (message, type = 'success') => {
         const existingToast = document.getElementById('twb-toast');
@@ -284,13 +310,15 @@ Looking forward to bringing this digital transformation to life!`;
                     name: name,
                     email: email,
                     phone: phone,
+                    page_source: getLeadSource(),
+                    form_name: 'Project Estimator',
                     message: message
                 })
             })
             .then(async (response) => {
                 let json = await response.json();
                 if (response.status == 200) {
-                    window.location.href = "thankyou.html";
+                    redirectToThankYou('Project Estimator');
                 } else {
                     console.log(response);
                     showToast("Something went wrong, please contact us directly!", "error");
@@ -1785,13 +1813,15 @@ Looking forward to bringing this digital transformation to life!`;
                 email: email,
                 company: company,
                 service: service,
+                page_source: getLeadSource(),
+                form_name: title,
                 message: message
             })
         })
         .then(async (response) => {
             let json = await response.json();
             if (response.status == 200) {
-                window.location.href = "thankyou.html";
+                redirectToThankYou(title);
             } else {
                 console.log(response);
                 showToast("Something went wrong, please contact us directly!", "error");
@@ -1811,6 +1841,14 @@ Looking forward to bringing this digital transformation to life!`;
     const marketingAuditForm = document.getElementById('marketing-audit-form');
     if (marketingAuditForm) {
         marketingAuditForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Free Marketing Consultation'));
+    }
+
+    // Main-site web development page (indexable, linked from the nav).
+    // Kept separate from the ads landing form so organic and paid leads
+    // stay distinguishable in both GTM and the inbox.
+    const webdevPageLeadForm = document.getElementById('webdev-page-lead-form');
+    if (webdevPageLeadForm) {
+        webdevPageLeadForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Web Development Enquiry'));
     }
 
     const campaignLeadForm = document.getElementById('campaign-lead-form');

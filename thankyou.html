@@ -10,6 +10,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TC7299D8');</script>
 <!-- End Google Tag Manager -->
 
+<!-- Lead Conversion Event -->
+<!-- Reads the source handed over by the submitting page and fires the single
+     authoritative conversion event. Fired here, not on the form page, so the
+     redirect cannot cut the tag off before it sends. -->
+<script>
+(function () {
+    var params = new URLSearchParams(window.location.search);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        event: 'generate_lead',
+        lead_source: params.get('src') || 'unknown',
+        form_name: params.get('form') || 'unknown'
+    });
+})();
+</script>
+<!-- End Lead Conversion Event -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thank You | The Web Branding</title>
