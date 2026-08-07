@@ -1542,28 +1542,54 @@ Looking forward to bringing this digital transformation to life!`;
         const updateMascotPosition = () => {
             const ceoBot = document.getElementById('ceo-sales-bot');
             const isCeoBotVisible = ceoBot && ceoBot.classList.contains('visible');
-            const heroSection = document.getElementById('home');
-            const heroTarget = document.querySelector('.mascot-hero-target');
+            const heroSection = document.getElementById('home') || document.querySelector('.hero-section, .hero, .bh-hero');
+            // Allow multiple hero targets per page, prioritizing the first one that is visible below the navbar
+            const heroTargets = document.querySelectorAll('.mascot-hero-target');
             
-            // Check if we are currently scrolled inside the hero section
-            let inHero = false;
-            if (heroSection) {
-                const rect = heroSection.getBoundingClientRect();
-                if (rect.bottom > 100) {
-                    inHero = true;
+            // Get bottom edge of navbar (if present)
+            const navbar = document.querySelector('.ag-pill-header, #main-header, header, .navbar');
+            let navBottom = 70;
+            if (navbar) {
+                const navRect = navbar.getBoundingClientRect();
+                if (navRect.height > 0 && navRect.bottom > 0) {
+                    navBottom = navRect.bottom;
                 }
             }
 
-            if (inHero && heroTarget) {
-                mascotContainer.classList.add('in-hero');
-                const targetRect = heroTarget.getBoundingClientRect();
+            // Mascot stays docked in hero ONLY while target top is below navbar bottom + 25px buffer
+            let inHero = false;
+            let activeHeroTarget = null;
+            
+            for (let i = 0; i < heroTargets.length; i++) {
+                const targetRect = heroTargets[i].getBoundingClientRect();
+                if (targetRect.top > (navBottom + 25) && targetRect.bottom > 0 && targetRect.top < window.innerHeight) {
+                    inHero = true;
+                    activeHeroTarget = heroTargets[i];
+                    break;
+                }
+            }
+
+            if (inHero && activeHeroTarget) {
+                if (activeHeroTarget.classList.contains('bh-dock')) {
+                    mascotContainer.classList.add('in-hero');
+                    mascotContainer.classList.remove('in-sub-hero');
+                } else {
+                    mascotContainer.classList.add('in-sub-hero');
+                    mascotContainer.classList.remove('in-hero');
+                    mascotContainer.style.removeProperty('--bh-mascot-scale');
+                    mascotContainer.style.removeProperty('--bh-mascot-inv-scale');
+                }
+                const targetRect = activeHeroTarget.getBoundingClientRect();
                 mascotContainer.style.left = `${targetRect.left}px`;
                 mascotContainer.style.top = `${targetRect.top}px`;
-                currentClosestTarget = heroTarget;
+                currentClosestTarget = activeHeroTarget;
                 return;
             }
 
             mascotContainer.classList.remove('in-hero');
+            mascotContainer.classList.remove('in-sub-hero');
+            mascotContainer.style.removeProperty('--bh-mascot-scale');
+            mascotContainer.style.removeProperty('--bh-mascot-inv-scale');
 
             // Default bottom-right corner
             let defaultX = window.innerWidth - 120;
@@ -1718,9 +1744,20 @@ Looking forward to bringing this digital transformation to life!`;
         
         mascotContainer.addEventListener('click', () => {
             clearTimeout(bubbleTimeout);
-            let pitch = "Hello! I'm here to help you build something amazing. Click Book Now to chat!";
+            let pitch = "Hello! I'm here to help you build something amazing. Click Get Started to chat!";
             
-            if (currentClosestTarget) {
+            const isInHero = mascotContainer.classList.contains('in-hero');
+
+            if (isInHero) {
+                const pagePath = window.location.pathname.toLowerCase();
+                if (pagePath.includes('web-development')) {
+                    pitch = "Hi! Ready to build a high-speed, custom website? Let's get started!";
+                } else if (pagePath.includes('digital-marketing')) {
+                    pitch = "Hi! Want to 10x your leads with high-converting Meta ads? Let's talk!";
+                } else {
+                    pitch = "Hi there! Welcome to Web Branding. Ready to transform your digital presence?";
+                }
+            } else if (currentClosestTarget) {
                 const text = currentClosestTarget.innerText.toLowerCase();
                 const className = currentClosestTarget.className.toLowerCase();
                 
@@ -1739,13 +1776,17 @@ Looking forward to bringing this digital transformation to life!`;
             
             // Adjust bubble direction based on mascot screen position
             const rect = mascotContainer.getBoundingClientRect();
-            if (rect.left < window.innerWidth / 2) {
+            if (isInHero || (rect.left > window.innerWidth * 0.35 && rect.left < window.innerWidth * 0.65)) {
+                // Mascot centered / docked in hero: Speech bubble centered directly above head
+                bubble.classList.remove('bubble-left', 'bubble-right');
+                bubble.classList.add('bubble-center');
+            } else if (rect.left < window.innerWidth / 2) {
                 // Mascot on left half: Bubble grows towards right
-                bubble.classList.remove('bubble-right');
+                bubble.classList.remove('bubble-right', 'bubble-center');
                 bubble.classList.add('bubble-left');
             } else {
                 // Mascot on right half: Bubble grows towards left
-                bubble.classList.remove('bubble-left');
+                bubble.classList.remove('bubble-left', 'bubble-center');
                 bubble.classList.add('bubble-right');
             }
             
@@ -1967,4 +2008,211 @@ Looking forward to bringing this digital transformation to life!`;
         });
     };
     initCustomSelects();
+
+    // --- 3D Ecommerce Carousel ---
+    const initEcommerceCarousel = () => {
+        const carousel = document.getElementById('ecommerce-carousel');
+        if (!carousel) return;
+
+        const cards = Array.from(carousel.querySelectorAll('.carousel-card'));
+        const dotsContainer = carousel.querySelector('.carousel-dots');
+        const currentDisplay = carousel.querySelector('.carousel-current');
+        const totalDisplay = carousel.querySelector('.carousel-total');
+        const nextBtn = carousel.querySelector('.carousel-next');
+        const prevBtn = carousel.querySelector('.carousel-prev');
+
+        if (cards.length === 0) return;
+
+        let currentIndex = 0;
+        let autoplayInterval = null;
+        let isUserHovering = false;
+        let isVisibleInViewport = true;
+
+        // Clear existing dots to prevent duplication on re-init
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+            cards.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.classList.add('carousel-dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    goToSlide(i);
+                    resetAutoplay();
+                });
+                dotsContainer.appendChild(dot);
+            });
+        }
+        const dots = dotsContainer ? Array.from(dotsContainer.querySelectorAll('.carousel-dot')) : [];
+
+        if (totalDisplay) {
+            totalDisplay.textContent = `of ${String(cards.length).padStart(2, '0')}`;
+        }
+
+        const updateCarousel = () => {
+            const len = cards.length;
+
+            cards.forEach((card) => {
+                card.className = 'industry-card carousel-card';
+            });
+
+            // Set active
+            cards[currentIndex].classList.add('active');
+
+            // Set Next 1 & Prev 1
+            const next1 = (currentIndex + 1) % len;
+            const prev1 = (currentIndex - 1 + len) % len;
+            cards[next1].classList.add('next-1');
+            cards[prev1].classList.add('prev-1');
+
+            if (len > 3) {
+                const next2 = (currentIndex + 2) % len;
+                const prev2 = (currentIndex - 2 + len) % len;
+                cards[next2].classList.add('next-2');
+                cards[prev2].classList.add('prev-2');
+            }
+
+            if (currentDisplay) {
+                currentDisplay.textContent = String(currentIndex + 1).padStart(2, '0');
+            }
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        };
+
+        const nextSlide = () => {
+            currentIndex = (currentIndex + 1) % cards.length;
+            updateCarousel();
+        };
+
+        const prevSlide = () => {
+            currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+            updateCarousel();
+        };
+
+        const goToSlide = (index) => {
+            currentIndex = index;
+            updateCarousel();
+        };
+
+        const startAutoplay = () => {
+            if (autoplayInterval) clearInterval(autoplayInterval);
+            if (isVisibleInViewport && !document.hidden) {
+                autoplayInterval = setInterval(nextSlide, 2400);
+            }
+        };
+
+        const stopAutoplay = () => {
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+                autoplayInterval = null;
+            }
+        };
+
+        const resetAutoplay = () => {
+            stopAutoplay();
+            startAutoplay();
+        };
+
+        // Click listeners on cards
+        cards.forEach((card, i) => {
+            card.addEventListener('click', () => {
+                if (i !== currentIndex) {
+                    goToSlide(i);
+                    resetAutoplay();
+                }
+            });
+        });
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                nextSlide();
+                resetAutoplay();
+            });
+        }
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                prevSlide();
+                resetAutoplay();
+            });
+        }
+
+        // Page visibility listener
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopAutoplay();
+            } else {
+                startAutoplay();
+            }
+        });
+
+        // IntersectionObserver to auto-start when visible in viewport
+        const carouselObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isVisibleInViewport = entry.isIntersecting;
+                if (isVisibleInViewport) {
+                    startAutoplay();
+                } else {
+                    stopAutoplay();
+                }
+            });
+        }, { threshold: 0.1 });
+        carouselObserver.observe(carousel);
+
+        // Initialize immediately
+        updateCarousel();
+        startAutoplay();
+    };
+    initEcommerceCarousel();
+
+    // --- Expandable Horizontal Accordion Hover & Click Handler ---
+    const initExpandAccordion = () => {
+        const container = document.querySelector('.expand-accordion-container');
+        if (!container) return;
+
+        const expandCards = container.querySelectorAll('.expand-card');
+        let hoverTimeout = null;
+
+        expandCards.forEach(card => {
+            // Hover Intent for desktop
+            card.addEventListener('mouseenter', () => {
+                if (window.innerWidth > 992) {
+                    clearTimeout(hoverTimeout);
+                    hoverTimeout = setTimeout(() => {
+                        expandCards.forEach(c => c.classList.remove('active-hover'));
+                        card.classList.add('active-hover');
+                        container.classList.add('has-active');
+                    }, 60);
+                }
+            });
+
+            // Mobile click toggle
+            card.addEventListener('click', function(e) {
+                if (window.innerWidth <= 992) {
+                    if (e.target.closest('a')) return;
+                    const isAlreadyActive = this.classList.contains('active-mobile');
+                    expandCards.forEach(c => c.classList.remove('active-mobile'));
+                    if (!isAlreadyActive) {
+                        this.classList.add('active-mobile');
+                        container.classList.add('has-active');
+                    } else {
+                        container.classList.remove('has-active');
+                    }
+                }
+            });
+        });
+
+        // Mouseleave container restores all cards to resting state
+        container.addEventListener('mouseleave', () => {
+            if (window.innerWidth > 992) {
+                clearTimeout(hoverTimeout);
+                expandCards.forEach(c => c.classList.remove('active-hover'));
+                container.classList.remove('has-active');
+            }
+        });
+    };
+    initExpandAccordion();
 });
