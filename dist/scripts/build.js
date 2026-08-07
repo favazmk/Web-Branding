@@ -4,9 +4,13 @@ const path = require('path');
 const rootDir = path.join(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 
-if (!fs.existsSync(distDir)) {
-    fs.mkdirSync(distDir);
+// Clear dist before copying. Without this the folder only ever grows: files
+// deleted or replaced at source (a .jpg swapped for a .webp, say) linger here
+// forever and get shipped in the deploy zip.
+if (fs.existsSync(distDir)) {
+    fs.rmSync(distDir, { recursive: true, force: true });
 }
+fs.mkdirSync(distDir, { recursive: true });
 
 // Copy all static root files
 const files = fs.readdirSync(rootDir);
