@@ -481,6 +481,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             position: relative;
             width: 100%;
             padding: 20px 0;
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
         }
         .projects-track {
             display: flex;
@@ -666,9 +668,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <main>
 
         <!-- Ambient Glowing Background Orbs -->
-        <div class="glow-wrapper" style="opacity: 0.6;">
+        <div class="glow-wrapper" style="opacity: 0.65;">
             <div class="glow-orb orb-primary" style="top: 5%; left: -10%;"></div>
-            <div class="glow-orb orb-secondary" style="top: 40%; right: -10%;"></div>
+            <div class="glow-orb" style="position: absolute; top: 25%; left: 35%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(225, 29, 72, 0.18) 0%, transparent 70%); filter: blur(85px); pointer-events: none;"></div>
+            <div class="glow-orb orb-secondary" style="top: 45%; right: -10%;"></div>
+            <div class="glow-orb" style="position: absolute; top: 72%; right: 25%; width: 450px; height: 450px; background: radial-gradient(circle, rgba(225, 29, 72, 0.15) 0%, transparent 70%); filter: blur(80px); pointer-events: none;"></div>
             <div class="glow-orb orb-accent" style="bottom: 10%; left: 20%;"></div>
         </div>
 
@@ -678,10 +682,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="hero-grid">
 
                     <div class="hero-left-content fade-in-up">
-                        <div class="hero-pill">High-Performance Growth Agency</div>
+                        <div class="hero-pill" style="background: rgba(225, 29, 72, 0.15); border: 1px solid rgba(225, 29, 72, 0.4); color: #ff4d6d; box-shadow: 0 4px 15px rgba(225, 29, 72, 0.2);">Special OFFERS</div>
                         
-                        <h1 class="hero-title-campaign">
-                            Accelerate Your Brand with <span class="gradient-text">Data-Driven Digital Marketing</span>
+                        <h1 class="hero-title-campaign" style="line-height: 1.2;">
+                            Social Media Management<br>from <span style="display: inline-block; background: #e11d48; color: white; padding: 4px 20px; border-radius: 12px; margin: 8px 0; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 0.9em; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.45); transform: translateY(-2px);">999 AED</span><br>onwards
                         </h1>
 
                         <p class="hero-subtitle-campaign">
@@ -690,21 +694,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                         <div class="hero-features">
                             <div class="hero-feature">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff4d6d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 Verified ROI Strategy
                             </div>
                             <div class="hero-feature">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff4d6d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 Dedicated Growth Team
                             </div>
                             <div class="hero-feature">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff4d6d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                 Transparent Weekly Reports
                             </div>
                         </div>
 
                         <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
-                            <a href="#packages" class="btn btn-primary" aria-label="Explore Marketing Packages">View Packages</a>
+                            <a href="#packages" class="btn" style="background: #e11d48; color: white; border: none; font-weight: 700; box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4);" aria-label="Explore Marketing Packages">View Packages</a>
                             <a href="https://wa.me/971585577182" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                                 Chat on WhatsApp
@@ -715,7 +719,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <!-- Right Column: Audit Lead Form -->
                     <div class="hero-right-content fade-in-up delay-100" id="audit-form">
                         <div class="mascot-hero-target"></div>
-                        <div class="lead-form-card">
+                        <div class="lead-form-card" style="border: 1px solid rgba(225, 29, 72, 0.25); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(225, 29, 72, 0.15);">
                             <h3>Get a Free Digital Marketing Audit</h3>
                             <p style="color: #a09ab0; font-size: 0.88rem; text-align: center; margin-top: -12px; margin-bottom: 20px;">
                                 Discover hidden growth opportunities & competitor insights for your brand.
@@ -744,7 +748,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                         <option value="Full Digital Transformation">Full Digital Transformation</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem; border-radius: 10px; cursor: pointer;">
+                                <button type="submit" class="btn" style="width: 100%; padding: 12px; font-size: 1rem; border-radius: 10px; cursor: pointer; background: #e11d48; color: #fff; border: none; font-weight: 700; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4);">
                                     Request Free Audit
                                 </button>
                             </form>
@@ -1078,7 +1082,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </section>
 
         <!-- Our Projects Showcase Section -->
-        <section class="section-padding theme-light" style="background: var(--bg-slate); border-top: 1px solid var(--border-glass);" id="projects">
+        <section class="section-padding theme-light" style="background: var(--bg-slate); border-top: 1px solid var(--border-glass); overflow: hidden; padding-left: 0; padding-right: 0;" id="projects">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 40px;" class="fade-in-up">
                     <span class="section-tag center">Proven Results</span>
@@ -1087,97 +1091,97 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         Explore active Instagram & social media creative campaigns managed by our team.
                     </p>
                 </div>
+            </div>
                 
-                <div class="projects-marquee">
-                    <div class="projects-track">
-                        <!-- Set 1 -->
-                        <a href="https://www.instagram.com/kenz__trading?igsh=MWh2NjFkZG04dnRpMQ==" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/kenz.webp" alt="Kenz Trading" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Trading</span>
-                                <h3 class="project-title">Kenz Trading</h3>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/theleatherdoctorabudhabi?igsh=aHJyOGN2cDMyOTJt" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/leather.webp" alt="The Leather Doctor" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Services</span>
-                                <h3 class="project-title">The Leather Doctor</h3>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/indusjewellers?igsh=cDM4NG5zbzUyOWNk" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/indus.webp" alt="Indus Jewellers" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Jewellery</span>
-                                <h3 class="project-title">Indus Jewellers</h3>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/magicmirrorbs?igsh=MXN4eDZ1YXhpdnAyYQ==" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/magic.webp" alt="Magic Mirror" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Beauty</span>
-                                <h3 class="project-title">Magic Mirror</h3>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/alrashad_commercial?igsh=MThwZjZ3emQ1NHVx" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/alrashad.webp" alt="Al Rashad Commercial" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Corporate</span>
-                                <h3 class="project-title">Al Rashad</h3>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/navratnajewellery_uae?igsh=MW84bGdpYXczM21kdQ==" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/navratna.webp" alt="Navratna Jewellery" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Jewellery</span>
-                                <h3 class="project-title">Navratna Jewellery</h3>
-                            </div>
-                        </a>
+            <div class="projects-marquee">
+                <div class="projects-track">
+                    <!-- Set 1 -->
+                    <a href="https://www.instagram.com/kenz__trading?igsh=MWh2NjFkZG04dnRpMQ==" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/kenz.webp" alt="Kenz Trading" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Trading</span>
+                            <h3 class="project-title">Kenz Trading</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/theleatherdoctorabudhabi?igsh=aHJyOGN2cDMyOTJt" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/leather.webp" alt="The Leather Doctor" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Services</span>
+                            <h3 class="project-title">The Leather Doctor</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/indusjewellers?igsh=cDM4NG5zbzUyOWNk" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/indus.webp" alt="Indus Jewellers" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Jewellery</span>
+                            <h3 class="project-title">Indus Jewellers</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/magicmirrorbs?igsh=MXN4eDZ1YXhpdnAyYQ==" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/magic.webp" alt="Magic Mirror" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Beauty</span>
+                            <h3 class="project-title">Magic Mirror</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/alrashad_commercial?igsh=MThwZjZ3emQ1NHVx" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/alrashad.webp" alt="Al Rashad Commercial" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Corporate</span>
+                            <h3 class="project-title">Al Rashad</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/navratnajewellery_uae?igsh=MW84bGdpYXczM21kdQ==" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/navratna.webp" alt="Navratna Jewellery" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Jewellery</span>
+                            <h3 class="project-title">Navratna Jewellery</h3>
+                        </div>
+                    </a>
 
-                        <!-- Set 2 (Duplicate for Infinite Carousel Loop) -->
-                        <a href="https://www.instagram.com/kenz__trading?igsh=MWh2NjFkZG04dnRpMQ==" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/kenz.webp" alt="Kenz Trading" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Trading</span>
-                                <h3 class="project-title">Kenz Trading</h3>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/theleatherdoctorabudhabi?igsh=aHJyOGN2cDMyOTJt" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/leather.webp" alt="The Leather Doctor" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Services</span>
-                                <h3 class="project-title">The Leather Doctor</h3>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/indusjewellers?igsh=cDM4NG5zbzUyOWNk" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/indus.webp" alt="Indus Jewellers" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Jewellery</span>
-                                <h3 class="project-title">Indus Jewellers</h3>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/magicmirrorbs?igsh=MXN4eDZ1YXhpdnAyYQ==" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/magic.webp" alt="Magic Mirror" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Beauty</span>
-                                <h3 class="project-title">Magic Mirror</h3>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/alrashad_commercial?igsh=MThwZjZ3emQ1NHVx" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/alrashad.webp" alt="Al Rashad Commercial" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Corporate</span>
-                                <h3 class="project-title">Al Rashad</h3>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/navratnajewellery_uae?igsh=MW84bGdpYXczM21kdQ==" target="_blank" class="project-slide">
-                            <img loading="lazy" decoding="async" src="./assets/navratna.webp" alt="Navratna Jewellery" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Jewellery</span>
-                                <h3 class="project-title">Navratna Jewellery</h3>
-                            </div>
-                        </a>
-                    </div>
+                    <!-- Set 2 (Duplicate for Infinite Carousel Loop) -->
+                    <a href="https://www.instagram.com/kenz__trading?igsh=MWh2NjFkZG04dnRpMQ==" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/kenz.webp" alt="Kenz Trading" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Trading</span>
+                            <h3 class="project-title">Kenz Trading</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/theleatherdoctorabudhabi?igsh=aHJyOGN2cDMyOTJt" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/leather.webp" alt="The Leather Doctor" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Services</span>
+                            <h3 class="project-title">The Leather Doctor</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/indusjewellers?igsh=cDM4NG5zbzUyOWNk" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/indus.webp" alt="Indus Jewellers" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Jewellery</span>
+                            <h3 class="project-title">Indus Jewellers</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/magicmirrorbs?igsh=MXN4eDZ1YXhpdnAyYQ==" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/magic.webp" alt="Magic Mirror" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Beauty</span>
+                            <h3 class="project-title">Magic Mirror</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/alrashad_commercial?igsh=MThwZjZ3emQ1NHVx" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/alrashad.webp" alt="Al Rashad Commercial" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Corporate</span>
+                            <h3 class="project-title">Al Rashad</h3>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/navratnajewellery_uae?igsh=MW84bGdpYXczM21kdQ==" target="_blank" class="project-slide">
+                        <img loading="lazy" decoding="async" src="./assets/navratna.webp" alt="Navratna Jewellery" class="ig-img">
+                        <div class="project-overlay-custom">
+                            <span class="project-cat">Jewellery</span>
+                            <h3 class="project-title">Navratna Jewellery</h3>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
