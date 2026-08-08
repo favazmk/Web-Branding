@@ -142,27 +142,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             margin-bottom: 15px;
         }
 
-        /* Marquee */
+        /* Client Brands Marquee */
         .brands-marquee {
             padding: 40px 0;
-            background: transparent;
-            border-bottom: 1px solid var(--border-glass);
+            background: #ffffff;
             overflow: hidden;
-            display: flex;
+        }
+        .marquee-client-logo {
+            height: 55px;
+            width: auto;
+            object-fit: contain;
+            opacity: 0.75;
+            filter: grayscale(100%);
+            transition: all 0.3s ease;
+        }
+        .marquee-client-logo:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.08);
         }
         .marquee-content {
             display: flex;
-            gap: 40px;
+            gap: 45px;
             align-items: center;
-            animation: scroll 20s linear infinite;
+            animation: scroll 25s linear infinite;
             white-space: nowrap;
-        }
-        .marquee-content span {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--text-faded);
-            opacity: 0.5;
         }
         @keyframes scroll {
             0% { transform: translateX(0); }
@@ -704,16 +708,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </section>
 
         <!-- Section 2: Trusted Brands -->
-        <section class="brands-marquee fade-in-up" style="background: #ffffff;">
+        <section class="brands-marquee fade-in-up">
             <div class="container" style="text-align: center; margin-bottom: 20px;">
-                <span class="section-tag center no-dot" style="color: #64748b; font-weight: 700;">Trusted by Top Brands in UAE & Across the World</span>
+                <span class="section-tag center no-dot" style="color: #64748b; font-weight: 700; font-size: 0.9rem;">
+                    TRUSTED BY TOP BRANDS IN UAE & ACROSS THE WORLD
+                </span>
             </div>
             <div style="width: 100%; overflow: hidden; position: relative;">
-                <!-- Duplicated for seamless scrolling -->
-                <style>
-                    .marquee-client-logo { height: 60px; width: auto; object-fit: contain; opacity: 0.7; filter: grayscale(100%); transition: all 0.3s ease; }
-                    .marquee-client-logo:hover { opacity: 1; filter: grayscale(0%); transform: scale(1.05); }
-                </style>
                 <div class="marquee-content">
                     <img src="./assets/clients/logo_0.webp" alt="Cedar Cosmetics" class="marquee-client-logo">
                     <img src="./assets/clients/logo_1.webp" alt="Vogue Venue" class="marquee-client-logo">
@@ -729,8 +730,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <img src="./assets/clients/logo_11.webp" alt="Extragram Jewels" class="marquee-client-logo">
                     <img src="./assets/clients/logo_12.webp" alt="Diora Jewellery" class="marquee-client-logo">
                     <img src="./assets/clients/logo_13.webp" alt="Zawaya" class="marquee-client-logo">
-                    
-                    <!-- Duplicated for seamless scrolling -->
+
+                    <!-- Duplicated for Infinite Loop -->
                     <img src="./assets/clients/logo_0.webp" alt="Cedar Cosmetics" class="marquee-client-logo">
                     <img src="./assets/clients/logo_1.webp" alt="Vogue Venue" class="marquee-client-logo">
                     <img src="./assets/clients/logo_2.webp" alt="Rashid Ali Hassan Cafeteria" class="marquee-client-logo">
