@@ -1514,6 +1514,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             pointer-events: none;
         }
 
+        /* Tracks .mascot-container.in-hero, which index.css drops to 100px
+           square below 992. app.js aligns the container's top-left to this
+           box, so the two sizes have to agree or the mascot stands 20px off
+           the floor the layout below measures from. */
         @media (max-width: 992px) {
             .bh-dock {
                 margin-left: -50px;
@@ -1678,7 +1682,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             100% { transform: translateX(-50%); }
         }
 
-        @media (max-width: 767px) {
+        /* ==================================================================
+           BANNER BELOW 1100px
+
+           Two things are sized off the viewport width here and they collide:
+           BUILD is set in vw, and the mascot takes 62% of the width (see
+           maxScale in the banner script). Left alone, the lettering runs off
+           both edges of a 360px phone and the word columns land on top of the
+           mascot standing between them.
+
+           So the composition restacks rather than shrinks: BUILD, then the
+           columns, then the mascot, each band derived from the same numbers
+           the script uses — min(62vh, 62vw) is the mascot's rendered size, so
+           the columns can be told exactly where it ends. The extra 20px is
+           the gap between the dock box and the taller mascot container that
+           grows out of it.
+           ================================================================== */
+        @media (max-width: 1100px) {
+            /* svh, so the mascot standing at the foot of the frame is not
+               parked behind the browser's own chrome. */
+            .bh-sticky {
+                height: 100vh;
+                height: 100svh;
+            }
             .bh-title-wrap { padding-top: calc(2vh + 60px); }
             .bh-title.bh-l0,
             .bh-title.bh-l1,
@@ -1686,17 +1712,79 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             .bh-l0 { transform: translateY(18px); }
             .bh-l1 { transform: translateY(12px); }
             .bh-l2 { transform: translateY(6px); }
-            .bh-words { padding: 0 3vw; }
-            .bh-col { gap: 0.25rem; max-width: 46vw; }
-            /* Both stacks have to clear the mascot between them, so the type
-               tracks the viewport all the way down rather than bottoming out
-               at a size that would collide at 320px. */
-            .bh-word {
-                font-size: clamp(0.85rem, 4.2vw, 1.6rem);
-                letter-spacing: -0.02em;
-            }
-            .bh-marquee { padding: 1.5rem 0; }
+            .bh-col { gap: 0.3rem; max-width: 46vw; }
+            .bh-word { letter-spacing: -0.02em; }
             .bh-dock { bottom: 3vh; }
+            .bh-marquee { padding: 1.5rem 0; }
+        }
+
+        /* Portrait: same reading order as desktop — the mascot stands over
+           the lower half of BUILD, and the columns take the space beneath it
+           rather than trying to squeeze either side of something 62vw wide.
+
+           The dock is driven off the top here, not the bottom, so the overlap
+           with the lettering is a fixed fraction of the title rather than
+           whatever falls out of the viewport height. Its rendered bottom edge
+           is dock top + 120px (the container height), which is where the
+           columns start measuring from. */
+        @media (max-width: 1100px) and (orientation: portrait) {
+            /* 28vw keeps all five letters plus tracking inside the frame at
+               320px, where the old 7.5rem floor cut them off at both ends. */
+            .bh-title { font-size: min(28vw, 30vh); }
+
+            /* Starts half over BUILD and rides --bh-drop down into the band
+               below the settled columns, shrinking as it goes. The script
+               works the distance out from the frame it is landing in. */
+            .bh-dock {
+                top: calc(2vh - 60px + 75vw + var(--bh-drop, 0px));
+                bottom: auto;
+            }
+
+            /* Centred on the mascot rather than the foot of the frame. */
+            .bh-glow {
+                top: calc(2vh + 60px + 44vw);
+                bottom: auto;
+                transform: translate(-50%, -50%);
+            }
+
+            /* Frame cut to what the composition actually needs: title, the
+               mascot over it, the columns, then the band the mascot drops
+               into (31vw — half its resting size, which is where the scroll
+               leaves it). No dead purple, and a third less to scroll. */
+            .bh-hero {
+                --bh-frame: min(100svh, calc(7vh + 74px + 125vw));
+                height: calc(var(--bh-frame) + 22vh);
+            }
+            .bh-sticky { height: var(--bh-frame); }
+
+            .bh-words {
+                top: calc(2vh + 60px + 75vw);
+                bottom: calc(5vh + 31vw);
+                align-items: flex-end;
+                padding: 0 4vw;
+            }
+            /* Sized so two columns plus a gutter fit the frame at 320px. */
+            .bh-word { font-size: min(4.2vw, 2.6vh); }
+        }
+
+        /* Landscape: no vertical room to stack, so the columns go back beside
+           the mascot, each capped at the actual gap left either side of it. */
+        @media (max-width: 1100px) and (orientation: landscape) {
+            .bh-title { font-size: min(20vw, 34vh); }
+            .bh-words {
+                top: 40vh;
+                bottom: 4vh;
+                padding: 0 4vw;
+            }
+            .bh-col { max-width: calc(50vw - min(31vh, 31vw) - 6vw); }
+            .bh-word { font-size: min(1.9vw, 2.6vh); }
+        }
+
+        /* Landscape phones: the band between BUILD and the mascot is a few
+           dozen pixels. Nothing readable fits there, so the columns step
+           aside rather than sit on top of the artwork. */
+        @media (max-width: 1100px) and (orientation: landscape) and (max-height: 480px) {
+            .bh-words { display: none; }
         }
 
         /* Sub-hero Mascot Docking Target in Negative Space */
@@ -2192,6 +2280,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
              INTERACTIVE LIVE WORK SHOWCASE GRID (VIDEOS)
              ========================================== -->
         <section class="section-padding video-showcase-section" id="live-showcase">
+            <div class="vs-aura" aria-hidden="true"></div>
             <div class="container">
                 <div class="video-showcase-header fade-in-up">
                     <div class="badge-pill-violet">
@@ -2204,116 +2293,132 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </p>
                 </div>
 
-                <div class="showcase-cards-grid fade-in-up">
-                    <!-- Card 1: Bandhan -->
-                    <article class="mockup-card-item">
-                        <div class="mockup-device-window">
-                            <div class="mockup-window-header">
-                                <div class="mockup-dots">
-                                    <span class="dot dot-red"></span>
-                                    <span class="dot dot-yellow"></span>
-                                    <span class="dot dot-green"></span>
-                                </div>
-                            </div>
-                            <div class="mockup-window-body">
-                                <video class="grid-card-video" autoplay muted loop playsinline poster="./assets/videos/bandhan.webp">
-                                    <source src="./assets/videos/bandhan.webm" type="video/webm">
-                                </video>
-                            </div>
-                        </div>
-                        <div class="mockup-card-meta">
-                            <span class="mockup-badge">Fit-Out & Maintenance</span>
-                            <h3 class="mockup-card-title">Bandhan</h3>
-                        </div>
-                    </article>
+                <!-- One stage, five selectors. The rail below swaps what the
+                     frame is playing; only the active video is ever running,
+                     and it stops when the section leaves the viewport. -->
+                <div class="vs-showcase fade-in-up" data-vs>
 
-                    <!-- Card 2: Netex -->
-                    <article class="mockup-card-item">
-                        <div class="mockup-device-window">
-                            <div class="mockup-window-header">
-                                <div class="mockup-dots">
-                                    <span class="dot dot-red"></span>
-                                    <span class="dot dot-yellow"></span>
-                                    <span class="dot dot-green"></span>
-                                </div>
-                            </div>
-                            <div class="mockup-window-body">
-                                <video class="grid-card-video" autoplay muted loop playsinline poster="./assets/videos/netex.webp">
-                                    <source src="./assets/videos/netex.webm" type="video/webm">
-                                </video>
-                            </div>
+                    <div class="vs-frame">
+                        <div class="vs-frame-bar">
+                            <span class="vs-dots" aria-hidden="true">
+                                <span class="dot dot-red"></span>
+                                <span class="dot dot-yellow"></span>
+                                <span class="dot dot-green"></span>
+                            </span>
+                            <span class="vs-frame-label" data-vs-label>Bandhan</span>
+                            <span class="vs-live"><i aria-hidden="true"></i><span>Live</span></span>
                         </div>
-                        <div class="mockup-card-meta">
-                            <span class="mockup-badge">Logistics & Freight</span>
-                            <h3 class="mockup-card-title">Netex</h3>
-                        </div>
-                    </article>
 
-                    <!-- Card 3: Sam Fitness -->
-                    <article class="mockup-card-item">
-                        <div class="mockup-device-window">
-                            <div class="mockup-window-header">
-                                <div class="mockup-dots">
-                                    <span class="dot dot-red"></span>
-                                    <span class="dot dot-yellow"></span>
-                                    <span class="dot dot-green"></span>
-                                </div>
-                            </div>
-                            <div class="mockup-window-body">
-                                <video class="grid-card-video" autoplay muted loop playsinline poster="./assets/videos/sam-fitness.webp">
-                                    <source src="./assets/videos/sam-fitness.webm" type="video/webm">
-                                </video>
-                            </div>
+                        <div class="vs-screen">
+                            <video class="vs-video is-active" data-vs-video="0" autoplay muted loop playsinline
+                                   preload="auto" poster="./assets/videos/bandhan.webp"
+                                   aria-label="Bandhan website walkthrough">
+                                <source src="./assets/videos/bandhan.webm" type="video/webm">
+                            </video>
+                            <video class="vs-video" data-vs-video="1" muted loop playsinline
+                                   preload="metadata" poster="./assets/videos/netex.webp"
+                                   aria-label="Netex website walkthrough">
+                                <source src="./assets/videos/netex.webm" type="video/webm">
+                            </video>
+                            <video class="vs-video" data-vs-video="2" muted loop playsinline
+                                   preload="metadata" poster="./assets/videos/sam-fitness.webp"
+                                   aria-label="Sam Fitness website walkthrough">
+                                <source src="./assets/videos/sam-fitness.webm" type="video/webm">
+                            </video>
+                            <video class="vs-video" data-vs-video="3" muted loop playsinline
+                                   preload="metadata" poster="./assets/videos/shaista-realestate.webp"
+                                   aria-label="Shaista Real Estate website walkthrough">
+                                <source src="./assets/videos/shaista-realestate.webm" type="video/webm">
+                            </video>
+                            <video class="vs-video" data-vs-video="4" muted loop playsinline
+                                   preload="metadata" poster="./assets/videos/mice-media.webp"
+                                   aria-label="MICE Media website walkthrough">
+                                <source src="./assets/videos/mice-media.webm" type="video/webm">
+                            </video>
+                            <span class="vs-glare" aria-hidden="true"></span>
                         </div>
-                        <div class="mockup-card-meta">
-                            <span class="mockup-badge">Health & Fitness</span>
-                            <h3 class="mockup-card-title">Sam Fitness</h3>
-                        </div>
-                    </article>
 
-                    <!-- Card 4: Shaista Real Estate -->
-                    <article class="mockup-card-item">
-                        <div class="mockup-device-window">
-                            <div class="mockup-window-header">
-                                <div class="mockup-dots">
-                                    <span class="dot dot-red"></span>
-                                    <span class="dot dot-yellow"></span>
-                                    <span class="dot dot-green"></span>
-                                </div>
+                        <div class="vs-caption">
+                            <div>
+                                <span class="vs-cap-sector" data-vs-sector>Fit-Out &amp; Maintenance</span>
+                                <h3 class="vs-cap-title" data-vs-title>Bandhan</h3>
                             </div>
-                            <div class="mockup-window-body">
-                                <video class="grid-card-video" autoplay muted loop playsinline poster="./assets/videos/shaista-realestate.webp">
-                                    <source src="./assets/videos/shaista-realestate.webm" type="video/webm">
-                                </video>
-                            </div>
+                            <span class="vs-count"><b data-vs-index>01</b> / <span data-vs-total>05</span></span>
                         </div>
-                        <div class="mockup-card-meta">
-                            <span class="mockup-badge">Luxury Real Estate</span>
-                            <h3 class="mockup-card-title">Shaista Real Estate</h3>
-                        </div>
-                    </article>
+                    </div>
 
-                    <!-- Card 5: MICE Media -->
-                    <article class="mockup-card-item">
-                        <div class="mockup-device-window">
-                            <div class="mockup-window-header">
-                                <div class="mockup-dots">
-                                    <span class="dot dot-red"></span>
-                                    <span class="dot dot-yellow"></span>
-                                    <span class="dot dot-green"></span>
-                                </div>
-                            </div>
-                            <div class="mockup-window-body">
-                                <video class="grid-card-video" autoplay muted loop playsinline poster="./assets/videos/mice-media.webp">
-                                    <source src="./assets/videos/mice-media.webm" type="video/webm">
-                                </video>
-                            </div>
-                        </div>
-                        <div class="mockup-card-meta">
-                            <span class="mockup-badge">Events & Media</span>
-                            <h3 class="mockup-card-title">MICE Media</h3>
-                        </div>
-                    </article>
+                    <ol class="vs-rail" role="tablist" aria-label="Featured client websites">
+                        <li role="presentation">
+                            <button type="button" class="vs-item is-active" role="tab" aria-selected="true"
+                                    data-vs-tab="0" data-title="Bandhan" data-sector="Fit-Out &amp; Maintenance">
+                                <span class="vs-bar" aria-hidden="true"><i></i></span>
+                                <span class="vs-thumb">
+                                    <span class="vs-item-num" aria-hidden="true">01</span>
+                                    <img src="./assets/videos/bandhan.webp" alt="" loading="lazy" decoding="async">
+                                </span>
+                                <span class="vs-item-text">
+                                    <span class="vs-item-title">Bandhan</span>
+                                    <span class="vs-item-sector">Fit-Out &amp; Maintenance</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li role="presentation">
+                            <button type="button" class="vs-item" role="tab" aria-selected="false" tabindex="-1"
+                                    data-vs-tab="1" data-title="Netex" data-sector="Logistics &amp; Freight">
+                                <span class="vs-bar" aria-hidden="true"><i></i></span>
+                                <span class="vs-thumb">
+                                    <span class="vs-item-num" aria-hidden="true">02</span>
+                                    <img src="./assets/videos/netex.webp" alt="" loading="lazy" decoding="async">
+                                </span>
+                                <span class="vs-item-text">
+                                    <span class="vs-item-title">Netex</span>
+                                    <span class="vs-item-sector">Logistics &amp; Freight</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li role="presentation">
+                            <button type="button" class="vs-item" role="tab" aria-selected="false" tabindex="-1"
+                                    data-vs-tab="2" data-title="Sam Fitness" data-sector="Health &amp; Fitness">
+                                <span class="vs-bar" aria-hidden="true"><i></i></span>
+                                <span class="vs-thumb">
+                                    <span class="vs-item-num" aria-hidden="true">03</span>
+                                    <img src="./assets/videos/sam-fitness.webp" alt="" loading="lazy" decoding="async">
+                                </span>
+                                <span class="vs-item-text">
+                                    <span class="vs-item-title">Sam Fitness</span>
+                                    <span class="vs-item-sector">Health &amp; Fitness</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li role="presentation">
+                            <button type="button" class="vs-item" role="tab" aria-selected="false" tabindex="-1"
+                                    data-vs-tab="3" data-title="Shaista Real Estate" data-sector="Luxury Real Estate">
+                                <span class="vs-bar" aria-hidden="true"><i></i></span>
+                                <span class="vs-thumb">
+                                    <span class="vs-item-num" aria-hidden="true">04</span>
+                                    <img src="./assets/videos/shaista-realestate.webp" alt="" loading="lazy" decoding="async">
+                                </span>
+                                <span class="vs-item-text">
+                                    <span class="vs-item-title">Shaista Real Estate</span>
+                                    <span class="vs-item-sector">Luxury Real Estate</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li role="presentation">
+                            <button type="button" class="vs-item" role="tab" aria-selected="false" tabindex="-1"
+                                    data-vs-tab="4" data-title="MICE Media" data-sector="Events &amp; Media">
+                                <span class="vs-bar" aria-hidden="true"><i></i></span>
+                                <span class="vs-thumb">
+                                    <span class="vs-item-num" aria-hidden="true">05</span>
+                                    <img src="./assets/videos/mice-media.webp" alt="" loading="lazy" decoding="async">
+                                </span>
+                                <span class="vs-item-text">
+                                    <span class="vs-item-title">MICE Media</span>
+                                    <span class="vs-item-sector">Events &amp; Media</span>
+                                </span>
+                            </button>
+                        </li>
+                    </ol>
                 </div>
             </div>
         </section>
@@ -2775,6 +2880,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             function selectCompareOption(index) {
                 const isMobile = window.innerWidth <= 992;
                 const clickedPill = document.querySelectorAll('.compare-opt-pill')[index];
+                // The pill UI this drives was replaced by .expand-card, so on
+                // this page there is nothing to select — without the guard the
+                // call below threw on every load, from inside DOMContentLoaded.
+                if (!clickedPill) return;
                 const isActive = clickedPill.classList.contains('active');
                 
                 // Remove active classes from all options
@@ -3233,7 +3342,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <script>
         // Banner scroll choreography, scoped to this page:
-        //   · word columns slide inward and fade up
+        //   · the word columns settle out of a scatter into their grid
         //   · BUILD lifts and tilts back
         //   · the docked mascot shrinks from full size down to 1
         //
@@ -3248,10 +3357,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             var leftWords = section.querySelectorAll('.bh-left .bh-word');
             var rightWords = section.querySelectorAll('.bh-right .bh-word');
             var layers = section.querySelectorAll('.bh-title');
+            var pin = section.querySelector('.bh-sticky');
             var mascot = document.querySelector('.mascot-container');
 
             // Stack offsets the layers rest at, halved on small screens.
             var BASE = [36, 24, 12, 0];
+
+            // Where each line sits before it settles. Fixed values rather than
+            // Math.random so the scatter is the same on every load and can be
+            // eyeballed; x and rotation are mirrored per column so the two
+            // stacks throw outwards from the centre.
+            var SCATTER = [
+                { x: -34, y: -30, r: -6 },
+                { x:  28, y:  26, r:  5 },
+                { x: -26, y:  34, r:  7 },
+                { x:  32, y: -24, r: -4 }
+            ];
+
+            function settle(el, i, dir, progress, amp) {
+                var s = SCATTER[i % SCATTER.length];
+                var t = (1 - progress) * amp;
+                el.style.transform =
+                    'translate(' + (s.x * dir * t).toFixed(1) + 'px,' +
+                    (s.y * t).toFixed(1) + 'px) rotate(' +
+                    (s.r * dir * t).toFixed(2) + 'deg)';
+            }
 
             // Docked size is set by index.css (120px, 100px under 992px), so
             // measure it rather than assuming.
@@ -3268,24 +3398,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             function update() {
                 var rect = section.getBoundingClientRect();
-                var range = section.offsetHeight - window.innerHeight;
+                // Measured against the pinned frame, not the viewport: below
+                // 1100 the frame is shorter than the screen, and offsetHeight
+                // minus innerHeight would go negative and freeze the whole
+                // sequence at progress 0.
+                var range = section.offsetHeight - (pin ? pin.offsetHeight : window.innerHeight);
                 var progress = range > 0 ? -rect.top / range : 0;
                 if (progress < 0) progress = 0;
                 if (progress > 1) progress = 1;
 
                 var isMobile = window.innerWidth < 768;
-                var scaleFactor = isMobile ? 0.5 : 1;
+                // The columns reach both edges of a phone, so the same throw
+                // that works on desktop would start them off-screen.
+                var amp = window.innerWidth <= 1100 ? 0.32 : 1;
                 var opacity = 0.35 + progress * 0.65;
 
                 var i;
                 for (i = 0; i < leftWords.length; i++) {
-                    var offset = (60 + i * 40) * scaleFactor * (1 - progress);
-                    leftWords[i].style.transform = 'translateX(' + (-offset) + 'px)';
+                    settle(leftWords[i], i, -1, progress, amp);
                     leftWords[i].style.opacity = opacity;
                 }
                 for (i = 0; i < rightWords.length; i++) {
-                    var roffset = (60 + i * 40) * scaleFactor * (1 - progress);
-                    rightWords[i].style.transform = 'translateX(' + roffset + 'px)';
+                    settle(rightWords[i], i, 1, progress, amp);
                     rightWords[i].style.opacity = opacity;
                 }
 
@@ -3297,6 +3431,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     var base = (BASE[i] || 0) * (isMobile ? 0.5 : 1);
                     layers[i].style.transform =
                         'translateY(' + (base - lift) + 'px) rotateX(' + (-tilt) + 'deg)';
+                }
+
+                // Portrait phones only: the dock rides down from BUILD into
+                // the gap under the columns as the words settle. Landing spot
+                // is the frame's own foot, so it tracks whatever the frame is.
+                if (pin) {
+                    var drop = pin.offsetHeight - 0.05 * window.innerHeight
+                             - 60 - 0.75 * window.innerWidth;
+                    section.style.setProperty('--bh-drop',
+                        (progress * Math.max(0, drop)).toFixed(1) + 'px');
                 }
 
                 // Shrink to exactly half size by the end of the pinned range. After
@@ -3313,6 +3457,109 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             update();
             window.addEventListener('scroll', update, { passive: true });
             window.addEventListener('resize', update, { passive: true });
+        })();
+
+        // Featured work stage. The rail buttons are a tablist over one frame;
+        // the active chip's progress bar is also the rotation clock, so
+        // pausing that animation (hover, focus, off-screen) pauses everything
+        // without a second timer to keep in sync.
+        (function () {
+            var root = document.querySelector('[data-vs]');
+            if (!root) return;
+
+            var tabs = Array.prototype.slice.call(root.querySelectorAll('[data-vs-tab]'));
+            var videos = Array.prototype.slice.call(root.querySelectorAll('[data-vs-video]'));
+            if (!tabs.length) return;
+
+            var label = root.querySelector('[data-vs-label]');
+            var sector = root.querySelector('[data-vs-sector]');
+            var title = root.querySelector('[data-vs-title]');
+            var index = root.querySelector('[data-vs-index]');
+            var total = root.querySelector('[data-vs-total]');
+            var current = 0;
+
+            function pad(n) {
+                return (n < 10 ? '0' : '') + n;
+            }
+
+            function play(video) {
+                if (!video) return;
+                var attempt = video.play();
+                // Autoplay can still be refused (low power mode, data saver);
+                // the poster stays up, which is a fine fallback.
+                if (attempt && attempt.catch) attempt.catch(function () {});
+            }
+
+            function show(i) {
+                current = i;
+                tabs.forEach(function (tab, n) {
+                    var on = n === i;
+                    tab.classList.toggle('is-active', on);
+                    tab.setAttribute('aria-selected', on ? 'true' : 'false');
+                    tab.tabIndex = on ? 0 : -1;
+                });
+                videos.forEach(function (video, n) {
+                    var on = n === i;
+                    video.classList.toggle('is-active', on);
+                    // Play unconditionally rather than gating on `visible`:
+                    // if the observer has not reported in yet, a click should
+                    // still start playback. It pauses again a frame later if
+                    // the section really is off-screen.
+                    if (on) play(video);
+                    else video.pause();
+                });
+
+                var meta = tabs[i].dataset;
+                if (label) label.textContent = meta.title;
+                if (sector) sector.textContent = meta.sector;
+                if (title) title.textContent = meta.title;
+                if (index) index.textContent = pad(i + 1);
+            }
+
+            if (total) total.textContent = pad(tabs.length);
+
+            // The bar finishing is the cue to advance.
+            root.addEventListener('animationend', function (event) {
+                if (event.animationName !== 'vs-progress') return;
+                show((current + 1) % tabs.length);
+            });
+
+            tabs.forEach(function (tab, i) {
+                tab.addEventListener('click', function () {
+                    if (i !== current) show(i);
+                });
+                tab.addEventListener('keydown', function (event) {
+                    var to = null;
+                    if (event.key === 'ArrowRight') to = (i + 1) % tabs.length;
+                    else if (event.key === 'ArrowLeft') to = (i - 1 + tabs.length) % tabs.length;
+                    else if (event.key === 'Home') to = 0;
+                    else if (event.key === 'End') to = tabs.length - 1;
+                    if (to === null) return;
+                    event.preventDefault();
+                    show(to);
+                    tabs[to].focus();
+                });
+            });
+
+            ['mouseenter', 'focusin'].forEach(function (type) {
+                root.addEventListener(type, function () { root.classList.add('is-paused'); });
+            });
+            ['mouseleave', 'focusout'].forEach(function (type) {
+                root.addEventListener(type, function () { root.classList.remove('is-paused'); });
+            });
+
+            // Scrolled past means nothing decodes and nothing rotates.
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        root.classList.toggle('is-offscreen', !entry.isIntersecting);
+                        if (entry.isIntersecting) play(videos[current]);
+                        else if (videos[current]) videos[current].pause();
+                    });
+                }, { threshold: 0.15 }).observe(root);
+            } else {
+                play(videos[0]);
+            }
         })();
     </script>
 

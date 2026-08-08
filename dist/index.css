@@ -3840,7 +3840,13 @@ nav {
 }
 
 /* ==========================================================================
-   5-CARD DEVICE MOCKUP SHOWCASE GALLERY
+   FEATURED WORK — ONE STAGE, FIVE SELECTORS
+
+   Replaces the old five-card grid. Three reasons it is built this way:
+   a 3-column grid left two orphans on the last row; five videos autoplaying
+   at once cost five decoders; and five equal cards give the eye nowhere to
+   land. One large frame plays the active project, the rail below switches
+   it, and only the on-screen active video ever runs.
    ========================================================================== */
 .video-showcase-section {
     position: relative;
@@ -3850,10 +3856,28 @@ nav {
     overflow: hidden;
 }
 
+/* Violet bloom sitting behind the frame so it reads as lit, not pasted on. */
+.vs-aura {
+    position: absolute;
+    top: 14%;
+    left: 50%;
+    width: min(1180px, 130vw);
+    height: min(640px, 78vw);
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center,
+                rgba(139, 61, 255, 0.22) 0%,
+                rgba(139, 61, 255, 0.08) 45%,
+                transparent 72%);
+    pointer-events: none;
+    z-index: 0;
+}
+
 .video-showcase-header {
+    position: relative;
+    z-index: 1;
     text-align: center;
     max-width: 800px;
-    margin: 0 auto 50px auto;
+    margin: 0 auto 44px auto;
 }
 
 .badge-pill-violet {
@@ -3878,76 +3902,95 @@ nav {
     stroke: #c49aff;
 }
 
-.showcase-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+.vs-showcase {
+    position: relative;
+    z-index: 1;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.mockup-card-item {
+/* ---- Stage ------------------------------------------------------------- */
+.vs-frame {
     position: relative;
-    background: rgba(15, 8, 28, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
+    border-radius: 20px;
     overflow: hidden;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    display: flex;
-    flex-direction: column;
+    background: #0b0518;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.62),
+                0 0 0 1px rgba(139, 61, 255, 0.10),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
-.mockup-card-item:hover {
-    transform: translate3d(0, -8px, 0);
-    border-color: rgba(139, 61, 255, 0.45);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(139, 61, 255, 0.22);
-}
-
-.mockup-device-window {
-    position: relative;
-    width: 100%;
-    background: #090314;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    overflow: hidden;
-}
-
-.mockup-window-header {
+.vs-frame-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 14px;
-    background: rgba(20, 10, 36, 0.85);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    gap: 14px;
+    padding: 12px 18px;
+    background: linear-gradient(180deg, rgba(28, 14, 50, 0.95), rgba(18, 9, 34, 0.95));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.mockup-dots {
+.vs-dots {
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-shrink: 0;
 }
 
-.mockup-dots .dot {
+.vs-dots .dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
 }
-.mockup-dots .dot-red { background: #ff5f56; }
-.mockup-dots .dot-yellow { background: #ffbd2e; }
-.mockup-dots .dot-green { background: #27c93f; }
+.vs-dots .dot-red { background: #ff5f56; }
+.vs-dots .dot-yellow { background: #ffbd2e; }
+.vs-dots .dot-green { background: #27c93f; }
 
-.mockup-url-pill {
-    font-size: 0.72rem;
-    color: var(--text-faded);
-    background: rgba(0, 0, 0, 0.35);
-    padding: 3px 10px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+.vs-frame-label {
+    flex: 1;
+    min-width: 0;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 5px 14px;
+    text-align: center;
     font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.55);
+    background: rgba(0, 0, 0, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.mockup-window-body {
+.vs-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #c49aff;
+}
+
+.vs-live i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #27c93f;
+    animation: vs-pulse 2.4s ease-out infinite;
+}
+
+@keyframes vs-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(39, 201, 63, 0.5); }
+    70%  { box-shadow: 0 0 0 8px rgba(39, 201, 63, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(39, 201, 63, 0); }
+}
+
+.vs-screen {
     position: relative;
     width: 100%;
     aspect-ratio: 1534 / 694;
@@ -3955,54 +3998,275 @@ nav {
     overflow: hidden;
 }
 
-.grid-card-video {
+/* All five stay in the DOM and cross-fade; only the active one is playing. */
+.vs-video {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.5s ease;
+    opacity: 0;
+    transition: opacity 0.55s ease;
 }
 
-.mockup-card-item:hover .grid-card-video {
-    transform: scale(1.03);
+.vs-video.is-active { opacity: 1; }
+
+.vs-glare {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 38%);
 }
 
-.mockup-card-meta {
-    padding: 18px 20px;
-    background: rgba(12, 5, 24, 0.4);
+.vs-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex-grow: 1;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 70px 28px 22px;
+    background: linear-gradient(180deg, transparent 0%, rgba(6, 2, 14, 0.5) 45%, rgba(6, 2, 14, 0.92) 100%);
+    pointer-events: none;
 }
 
-.mockup-badge {
-    font-size: 0.75rem;
-    color: #c49aff;
+.vs-cap-sector {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.76rem;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
+    color: #c49aff;
 }
 
-.mockup-card-title {
-    font-size: 1.2rem;
-    color: #ffffff;
+.vs-cap-title {
+    margin: 0;
     font-family: 'Outfit', sans-serif;
     font-weight: 700;
-    margin: 0;
+    font-size: clamp(1.35rem, 2.4vw, 2.1rem);
+    line-height: 1.1;
+    color: #ffffff;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    .showcase-cards-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+.vs-count {
+    flex-shrink: 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.vs-count b {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* ---- Selector rail ----------------------------------------------------- */
+.vs-rail {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.vs-item {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    background: rgba(15, 8, 28, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+}
+
+.vs-item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 61, 255, 0.4);
+}
+
+.vs-item.is-active {
+    border-color: rgba(139, 61, 255, 0.75);
+    background: rgba(139, 61, 255, 0.1);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45), 0 0 22px rgba(139, 61, 255, 0.2);
+}
+
+.vs-item:focus-visible {
+    outline: 2px solid #c49aff;
+    outline-offset: 3px;
+}
+
+.vs-thumb {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1534 / 694;
+    overflow: hidden;
+    background: #000;
+}
+
+.vs-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(0.55) brightness(0.6);
+    transition: filter 0.35s ease, transform 0.5s ease;
+}
+
+.vs-item:hover .vs-thumb img,
+.vs-item.is-active .vs-thumb img { filter: none; }
+.vs-item:hover .vs-thumb img { transform: scale(1.04); }
+
+.vs-item-num {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    z-index: 2;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.vs-item-text {
+    display: block;
+    padding: 10px 12px 12px;
+}
+
+.vs-item-title {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    color: #ffffff;
+}
+
+.vs-item-sector {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.72rem;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* This bar is the rotation's clock, not a decoration — the script advances
+   the stage on its animationend, so pausing the bar pauses the rotation. */
+.vs-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 3;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.vs-item.is-active .vs-bar { opacity: 1; }
+
+.vs-bar i {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: var(--grad-primary);
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+.vs-item.is-active .vs-bar i {
+    animation: vs-progress 7s linear forwards;
+}
+
+@keyframes vs-progress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+/* Hovered, focused, or scrolled past — hold the rotation where it is. */
+.vs-showcase.is-paused .vs-item.is-active .vs-bar i,
+.vs-showcase.is-offscreen .vs-item.is-active .vs-bar i {
+    animation-play-state: paused;
+}
+
+/* ---- Responsive -------------------------------------------------------- */
+@media (max-width: 900px) {
+    /* Five chips no longer divide the width sensibly, so the rail becomes a
+       snap scroller rather than a 3 + 2 orphan row. */
+    .vs-rail {
+        display: flex;
+        gap: 12px;
+        margin-top: 14px;
+        padding: 4px 4px 8px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(139, 61, 255, 0.5) transparent;
+    }
+    .vs-rail li {
+        flex: 0 0 44%;
+        scroll-snap-align: start;
+    }
+    .vs-rail::-webkit-scrollbar { height: 4px; }
+    .vs-rail::-webkit-scrollbar-thumb {
+        background: rgba(139, 61, 255, 0.5);
+        border-radius: 4px;
     }
 }
 
-@media (max-width: 640px) {
-    .showcase-cards-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
+@media (max-width: 767px) {
+    /* At this width the frame is ~160px tall — an overlaid caption would
+       cover the work it is captioning, so it drops out to a footer bar. */
+    .vs-caption {
+        position: static;
+        padding: 12px 14px 14px;
+        background: rgba(12, 5, 24, 0.72);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        align-items: center;
     }
+    .vs-cap-sector {
+        margin-bottom: 3px;
+        font-size: 0.66rem;
+        letter-spacing: 0.1em;
+    }
+    .vs-cap-title { font-size: 1.1rem; }
+    .vs-count { font-size: 0.8rem; }
+    .vs-count b { font-size: 1.15rem; }
+    .vs-frame { border-radius: 14px; }
+    .vs-frame-bar { padding: 9px 12px; gap: 10px; }
+    .vs-frame-label { font-size: 0.7rem; padding: 4px 10px; }
+    .vs-live span { display: none; }
+    .vs-dots .dot { width: 8px; height: 8px; }
+    .vs-rail li { flex: 0 0 62%; }
+    .vs-aura { top: 18%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* No animation means no animationend, which means no auto-advance —
+       the rail still switches on click. */
+    .vs-item.is-active .vs-bar i {
+        animation: none;
+        transform: scaleX(1);
+    }
+    .vs-live i { animation: none; }
+    .vs-video { transition: none; }
+    .vs-item, .vs-thumb img { transition: none; }
 }
