@@ -3838,3 +3838,171 @@ nav {
         height: 15px !important;
     }
 }
+
+/* ==========================================================================
+   5-CARD DEVICE MOCKUP SHOWCASE GALLERY
+   ========================================================================== */
+.video-showcase-section {
+    position: relative;
+    background: var(--bg-slate);
+    border-top: 1px solid var(--border-glass);
+    border-bottom: 1px solid var(--border-glass);
+    overflow: hidden;
+}
+
+.video-showcase-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+}
+
+.badge-pill-violet {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 100px;
+    background: rgba(139, 61, 255, 0.12);
+    border: 1px solid rgba(139, 61, 255, 0.3);
+    color: #c49aff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 15px rgba(139, 61, 255, 0.15);
+}
+
+.badge-pill-violet svg {
+    width: 14px;
+    height: 14px;
+    stroke: #c49aff;
+}
+
+.showcase-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mockup-card-item {
+    position: relative;
+    background: rgba(15, 8, 28, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    display: flex;
+    flex-direction: column;
+}
+
+.mockup-card-item:hover {
+    transform: translate3d(0, -8px, 0);
+    border-color: rgba(139, 61, 255, 0.45);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(139, 61, 255, 0.22);
+}
+
+.mockup-device-window {
+    position: relative;
+    width: 100%;
+    background: #090314;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+}
+
+.mockup-window-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: rgba(20, 10, 36, 0.85);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mockup-dots {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mockup-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.mockup-dots .dot-red { background: #ff5f56; }
+.mockup-dots .dot-yellow { background: #ffbd2e; }
+.mockup-dots .dot-green { background: #27c93f; }
+
+.mockup-url-pill {
+    font-size: 0.72rem;
+    color: var(--text-faded);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 3px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    font-family: 'Inter', sans-serif;
+}
+
+.mockup-window-body {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1534 / 694;
+    background: #000;
+    overflow: hidden;
+}
+
+.grid-card-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.mockup-card-item:hover .grid-card-video {
+    transform: scale(1.03);
+}
+
+.mockup-card-meta {
+    padding: 18px 20px;
+    background: rgba(12, 5, 24, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-grow: 1;
+}
+
+.mockup-badge {
+    font-size: 0.75rem;
+    color: #c49aff;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.mockup-card-title {
+    font-size: 1.2rem;
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .showcase-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 640px) {
+    .showcase-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}

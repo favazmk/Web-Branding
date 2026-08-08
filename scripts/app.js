@@ -2215,4 +2215,28 @@ Looking forward to bringing this digital transformation to life!`;
         });
     };
     initExpandAccordion();
+
+    // --- 5-Card Device Showcase Grid Observer ---
+    const initVideoShowcase = () => {
+        const showcaseSection = document.getElementById('live-showcase');
+        if (!showcaseSection) return;
+
+        const gridVideos = showcaseSection.querySelectorAll('.grid-card-video');
+
+        if ('IntersectionObserver' in window && gridVideos.length > 0) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        video.play().catch(e => console.log('Autoplay deferred:', e));
+                    } else {
+                        video.pause();
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            gridVideos.forEach(v => observer.observe(v));
+        }
+    };
+    initVideoShowcase();
 });
