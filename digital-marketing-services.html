@@ -360,7 +360,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
         .addon-glass-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 24px;
             margin-top: 40px;
         }
@@ -412,17 +412,161 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             gap: 6px;
         }
 
+        /* Industry Grid */
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+        .industry-image-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 220px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .industry-image-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.85)), var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            transition: opacity 0.4s ease;
+        }
+        .industry-image-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .industry-image-card:hover {
+            transform: translate3d(0, -8px, 0);
+            box-shadow: 0 15px 35px rgba(139, 61, 255, 0.25);
+            border-color: rgba(139, 61, 255, 0.4);
+        }
+        .industry-image-card:hover::before {
+            opacity: 0.3;
+        }
+        .industry-image-card:hover::after {
+            transform: scale(1.1);
+        }
+        .industry-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+        }
+
+        /* Projects Marquee & Hover Effect */
+        .projects-marquee {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            width: 100%;
+            padding: 20px 0;
+        }
+        .projects-track {
+            display: flex;
+            width: max-content;
+            gap: 24px;
+            animation: scroll-marquee 45s linear infinite;
+            padding: 20px 0;
+            will-change: transform;
+        }
+        .projects-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes scroll-marquee {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+        .project-slide {
+            flex: 0 0 auto;
+            width: 320px;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: block;
+            text-decoration: none;
+        }
+        .ig-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 3.5s ease-in-out;
+        }
+        .project-slide:hover .ig-img {
+            transform: translateY(calc(-100% + 400px));
+        }
+        .project-overlay-custom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 80px 20px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .project-slide:hover .project-overlay-custom {
+            opacity: 0;
+        }
+        .project-cat {
+            color: #c084fc;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+        .project-title {
+            color: #ffffff;
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+        }
+
         /* Footer CTA */
         .footer-cta {
             background: #05010a;
             padding: 80px 0;
-            text-align: center;
             border-top: 1px solid rgba(139, 61, 255, 0.3);
         }
 
         @media (max-width: 1024px) {
             .services-detail-grid { grid-template-columns: repeat(2, 1fr); }
             .addon-glass-grid { grid-template-columns: repeat(2, 1fr); }
+            .industry-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 992px) {
             .campaign-hero .hero-grid { grid-template-columns: 1fr; }
@@ -432,8 +576,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         @media (max-width: 640px) {
             .services-detail-grid { grid-template-columns: 1fr; }
             .addon-glass-grid { grid-template-columns: 1fr; }
+            .industry-grid { grid-template-columns: 1fr; }
             .hero-title-campaign { font-size: clamp(2rem, 8vw, 2.8rem); }
             .campaign-hero { padding-top: 90px; padding-bottom: 40px; }
+            .project-slide { width: 280px; height: 350px; }
         }
     </style>
 </head>
@@ -478,11 +624,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="ag-dropdown-content">
                     <a href="index.html" class="ag-menu-item">Home</a>
                     <a href="index.html#about" class="ag-menu-item">About</a>
-                    <a href="index.html#services" class="ag-menu-item">Services</a>
                     <a href="web-development-services.html" class="ag-menu-item">Web Development</a>
                     <a href="digital-marketing-services.html" class="ag-menu-item active">Digital Marketing</a>
-                    <a href="index.html#portfolio" class="ag-menu-item">Portfolio</a>
-                    <a href="#packages" class="ag-menu-item">Pricing</a>
+                    <a href="#services" class="ag-menu-item">Solutions</a>
+                    <a href="#packages" class="ag-menu-item">Packages</a>
+                    <a href="#addons" class="ag-menu-item">Addons</a>
+                    <a href="#industries" class="ag-menu-item">Industries</a>
+                    <a href="#projects" class="ag-menu-item">Our Works</a>
                     <a href="#audit-form" class="ag-menu-item btn btn-primary"
                         style="margin-top: 10px; width: 80%; text-align: center; border-radius: 9999px;">Get Free Audit</a>
                 </div>
@@ -500,12 +648,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 <ul class="nav-links">
                     <li><a href="index.html" class="nav-link">Home</a></li>
-                    <li><a href="index.html#about" class="nav-link">About</a></li>
-                    <li><a href="index.html#services" class="nav-link">Services</a></li>
                     <li><a href="web-development-services.html" class="nav-link">Web Development</a></li>
                     <li><a href="digital-marketing-services.html" class="nav-link active" style="color: #c084fc;">Digital Marketing</a></li>
-                    <li><a href="index.html#portfolio" class="nav-link">Portfolio</a></li>
-                    <li><a href="#packages" class="nav-link">Pricing</a></li>
+                    <li><a href="#services" class="nav-link">Solutions</a></li>
+                    <li><a href="#packages" class="nav-link">Packages</a></li>
+                    <li><a href="#addons" class="nav-link">Addons</a></li>
+                    <li><a href="#industries" class="nav-link">Industries</a></li>
+                    <li><a href="#projects" class="nav-link">Our Works</a></li>
                 </ul>
 
                 <a href="#audit-form" class="btn btn-primary" aria-label="Get Free Marketing Audit">Free Audit</a>
@@ -565,6 +714,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                     <!-- Right Column: Audit Lead Form -->
                     <div class="hero-right-content fade-in-up delay-100" id="audit-form">
+                        <div class="mascot-hero-target"></div>
                         <div class="lead-form-card">
                             <h3>Get a Free Digital Marketing Audit</h3>
                             <p style="color: #a09ab0; font-size: 0.88rem; text-align: center; margin-top: -12px; margin-bottom: 20px;">
@@ -806,7 +956,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="container">
                 <div style="text-align: center;" class="fade-in-up">
                     <span class="section-tag center">Scale Further</span>
-                    <h2 class="section-title" style="color: #fff;">Specialized Growth Add-Ons</h2>
+                    <h2 class="section-title" style="color: #fff;">Premium Add-Ons</h2>
                 </div>
 
                 <div class="addon-glass-grid">
@@ -816,8 +966,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         </div>
                         <div>
-                            <h3>Local SEO</h3>
-                            <p>Boost Dubai Local Search <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+                            <h3>SEO Optimization</h3>
+                            <p>Boost Organic Search Rank <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
                         </div>
                     </a>
 
@@ -827,30 +977,207 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                         <div>
                             <h3>Google PPC Ads</h3>
-                            <p>Capture Buying Intent <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+                            <p>Capture High Buying Intent <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
                         </div>
                     </a>
 
-                    <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20TikTok%20Ads" class="addon-glass-card reveal-3d-pop delay-200" target="_blank" rel="noopener noreferrer">
+                    <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Influencer%20Marketing" class="addon-glass-card reveal-3d-pop delay-200" target="_blank" rel="noopener noreferrer">
+                        <div class="addon-glass-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <div>
+                            <h3>Influencer Marketing</h3>
+                            <p>GCC Influencer Partnerships <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+                        </div>
+                    </a>
+
+                    <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Event%20Management" class="addon-glass-card reveal-3d-pop" target="_blank" rel="noopener noreferrer">
+                        <div class="addon-glass-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        </div>
+                        <div>
+                            <h3>Event Management</h3>
+                            <p>Brand Launches & Coverage <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+                        </div>
+                    </a>
+
+                    <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Media%20Production" class="addon-glass-card reveal-3d-pop delay-100" target="_blank" rel="noopener noreferrer">
                         <div class="addon-glass-icon">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
                         </div>
                         <div>
-                            <h3>TikTok Ads</h3>
-                            <p>Viral Video Scaling <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+                            <h3>Media Production</h3>
+                            <p>Commercial Video Shoots <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
                         </div>
                     </a>
 
-                    <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20E-commerce%20Funnel%20Optimization" class="addon-glass-card reveal-3d-pop delay-300" target="_blank" rel="noopener noreferrer">
+                    <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Brand%20Collabs" class="addon-glass-card reveal-3d-pop delay-200" target="_blank" rel="noopener noreferrer">
                         <div class="addon-glass-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                         </div>
                         <div>
-                            <h3>E-commerce Funnels</h3>
-                            <p>Maximize ROAS & Lifetime Value <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
+                            <h3>Brand Collabs</h3>
+                            <p>Strategic Strategic Alliances <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></p>
                         </div>
                     </a>
 
+                </div>
+            </div>
+        </section>
+
+        <!-- Industries We Serve Section -->
+        <section class="section-padding theme-light" style="background: var(--bg-slate); border-top: 1px solid var(--border-glass);" id="industries">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 40px;" class="fade-in-up">
+                    <span class="section-tag center">Market Expertise</span>
+                    <h2 class="section-title">Industries We Serve</h2>
+                    <p style="color: var(--text-faded); max-width: 600px; margin: 10px auto 0 auto;">
+                        Tailored performance marketing blueprints for major industries in Dubai & GCC.
+                    </p>
+                </div>
+                
+                <div class="industry-grid">
+                    <div class="industry-image-card reveal-3d-pop" style="--bg-image: url('assets/mockup_fashion.webp');">
+                        <h3 class="industry-title">Fashion</h3>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Fashion%20Marketing" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;" target="_blank" rel="noopener noreferrer">Book Consultation</a>
+                    </div>
+                    <div class="industry-image-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_hospitality.webp');">
+                        <h3 class="industry-title">Restaurants & Dining</h3>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Restaurant%20Marketing" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;" target="_blank" rel="noopener noreferrer">Book Consultation</a>
+                    </div>
+                    <div class="industry-image-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_realestate.webp');">
+                        <h3 class="industry-title">Corporate & Real Estate</h3>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Corporate%20Real%20Estate%20Marketing" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;" target="_blank" rel="noopener noreferrer">Book Consultation</a>
+                    </div>
+                    <div class="industry-image-card reveal-3d-pop" style="--bg-image: url('assets/mockup_medical.webp');">
+                        <h3 class="industry-title">Medical & Clinics</h3>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Medical%20Clinic%20Marketing" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;" target="_blank" rel="noopener noreferrer">Book Consultation</a>
+                    </div>
+                    <div class="industry-image-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_construction.webp');">
+                        <h3 class="industry-title">Construction & Contracting</h3>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Construction%20Marketing" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;" target="_blank" rel="noopener noreferrer">Book Consultation</a>
+                    </div>
+                    <div class="industry-image-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_electronics.webp');">
+                        <h3 class="industry-title">Technology & IT</h3>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Technology%20Marketing" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;" target="_blank" rel="noopener noreferrer">Book Consultation</a>
+                    </div>
+                    <div class="industry-image-card reveal-3d-pop" style="--bg-image: url('assets/mockup_supermarket.webp');">
+                        <h3 class="industry-title">Retail & E-commerce</h3>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Retail%20Marketing" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;" target="_blank" rel="noopener noreferrer">Book Consultation</a>
+                    </div>
+                    <div class="industry-image-card reveal-3d-pop delay-100" style="--bg-image: url('assets/mockup_beauty.webp');">
+                        <h3 class="industry-title">Beauty & Salons</h3>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Beauty%20Salon%20Marketing" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;" target="_blank" rel="noopener noreferrer">Book Consultation</a>
+                    </div>
+                    <div class="industry-image-card reveal-3d-pop delay-200" style="--bg-image: url('assets/mockup_repair.webp');">
+                        <h3 class="industry-title">Services & Repair</h3>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20Service%20Business%20Marketing" class="btn btn-primary" style="background: rgba(139, 61, 255, 0.9); border: none;" target="_blank" rel="noopener noreferrer">Book Consultation</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Projects Showcase Section -->
+        <section class="section-padding theme-light" style="background: var(--bg-slate); border-top: 1px solid var(--border-glass);" id="projects">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 40px;" class="fade-in-up">
+                    <span class="section-tag center">Proven Results</span>
+                    <h2 class="section-title">Our Campaign Portfolio</h2>
+                    <p style="color: var(--text-faded); max-width: 600px; margin: 10px auto 0 auto;">
+                        Explore active Instagram & social media creative campaigns managed by our team.
+                    </p>
+                </div>
+                
+                <div class="projects-marquee">
+                    <div class="projects-track">
+                        <!-- Set 1 -->
+                        <a href="https://www.instagram.com/kenz__trading?igsh=MWh2NjFkZG04dnRpMQ==" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/kenz.webp" alt="Kenz Trading" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Trading</span>
+                                <h3 class="project-title">Kenz Trading</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/theleatherdoctorabudhabi?igsh=aHJyOGN2cDMyOTJt" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/leather.webp" alt="The Leather Doctor" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Services</span>
+                                <h3 class="project-title">The Leather Doctor</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/indusjewellers?igsh=cDM4NG5zbzUyOWNk" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/indus.webp" alt="Indus Jewellers" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Jewellery</span>
+                                <h3 class="project-title">Indus Jewellers</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/magicmirrorbs?igsh=MXN4eDZ1YXhpdnAyYQ==" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/magic.webp" alt="Magic Mirror" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Beauty</span>
+                                <h3 class="project-title">Magic Mirror</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/alrashad_commercial?igsh=MThwZjZ3emQ1NHVx" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/alrashad.webp" alt="Al Rashad Commercial" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Corporate</span>
+                                <h3 class="project-title">Al Rashad</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/navratnajewellery_uae?igsh=MW84bGdpYXczM21kdQ==" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/navratna.webp" alt="Navratna Jewellery" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Jewellery</span>
+                                <h3 class="project-title">Navratna Jewellery</h3>
+                            </div>
+                        </a>
+
+                        <!-- Set 2 (Duplicate for Infinite Carousel Loop) -->
+                        <a href="https://www.instagram.com/kenz__trading?igsh=MWh2NjFkZG04dnRpMQ==" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/kenz.webp" alt="Kenz Trading" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Trading</span>
+                                <h3 class="project-title">Kenz Trading</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/theleatherdoctorabudhabi?igsh=aHJyOGN2cDMyOTJt" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/leather.webp" alt="The Leather Doctor" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Services</span>
+                                <h3 class="project-title">The Leather Doctor</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/indusjewellers?igsh=cDM4NG5zbzUyOWNk" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/indus.webp" alt="Indus Jewellers" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Jewellery</span>
+                                <h3 class="project-title">Indus Jewellers</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/magicmirrorbs?igsh=MXN4eDZ1YXhpdnAyYQ==" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/magic.webp" alt="Magic Mirror" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Beauty</span>
+                                <h3 class="project-title">Magic Mirror</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/alrashad_commercial?igsh=MThwZjZ3emQ1NHVx" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/alrashad.webp" alt="Al Rashad Commercial" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Corporate</span>
+                                <h3 class="project-title">Al Rashad</h3>
+                            </div>
+                        </a>
+                        <a href="https://www.instagram.com/navratnajewellery_uae?igsh=MW84bGdpYXczM21kdQ==" target="_blank" class="project-slide">
+                            <img loading="lazy" decoding="async" src="./assets/navratna.webp" alt="Navratna Jewellery" class="ig-img">
+                            <div class="project-overlay-custom">
+                                <span class="project-cat">Jewellery</span>
+                                <h3 class="project-title">Navratna Jewellery</h3>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -886,9 +1213,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <h4 style="color: #fff; font-family: 'Outfit', sans-serif; margin-bottom: 15px; font-size: 1.1rem;">Quick Links</h4>
                     <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
                         <li><a href="index.html" style="color: #8b8398; text-decoration: none;">Home</a></li>
-                        <li><a href="web-development.html" style="color: #8b8398; text-decoration: none;">Web Development</a></li>
+                        <li><a href="web-development-services.html" style="color: #8b8398; text-decoration: none;">Web Development</a></li>
                         <li><a href="digital-marketing-services.html" style="color: #c084fc; text-decoration: none;">Digital Marketing</a></li>
-                        <li><a href="index.html#portfolio" style="color: #8b8398; text-decoration: none;">Portfolio</a></li>
+                        <li><a href="#projects" style="color: #8b8398; text-decoration: none;">Portfolio</a></li>
                     </ul>
                 </div>
                 <div>
@@ -903,10 +1230,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div>
                     <h4 style="color: #fff; font-family: 'Outfit', sans-serif; margin-bottom: 15px; font-size: 1.1rem;">Locations</h4>
                     <p style="color: #8b8398; font-size: 0.9rem; line-height: 1.6; margin-bottom: 10px;">
-                        <strong>Dubai, UAE:</strong> Business Bay, Dubai<br>
+                        <strong>Dubai, UAE:</strong> BMI Building Sharaf DG, Al Mankhool & Port Saeed, Deira - Dubai<br>
                         <strong>India:</strong> Kerala, India
                     </p>
                     <p style="color: #8b8398; font-size: 0.9rem;">
+                        <strong>Phone:</strong> +971 58 557 7182<br>
                         <strong>Email:</strong> info@thewebbranding.com
                     </p>
                 </div>
@@ -916,6 +1244,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
         </div>
     </footer>
+
+    <!-- Interactive Mascot -->
+    <div class="mascot-container">
+        <div class="mascot">
+            <div class="mascot-head">
+                <div class="mascot-screen">
+                    <div class="mascot-eye left"></div>
+                    <div class="mascot-eye right"></div>
+                </div>
+            </div>
+            <div class="mascot-body">
+                <div class="mascot-arm left"></div>
+                <div class="mascot-arm right"></div>
+            </div>
+        </div>
+        <div class="mascot-shadow"></div>
+    </div>
 
     <!-- Scripts -->
     <script src="./scripts/app.js"></script>
