@@ -1348,6 +1348,76 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             line-height: 1.55;
         }
 
+        /* Terms live on the page rather than behind a link so the asterisks
+           above have something to point at. Collapsed by default — it is
+           reference material, not something to read on the way past. */
+        .wd-terms {
+            max-width: 860px;
+            margin: 34px auto 0;
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .wd-terms summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 16px 22px;
+            cursor: pointer;
+            list-style: none;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-white);
+        }
+
+        .wd-terms summary::-webkit-details-marker { display: none; }
+
+        .wd-terms summary svg {
+            flex-shrink: 0;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .wd-terms[open] summary svg { transform: rotate(180deg); }
+
+        .wd-terms summary:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .wd-terms-body {
+            padding: 4px 22px 24px;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .wd-terms-intro {
+            margin-top: 18px;
+            color: var(--text-gray);
+        }
+
+        .wd-terms-body h4 {
+            margin: 22px 0 6px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text-white);
+        }
+
+        .wd-terms-body p {
+            font-size: 0.85rem;
+            line-height: 1.65;
+            color: var(--text-faded);
+        }
+
+        @media (max-width: 767px) {
+            .wd-terms summary { padding: 14px 16px; font-size: 0.9rem; }
+            .wd-terms-body { padding: 4px 16px 20px; }
+            .wd-terms-body p { font-size: 0.82rem; }
+        }
+
         /* --- Enquiry section ---------------------------------------------- */
         .wd-enquire-grid {
             display: grid;
@@ -2013,7 +2083,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             reason to get in touch.
                         </p>
                         <div class="wd-track-spec">
-                            <span>5–30 pages</span><span>CMS</span><span>3–5 weeks</span>
+                            <span>5–30 pages</span><span>CMS</span><span>1 week</span>
                         </div>
                         <div class="wd-track-from"><small>From</small>AED 4,999</div>
                     </a>
@@ -2028,9 +2098,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             and the reporting to run it.
                         </p>
                         <div class="wd-track-spec">
-                            <span>Payments</span><span>Inventory</span><span>4–8 weeks</span>
+                            <span>Payments</span><span>Inventory</span><span>2–3 weeks</span>
                         </div>
-                        <div class="wd-track-from"><small>From</small>Quoted on scope</div>
+                        <div class="wd-track-from"><small>From</small>AED 7,499</div>
                     </a>
 
                     <a href="#build-app" class="wd-track fade-in-up delay-200">
@@ -2043,9 +2113,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             built to your process.
                         </p>
                         <div class="wd-track-spec">
-                            <span>Logins</span><span>Database</span><span>6 weeks+</span>
+                            <span>Logins</span><span>CRM</span><span>3–5 weeks</span>
                         </div>
-                        <div class="wd-track-from"><small>From</small>Quoted on scope</div>
+                        <div class="wd-track-from"><small>From</small>AED 9,999</div>
                     </a>
                 </div>
             </div>
@@ -2211,7 +2281,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                         <div class="wd-spec">
                             <div class="wd-spec-row"><span class="wd-spec-key">Typical size</span><span class="wd-spec-val">5–30 pages</span></div>
-                            <div class="wd-spec-row"><span class="wd-spec-key">Build time</span><span class="wd-spec-val">3–5 weeks</span></div>
+                            <div class="wd-spec-row"><span class="wd-spec-key">Build time</span><span class="wd-spec-val">1 week</span></div>
                             <div class="wd-spec-row"><span class="wd-spec-key">Suits</span><span class="wd-spec-val">Corporates, clinics, contractors</span></div>
                             <div class="wd-spec-row"><span class="wd-spec-key">From</span><span class="wd-spec-val">AED 4,999</span></div>
                             <a href="#packages" class="btn btn-secondary" style="width: 100%; margin-top: 20px; justify-content: center;">Compare packages</a>
@@ -2239,9 +2309,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                         <div class="wd-spec">
                             <div class="wd-spec-row"><span class="wd-spec-key">Catalogue</span><span class="wd-spec-val">Any size</span></div>
-                            <div class="wd-spec-row"><span class="wd-spec-key">Build time</span><span class="wd-spec-val">4–8 weeks</span></div>
+                            <div class="wd-spec-row"><span class="wd-spec-key">Build time</span><span class="wd-spec-val">2–3 weeks</span></div>
                             <div class="wd-spec-row"><span class="wd-spec-key">Suits</span><span class="wd-spec-val">Retail, fashion, electronics</span></div>
-                            <div class="wd-spec-row"><span class="wd-spec-key">Pricing</span><span class="wd-spec-val">Quoted on scope</span></div>
+                            <div class="wd-spec-row"><span class="wd-spec-key">From</span><span class="wd-spec-val">AED 7,499</span></div>
                             <a href="#ecommerce" class="btn btn-secondary" style="width: 100%; margin-top: 20px; justify-content: center;">See stores we built</a>
                         </div>
                     </article>
@@ -2253,8 +2323,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <h3>Custom web application</h3>
                             <p>
                                 When the thing you need does not exist as a product. Booking systems, client
-                                portals, quoting tools, internal dashboards — software shaped around how your
-                                business already works rather than the other way round.
+                                portals, quoting tools, internal dashboards, and CRM connected to the rest of
+                                your stack — software shaped around how your business already works rather
+                                than the other way round.
                             </p>
                             <div class="wd-chips">
                                 <span class="wd-chip">User accounts &amp; roles</span>
@@ -2267,9 +2338,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                         <div class="wd-spec">
                             <div class="wd-spec-row"><span class="wd-spec-key">Starts with</span><span class="wd-spec-val">A scoping session</span></div>
-                            <div class="wd-spec-row"><span class="wd-spec-key">Build time</span><span class="wd-spec-val">6 weeks upward</span></div>
+                            <div class="wd-spec-row"><span class="wd-spec-key">Build time</span><span class="wd-spec-val">3–5 weeks</span></div>
                             <div class="wd-spec-row"><span class="wd-spec-key">Suits</span><span class="wd-spec-val">Operations-heavy businesses</span></div>
-                            <div class="wd-spec-row"><span class="wd-spec-key">Pricing</span><span class="wd-spec-val">Quoted on scope</span></div>
+                            <div class="wd-spec-row"><span class="wd-spec-key">From</span><span class="wd-spec-val">AED 9,999</span></div>
                             <a href="#enquire" class="btn btn-secondary" style="width: 100%; margin-top: 20px; justify-content: center;">Describe your project</a>
                         </div>
                     </article>
@@ -2644,7 +2715,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="pricing-grid">
                     <!-- Corporate Starter -->
                     <div id="pkg-starter" class="pricing-card reveal-3d-pop">
-                        <h3 class="pkg-title">Starter Website</h3>
+                        <h3 class="pkg-title">Business Website</h3>
                         <p style="color: var(--text-faded); font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px;">5 Page Corporate Website</p>
                         <div class="pkg-price"><span>AED</span> 4,999</div>
                         <div class="pkg-features">
@@ -2658,7 +2729,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 2 Business Email Accounts</div>
                             <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 1 Month Technical Support</div>
                         </div>
-                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Corporate%20Starter%20Package%20(AED%204,999)" target="_blank" class="btn btn-whatsapp" style="width: 100%;">Discuss this package</a>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Business%20Website%20Package%20(AED%204,999)" target="_blank" class="btn btn-whatsapp" style="width: 100%;">Discuss this package</a>
                     </div>
 
                     <!-- Corporate Professional -->
@@ -2667,11 +2738,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                             Most Popular
                         </div>
-                        <h3 class="pkg-title" style="color: white;">Corporate Website</h3>
+                        <h3 class="pkg-title" style="color: white;">E-commerce Store</h3>
                         <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px;">10 Page Website</p>
                         <div class="pkg-price" style="color: white;"><span>AED</span> 7,499</div>
                         <div class="pkg-features">
-                            <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Everything in Starter</strong></div>
+                            <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Everything in Business Website</strong></div>
                             <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 10 Custom Designed Pages</div>
                             <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Blog Module Integration</div>
                             <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Advanced UI/UX Elements</div>
@@ -2681,16 +2752,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 5 Business Email Accounts</div>
                             <div class="pkg-feature" style="color: white;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 3 Months Technical Support</div>
                         </div>
-                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Corporate%20Professional%20Package%20(AED%207,499)" target="_blank" class="btn btn-primary" style="width: 100%; background: #fff; color: #5A2C89;">Discuss this package</a>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20E-commerce%20Store%20Package%20(AED%207,499)" target="_blank" class="btn btn-primary" style="width: 100%; background: #fff; color: #5A2C89;">Discuss this package</a>
                     </div>
 
                     <!-- Corporate Enterprise -->
                     <div id="pkg-enterprise" class="pricing-card reveal-3d-pop delay-200">
-                        <h3 class="pkg-title">Enterprise Website</h3>
+                        <h3 class="pkg-title">Custom Web Application</h3>
                         <p style="color: var(--text-faded); font-size: 0.9rem; margin-top: -5px; margin-bottom: 10px;">30 Page Website</p>
                         <div class="pkg-price"><span>AED</span> 9,999</div>
                         <div class="pkg-features">
-                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Everything in Professional</strong></div>
+                            <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <strong>Everything in E-commerce Store</strong></div>
                             <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 30 Custom Designed Pages</div>
                             <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Premium UI/UX Design</div>
                             <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Multi-language Ready</div>
@@ -2700,7 +2771,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 10 Business Email Accounts</div>
                             <div class="pkg-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 6 Months Technical Support</div>
                         </div>
-                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Corporate%20Enterprise%20Package%20(AED%209,999)" target="_blank" class="btn btn-whatsapp" style="width: 100%;">Discuss this package</a>
+                        <a href="https://wa.me/971585577182?text=I'm%20interested%20in%20the%20Custom%20Web%20Application%20Package%20(AED%209,999)" target="_blank" class="btn btn-whatsapp" style="width: 100%;">Discuss this package</a>
                     </div>
                 </div>
             </div>
@@ -3124,14 +3195,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <h2 class="section-title">What comes with every build</h2>
                     <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">
                         These are not upsells. Whichever route you take, the following is part of the price.
+                        Terms and conditions apply.
                     </p>
                 </div>
 
                 <div class="wd-included fade-in-up">
                     <div class="wd-inc-item">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                        <h4>Domain &amp; hosting, first year</h4>
-                        <p>A premium domain and fast, secure cloud hosting, free for the first twelve months.</p>
+                        <h4>Domain &amp; hosting, first year*</h4>
+                        <p>A standard domain and fast, secure cloud hosting, free for the first twelve months.</p>
                     </div>
                     <div class="wd-inc-item">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
@@ -3140,8 +3212,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                     <div class="wd-inc-item">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                        <h4>Analytics from day one</h4>
-                        <p>Google Analytics and Tag Manager wired in, so you can see what the site is actually doing.</p>
+                        <h4>Launch checks before handover</h4>
+                        <p>Every link, form, and page checked on real phones and browsers before the site goes live.</p>
                     </div>
                     <div class="wd-inc-item">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -3169,6 +3241,166 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <p>One to six months of technical support included, depending on the package you choose.</p>
                     </div>
                 </div>
+
+                <details class="wd-terms fade-in-up">
+                    <summary>
+                        <span>Terms &amp; conditions</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </summary>
+                    <div class="wd-terms-body">
+                        <p class="wd-terms-intro">
+                            The following applies to every proposal, invoice, and build unless we have signed a
+                            separate written agreement that says otherwise. Placing an order, paying a deposit,
+                            or asking us to begin work means these terms are accepted.
+                        </p>
+
+                        <h4>1. Quotations and scope</h4>
+                        <p>
+                            Prices shown on this page are starting points for the scope described, not fixed
+                            quotations. The scope of any project is limited to what is written in the accepted
+                            proposal or invoice. Anything not written there — extra pages, extra languages,
+                            additional integrations, redesigns after approval, content creation, photography,
+                            copywriting, advertising, or ongoing marketing — is out of scope and quoted
+                            separately. Quotations are valid for 14 days from issue.
+                        </p>
+
+                        <h4>2. Payment</h4>
+                        <p>
+                            Unless agreed otherwise in writing, 50% of the project value is payable in advance
+                            before work begins and the balance is payable before the site is published or files
+                            are handed over. Advance payments are non-refundable once work has started, as they
+                            cover time already committed. Invoices are due on presentation. We may suspend work,
+                            withhold delivery, or take a site offline where an invoice remains unpaid for 14 days
+                            or more. All prices are exclusive of VAT and of any third-party fees, which are
+                            charged at cost.
+                        </p>
+
+                        <h4>3. Timelines</h4>
+                        <p>
+                            Build times quoted on this page are working estimates for a standard project of that
+                            type. The clock starts only once the advance payment has cleared and all content,
+                            logos, access credentials, and approvals we have asked for have been received in
+                            usable form. Delays in feedback, content, third-party approvals, payment gateway or
+                            merchant account activation, domain transfers, or hosting access extend the timeline
+                            by at least the length of the delay. Estimated dates are not guaranteed delivery
+                            dates and no penalty, discount, or compensation arises from a timeline moving.
+                        </p>
+
+                        <h4>4. Client material and responsibilities</h4>
+                        <p>
+                            You are responsible for the accuracy, legality, and ownership of all text, images,
+                            logos, video, product data, and other material you supply, and you confirm you hold
+                            the rights and licences needed to use it. We are not liable for any claim arising
+                            from material you supply, and you agree to indemnify us against such claims. Where we
+                            source stock assets on your behalf, the licence covers the delivered project only.
+                        </p>
+
+                        <h4>5. Revisions and approval</h4>
+                        <p>
+                            Each project includes up to two rounds of revisions at the design stage and one round
+                            after development, within the agreed scope. Further rounds, or changes requested
+                            after a stage has been signed off, are billed at our prevailing hourly rate. If we do
+                            not receive feedback within seven days of sending work for review, the stage is
+                            treated as approved and the project moves on.
+                        </p>
+
+                        <h4>6. Hosting, domains, and email</h4>
+                        <p>
+                            Where a domain and hosting are stated as included, this covers twelve months of
+                            shared cloud hosting on infrastructure of our choosing, and the first year of
+                            registration for one standard domain, subject to availability at the time of
+                            registration. Premium domains, alternative extensions, additional domains, privacy
+                            services, and transfers in or out are chargeable at cost. The domain is registered
+                            for your use as part of the project; where it is held in our account, it will be
+                            released or transferred to you on written request once all invoices are settled.
+                            Business email accounts are provisioned in the quantity stated in your package;
+                            mailbox storage, migration of existing mail, and additional accounts are chargeable.
+                            After the first twelve months, hosting, domain, email, SSL, and licence renewals are
+                            invoiced annually in advance at our prevailing rates. Services may be suspended and
+                            domains may lapse if a renewal is not paid before its due date, and we are not
+                            responsible for loss of data, mail, search visibility, or the domain itself in that
+                            event. Projects hosted on infrastructure you control are excluded from this clause.
+                        </p>
+
+                        <h4>7. Third-party services</h4>
+                        <p>
+                            Projects may depend on services we do not own or control — payment gateways, banks,
+                            shipping and tax providers, CRMs, plugins, themes, APIs, analytics, and mail
+                            services. Their fees, approval decisions, downtime, pricing changes, deprecations,
+                            and terms of use are outside our control and are your responsibility. If a provider
+                            changes or withdraws a service after handover, the work needed to adapt is a new
+                            chargeable job.
+                        </p>
+
+                        <h4>8. Support and maintenance</h4>
+                        <p>
+                            The support period stated in your package begins on the date the site goes live. It
+                            covers correction of defects in the work we delivered and reasonable minor assistance
+                            during normal business hours, Monday to Friday. It does not cover new features,
+                            design changes, new pages, content updates, SEO or marketing work, recovery from
+                            edits made by you or a third party, changes forced by third-party updates, or issues
+                            caused by hosting you control. Support is not a guarantee of continuous availability
+                            and no service level or uptime commitment applies unless separately contracted.
+                        </p>
+
+                        <h4>9. Intellectual property</h4>
+                        <p>
+                            Ownership of the delivered design and site content transfers to you only once all
+                            invoices have been paid in full. We retain ownership of our underlying frameworks,
+                            code libraries, components, and working files, and may reuse them on other projects.
+                            Third-party themes, plugins, fonts, and stock assets remain licensed on their own
+                            terms. Unless you ask us in writing not to, we may display the project in our
+                            portfolio, case studies, and marketing.
+                        </p>
+
+                        <h4>10. Data, backups, and security</h4>
+                        <p>
+                            We take reasonable care with credentials and data supplied to us. Once the project is
+                            handed over, responsibility for backups, updates, passwords, user access, and
+                            security rests with you unless you hold an active maintenance agreement with us. We
+                            are not liable for data loss, hacking, malware, or downtime on infrastructure or
+                            accounts we do not administer.
+                        </p>
+
+                        <h4>11. Results</h4>
+                        <p>
+                            We build to current best practice, but we do not guarantee search rankings, traffic
+                            volumes, conversion rates, sales, or any commercial outcome. Search engines, ad
+                            platforms, and marketplaces change their systems without notice and independently of
+                            our work.
+                        </p>
+
+                        <h4>12. Limitation of liability</h4>
+                        <p>
+                            To the fullest extent permitted by law, our total liability arising out of or in
+                            connection with a project is limited to the total fees actually paid to us for that
+                            project. We are not liable for indirect, incidental, or consequential loss, including
+                            loss of profit, revenue, business, goodwill, or data, however caused.
+                        </p>
+
+                        <h4>13. Cancellation</h4>
+                        <p>
+                            You may cancel a project in writing at any time. Amounts already paid are
+                            non-refundable and any work completed beyond the amount paid is invoiced at the point
+                            of cancellation. If a project is put on hold by you for more than 30 days, we may
+                            treat it as cancelled or charge a re-mobilisation fee to restart it.
+                        </p>
+
+                        <h4>14. Force majeure</h4>
+                        <p>
+                            Neither party is liable for delay or failure to perform caused by events beyond
+                            reasonable control, including outages, provider failures, cyber attacks, government
+                            action, or natural events.
+                        </p>
+
+                        <h4>15. Governing law</h4>
+                        <p>
+                            These terms are governed by the laws of the United Arab Emirates, and the courts of
+                            Dubai have exclusive jurisdiction. We may update these terms at any time; the version
+                            published here at the date of your invoice applies to that project.
+                        </p>
+                    </div>
+                </details>
             </div>
         </section>
 
