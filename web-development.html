@@ -1617,25 +1617,33 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .bh-col {
             display: flex;
             flex-direction: column;
-            gap: 0.7rem;
-            max-width: 32vw;
+            gap: 0.35rem;
+            max-width: 40vw;
         }
 
         .bh-col.bh-right { align-items: flex-end; }
         .bh-col.bh-right .bh-word { text-align: right; }
 
+        /* Set large and close-leaded on purpose: four lines a side have to
+           hold the flanks of the frame, not sit in them as captions. Lines
+           are kept close in length so both stacks square up at roughly the
+           same width and the pair reads as one spread. */
         .bh-word {
             font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            font-size: clamp(1.15rem, 2.6vw, 2.8rem);
-            line-height: 1.25;
-            letter-spacing: -0.015em;
+            font-weight: 600;
+            font-size: clamp(1.2rem, 3vw, 3.2rem);
+            line-height: 1.14;
+            letter-spacing: -0.025em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.82);
+            color: rgba(255, 255, 255, 0.9);
             user-select: none;
             white-space: nowrap;
             transition: transform 0.05s linear;
         }
+
+        /* The repeated anchor drops back so the refusals stair down the left
+           edge without four shouted NOs. */
+        .bh-no { color: rgba(255, 255, 255, 0.45); }
 
         /* Marquee */
         .bh-marquee {
@@ -1679,7 +1687,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             .bh-l1 { transform: translateY(12px); }
             .bh-l2 { transform: translateY(6px); }
             .bh-words { padding: 0 3vw; }
-            .bh-col { gap: 0.25rem; }
+            .bh-col { gap: 0.25rem; max-width: 46vw; }
+            /* Both stacks have to clear the mascot between them, so the type
+               tracks the viewport all the way down rather than bottoming out
+               at a size that would collide at 320px. */
+            .bh-word {
+                font-size: clamp(0.85rem, 4.2vw, 1.6rem);
+                letter-spacing: -0.02em;
+            }
             .bh-marquee { padding: 1.5rem 0; }
             .bh-dock { bottom: 3vh; }
         }
@@ -1835,18 +1850,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="bh-title bh-l3">BUILD</div>
                 </div>
 
+                <!-- A refusal list answered by a delivery list: read across
+                     and each pair lines up. Kept close in length so the two
+                     blocks read as one spread, not two stray captions. -->
                 <div class="bh-words" aria-hidden="true">
                     <div class="bh-col bh-left">
-                        <span class="bh-word">Designed for you</span>
-                        <span class="bh-word">Built for speed</span>
-                        <span class="bh-word">Launched with data</span>
-                        <span class="bh-word">Scaled to grow</span>
+                        <span class="bh-word"><span class="bh-no">No</span> gatekeeping</span>
+                        <span class="bh-word"><span class="bh-no">No</span> templates</span>
+                        <span class="bh-word"><span class="bh-no">No</span> guesswork</span>
+                        <span class="bh-word"><span class="bh-no">No</span> slipped dates</span>
                     </div>
                     <div class="bh-col bh-right">
-                        <span class="bh-word">Strategy first</span>
-                        <span class="bh-word">Never templated</span>
+                        <span class="bh-word">Prices published</span>
+                        <span class="bh-word">Timelines given</span>
+                        <span class="bh-word">Built for the job</span>
                         <span class="bh-word">Shipped on time</span>
-                        <span class="bh-word">Support that lasts</span>
                     </div>
                 </div>
             </div>
