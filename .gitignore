@@ -9,3 +9,9 @@ Thumbs.db
 # Misc
 *.log
 *.zip
+*.tar
+*.gz
+
+# Raw Source Assets
+assets/WEBSITE MOCKUP VIDEOS/
+dist/assets/WEBSITE MOCKUP VIDEOS/
