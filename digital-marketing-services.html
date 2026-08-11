@@ -48,19 +48,627 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <style>
         /* Dedicated Page Specific Enhancements */
-        .campaign-hero {
-            background: transparent;
-            padding-top: 120px;
-            padding-bottom: 80px;
+        /* ==========================================================================
+           FULL-BLEED BACKGROUND IMAGE TRANSFORMATION HERO SECTION STYLES
+           ========================================================================== */
+        .hero-bg-transform-section {
             position: relative;
-            overflow: visible;
+            height: 95vh;
+            min-height: 720px;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            padding-top: 130px;
+            padding-bottom: 60px;
+            overflow: hidden;
+            background: #05010a;
             z-index: 10;
         }
-        .campaign-hero .hero-grid {
-            display: grid;
-            grid-template-columns: 7fr 5fr;
-            gap: 40px;
+
+        .hero-bg-viewport {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            background: #05010a;
+        }
+
+        /* Chessboard scaled up 15-20% centered */
+        .hero-bg-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+            opacity: 0;
+            transform: scale(1.18);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+            will-change: opacity, transform, filter;
+        }
+
+        .hero-bg-img.active {
+            opacity: 1;
+            transform: scale(1.18);
+        }
+
+        /* Localized radial spotlight behind text only */
+        .hero-radial-spotlight {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 35%, rgba(5, 1, 10, 0.82) 0%, rgba(5, 1, 10, 0.5) 55%, transparent 85%),
+                        linear-gradient(180deg, rgba(5, 1, 10, 0.45) 0%, transparent 40%, rgba(5, 1, 10, 0.85) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .hero-ambient-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .hero-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: 0.22;
+            will-change: transform;
+            animation: blobFloat 12s infinite ease-in-out alternate;
+        }
+
+        .hero-blob.blob-1 {
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, rgba(139, 61, 255, 0.35), transparent 70%);
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hero-blob.blob-2 {
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, rgba(225, 29, 72, 0.22), transparent 70%);
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -6s;
+        }
+
+        @keyframes blobFloat {
+            0% { transform: translate(-50%, 0) scale(1); }
+            100% { transform: translate(-50%, 40px) scale(1.15); }
+        }
+
+        #hero-particle-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        /* Centered Container Directly Overlaid Over Background Image */
+        .hero-centered-container {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            width: 100% !important;
+            max-width: 1100px !important;
+            margin: 0 auto !important;
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+            box-sizing: border-box !important;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-content-center {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            max-width: 780px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            position: relative;
+            z-index: 10;
+            will-change: opacity, transform;
+        }
+
+        /* Small Label Badge */
+        .hero-pill-badge {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px;
+            background: rgba(16, 8, 29, 0.85);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            color: #f3e8ff;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            margin: 0 auto 22px auto !important;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(139, 61, 255, 0.25);
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-pill-badge .pill-icon {
+            color: #c084fc;
+            display: inline-flex;
+            align-items: center;
+            transition: transform 0.4s ease;
+        }
+
+        .hero-pill-badge:hover .pill-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        /* Main Heading */
+        .hero-transform-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.2rem, 4.4vw, 3.8rem);
+            font-weight: 700;
+            line-height: 1.18;
+            color: #ffffff;
+            margin: 0 auto 18px auto !important;
+            text-align: center !important;
+            width: 100% !important;
+            letter-spacing: -0.02em;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gradient-text.hero-text-highlight {
+            background: linear-gradient(135deg, #ffffff 10%, #d8b4fe 40%, #a855f7 70%, #9d4edd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.8));
+            transition: all 0.5s ease;
+        }
+
+        /* Sub Heading */
+        .hero-transform-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1rem, 1.3vw, 1.15rem);
+            color: #e2dcee;
+            line-height: 1.6;
+            max-width: 580px;
+            margin: 0 auto 35px auto !important;
+            text-align: center !important;
+            width: 100% !important;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.95);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* CTA Wrapper & Annotation */
+        .hero-cta-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            z-index: 10;
+        }
+
+        /* Scribble Annotation */
+        .hero-annotation-badge {
+            position: absolute;
+            top: -34px;
+            right: -35px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #e9d5ff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+            transform: rotate(4deg);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+            animation: annotationFloat 3s infinite ease-in-out alternate;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .hero-annotation-badge .annotation-arrow {
+            color: #c084fc;
+            transform: scaleX(-1) rotate(15deg);
+            filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.8));
+        }
+
+        @keyframes annotationFloat {
+            0% { transform: translateY(0) rotate(4deg); }
+            100% { transform: translateY(-5px) rotate(2deg); }
+        }
+
+        /* Buttons Styling (Compact size) */
+        .btn-hero-transform {
+            position: relative;
+            background: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%);
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 13px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(123, 44, 191, 0.6), 0 0 15px rgba(0,0,0,0.5);
+            cursor: pointer;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.3s ease;
+            will-change: transform, box-shadow;
+        }
+
+        .btn-hero-transform:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(157, 78, 221, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+        }
+
+        .btn-hero-transform:active {
+            transform: translateY(1px) scale(0.95);
+        }
+
+        .btn-hero-transform .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-hero-transform:hover .btn-icon .icon-rocket {
+            transform: translateY(-3px) rotate(-10deg) scale(1.15);
+        }
+
+        .hero-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(16, 8, 29, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 13px 28px;
+            border-radius: 50px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(192, 132, 252, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-btn-secondary:hover .sec-btn-icon {
+            transform: translateX(4px);
+        }
+
+        .sec-btn-icon {
+            display: inline-flex;
+            transition: transform 0.3s ease;
+        }
+
+        /* Lens Flare & Light Sweep Overlay */
+        .lens-flare-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(216, 180, 254, 0.85) 0%, rgba(157, 78, 221, 0.45) 35%, transparent 75%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 5;
+            mix-blend-mode: screen;
+            transition: opacity 0.3s ease;
+        }
+
+        .purple-light-sweep {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -100%;
+            width: 60%;
+            background: linear-gradient(90deg, transparent 0%, rgba(192, 132, 252, 0.6) 50%, transparent 100%);
+            transform: skewX(-25deg);
+            pointer-events: none;
+            z-index: 6;
+            mix-blend-mode: overlay;
+        }
+
+        /* Shockwave Energy Pulse */
+        .hero-shockwave {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.85) 0%, rgba(123, 44, 191, 0.45) 40%, transparent 70%);
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 99;
+            box-shadow: 0 0 120px rgba(168, 85, 247, 0.95);
+        }
+
+        /* Floating Glassmorphic Metric Cards Overlaid Over Hero Image - Exactly 4 Spaced Out Cards */
+        .floating-cards-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 12;
+            opacity: 0;
+            transition: opacity 0.8s ease 0.3s;
+        }
+
+        .floating-cards-container.active {
+            opacity: 1;
+        }
+
+        .glass-metric-card {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(16, 8, 29, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 14px 22px;
+            border-radius: 18px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 0 0 30px rgba(139, 61, 255, 0.25);
+            transform: translateY(20px) scale(0.9);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+
+        .floating-cards-container.active .glass-metric-card {
+            opacity: 1;
+            animation: floatCard var(--duration, 4.2s) infinite ease-in-out alternate var(--delay, 0s);
+        }
+
+        @keyframes floatCard {
+            0% { transform: translateY(0px) scale(var(--base-scale, 1)); }
+            100% { transform: translateY(-14px) scale(calc(var(--base-scale, 1) + 0.03)); }
+        }
+
+        /* 4 Spaced-Out Card Positions (Desktop) */
+        .card-top-center {
+            top: 14%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 25;
+            --base-scale: 1.02;
+            background: rgba(22, 10, 38, 0.92);
+            border-color: rgba(192, 132, 252, 0.45);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75), 0 0 35px rgba(168, 85, 247, 0.35);
+        }
+
+        .card-mid-left {
+            top: 48%;
+            left: 4%;
+            z-index: 20;
+            --base-scale: 0.95;
+        }
+
+        .card-mid-right {
+            top: 48%;
+            right: 4%;
+            z-index: 20;
+            --base-scale: 0.95;
+        }
+
+        .card-bottom-center {
+            bottom: 4%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 24;
+            --base-scale: 1.02;
+            background: rgba(22, 10, 38, 0.92);
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+
+        .card-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .icon-purple { background: rgba(139, 61, 255, 0.25); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.4); }
+        .icon-rose { background: rgba(225, 29, 72, 0.25); color: #fb7185; border: 1px solid rgba(251, 113, 133, 0.4); }
+        .icon-blue { background: rgba(59, 130, 246, 0.25); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.4); }
+        .icon-emerald { background: rgba(16, 185, 129, 0.25); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.4); }
+        .icon-gold { background: rgba(245, 158, 11, 0.25); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .card-val {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .card-lbl {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.76rem;
+            color: #c5c0d0;
+            font-weight: 500;
+        }
+
+        /* Keyframes */
+        @keyframes cameraPush {
+            0% { transform: scale(1); filter: brightness(1) blur(0px); }
+            50% { transform: scale(1.06); filter: brightness(1.45) blur(5px); }
+            100% { transform: scale(1); filter: brightness(1) blur(0px); }
+        }
+
+        .animating-camera-push {
+            animation: cameraPush 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes sweepLight {
+            0% { left: -100%; opacity: 0; }
+            30% { opacity: 1; }
+            100% { left: 150%; opacity: 0; }
+        }
+
+        .animating-light-sweep {
+            animation: sweepLight 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes shockwaveExpand {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0.95; }
+            100% { transform: translate(-50%, -50%) scale(100); opacity: 0; }
+        }
+
+        .animating-shockwave {
+            animation: shockwaveExpand 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Fully Responsive Breakpoints - Strict Centering & Non-Overlapping Metric Grid */
+        @media (max-width: 1200px) {
+            .card-mid-left { left: 2%; --base-scale: 0.9; }
+            .card-mid-right { right: 2%; --base-scale: 0.9; }
+            .card-top-center { top: 2%; }
+            .card-bottom-center { bottom: 2%; }
+        }
+
+        @media (max-width: 992px) {
+            .hero-bg-transform-section {
+                height: auto;
+                min-height: 780px;
+                padding-top: 140px !important;
+                padding-bottom: 70px;
+            }
+            .card-mid-left { top: auto; bottom: 12%; left: 3%; --base-scale: 0.85; }
+            .card-mid-right { top: auto; bottom: 12%; right: 3%; --base-scale: 0.85; }
+            .card-top-center { top: 2%; --base-scale: 0.88; }
+            .card-bottom-center { bottom: 2%; --base-scale: 0.88; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-bg-transform-section {
+                height: auto !important;
+                min-height: 640px !important;
+                padding-top: 150px !important;
+                padding-bottom: 50px !important;
+            }
+            .hero-bg-img {
+                object-position: center 35% !important;
+            }
+            .hero-centered-container {
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+            }
+            .hero-content-center {
+                width: 100% !important;
+                text-align: center !important;
+                align-items: center !important;
+            }
+            .hero-pill-badge {
+                margin: 0 auto 16px auto !important;
+            }
+            .hero-annotation-badge {
+                display: none !important;
+            }
+            .hero-transform-title {
+                font-size: clamp(1.8rem, 7vw, 2.4rem) !important;
+                margin: 0 auto 14px auto !important;
+                text-align: center !important;
+            }
+            .hero-transform-subtitle {
+                font-size: 0.95rem !important;
+                margin: 0 auto 24px auto !important;
+                text-align: center !important;
+                max-width: 100% !important;
+            }
+            .hero-cta-wrapper {
+                flex-direction: column !important;
+                width: 100% !important;
+                gap: 12px !important;
+                align-items: center !important;
+            }
+            .hero-cta-wrapper .btn {
+                width: 100% !important;
+                max-width: 280px !important;
+                justify-content: center !important;
+                text-align: center !important;
+            }
+            /* Clean 2-column non-overlapping grid below CTA buttons on mobile */
+            .floating-cards-container {
+                position: relative !important;
+                inset: auto !important;
+                width: 100% !important;
+                margin-top: 30px !important;
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+                pointer-events: auto !important;
+            }
+            .glass-metric-card {
+                position: relative !important;
+                inset: auto !important;
+                transform: none !important;
+                animation: none !important;
+                opacity: 1 !important;
+                padding: 10px 12px !important;
+                border-radius: 14px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                justify-content: flex-start !important;
+            }
+            .card-icon {
+                width: 32px !important;
+                height: 32px !important;
+                border-radius: 10px !important;
+            }
+            .card-icon svg {
+                width: 15px !important;
+                height: 15px !important;
+            }
+            .card-val {
+                font-size: 0.92rem !important;
+            }
+            .card-lbl {
+                font-size: 0.66rem !important;
+            }
         }
         .hero-left-content {
             color: #fff;
@@ -195,7 +803,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             100% { transform: translateX(-50%); }
         }
 
-        /* Services Grid */
+        /* Services Grid & Pillar Image Cards */
         .services-detail-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -206,8 +814,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
-            padding: 30px 24px;
-            transition: all 0.4s ease;
+            padding: 22px 20px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
             display: flex;
@@ -216,10 +824,55 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
         .service-pillar-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(139, 61, 255, 0.4);
-            box-shadow: 0 15px 35px rgba(139, 61, 255, 0.15);
+            border-color: rgba(139, 61, 255, 0.45);
+            box-shadow: 0 20px 45px rgba(139, 61, 255, 0.2), 0 0 30px rgba(0, 0, 0, 0.8);
             background: rgba(255, 255, 255, 0.05);
         }
+
+        .pillar-image-wrapper {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            background: #0d0618;
+        }
+
+        .pillar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+        }
+
+        .service-pillar-card:hover .pillar-img {
+            transform: scale(1.08);
+            filter: brightness(1.12);
+        }
+
+        .pillar-icon-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(16, 8, 29, 0.78);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c084fc;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
         .pillar-icon {
             width: 60px;
             height: 60px;
@@ -234,20 +887,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
         .service-pillar-card h3 {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             color: #fff;
             margin-bottom: 12px;
         }
         .service-pillar-card p {
             color: #a09ab0;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             line-height: 1.55;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         .pillar-list {
             list-style: none;
             padding: 0;
-            margin: 0 0 20px 0;
+            margin: 0 0 10px 0;
         }
         .pillar-list li {
             font-size: 0.88rem;
@@ -676,83 +1329,130 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="glow-orb orb-accent" style="bottom: 10%; left: 20%;"></div>
         </div>
 
-        <!-- Hero Section -->
-        <section class="campaign-hero" id="home">
-            <div class="container">
-                <div class="hero-grid">
+        <!-- Transformation Hero Section -->
+        <section class="campaign-hero hero-bg-transform-section" id="home">
+            <!-- Background Images Viewport (Scaled 15-20%, King as visual anchor) -->
+            <div class="hero-bg-viewport" id="hero-bg-viewport">
+                <!-- Before Image (Default State) -->
+                <img id="bg-img-before" class="hero-bg-img bg-before active" src="./assets/before.png" alt="Brand Before Transformation">
+                
+                <!-- After Image (Transformed State) -->
+                <img id="bg-img-after" class="hero-bg-img bg-after" src="./assets/after.png" alt="Brand After Transformation">
 
-                    <div class="hero-left-content fade-in-up">
-                        <div class="hero-pill" style="background: rgba(225, 29, 72, 0.15); border: 1px solid rgba(225, 29, 72, 0.4); color: #ff4d6d; box-shadow: 0 4px 15px rgba(225, 29, 72, 0.2);">Special OFFERS</div>
-                        
-                        <h1 class="hero-title-campaign" style="line-height: 1.2;">
-                            Social Media Management<br>from <span style="display: inline-block; background: #e11d48; color: white; padding: 4px 20px; border-radius: 12px; margin: 8px 0; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 0.9em; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.45); transform: translateY(-2px);">999 AED</span><br>onwards
-                        </h1>
+                <!-- Localized Radial Spotlight Behind Text Only -->
+                <div class="hero-radial-spotlight"></div>
 
-                        <p class="hero-subtitle-campaign">
-                            Turn online presence into predictable revenue. We create high-converting ad campaigns, viral social media creative, SEO rankings, and video content that make your business stand out in Dubai and across the GCC.
-                        </p>
+                <!-- Ambient Blobs & Particles Canvas -->
+                <div class="hero-ambient-bg">
+                    <div class="hero-blob blob-1"></div>
+                    <div class="hero-blob blob-2"></div>
+                    <canvas id="hero-particle-canvas"></canvas>
+                </div>
 
-                        <div class="hero-features">
-                            <div class="hero-feature">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff4d6d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Verified ROI Strategy
-                            </div>
-                            <div class="hero-feature">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff4d6d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Dedicated Growth Team
-                            </div>
-                            <div class="hero-feature">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff4d6d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Transparent Weekly Reports
-                            </div>
-                        </div>
+                <!-- Lens Flare & Purple Light Sweep -->
+                <div id="lens-flare-overlay" class="lens-flare-overlay"></div>
+                <div id="purple-light-sweep" class="purple-light-sweep"></div>
+            </div>
 
-                        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
-                            <a href="#packages" class="btn" style="background: #e11d48; color: white; border: none; font-weight: 700; box-shadow: 0 8px 20px rgba(225, 29, 72, 0.4);" aria-label="Explore Marketing Packages">View Packages</a>
-                            <a href="https://wa.me/971585577182" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                                Chat on WhatsApp
-                            </a>
-                        </div>
+            <!-- Expansion Energy Pulse Shockwave -->
+            <div id="hero-shockwave" class="hero-shockwave"></div>
+
+            <!-- Floating Glassmorphic Metric Cards Overlaid Over Hero (4 Spaced Out Cards) -->
+            <div id="floating-cards-layer" class="floating-cards-container">
+                
+                <div class="glass-metric-card card-top-center" style="--delay: 0s; --duration: 4s;">
+                    <div class="card-icon icon-purple">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-val">+2.5M</span>
+                        <span class="card-lbl">Total Reach</span>
+                    </div>
+                </div>
+
+                <div class="glass-metric-card card-mid-left" style="--delay: 0.4s; --duration: 4.2s;">
+                    <div class="card-icon icon-blue">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-val">25K</span>
+                        <span class="card-lbl">New Customers</span>
+                    </div>
+                </div>
+
+                <div class="glass-metric-card card-mid-right" style="--delay: 0.8s; --duration: 3.8s;">
+                    <div class="card-icon icon-emerald">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-val">300%</span>
+                        <span class="card-lbl">ROI Growth</span>
+                    </div>
+                </div>
+
+                <div class="glass-metric-card card-bottom-center" style="--delay: 1.2s; --duration: 4.5s;">
+                    <div class="card-icon icon-gold">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-val">Top 1%</span>
+                        <span class="card-lbl">Performing Brand</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Centered Text Overlaid Directly Over Background Image -->
+            <div class="container hero-centered-container">
+                <div class="hero-content-center">
+                    
+                    <!-- Small Label Badge (Clean SVG Icon) -->
+                    <div id="hero-label" class="hero-pill-badge">
+                        <span class="pill-icon">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </span>
+                        <span id="hero-label-text">Untapped Potential</span>
                     </div>
 
-                    <!-- Right Column: Audit Lead Form -->
-                    <div class="hero-right-content fade-in-up delay-100" id="audit-form">
-                        <div class="mascot-hero-target"></div>
-                        <div class="lead-form-card" style="border: 1px solid rgba(225, 29, 72, 0.25); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(225, 29, 72, 0.15);">
-                            <h3>Get a Free Digital Marketing Audit</h3>
-                            <p style="color: #a09ab0; font-size: 0.88rem; text-align: center; margin-top: -12px; margin-bottom: 20px;">
-                                Discover hidden growth opportunities & competitor insights for your brand.
-                            </p>
-                            <form id="digital-marketing-main-form">
-                                <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
-                                    <div style="flex: 1; min-width: 130px;">
-                                        <input type="text" class="form-control" name="name" placeholder="Your Name" required>
-                                    </div>
-                                    <div style="flex: 1; min-width: 130px;">
-                                        <input type="tel" class="form-control" name="phone" placeholder="Phone / WhatsApp" required pattern="[+]?[0-9\s\-()]{7,20}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" name="email" placeholder="Email Address" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="company" placeholder="Company Name / Website URL">
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control" name="service" required>
-                                        <option value="" disabled selected>Primary Goal</option>
-                                        <option value="Social Media Management">Social Media Management</option>
-                                        <option value="Paid Lead Generation Ads">Paid Lead Generation (Meta / Google)</option>
-                                        <option value="SEO Ranking & Organic Growth">SEO Ranking & Organic Traffic</option>
-                                        <option value="Full Digital Transformation">Full Digital Transformation</option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn" style="width: 100%; padding: 12px; font-size: 1rem; border-radius: 10px; cursor: pointer; background: #e11d48; color: #fff; border: none; font-weight: 700; box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4);">
-                                    Request Free Audit
-                                </button>
-                            </form>
+                    <!-- Main Heading (2 lines max) -->
+                    <h1 id="hero-title" class="hero-transform-title">
+                        Your Brand Has Potential.<br>
+                        Make It <span class="gradient-text hero-text-highlight">Impossible To Ignore.</span>
+                    </h1>
+
+                    <!-- Sub Heading (2 short lines max) -->
+                    <p id="hero-subtitle" class="hero-transform-subtitle">
+                        Strategy-first digital marketing that turns overlooked brands into market leaders.
+                    </p>
+
+                    <!-- CTA Buttons Stack -->
+                    <div class="hero-cta-wrapper">
+                        <!-- Handwritten Annotation Badge with Arrow -->
+                        <div id="hero-annotation" class="hero-annotation-badge">
+                            <span class="annotation-text">Watch the transformation</span>
+                            <svg class="annotation-arrow" width="36" height="24" viewBox="0 0 45 28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 24C12 18 20 6 36 6M36 6L28 2M36 6L30 12"></path>
+                            </svg>
                         </div>
+
+                        <!-- Primary CTA (Clean SVG Icon, No Rocket Emoji) -->
+                        <button id="transform-cta-btn" class="btn btn-hero-transform" aria-label="Transform My Brand">
+                            <span id="btn-text-content">Transform My Brand</span>
+                            <span class="btn-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </span>
+                        </button>
+
+                        <!-- Secondary CTA -->
+                        <a id="secondary-cta-btn" href="#projects" class="btn btn-secondary hero-btn-secondary" aria-label="See Our Work">
+                            <span id="sec-btn-text">Our Work →</span>
+                        </a>
                     </div>
 
                 </div>
@@ -818,8 +1518,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <!-- Pillar 1 -->
                     <div class="service-pillar-card fade-in-up">
                         <div>
-                            <div class="pillar-icon">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                            <div class="pillar-image-wrapper">
+                                <img src="./assets/social_media_mgmt.png" alt="Social Media Management" class="pillar-img">
+                                <div class="pillar-icon-overlay">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                                </div>
                             </div>
                             <h3>Social Media Management</h3>
                             <p>Build a magnetic brand identity across Instagram, TikTok, Facebook, and LinkedIn with striking visual design and active community engagement.</p>
@@ -834,8 +1537,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <!-- Pillar 2 -->
                     <div class="service-pillar-card fade-in-up delay-100">
                         <div>
-                            <div class="pillar-icon">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            <div class="pillar-image-wrapper">
+                                <img src="./assets/paid_ads_campaigns.png" alt="Paid Ad Campaigns" class="pillar-img">
+                                <div class="pillar-icon-overlay">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                </div>
                             </div>
                             <h3>Paid Ad Campaigns</h3>
                             <p>Generate highly qualified leads and e-commerce sales with targeted campaign structures across Meta (Instagram/Facebook) and Google Search.</p>
@@ -850,8 +1556,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <!-- Pillar 3 -->
                     <div class="service-pillar-card fade-in-up delay-200">
                         <div>
-                            <div class="pillar-icon">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            <div class="pillar-image-wrapper">
+                                <img src="./assets/seo_optimization.png" alt="Search Engine Optimization" class="pillar-img">
+                                <div class="pillar-icon-overlay">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                </div>
                             </div>
                             <h3>Search Engine Optimization (SEO)</h3>
                             <p>Dominate search engine results pages in Dubai & GCC. Capture high-intent customers searching actively for your services.</p>
@@ -866,8 +1575,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <!-- Pillar 4 -->
                     <div class="service-pillar-card fade-in-up delay-300">
                         <div>
-                            <div class="pillar-icon">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                            <div class="pillar-image-wrapper">
+                                <img src="./assets/video_ugc_production.png" alt="Video & UGC Production" class="pillar-img">
+                                <div class="pillar-icon-overlay">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                                </div>
                             </div>
                             <h3>Video & UGC Production</h3>
                             <p>Engage fast-scrolling audiences with high-impact short-form videos, AI voiceover presentation reels, and authentic UGC content.</p>
@@ -1269,18 +1981,228 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- Scripts -->
     <script src="./scripts/app.js"></script>
     <script>
-        // Lead Form Handler for Digital Marketing Page
-        document.getElementById('digital-marketing-main-form')?.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            const name = formData.get('name');
-            const phone = formData.get('phone');
-            const service = formData.get('service');
+    /* ==========================================================================
+       BACKGROUND HERO BEFORE / AFTER TRANSFORMATION INTERACTION SCRIPT
+       ========================================================================== */
+    document.addEventListener('DOMContentLoaded', function() {
+        // Particle Canvas Effect
+        const canvas = document.getElementById('hero-particle-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const particleCount = 45;
 
-            const message = `Hello! I would like a Free Digital Marketing Audit.\nName: ${name}\nPhone: ${phone}\nGoal: ${service}`;
-            const whatsappUrl = `https://wa.me/971585577182?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
+            function resizeCanvas() {
+                if (canvas.parentElement) {
+                    canvas.width = canvas.parentElement.clientWidth;
+                    canvas.height = canvas.parentElement.clientHeight;
+                }
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * (canvas.width || 1200),
+                    y: Math.random() * (canvas.height || 700),
+                    radius: Math.random() * 2 + 0.5,
+                    alpha: Math.random() * 0.5 + 0.1,
+                    speedY: Math.random() * -0.5 - 0.2,
+                    speedX: (Math.random() - 0.5) * 0.3
+                });
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(192, 132, 252, ${p.alpha})`;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = 'rgba(192, 132, 252, 0.8)';
+                    ctx.fill();
+
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+
+                    if (p.y < 0) {
+                        p.y = canvas.height;
+                        p.x = Math.random() * canvas.width;
+                    }
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+        }
+
+        // State tracking: 'before' or 'after'
+        let currentState = 'before';
+        let isAnimating = false;
+
+        const transformBtn = document.getElementById('transform-cta-btn');
+        const secondaryBtn = document.getElementById('secondary-cta-btn');
+        const labelBadge = document.getElementById('hero-label');
+        const labelText = document.getElementById('hero-label-text');
+        const heroTitle = document.getElementById('hero-title');
+        const heroSubtitle = document.getElementById('hero-subtitle');
+        const btnText = document.getElementById('btn-text-content');
+        const secBtnText = document.getElementById('sec-btn-text');
+        const annotationBadge = document.getElementById('hero-annotation');
+        
+        const bgImgBefore = document.getElementById('bg-img-before');
+        const bgImgAfter = document.getElementById('bg-img-after');
+        const heroViewport = document.getElementById('hero-bg-viewport');
+        const shockwave = document.getElementById('hero-shockwave');
+        const lightSweep = document.getElementById('purple-light-sweep');
+        const lensFlare = document.getElementById('lens-flare-overlay');
+        const floatingCardsLayer = document.getElementById('floating-cards-layer');
+
+        if (!transformBtn) return;
+
+        transformBtn.addEventListener('click', function(e) {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            if (currentState === 'before') {
+                performTransformationToAfter();
+            } else {
+                performTransformationToBefore();
+            }
         });
+
+        function performTransformationToAfter() {
+            transformBtn.style.transform = 'scale(0.94)';
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+
+            setTimeout(() => {
+                transformBtn.style.transform = '';
+
+                setTimeout(() => {
+                    const btnRect = transformBtn.getBoundingClientRect();
+                    shockwave.style.left = `${btnRect.left + btnRect.width / 2}px`;
+                    shockwave.style.top = `${btnRect.top + btnRect.height / 2}px`;
+                    shockwave.classList.remove('animating-shockwave');
+                    void shockwave.offsetWidth;
+                    shockwave.classList.add('animating-shockwave');
+
+                    heroViewport.classList.remove('animating-camera-push');
+                    lightSweep.classList.remove('animating-light-sweep');
+                    void heroViewport.offsetWidth;
+
+                    heroViewport.classList.add('animating-camera-push');
+                    lightSweep.classList.add('animating-light-sweep');
+                    lensFlare.style.opacity = '0.9';
+
+                    setTimeout(() => {
+                        lensFlare.style.opacity = '0';
+                    }, 400);
+
+                    setTimeout(() => {
+                        bgImgBefore.classList.remove('active');
+                        bgImgAfter.classList.add('active');
+
+                        labelText.innerText = 'Potential Unlocked';
+                        labelBadge.querySelector('.pill-icon').innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>';
+
+                        heroTitle.innerHTML = 'This Is What <span class="gradient-text hero-text-highlight">Growth Looks Like.</span>';
+                        heroSubtitle.innerText = 'More visibility. More customers. More opportunities. Powered by smart digital marketing.';
+
+                        btnText.innerText = '← See Before';
+                        const btnIcon = document.querySelector('#transform-cta-btn .btn-icon');
+                        if(btnIcon) btnIcon.style.display = 'none';
+                        secBtnText.innerText = 'Book Free Strategy Call →';
+                        secondaryBtn.setAttribute('href', '#offer');
+
+                        if (annotationBadge) {
+                            annotationBadge.style.opacity = '0';
+                        }
+
+                        floatingCardsLayer.classList.add('active');
+
+                        currentState = 'after';
+                        isAnimating = false;
+                    }, 400);
+
+                }, 120);
+
+            }, 40);
+        }
+
+        function performTransformationToBefore() {
+            transformBtn.style.transform = 'scale(0.94)';
+            if (navigator.vibrate) {
+                navigator.vibrate(30);
+            }
+
+            setTimeout(() => {
+                transformBtn.style.transform = '';
+
+                setTimeout(() => {
+                    const btnRect = transformBtn.getBoundingClientRect();
+                    shockwave.style.left = `${btnRect.left + btnRect.width / 2}px`;
+                    shockwave.style.top = `${btnRect.top + btnRect.height / 2}px`;
+                    shockwave.classList.remove('animating-shockwave');
+                    void shockwave.offsetWidth;
+                    shockwave.classList.add('animating-shockwave');
+
+                    heroViewport.classList.remove('animating-camera-push');
+                    lightSweep.classList.remove('animating-light-sweep');
+                    void heroViewport.offsetWidth;
+
+                    heroViewport.classList.add('animating-camera-push');
+                    lightSweep.classList.add('animating-light-sweep');
+                    lensFlare.style.opacity = '0.9';
+
+                    setTimeout(() => {
+                        lensFlare.style.opacity = '0';
+                    }, 400);
+
+                    setTimeout(() => {
+                        bgImgAfter.classList.remove('active');
+                        bgImgBefore.classList.add('active');
+
+                        labelText.innerText = 'Untapped Potential';
+                        labelBadge.querySelector('.pill-icon').innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+
+                        heroTitle.innerHTML = 'Your Brand Has Potential.<br>Make It <span class="gradient-text hero-text-highlight">Impossible To Ignore.</span>';
+                        heroSubtitle.innerText = 'Strategy-first digital marketing that turns overlooked brands into market leaders.';
+
+                        btnText.innerText = 'Transform My Brand';
+                        const btnIcon = document.querySelector('#transform-cta-btn .btn-icon');
+                        if(btnIcon) btnIcon.style.display = 'inline-flex';
+                        secBtnText.innerText = 'Our Work →';
+                        secondaryBtn.setAttribute('href', '#projects');
+
+                        if (annotationBadge) {
+                            annotationBadge.style.opacity = '1';
+                        }
+
+                        floatingCardsLayer.classList.remove('active');
+
+                        currentState = 'before';
+                        isAnimating = false;
+                    }, 400);
+
+                }, 120);
+
+            }, 40);
+        }
+
+        // Scroll Parallax for Hero Background
+        const heroContent = document.querySelector('.hero-content-center');
+
+        window.addEventListener('scroll', function() {
+            const scrolled = window.scrollY;
+            if (scrolled < 1000) {
+                if (heroContent) {
+                    heroContent.style.transform = `translate3d(0, ${scrolled * 0.05}px, 0)`;
+                    heroContent.style.opacity = Math.max(0, 1 - (scrolled / 700));
+                }
+            }
+        });
+    });
     </script>
 </body>
 
