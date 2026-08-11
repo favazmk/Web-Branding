@@ -2471,6 +2471,97 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             outline-offset: 3px;
         }
 
+        /* Before-After Slider */
+        .ba-slider {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            background: #0d0618;
+            --pos: 50%;
+        }
+        .ba-image-after, .ba-image-before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .ba-image-before {
+            z-index: 2;
+            clip-path: polygon(0 0, var(--pos) 0, var(--pos) 100%, 0 100%);
+        }
+        .ba-image-after img, .ba-image-before img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+        }
+        .ba-range {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            opacity: 0;
+            cursor: ew-resize;
+            margin: 0;
+        }
+        .ba-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: var(--pos);
+            width: 3px;
+            background: #8B3DFF;
+            z-index: 3;
+            transform: translateX(-50%);
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(139, 61, 255, 0.5);
+        }
+        .ba-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 36px;
+            height: 36px;
+            background: #fff;
+            border: 2px solid #8B3DFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            color: #8B3DFF;
+        }
+        .ba-labels {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 4;
+            pointer-events: none;
+        }
+        .ba-label {
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
         /* --- Responsive ---------------------------------------------------- */
         @media (max-width: 1180px) {
             .bd-hero-grid { gap: 44px; }
@@ -3101,75 +3192,83 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <section class="section-padding theme-light bg-grid-pattern" style="background: var(--bg-slate); border-top: 1px solid var(--border-glass);" id="projects">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 40px;" class="fade-in-up">
-                    <span class="section-tag center no-dot">Selected Work</span>
-                    <h2 class="section-title">Creative work, in the wild</h2>
+                    <span class="section-tag center no-dot">The Difference</span>
+                    <h2 class="section-title">Before &amp; after we step in</h2>
                     <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">
-                        Live brand feeds we design and run. Whole grids rather than a single flattering post —
-                        the point of a template set is that the ninth one still belongs beside the first.
+                        Slide to see the difference a cohesive brand strategy makes. We take cluttered, inconsistent feeds and turn them into premium, high-converting digital storefronts that command attention and drive sales.
                     </p>
                 </div>
 
                 <div class="bd-work-grid fade-in-up">
 
-                    <a class="bd-work-card" href="https://www.instagram.com/kenz__trading?igsh=MWh2NjFkZG04dnRpMQ==" target="_blank" rel="noopener" aria-label="Kenz Trading brand feed on Instagram">
-                        <img src="./assets/kenz.webp" alt="Kenz Trading Instagram grid of designed brand creatives" loading="lazy" decoding="async">
-                        <span class="bd-pixels" aria-hidden="true"></span>
-                        <span class="bd-work-mark" aria-hidden="true">+</span>
-                        <span class="bd-work-plate">
-                            <strong>Kenz Trading</strong>
-                            <span>Wholesale food trading</span>
-                        </span>
-                    </a>
-
-                    <a class="bd-work-card" href="https://www.instagram.com/theleatherdoctorabudhabi?igsh=aHJyOGN2cDMyOTJt" target="_blank" rel="noopener" aria-label="The Leather Doctor brand feed on Instagram">
-                        <img src="./assets/leather.webp" alt="The Leather Doctor Instagram grid of designed brand creatives" loading="lazy" decoding="async">
-                        <span class="bd-pixels" aria-hidden="true"></span>
-                        <span class="bd-work-mark" aria-hidden="true">+</span>
-                        <span class="bd-work-plate">
-                            <strong>The Leather Doctor</strong>
-                            <span>Leather care &amp; restoration</span>
-                        </span>
-                    </a>
-
-                    <a class="bd-work-card" href="https://www.instagram.com/indusjewellers?igsh=cDM4NG5zbzUyOWNk" target="_blank" rel="noopener" aria-label="Indus Jewellers brand feed on Instagram">
-                        <img src="./assets/indus.webp" alt="Indus Jewellers Instagram grid of designed brand creatives" loading="lazy" decoding="async">
-                        <span class="bd-pixels" aria-hidden="true"></span>
-                        <span class="bd-work-mark" aria-hidden="true">+</span>
-                        <span class="bd-work-plate">
-                            <strong>Indus Jewellers</strong>
-                            <span>Jewellery retail</span>
-                        </span>
-                    </a>
-
-                    <a class="bd-work-card" href="https://www.instagram.com/magicmirrorbs?igsh=MXN4eDZ1YXhpdnAyYQ==" target="_blank" rel="noopener" aria-label="Magic Mirror Beauty Salon brand feed on Instagram">
-                        <img src="./assets/magic.webp" alt="Magic Mirror Beauty Salon Instagram grid of designed brand creatives" loading="lazy" decoding="async">
-                        <span class="bd-pixels" aria-hidden="true"></span>
-                        <span class="bd-work-mark" aria-hidden="true">+</span>
+                    <div class="bd-work-card ba-slider">
+                        <div class="ba-image-after">
+                            <img src="./assets/magic.webp" alt="Magic Mirror After" loading="lazy" decoding="async">
+                        </div>
+                        <div class="ba-image-before">
+                            <img src="./assets/magicmirrors before.png" alt="Magic Mirror Before" loading="lazy" decoding="async">
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="ba-range" aria-label="Compare before and after" oninput="this.parentElement.style.setProperty('--pos', this.value + '%')">
+                        <div class="ba-line">
+                            <div class="ba-button">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="13 7 18 12 13 17"></polyline></svg>
+                            </div>
+                        </div>
+                        <div class="ba-labels">
+                            <span class="ba-label">Before</span>
+                            <span class="ba-label">After</span>
+                        </div>
                         <span class="bd-work-plate">
                             <strong>Magic Mirror</strong>
                             <span>Beauty &amp; salon</span>
                         </span>
-                    </a>
+                    </div>
 
-                    <a class="bd-work-card" href="https://www.instagram.com/alrashad_commercial?igsh=MThwZjZ3emQ1NHVx" target="_blank" rel="noopener" aria-label="Al Rashad Commercial brand feed on Instagram">
-                        <img src="./assets/alrashad.webp" alt="Al Rashad Commercial Instagram grid of designed brand creatives" loading="lazy" decoding="async">
-                        <span class="bd-pixels" aria-hidden="true"></span>
-                        <span class="bd-work-mark" aria-hidden="true">+</span>
-                        <span class="bd-work-plate">
-                            <strong>Al Rashad Commercial</strong>
-                            <span>Commercial trading</span>
-                        </span>
-                    </a>
-
-                    <a class="bd-work-card" href="https://www.instagram.com/navratnajewellery_uae?igsh=MW84bGdpYXczM21kdQ==" target="_blank" rel="noopener" aria-label="Navratna Jewellery brand feed on Instagram">
-                        <img src="./assets/navratna.webp" alt="Navratna Jewellery Instagram grid of designed brand creatives" loading="lazy" decoding="async">
-                        <span class="bd-pixels" aria-hidden="true"></span>
-                        <span class="bd-work-mark" aria-hidden="true">+</span>
+                    <div class="bd-work-card ba-slider">
+                        <div class="ba-image-after">
+                            <img src="./assets/navratna.webp" alt="Navratna Jewellery After" loading="lazy" decoding="async">
+                        </div>
+                        <div class="ba-image-before">
+                            <img src="./assets/navaratna before.png" alt="Navratna Jewellery Before" loading="lazy" decoding="async">
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="ba-range" aria-label="Compare before and after" oninput="this.parentElement.style.setProperty('--pos', this.value + '%')">
+                        <div class="ba-line">
+                            <div class="ba-button">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="13 7 18 12 13 17"></polyline></svg>
+                            </div>
+                        </div>
+                        <div class="ba-labels">
+                            <span class="ba-label">Before</span>
+                            <span class="ba-label">After</span>
+                        </div>
                         <span class="bd-work-plate">
                             <strong>Navratna Jewellery</strong>
                             <span>Jewellery retail</span>
                         </span>
-                    </a>
+                    </div>
+
+                    <div class="bd-work-card ba-slider">
+                        <div class="ba-image-after">
+                            <img src="./assets/leather.webp" alt="Brand Design After" loading="lazy" decoding="async">
+                        </div>
+                        <div class="ba-image-before">
+                            <img src="./assets/magic before.png" alt="Brand Design Before" loading="lazy" decoding="async">
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="ba-range" aria-label="Compare before and after" oninput="this.parentElement.style.setProperty('--pos', this.value + '%')">
+                        <div class="ba-line">
+                            <div class="ba-button">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"></polyline><polyline points="13 7 18 12 13 17"></polyline></svg>
+                            </div>
+                        </div>
+                        <div class="ba-labels">
+                            <span class="ba-label">Before</span>
+                            <span class="ba-label">After</span>
+                        </div>
+                        <span class="bd-work-plate">
+                            <strong>Brand Creatives</strong>
+                            <span>Social Media Design</span>
+                        </span>
+                    </div>
 
                 </div>
             </div>
