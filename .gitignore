@@ -15,3 +15,11 @@ Thumbs.db
 # Raw Source Assets
 assets/WEBSITE MOCKUP VIDEOS/
 dist/assets/WEBSITE MOCKUP VIDEOS/
+
+# Design-page image masters. The site ships the .webp next to them;
+# these stay local so the repo does not carry ~10 MB of PNG.
+assets/brand_design_hero.png
+assets/brand_identity_design.png
+assets/graphic_social_creatives.png
+assets/motion_graphics_design.png
+assets/ui_ux_design.png
