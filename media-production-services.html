@@ -1103,6 +1103,347 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
 
+        /* ==================================================================
+           LENS INTRO — the scroll-driven fly-through that opens the page.
+
+           Pinned with a JS-controlled fixed stage rather than
+           position: sticky. index.css sets overflow-x: hidden on both html
+           and body, which turns body into a scroll container whose height
+           is auto — sticky descendants of it never get anything to stick
+           against, so sticky would silently do nothing here.
+
+           Every moving value is a custom property written once per frame.
+           With JavaScript off, or under prefers-reduced-motion, the track
+           collapses to one viewport and the camera reads as a static title
+           card: nothing below this section depends on the sequence running.
+           ================================================================== */
+        .mp-lens {
+            position: relative;
+            /* Matches the veil exactly, so the tail of the track that is
+               still on screen when the stage releases is invisible against
+               the black that is lifting off the hero. */
+            background: #06010e;
+        }
+
+        .mp-lens-track { position: relative; height: 100vh; }
+        @supports (height: 100svh) { .mp-lens-track { height: 100svh; } }
+
+        /* The scroll distance the sequence plays over. JS only. */
+        .mp-lens.is-live .mp-lens-track { height: 300vh; }
+
+        /* Column rather than absolutely-placed blocks: the camera and the
+           copy are laid out against each other, so no combination of
+           viewport height and wrapped headline can make them collide. */
+        .mp-lens-stage {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(18px, 4vh, 48px);
+            padding: clamp(96px, 16vh, 170px) 20px clamp(64px, 10vh, 110px);
+            background:
+                radial-gradient(88% 68% at 50% 48%, rgba(139, 61, 255, 0.20) 0%, rgba(139, 61, 255, 0) 64%),
+                #06010e;
+        }
+
+        .mp-lens.is-live .mp-lens-stage { position: fixed; z-index: 5; }
+
+        /* Once the track is spent there is nothing left to draw and the veil
+           is fully opaque over it, so the stage can leave the paint. */
+        .mp-lens.is-live.is-done .mp-lens-stage { visibility: hidden; }
+
+        /* --- Depth: concentric rings that rush past during the flight ----- */
+        .mp-lens-depth {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vmax;
+            height: 100vmax;
+            margin: -50vmax 0 0 -50vmax;
+            background: repeating-radial-gradient(circle at 50% 50%,
+                rgba(139, 61, 255, 0) 0 44px,
+                rgba(139, 61, 255, 0.10) 44px 45px);
+            opacity: var(--mp-depth, 0.34);
+            transform: scale(var(--mp-depth-s, 1));
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+
+        /* Bloom at the moment of passage through the aperture */
+        .mp-lens-flare {
+            position: absolute;
+            inset: -20%;
+            background: radial-gradient(circle at 50% 50%,
+                rgba(192, 132, 252, 0.55) 0%, rgba(139, 61, 255, 0.22) 32%, rgba(139, 61, 255, 0) 62%);
+            opacity: var(--mp-flare, 0);
+            pointer-events: none;
+            will-change: opacity;
+        }
+
+        /* --- The camera ---------------------------------------------------- */
+
+        /* Idle drift lives OUTSIDE the scaled element on purpose: inside it,
+           a 6px float would be multiplied by the flight scale into a 90px
+           lurch across the screen. */
+        .mp-lens-float {
+            position: relative;
+            animation: mp-lens-float 9s ease-in-out infinite alternate;
+        }
+
+        @keyframes mp-lens-float {
+            from { transform: translate3d(0, -6px, 0) rotate(-0.7deg); }
+            to   { transform: translate3d(0, 6px, 0) rotate(0.7deg); }
+        }
+
+        .mp-lens-rig {
+            position: relative;
+            width: min(46vmin, 430px);
+            max-width: 100%;
+            aspect-ratio: 480 / 420;
+        }
+
+        /* The tunnel. A plain solid-colour div rather than the SVG's own disc:
+           this is the layer that grows to fill the viewport, and stretching a
+           flat composited layer costs nothing, where re-rasterising vector
+           artwork at 15x does not. Sized by JS to line up exactly with the
+           aperture clip circle. */
+        .mp-lens-hole {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            border-radius: 50%;
+            background: #04010a;
+            transform: translate(-50%, -50%) scale(var(--mp-scale, 1));
+            transform-origin: center;
+            will-change: transform;
+        }
+
+        .mp-lens-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transform: scale(var(--mp-svg-scale, 1));
+            transform-origin: center;
+            opacity: var(--mp-svg, 1);
+            will-change: transform, opacity;
+        }
+
+        .mp-cam-body  { opacity: var(--mp-body, 1); }
+        .mp-cam-rings { opacity: var(--mp-rings, 1); }
+        .mp-sheen     { opacity: var(--mp-sheen, 0.9); }
+
+        /* Barrel rings turn against each other so the camera reads as a
+           mechanism at rest rather than a flat illustration. */
+        .mp-ring-a,
+        .mp-ring-b {
+            transform-box: view-box;
+            transform-origin: 240px 210px;
+        }
+
+        .mp-ring-a { animation: mp-lens-spin 24s linear infinite; }
+        .mp-ring-b { animation: mp-lens-spin 17s linear infinite reverse; }
+
+        @keyframes mp-lens-spin { to { transform: rotate(360deg); } }
+
+        /* Six blades, each a half-plane rotated 60 deg from the last. Their
+           union is a hexagonal hole whose inradius is --mp-iris, so one
+           number opens the whole aperture. They overlap heavily, which is
+           invisible while they are opaque and is what gives the seams their
+           real-iris look. */
+        .mp-iris {
+            transform: rotate(calc(var(--mp-iris-spin, 0) * 1deg));
+            transform-box: view-box;
+            transform-origin: 240px 210px;
+        }
+
+        .mp-blade {
+            fill: url(#mpBladeG);
+            stroke: rgba(255, 255, 255, 0.11);
+            stroke-width: 0.9;
+            transform: translateY(calc(var(--mp-iris, 6) * -1px));
+        }
+
+        /* --- Copy ---------------------------------------------------------- */
+        .mp-lens-kicker {
+            position: absolute;
+            top: clamp(76px, 11vh, 120px);
+            left: 50%;
+            transform: translateX(-50%) translateY(calc(var(--mp-copy-y, 0px) * 0.6));
+            opacity: var(--mp-copy, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.55);
+            z-index: 4;
+        }
+
+        .mp-lens-kicker::before,
+        .mp-lens-kicker::after {
+            content: '';
+            width: clamp(18px, 5vw, 44px);
+            height: 1px;
+            background: rgba(192, 132, 252, 0.45);
+        }
+
+        .mp-lens-copy {
+            position: relative;
+            width: min(92vw, 680px);
+            transform: translateY(calc(var(--mp-copy-y, 0px) * -1));
+            text-align: center;
+            opacity: var(--mp-copy, 1);
+            z-index: 4;
+        }
+
+        .mp-lens-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.6rem, 4.2vw, 2.9rem);
+            font-weight: 700;
+            line-height: 1.14;
+            letter-spacing: -0.02em;
+            color: #fff;
+            margin: 0 0 12px;
+        }
+
+        .mp-lens-title em {
+            font-style: normal;
+            background: linear-gradient(120deg, #c084fc 0%, #8b3dff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .mp-lens-sub {
+            font-size: 0.98rem;
+            line-height: 1.6;
+            color: var(--text-gray);
+            margin: 0 auto;
+            max-width: 520px;
+        }
+
+        .mp-lens-cue {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-top: 22px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .mp-lens-cue svg { animation: mp-lens-cue 2.1s ease-in-out infinite; }
+
+        @keyframes mp-lens-cue {
+            0%, 100% { transform: translateY(0); opacity: 0.5; }
+            50%      { transform: translateY(7px); opacity: 1; }
+        }
+
+        .mp-lens-skip {
+            position: absolute;
+            right: clamp(18px, 5vw, 48px);
+            bottom: clamp(48px, 9vh, 104px);
+            z-index: 6;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.45);
+            text-decoration: none;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            opacity: var(--mp-copy, 1);
+            transition: color 0.25s ease, border-color 0.25s ease;
+        }
+
+        .mp-lens-skip:hover,
+        .mp-lens-skip:focus-visible { color: #fff; border-color: rgba(255, 255, 255, 0.55); }
+
+        /* --- The black that lifts off the hero ----------------------------- */
+        .mp-lens-veil {
+            position: fixed;
+            inset: 0;
+            z-index: 99990;
+            background: #06010e;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .mp-lens-veil.is-clear { visibility: hidden; }
+
+        /* Chrome over a full-screen cinematic reads as a collision, so the
+           header and mascot step out for the duration of the flight. header
+           already carries a transition from index.css. */
+        body.mp-in-flight #main-header,
+        body.mp-in-flight #ag-custom-header {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* app.js writes the mascot's opacity and pointer-events inline as it
+           moves it around the page, so this rule only wins with !important. */
+        body.mp-in-flight .mascot-container {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        /* The hero fades up through the lifting veil rather than being
+           uncovered flat.
+
+           Gated on a body class that JS removes the moment the reveal
+           finishes, so the page's own H1 can never be left stranded at
+           opacity 0 by a script that stopped running. The var fallback
+           covers the same risk a second time. */
+        body.mp-intro-open .mp-hero-inner {
+            opacity: var(--mp-open, 1);
+            transform: translateY(calc((1 - var(--mp-open, 1)) * 26px));
+        }
+
+        /* --- Responsive ---------------------------------------------------- */
+        @media (max-width: 700px) {
+            .mp-lens.is-live .mp-lens-track { height: 240vh; }
+            .mp-lens-rig { width: min(66vmin, 360px); }
+            .mp-lens-kicker { font-size: 0.6rem; letter-spacing: 0.2em; }
+            .mp-lens-skip { left: 50%; right: auto; transform: translateX(-50%); bottom: 20px; }
+            .mp-lens-stage { padding-bottom: clamp(76px, 12vh, 120px); }
+        }
+
+        /* Landscape phones and short desktop windows. There is not enough
+           height here for a camera plus three lines of furniture, so the
+           sub-line and the scroll cue go and the column re-budgets around
+           what is left. */
+        @media (max-height: 640px) {
+            .mp-lens-rig { width: min(36vmin, 230px); }
+            .mp-lens-sub,
+            .mp-lens-cue { display: none; }
+            .mp-lens-title { font-size: clamp(1.1rem, 2.6vw, 1.5rem); }
+            .mp-lens-stage { padding: 72px 20px 56px; gap: 20px; }
+            .mp-lens-kicker { top: 22px; }
+            .mp-lens-skip { bottom: 16px; }
+        }
+
+        /* No sequence, no track: one static frame that says the same thing. */
+        @media (prefers-reduced-motion: reduce) {
+            .mp-lens-float { animation: none; }
+            .mp-ring-a,
+            .mp-ring-b { animation: none; }
+            .mp-lens-cue svg { animation: none; }
+        }
+
     </style>
 </head>
 <body>
@@ -1171,6 +1512,128 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </header>
 
     <main>
+
+        <!-- ============================================================
+             LENS INTRO
+             A camera that the page scrolls into. The aperture opens, the
+             tunnel behind it grows to fill the screen, and the black that
+             is left lifts off the hero. Decorative: the copy here repeats
+             nothing the hero needs, and the whole block is skippable.
+             ============================================================ -->
+        <section class="mp-lens" id="lens" aria-label="Introduction">
+            <div class="mp-lens-track">
+                <div class="mp-lens-stage">
+
+                    <div class="mp-lens-depth" aria-hidden="true"></div>
+
+                    <span class="mp-lens-kicker">Media Production · Dubai</span>
+
+                    <div class="mp-lens-float" aria-hidden="true">
+                        <div class="mp-lens-rig">
+                            <div class="mp-lens-hole"></div>
+
+                            <svg class="mp-lens-svg" viewBox="0 0 480 420" role="img" aria-label="Cinema camera">
+                                <defs>
+                                    <radialGradient id="mpBarrelG" cx="36%" cy="28%" r="80%">
+                                        <stop offset="0%"   stop-color="#2c1552"/>
+                                        <stop offset="58%"  stop-color="#170c2b"/>
+                                        <stop offset="100%" stop-color="#0c0518"/>
+                                    </radialGradient>
+
+                                    <linearGradient id="mpBodyG" x1="0" y1="140" x2="0" y2="292" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%"   stop-color="#241239"/>
+                                        <stop offset="100%" stop-color="#0e0619"/>
+                                    </linearGradient>
+
+                                    <!-- Drawn in each blade's own rotated frame, so every
+                                         blade catches light on its leading edge. -->
+                                    <linearGradient id="mpBladeG" x1="0" y1="210" x2="0" y2="126" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%"   stop-color="#43226f"/>
+                                        <stop offset="52%"  stop-color="#25123f"/>
+                                        <stop offset="100%" stop-color="#150a25"/>
+                                    </linearGradient>
+
+                                    <linearGradient id="mpSheenG" x1="180" y1="152" x2="292" y2="264" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.32"/>
+                                        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                                    </linearGradient>
+
+                                    <clipPath id="mpIrisClip">
+                                        <circle cx="240" cy="210" r="67"/>
+                                    </clipPath>
+                                </defs>
+
+                                <!-- Body. Sits left of centre so the lens stays dead centre
+                                     of the viewport and the flight is not off-axis. -->
+                                <g class="mp-cam-body">
+                                    <rect x="86" y="106" width="122" height="17" rx="8" fill="#1b1030" stroke="#ffffff" stroke-opacity="0.10"/>
+                                    <rect x="100" y="122" width="13" height="20" rx="3" fill="#150c26"/>
+                                    <rect x="182" y="122" width="13" height="20" rx="3" fill="#150c26"/>
+
+                                    <rect x="58" y="140" width="168" height="152" rx="17" fill="url(#mpBodyG)" stroke="#ffffff" stroke-opacity="0.11" stroke-width="1.4"/>
+
+                                    <rect x="18" y="166" width="44" height="60" rx="8" fill="#120a20" stroke="#ffffff" stroke-opacity="0.10"/>
+                                    <rect x="25" y="173" width="30" height="46" rx="4" fill="#8b3dff" fill-opacity="0.20"/>
+
+                                    <circle cx="86" cy="160" r="4.5" fill="#ff4d4d"/>
+                                    <text x="98" y="164" font-family="Outfit, sans-serif" font-size="10" font-weight="600" letter-spacing="2" fill="#ffffff" fill-opacity="0.42">REC 4K</text>
+
+                                    <g stroke="#ffffff" stroke-opacity="0.09" stroke-width="2" stroke-linecap="round">
+                                        <path d="M74 250h34M74 260h34M74 270h22"/>
+                                    </g>
+
+                                    <rect x="96" y="292" width="96" height="13" rx="4" fill="#150c26" stroke="#ffffff" stroke-opacity="0.08"/>
+                                </g>
+
+                                <!-- Barrel -->
+                                <g class="mp-cam-rings">
+                                    <circle cx="240" cy="210" r="112" fill="none" stroke="#8b3dff" stroke-opacity="0.28" stroke-width="1.2"/>
+                                    <circle cx="240" cy="210" r="104" fill="url(#mpBarrelG)" stroke="#ffffff" stroke-opacity="0.13" stroke-width="1.6"/>
+
+                                    <!-- Knurled grip ring -->
+                                    <circle class="mp-ring-a" cx="240" cy="210" r="95" fill="none" stroke="#ffffff" stroke-opacity="0.17" stroke-width="11" stroke-dasharray="2 7"/>
+                                    <!-- Focus scale, turning the other way -->
+                                    <circle class="mp-ring-b" cx="240" cy="210" r="83" fill="none" stroke="#c084fc" stroke-opacity="0.42" stroke-width="1.8" stroke-dasharray="13 25"/>
+
+                                    <circle cx="240" cy="210" r="76" fill="none" stroke="#8b3dff" stroke-opacity="0.55" stroke-width="1.2"/>
+                                    <path d="M234 104h12l-6 11z" fill="#c084fc" fill-opacity="0.85"/>
+                                    <circle cx="240" cy="210" r="69.5" fill="none" stroke="#ffffff" stroke-opacity="0.22" stroke-width="2.6"/>
+
+                                    <text x="240" y="332" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10" font-weight="600" letter-spacing="3" fill="#ffffff" fill-opacity="0.38">24–70 · T1.5</text>
+                                </g>
+
+                                <!-- Aperture -->
+                                <g class="mp-iris" clip-path="url(#mpIrisClip)">
+                                    <g transform="rotate(0 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
+                                    <g transform="rotate(60 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
+                                    <g transform="rotate(120 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
+                                    <g transform="rotate(180 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
+                                    <g transform="rotate(240 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
+                                    <g transform="rotate(300 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
+                                </g>
+
+                                <g class="mp-sheen" clip-path="url(#mpIrisClip)">
+                                    <ellipse cx="205" cy="176" rx="52" ry="30" transform="rotate(-38 205 176)" fill="url(#mpSheenG)"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="mp-lens-flare" aria-hidden="true"></div>
+
+                    <div class="mp-lens-copy">
+                        <p class="mp-lens-title">Everything we sell <em>starts behind the lens</em>.</p>
+                        <p class="mp-lens-sub">Scripting, casting, crew, camera and edit — one team, one invoice.</p>
+                        <span class="mp-lens-cue">
+                            Scroll through
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </span>
+                    </div>
+
+                    <a href="#home" class="mp-lens-skip" data-mp-skip>Skip intro</a>
+                </div>
+            </div>
+        </section>
 
         <!-- ============================================================
              HERO
@@ -1875,6 +2338,172 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="mascot-shadow"></div>
     </div>
+
+    <!-- The black the flight ends in. Fixed and outside the stage on purpose:
+         it has to survive the stage releasing so it can lift off the hero
+         rather than off the end of the intro section. -->
+    <div class="mp-lens-veil is-clear" id="mp-veil" aria-hidden="true"></div>
+
+    <script>
+    /* ==================================================================
+       LENS INTRO — scroll driver.
+
+       One rAF-throttled pass per frame writes custom properties onto the
+       section; CSS does the rest. Positions come from the track's own
+       getBoundingClientRect, so resizes, zoom and restored scroll offsets
+       all self-correct without a cached page height.
+       ================================================================== */
+    (function () {
+        var lens = document.getElementById('lens');
+        var veil = document.getElementById('mp-veil');
+        if (!lens || !veil) return;
+
+        var track = lens.querySelector('.mp-lens-track');
+        var rig   = lens.querySelector('.mp-lens-rig');
+        var hole  = lens.querySelector('.mp-lens-hole');
+        var skip  = lens.querySelector('.mp-lens-skip');
+        var root  = document.documentElement;
+
+        /* Reduced motion keeps the static title card: the track never grows,
+           the stage never pins, and the veil is never painted. */
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        lens.classList.add('is-live');
+
+        var vh = 1, vw = 1, maxScale = 14;
+        var HOLE_UNITS = 134;   /* aperture clip diameter, in viewBox units */
+        var VIEWBOX_W  = 480;
+
+        function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+        function seg(v, a, b)   { return clamp((v - a) / (b - a), 0, 1); }
+        function easeOut(t)     { return 1 - Math.pow(1 - t, 3); }
+        function bump(v, a, c, b) { return v < c ? seg(v, a, c) : 1 - seg(v, c, b); }
+
+        function measure() {
+            vh = window.innerHeight;
+            vw = window.innerWidth;
+
+            /* offsetWidth, not getBoundingClientRect: the rig's children are
+               mid-transform and a measured rect would be the scaled size. */
+            var rigW = rig.offsetWidth || 1;
+            var holePx = rigW * HOLE_UNITS / VIEWBOX_W;
+
+            hole.style.width  = holePx.toFixed(2) + 'px';
+            hole.style.height = holePx.toFixed(2) + 'px';
+
+            /* Grow the tunnel until it clears the furthest viewport corner,
+               measured from where the lens actually sits. The column layout
+               pushes the camera above centre by however much room the copy
+               needs, so a plain half-diagonal would come up short. The rig
+               box itself is never transformed, so this rect is the resting
+               geometry whatever the flight is currently doing. */
+            var box = rig.getBoundingClientRect();
+            var cx = box.left + box.width / 2;
+            var cy = box.top + box.height / 2;
+            var dx = Math.max(cx, vw - cx);
+            var dy = Math.max(cy, vh - cy);
+
+            maxScale = clamp(2 * Math.sqrt(dx * dx + dy * dy) / holePx * 1.15, 6, 60);
+        }
+
+        var ticking = false;
+
+        function update() {
+            ticking = false;
+
+            /* Self-heal: every distance below is scaled by the cached
+               viewport, so a stale one silently skews the whole sequence
+               (the veil stops reaching full black, the tunnel stops
+               covering). The debounced resize handler is not enough on its
+               own — mobile URL-bar collapse changes the height mid-scroll,
+               and a missed resize event would never be recovered from.
+               innerHeight/innerWidth are free to read; the layout-reading
+               part of measure() only runs when one actually changed. */
+            if (window.innerHeight !== vh || window.innerWidth !== vw) measure();
+
+            var rect   = track.getBoundingClientRect();
+            var travel = rect.height - vh;
+            if (travel <= 0) return;
+
+            var scrolled = -rect.top;
+            var p    = clamp(scrolled / travel, 0, 1);
+            var past = clamp((scrolled - travel) / vh, 0, 2);
+
+            /* Flight. Exponential rather than linear so the approach reads as
+               constant speed toward the lens instead of slamming at the end. */
+            var flight = Math.pow(seg(p, 0.14, 0.80), 1.28);
+            var scale  = Math.pow(maxScale, flight);
+
+            var copyO = 1 - seg(p, 0.05, 0.19);
+            var veilO = seg(p, 0.60, 0.82) * (1 - seg(past, 0.05, 0.80));
+
+            var s = lens.style;
+            s.setProperty('--mp-scale', scale.toFixed(4));
+            /* The artwork is gone by the time this cap could bite; it exists
+               so the browser is never asked to rasterise vectors at 15x. */
+            s.setProperty('--mp-svg-scale', Math.min(scale, 10).toFixed(4));
+            s.setProperty('--mp-svg', (1 - seg(p, 0.62, 0.74)).toFixed(3));
+
+            s.setProperty('--mp-iris', (6 + 84 * easeOut(seg(p, 0.26, 0.66))).toFixed(2));
+            s.setProperty('--mp-iris-spin', (-24 * seg(p, 0.26, 0.70)).toFixed(2));
+
+            s.setProperty('--mp-body',  (1 - seg(p, 0.20, 0.40)).toFixed(3));
+            s.setProperty('--mp-rings', (1 - seg(p, 0.46, 0.68)).toFixed(3));
+            s.setProperty('--mp-sheen', (0.9 * (1 - seg(p, 0.24, 0.46))).toFixed(3));
+
+            s.setProperty('--mp-copy', copyO.toFixed(3));
+            s.setProperty('--mp-copy-y', (-46 * seg(p, 0.05, 0.22)).toFixed(1) + 'px');
+
+            s.setProperty('--mp-depth', (0.5 * (0.35 + 0.65 * seg(p, 0, 0.2)) * (1 - seg(p, 0.55, 0.78))).toFixed(3));
+            s.setProperty('--mp-depth-s', (1 + 7 * flight).toFixed(3));
+            s.setProperty('--mp-flare', (0.8 * bump(p, 0.48, 0.62, 0.76)).toFixed(3));
+
+            veil.style.opacity = veilO.toFixed(3);
+            veil.classList.toggle('is-clear', veilO < 0.004);
+
+            /* The hero comes up through the veil rather than being uncovered.
+               The binding is detached again as soon as it is fully open so a
+               later script failure cannot leave the hero hidden. */
+            var open = seg(past, 0.10, 0.62);
+            root.style.setProperty('--mp-open', open.toFixed(3));
+            document.body.classList.toggle('mp-intro-open', open < 0.999);
+
+            lens.classList.toggle('is-done', p >= 0.999);
+
+            /* Hidden copy must not stay clickable. */
+            skip.style.pointerEvents = copyO < 0.05 ? 'none' : '';
+
+            document.body.classList.toggle('mp-in-flight', p > 0.16 && !(p >= 0.999 && veilO < 0.05));
+        }
+
+        function onScroll() {
+            if (!ticking) { ticking = true; requestAnimationFrame(update); }
+        }
+
+        var resizeTimer;
+        function onResize() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () { measure(); update(); }, 120);
+        }
+
+        /* Skip jumps rather than scrolls: index.css sets scroll-behavior:
+           smooth globally, which would play the whole sequence at speed
+           instead of skipping it. */
+        skip.addEventListener('click', function (e) {
+            var hero = document.getElementById('home');
+            if (!hero) return;
+            e.preventDefault();
+            window.scrollTo({ top: window.scrollY + hero.getBoundingClientRect().top, behavior: 'auto' });
+        });
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize);
+        window.addEventListener('orientationchange', onResize);
+
+        measure();
+        update();
+    })();
+    </script>
 
     </body>
 </html>
