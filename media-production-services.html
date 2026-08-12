@@ -1202,7 +1202,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             position: relative;
             width: min(46vmin, 430px);
             max-width: 100%;
-            aspect-ratio: 480 / 420;
+            aspect-ratio: 560 / 460;
         }
 
         /* The tunnel. A plain solid-colour div rather than the SVG's own disc:
@@ -1241,7 +1241,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .mp-ring-a,
         .mp-ring-b {
             transform-box: view-box;
-            transform-origin: 240px 210px;
+            transform-origin: 280px 230px;
         }
 
         .mp-ring-a { animation: mp-lens-spin 24s linear infinite; }
@@ -1257,14 +1257,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         .mp-iris {
             transform: rotate(calc(var(--mp-iris-spin, 0) * 1deg));
             transform-box: view-box;
-            transform-origin: 240px 210px;
+            transform-origin: 280px 230px;
         }
 
         .mp-blade {
             fill: url(#mpBladeG);
-            stroke: rgba(255, 255, 255, 0.11);
+            stroke: rgba(201, 214, 232, 0.13);
             stroke-width: 0.9;
-            transform: translateY(calc(var(--mp-iris, 6) * -1px));
+            transform: translateY(calc(var(--mp-iris, 5) * -1px));
         }
 
         /* --- Copy ---------------------------------------------------------- */
@@ -1401,16 +1401,38 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             pointer-events: none !important;
         }
 
-        /* The hero fades up through the lifting veil rather than being
-           uncovered flat.
+        /* The hero arrives THROUGH the lens rather than sliding up into
+           place: it starts pushed in and defocused, then racks back to
+           normal as the veil lifts, so the flight reads as one continuous
+           move that ends by pulling focus on the headline.
 
            Gated on a body class that JS removes the moment the reveal
-           finishes, so the page's own H1 can never be left stranded at
-           opacity 0 by a script that stopped running. The var fallback
-           covers the same risk a second time. */
-        body.mp-intro-open .mp-hero-inner {
-            opacity: var(--mp-open, 1);
-            transform: translateY(calc((1 - var(--mp-open, 1)) * 26px));
+           finishes, so the page's own H1 can never be left stranded by a
+           script that stopped running, and so the plate gets its drift
+           animation back. The var fallbacks resolve to the resting state
+           and cover the same risk a second time.
+
+           Every child scales rather than the section itself — .mp-hero is
+           in flow, so scaling it would push the layout wider. */
+        body.mp-intro-open .mp-hero > * {
+            transform: scale(calc(1 + (1 - var(--mp-open, 1)) * 0.18));
+        }
+
+        body.mp-intro-open .mp-hero > .container {
+            filter: blur(calc((1 - var(--mp-open, 1)) * 18px));
+        }
+
+        /* The plate carries both its own grade and its own drift keyframes.
+           A bare filter would drop the grade, and the animation would win
+           the transform outright, so both are restated for the duration.
+           The resting scale is the drift's own start value, so handing the
+           animation back at the end is seamless. */
+        body.mp-intro-open .mp-hero-plate {
+            animation: none;
+            transform: scale(calc(1.04 + (1 - var(--mp-open, 1)) * 0.26));
+            filter:
+                saturate(0.72) contrast(1.06) brightness(0.42)
+                blur(calc((1 - var(--mp-open, 1)) * 16px));
         }
 
         /* --- Responsive ---------------------------------------------------- */
@@ -1532,88 +1554,203 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <div class="mp-lens-rig">
                             <div class="mp-lens-hole"></div>
 
-                            <svg class="mp-lens-svg" viewBox="0 0 480 420" role="img" aria-label="Cinema camera">
+                            <svg class="mp-lens-svg" viewBox="0 0 560 460" role="img" aria-label="Cinema camera on a fluid-head tripod">
                                 <defs>
-                                    <radialGradient id="mpBarrelG" cx="36%" cy="28%" r="80%">
-                                        <stop offset="0%"   stop-color="#2c1552"/>
-                                        <stop offset="58%"  stop-color="#170c2b"/>
-                                        <stop offset="100%" stop-color="#0c0518"/>
+                                    <!-- Key light sits upper-left, so every top face is
+                                         the light stop of its pair and every underside is
+                                         the dark one. Neutral charcoal throughout; the
+                                         only colour on the camera is the tally and the
+                                         violet rim that ties it to the page. -->
+                                    <linearGradient id="mpHoodFace" x1="178" y1="118" x2="382" y2="342" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%"   stop-color="#333a44"/>
+                                        <stop offset="52%"  stop-color="#20252c"/>
+                                        <stop offset="100%" stop-color="#12151a"/>
+                                    </linearGradient>
+
+                                    <linearGradient id="mpHoodSide" x1="382" y1="130" x2="408" y2="320" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%"   stop-color="#1b1f25"/>
+                                        <stop offset="100%" stop-color="#0d0f13"/>
+                                    </linearGradient>
+
+                                    <linearGradient id="mpBodySide" x1="348" y1="150" x2="486" y2="330" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%"   stop-color="#282e37"/>
+                                        <stop offset="60%"  stop-color="#1a1e25"/>
+                                        <stop offset="100%" stop-color="#0f1216"/>
+                                    </linearGradient>
+
+                                    <linearGradient id="mpBodyTop" x1="360" y1="124" x2="500" y2="162" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%"   stop-color="#404855"/>
+                                        <stop offset="100%" stop-color="#252b33"/>
+                                    </linearGradient>
+
+                                    <radialGradient id="mpBarrel" cx="34%" cy="28%" r="82%">
+                                        <stop offset="0%"   stop-color="#3b434f"/>
+                                        <stop offset="55%"  stop-color="#1d222a"/>
+                                        <stop offset="100%" stop-color="#0d1014"/>
                                     </radialGradient>
 
-                                    <linearGradient id="mpBodyG" x1="0" y1="140" x2="0" y2="292" gradientUnits="userSpaceOnUse">
-                                        <stop offset="0%"   stop-color="#241239"/>
-                                        <stop offset="100%" stop-color="#0e0619"/>
+                                    <linearGradient id="mpScreen" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%"   stop-color="#1a2029"/>
+                                        <stop offset="100%" stop-color="#0b0e12"/>
+                                    </linearGradient>
+
+                                    <linearGradient id="mpRubber" x1="500" y1="112" x2="548" y2="162" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%"   stop-color="#2b3038"/>
+                                        <stop offset="100%" stop-color="#101317"/>
+                                    </linearGradient>
+
+                                    <linearGradient id="mpTripod" x1="320" y1="340" x2="446" y2="400" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%"   stop-color="#2a3039"/>
+                                        <stop offset="100%" stop-color="#12151a"/>
                                     </linearGradient>
 
                                     <!-- Drawn in each blade's own rotated frame, so every
                                          blade catches light on its leading edge. -->
-                                    <linearGradient id="mpBladeG" x1="0" y1="210" x2="0" y2="126" gradientUnits="userSpaceOnUse">
-                                        <stop offset="0%"   stop-color="#43226f"/>
-                                        <stop offset="52%"  stop-color="#25123f"/>
-                                        <stop offset="100%" stop-color="#150a25"/>
+                                    <linearGradient id="mpBladeG" x1="0" y1="230" x2="0" y2="164" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%"   stop-color="#39414c"/>
+                                        <stop offset="55%"  stop-color="#1d2229"/>
+                                        <stop offset="100%" stop-color="#0e1115"/>
                                     </linearGradient>
 
-                                    <linearGradient id="mpSheenG" x1="180" y1="152" x2="292" y2="264" gradientUnits="userSpaceOnUse">
-                                        <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.32"/>
-                                        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                                    <linearGradient id="mpSheenG" x1="232" y1="186" x2="316" y2="270" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%"   stop-color="#dfe8ff" stop-opacity="0.30"/>
+                                        <stop offset="100%" stop-color="#dfe8ff" stop-opacity="0"/>
                                     </linearGradient>
 
                                     <clipPath id="mpIrisClip">
-                                        <circle cx="240" cy="210" r="67"/>
+                                        <circle cx="280" cy="230" r="52"/>
                                     </clipPath>
                                 </defs>
 
-                                <!-- Body. Sits left of centre so the lens stays dead centre
-                                     of the viewport and the flight is not off-axis. -->
+                                <!-- Everything that is not the front of the lens. This is
+                                     the group that dissolves as the flight starts, leaving
+                                     the barrel alone on screen to be flown through. -->
                                 <g class="mp-cam-body">
-                                    <rect x="86" y="106" width="122" height="17" rx="8" fill="#1b1030" stroke="#ffffff" stroke-opacity="0.10"/>
-                                    <rect x="100" y="122" width="13" height="20" rx="3" fill="#150c26"/>
-                                    <rect x="182" y="122" width="13" height="20" rx="3" fill="#150c26"/>
 
-                                    <rect x="58" y="140" width="168" height="152" rx="17" fill="url(#mpBodyG)" stroke="#ffffff" stroke-opacity="0.11" stroke-width="1.4"/>
-
-                                    <rect x="18" y="166" width="44" height="60" rx="8" fill="#120a20" stroke="#ffffff" stroke-opacity="0.10"/>
-                                    <rect x="25" y="173" width="30" height="46" rx="4" fill="#8b3dff" fill-opacity="0.20"/>
-
-                                    <circle cx="86" cy="160" r="4.5" fill="#ff4d4d"/>
-                                    <text x="98" y="164" font-family="Outfit, sans-serif" font-size="10" font-weight="600" letter-spacing="2" fill="#ffffff" fill-opacity="0.42">REC 4K</text>
-
-                                    <g stroke="#ffffff" stroke-opacity="0.09" stroke-width="2" stroke-linecap="round">
-                                        <path d="M74 250h34M74 260h34M74 270h22"/>
+                                    <!-- Tripod: legs, then the fluid head on top of them -->
+                                    <g fill="#161a1f" stroke="#7d8a9c" stroke-opacity="0.14" stroke-width="1">
+                                        <path d="M378,392 L392,392 L396,458 L376,458 Z"/>
+                                        <path d="M356,386 L374,390 L338,458 L316,458 Z"/>
+                                        <path d="M392,390 L410,386 L450,458 L428,458 Z"/>
                                     </g>
 
-                                    <rect x="96" y="292" width="96" height="13" rx="4" fill="#150c26" stroke="#ffffff" stroke-opacity="0.08"/>
+                                    <ellipse cx="383" cy="386" rx="47" ry="12" fill="#1c2128"/>
+                                    <path d="M320,340 L446,352 L446,378 L320,368 Z" fill="url(#mpTripod)" stroke="#7d8a9c" stroke-opacity="0.16"/>
+                                    <ellipse cx="383" cy="372" rx="38" ry="9" fill="none" stroke="#e0342f" stroke-opacity="0.55" stroke-width="2"/>
+                                    <circle cx="331" cy="360" r="14" fill="#20262e" stroke="#7d8a9c" stroke-opacity="0.2"/>
+                                    <circle cx="331" cy="360" r="6" fill="#0f1216"/>
+
+                                    <!-- Pan bar -->
+                                    <path d="M438,352 L528,398" stroke="#242a32" stroke-width="11" stroke-linecap="round"/>
+                                    <path d="M438,352 L528,398" stroke="#7d8a9c" stroke-opacity="0.16" stroke-width="1"/>
+                                    <path d="M492,379 L532,400" stroke="#171b21" stroke-width="15" stroke-linecap="round"/>
+
+                                    <!-- Flip-out monitor, on the camera's left, tucked
+                                         behind the hood at its inner edge -->
+                                    <g transform="rotate(-7 141 239)">
+                                        <rect x="92" y="186" width="99" height="107" rx="8" fill="#1b2029" stroke="#7d8a9c" stroke-opacity="0.22"/>
+                                        <rect x="100" y="194" width="83" height="91" rx="4" fill="url(#mpScreen)"/>
+                                        <path d="M104,278 L150,198 L166,198 L120,278 Z" fill="#8ea6c8" fill-opacity="0.06"/>
+                                    </g>
+                                    <path d="M188,236 L216,230 L218,246 L190,252 Z" fill="#20252d" stroke="#7d8a9c" stroke-opacity="0.16"/>
+
+                                    <!-- Body block: near face carries the control panel,
+                                         top face catches the key -->
+                                    <path d="M348,146 L486,158 L486,304 L348,338 Z" fill="url(#mpBodySide)" stroke="#7d8a9c" stroke-opacity="0.2"/>
+                                    <path d="M348,146 L486,158 L502,140 L368,124 Z" fill="url(#mpBodyTop)" stroke="#7d8a9c" stroke-opacity="0.22"/>
+                                    <path d="M486,158 L502,140 L502,286 L486,304 Z" fill="#0e1115" stroke="#7d8a9c" stroke-opacity="0.12"/>
+
+                                    <rect x="362" y="152" width="58" height="23" rx="3" fill="#0d1014" stroke="#7d8a9c" stroke-opacity="0.18" transform="rotate(4.5 391 163)"/>
+                                    <rect x="366" y="156" width="30" height="6" rx="2" fill="#8b3dff" fill-opacity="0.35" transform="rotate(4.5 391 163)"/>
+
+                                    <!-- Control panel -->
+                                    <g transform="rotate(4.5 415 225)" fill="#2b323b" stroke="#7d8a9c" stroke-opacity="0.16" stroke-width="0.8">
+                                        <rect x="362" y="182" width="16" height="11" rx="2.5"/>
+                                        <rect x="384" y="182" width="16" height="11" rx="2.5"/>
+                                        <rect x="406" y="182" width="16" height="11" rx="2.5"/>
+                                        <rect x="428" y="182" width="16" height="11" rx="2.5"/>
+                                        <rect x="450" y="182" width="16" height="11" rx="2.5"/>
+                                        <rect x="362" y="204" width="16" height="11" rx="2.5"/>
+                                        <rect x="384" y="204" width="16" height="11" rx="2.5"/>
+                                        <rect x="406" y="204" width="16" height="11" rx="2.5"/>
+                                        <rect x="428" y="204" width="16" height="11" rx="2.5"/>
+                                        <rect x="450" y="204" width="16" height="11" rx="2.5"/>
+                                        <rect x="362" y="226" width="16" height="11" rx="2.5"/>
+                                        <rect x="384" y="226" width="16" height="11" rx="2.5"/>
+                                        <rect x="406" y="226" width="16" height="11" rx="2.5"/>
+                                        <rect x="428" y="226" width="16" height="11" rx="2.5"/>
+                                        <rect x="450" y="226" width="16" height="11" rx="2.5"/>
+                                        <rect x="362" y="248" width="16" height="11" rx="2.5"/>
+                                        <rect x="384" y="248" width="16" height="11" rx="2.5"/>
+                                        <rect x="406" y="248" width="16" height="11" rx="2.5"/>
+                                        <rect x="428" y="248" width="16" height="11" rx="2.5"/>
+                                        <rect x="450" y="248" width="16" height="11" rx="2.5"/>
+                                    </g>
+
+                                    <circle cx="452" cy="286" r="14" fill="#232a32" stroke="#7d8a9c" stroke-opacity="0.22"/>
+                                    <circle cx="452" cy="286" r="6" fill="#0e1115"/>
+                                    <circle cx="372" cy="296" r="5.5" fill="#e0342f" fill-opacity="0.85"/>
+
+                                    <!-- Top handle, audio module and eyecup -->
+                                    <path d="M364,100 L496,116 L500,126 L494,133 L362,117 L358,107 Z" fill="url(#mpBodyTop)" stroke="#7d8a9c" stroke-opacity="0.24"/>
+                                    <path d="M368,117 L386,119 L384,129 L366,127 Z" fill="#1a1f26"/>
+                                    <path d="M474,131 L492,133 L490,143 L472,141 Z" fill="#1a1f26"/>
+                                    <rect x="408" y="104" width="26" height="8" rx="2" fill="#2a313a" stroke="#7d8a9c" stroke-opacity="0.2" transform="rotate(7 421 108)"/>
+
+                                    <path d="M326,106 L364,111 L364,146 L326,140 Z" fill="url(#mpBodySide)" stroke="#7d8a9c" stroke-opacity="0.22"/>
+                                    <circle cx="345" cy="121" r="6.5" fill="#0e1115" stroke="#7d8a9c" stroke-opacity="0.28"/>
+                                    <circle cx="345" cy="136" r="6.5" fill="#0e1115" stroke="#7d8a9c" stroke-opacity="0.28"/>
+
+                                    <path d="M478,148 L512,132 L522,148 L490,164 Z" fill="#1c2129" stroke="#7d8a9c" stroke-opacity="0.18"/>
+                                    <g transform="rotate(-18 524 138)">
+                                        <ellipse cx="524" cy="138" rx="27" ry="23" fill="url(#mpRubber)" stroke="#7d8a9c" stroke-opacity="0.22"/>
+                                        <ellipse cx="524" cy="138" rx="17" ry="14" fill="#0a0c0f"/>
+                                        <ellipse cx="518" cy="132" rx="6" ry="4" fill="#8ea6c8" fill-opacity="0.13"/>
+                                    </g>
+
+                                    <!-- Tally -->
+                                    <circle cx="356" cy="140" r="4" fill="#e0342f"/>
+                                    <circle cx="356" cy="140" r="8" fill="#e0342f" fill-opacity="0.18"/>
+
+                                    <!-- Matte box. Right-side depth band first, then the
+                                         front rim over it. -->
+                                    <path d="M382,126 L406,150 L406,312 L382,336 Z" fill="url(#mpHoodSide)" stroke="#7d8a9c" stroke-opacity="0.12"/>
+                                    <g transform="rotate(-3.2 280 230)">
+                                        <rect x="178" y="118" width="204" height="224" rx="15" fill="url(#mpHoodFace)" stroke="#7d8a9c" stroke-opacity="0.26"/>
+                                        <rect x="196" y="136" width="168" height="188" rx="11" fill="#0b0d11" stroke="#7d8a9c" stroke-opacity="0.14"/>
+                                        <path d="M186,124 H374" stroke="#a9b8cc" stroke-opacity="0.18" stroke-width="1.6" stroke-linecap="round"/>
+                                        <path d="M186,124 H300" stroke="#8b3dff" stroke-opacity="0.4" stroke-width="1.6" stroke-linecap="round"/>
+                                        <circle cx="192" cy="332" r="4" fill="#0d1014" stroke="#7d8a9c" stroke-opacity="0.24"/>
+                                        <circle cx="368" cy="332" r="4" fill="#0d1014" stroke="#7d8a9c" stroke-opacity="0.24"/>
+                                    </g>
                                 </g>
 
-                                <!-- Barrel -->
+                                <!-- The barrel itself: the last thing standing before the
+                                     aperture fills the screen -->
                                 <g class="mp-cam-rings">
-                                    <circle cx="240" cy="210" r="112" fill="none" stroke="#8b3dff" stroke-opacity="0.28" stroke-width="1.2"/>
-                                    <circle cx="240" cy="210" r="104" fill="url(#mpBarrelG)" stroke="#ffffff" stroke-opacity="0.13" stroke-width="1.6"/>
-
+                                    <circle cx="280" cy="230" r="78" fill="url(#mpBarrel)" stroke="#7d8a9c" stroke-opacity="0.26" stroke-width="1.4"/>
                                     <!-- Knurled grip ring -->
-                                    <circle class="mp-ring-a" cx="240" cy="210" r="95" fill="none" stroke="#ffffff" stroke-opacity="0.17" stroke-width="11" stroke-dasharray="2 7"/>
+                                    <circle class="mp-ring-a" cx="280" cy="230" r="71" fill="none" stroke="#a9b8cc" stroke-opacity="0.18" stroke-width="9" stroke-dasharray="2 6"/>
                                     <!-- Focus scale, turning the other way -->
-                                    <circle class="mp-ring-b" cx="240" cy="210" r="83" fill="none" stroke="#c084fc" stroke-opacity="0.42" stroke-width="1.8" stroke-dasharray="13 25"/>
-
-                                    <circle cx="240" cy="210" r="76" fill="none" stroke="#8b3dff" stroke-opacity="0.55" stroke-width="1.2"/>
-                                    <path d="M234 104h12l-6 11z" fill="#c084fc" fill-opacity="0.85"/>
-                                    <circle cx="240" cy="210" r="69.5" fill="none" stroke="#ffffff" stroke-opacity="0.22" stroke-width="2.6"/>
-
-                                    <text x="240" y="332" text-anchor="middle" font-family="Outfit, sans-serif" font-size="10" font-weight="600" letter-spacing="3" fill="#ffffff" fill-opacity="0.38">24–70 · T1.5</text>
+                                    <circle class="mp-ring-b" cx="280" cy="230" r="63" fill="none" stroke="#c084fc" stroke-opacity="0.4" stroke-width="1.6" stroke-dasharray="11 21"/>
+                                    <circle cx="280" cy="230" r="57" fill="none" stroke="#8b3dff" stroke-opacity="0.5" stroke-width="1.2"/>
+                                    <path d="M274,146 h12 l-6,10 z" fill="#c084fc" fill-opacity="0.8"/>
+                                    <circle cx="280" cy="230" r="54.5" fill="none" stroke="#c8d4e4" stroke-opacity="0.24" stroke-width="2.4"/>
+                                    <text x="280" y="300" text-anchor="middle" font-family="Outfit, sans-serif" font-size="9" font-weight="600" letter-spacing="2.6" fill="#c8d4e4" fill-opacity="0.34">4K · T1.5</text>
                                 </g>
 
                                 <!-- Aperture -->
                                 <g class="mp-iris" clip-path="url(#mpIrisClip)">
-                                    <g transform="rotate(0 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
-                                    <g transform="rotate(60 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
-                                    <g transform="rotate(120 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
-                                    <g transform="rotate(180 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
-                                    <g transform="rotate(240 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
-                                    <g transform="rotate(300 240 210)"><path class="mp-blade" d="M-160,-160 H640 V210 H-160 Z"/></g>
+                                    <g transform="rotate(0 280 230)"><path class="mp-blade" d="M-220,-220 H780 V230 H-220 Z"/></g>
+                                    <g transform="rotate(60 280 230)"><path class="mp-blade" d="M-220,-220 H780 V230 H-220 Z"/></g>
+                                    <g transform="rotate(120 280 230)"><path class="mp-blade" d="M-220,-220 H780 V230 H-220 Z"/></g>
+                                    <g transform="rotate(180 280 230)"><path class="mp-blade" d="M-220,-220 H780 V230 H-220 Z"/></g>
+                                    <g transform="rotate(240 280 230)"><path class="mp-blade" d="M-220,-220 H780 V230 H-220 Z"/></g>
+                                    <g transform="rotate(300 280 230)"><path class="mp-blade" d="M-220,-220 H780 V230 H-220 Z"/></g>
                                 </g>
 
                                 <g class="mp-sheen" clip-path="url(#mpIrisClip)">
-                                    <ellipse cx="205" cy="176" rx="52" ry="30" transform="rotate(-38 205 176)" fill="url(#mpSheenG)"/>
+                                    <ellipse cx="256" cy="204" rx="40" ry="23" transform="rotate(-38 256 204)" fill="url(#mpSheenG)"/>
                                 </g>
                             </svg>
                         </div>
@@ -2371,8 +2508,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         lens.classList.add('is-live');
 
         var vh = 1, vw = 1, maxScale = 14;
-        var HOLE_UNITS = 134;   /* aperture clip diameter, in viewBox units */
-        var VIEWBOX_W  = 480;
+        var HOLE_UNITS = 104;   /* aperture clip diameter, in viewBox units */
+        var VIEWBOX_W  = 560;
 
         function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
         function seg(v, a, b)   { return clamp((v - a) / (b - a), 0, 1); }
@@ -2444,7 +2581,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             s.setProperty('--mp-svg-scale', Math.min(scale, 10).toFixed(4));
             s.setProperty('--mp-svg', (1 - seg(p, 0.62, 0.74)).toFixed(3));
 
-            s.setProperty('--mp-iris', (6 + 84 * easeOut(seg(p, 0.26, 0.66))).toFixed(2));
+            s.setProperty('--mp-iris', (5 + 65 * easeOut(seg(p, 0.26, 0.66))).toFixed(2));
             s.setProperty('--mp-iris-spin', (-24 * seg(p, 0.26, 0.70)).toFixed(2));
 
             s.setProperty('--mp-body',  (1 - seg(p, 0.20, 0.40)).toFixed(3));
