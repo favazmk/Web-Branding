@@ -2486,6 +2486,11 @@ nav {
     #main-header {
         display: none !important;
     }
+    /* Keep anchor targets (e.g. the Contact link jumping to #estimator)
+       clear of the floating pill header */
+    section[id] {
+        scroll-margin-top: 110px;
+    }
 }
 
 /* --- Interactive Mascot --- */
