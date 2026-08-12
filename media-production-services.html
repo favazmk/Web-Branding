@@ -12,9 +12,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Production Services | The Web Branding</title>
-    <meta name="description" content="Video production, editing and post-production, motion graphics, and photography in Dubai — shot, cut and delivered in the format each platform actually rewards.">
-    <meta name="keywords" content="Media Production, Video Production, Video Editing, Post Production, Motion Graphics, Animation, Photography, Reels, UGC, Dubai, UAE">
+    <title>Video Production Company in Dubai | Script, Shoot, Edit | The Web Branding</title>
+    <meta name="description" content="Full-service video production in Dubai — scripting, casting, crew and camera, editing, influencer content, UGC and AI video. One team from idea to the file you publish.">
+    <meta name="keywords" content="Video Production Dubai, Video Production Company, Corporate Video, Influencer Marketing, UGC Content, AI Video, Reels Production, Video Editing, Media Production, Dubai, UAE">
 
     <!-- Indexable: this is the main-site service page for media production,
          linked from the nav and distinct from the ad landing pages. -->
@@ -27,14 +27,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="The Web Branding">
-    <meta property="og:title" content="Media Production Services in Dubai | The Web Branding">
-    <meta property="og:description" content="Video production, editing and post-production, motion graphics, and photography in Dubai — one crew, cut per platform, source files handed over.">
+    <meta property="og:title" content="Video Production Company in Dubai | The Web Branding">
+    <meta property="og:description" content="Scripting, crew and camera, editing, influencers, UGC and AI video — one team from idea to the file you publish.">
     <meta property="og:url" content="https://thewebbranding.com/media-production-services.html">
     <meta property="og:image" content="https://thewebbranding.com/assets/service-video.webp">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Media Production Services in Dubai | The Web Branding">
-    <meta name="twitter:description" content="Video production, editing and post-production, motion graphics, and photography in Dubai — one crew, cut per platform, source files handed over.">
+    <meta name="twitter:title" content="Video Production Company in Dubai | The Web Branding">
+    <meta name="twitter:description" content="Scripting, crew and camera, editing, influencers, UGC and AI video — one team from idea to the file you publish.">
     <meta name="twitter:image" content="https://thewebbranding.com/assets/service-video.webp">
 
     <link rel="stylesheet" href="./index.css">
@@ -42,212 +42,651 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.webp">
+
+    <!-- Preload the hero plate: it is the largest contentful paint on this
+         page and it sits behind text, so a late arrival is very visible. -->
+    <link rel="preload" as="image" href="./assets/service-video.webp">
+
     <style>
         /* ==================================================================
            MEDIA PRODUCTION
 
-           Structure and component CSS are shared with the brand & creative
-           design page so the two service pages read as one site: the bd-*
-           hero, discipline index and discipline panels below are the same
-           rules, kept page-local because index.css carries only the site-wide
-           components.
+           This page deliberately does NOT reuse the brand & creative design
+           page's index-and-panels spine. That layout argues "here are our
+           disciplines"; a production page has to argue "here is what you end
+           up with", so the structure is built around outcome first, then the
+           pipeline that produces it, then who runs each stage.
 
-           Page-specific additions live in the MP block at the end.
+           Everything below is scoped with mp-. Only the header, footer, form
+           and button components are shared with the rest of the site.
            ================================================================== */
-        /* Client Brands Marquee */
-        .brands-marquee {
-            padding: 40px 0;
-            background: #ffffff;
-            overflow: hidden;
-        }
-        .marquee-client-logo {
-            height: 55px;
-            width: auto;
-            object-fit: contain;
-            opacity: 0.75;
-            filter: grayscale(100%);
-            transition: all 0.3s ease;
-        }
-        .marquee-client-logo:hover {
-            opacity: 1;
-            filter: grayscale(0%);
-            transform: scale(1.08);
-        }
-        .marquee-content {
+
+        /* ------------------------------------------------------------------
+           HERO — a cinema frame rather than a headline over a gradient.
+
+           The plate is graded rather than shown raw: a production page whose
+           own hero looks like an untreated stock photo undercuts the pitch.
+           Letterbox bars, timecode and a scrub line carry the format read, so
+           the premium feel comes from the treatment rather than from a bigger
+           typeface.
+           ------------------------------------------------------------------ */
+        .mp-hero {
+            position: relative;
+            min-height: min(94vh, 900px);
             display: flex;
-            gap: 45px;
             align-items: center;
-            animation: scroll 25s linear infinite;
-            white-space: nowrap;
-        }
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            overflow: hidden;
+            isolation: isolate;
+            /* Top padding clears both the fixed header and the timecode bar
+               beneath it (bar bottom sits at 132px). */
+            padding: 168px 0 110px;
         }
 
-        /* Pricing Cards */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 50px;
+        /* The plate itself. Scaled slightly past the frame so the slow drift
+           never exposes an edge. */
+        .mp-hero-plate {
+            position: absolute;
+            inset: -3%;
+            z-index: -3;
+            background-image: url('./assets/service-video.webp');
+            background-size: cover;
+            background-position: 50% 42%;
+            /* Graded to the brand violet instead of left as a grey set photo */
+            filter: saturate(0.72) contrast(1.06) brightness(0.42);
+            animation: mp-drift 26s ease-in-out infinite alternate;
         }
-        .pricing-card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg);
-            padding: 40px 30px;
-            text-align: center;
+
+        @keyframes mp-drift {
+            from { transform: scale(1.04) translate3d(0, 0, 0); }
+            to   { transform: scale(1.10) translate3d(-1.4%, -1.2%, 0); }
+        }
+
+        /* Two-stop wash: violet from the low left, black from the bottom, so
+           the headline sits on ink and the frame still reads as a photograph. */
+        .mp-hero-wash {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(120% 90% at 8% 90%, rgba(139, 61, 255, 0.55) 0%, rgba(139, 61, 255, 0) 58%),
+                linear-gradient(180deg, rgba(6, 2, 14, 0.86) 0%, rgba(6, 2, 14, 0.42) 38%, rgba(6, 2, 14, 0.94) 100%);
+        }
+
+        /* Vignette, kept separate so it can stay put while the plate drifts */
+        .mp-hero-vignette {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(75% 75% at 50% 50%, transparent 40%, rgba(6, 2, 14, 0.72) 100%);
+            pointer-events: none;
+        }
+
+        /* --- Letterbox furniture ------------------------------------------ */
+        .mp-bar {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 clamp(18px, 5vw, 54px);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.55);
+            background: rgba(6, 2, 14, 0.55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 2;
+        }
+
+        /* Clears the fixed site header rather than sitting at top: 0 under it —
+           the nav is transparent over the hero, so an edge-anchored bar reads
+           as a collision with the logo and links. */
+        .mp-bar-top { top: 92px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+        .mp-bar-bottom { bottom: 0; border-top: 1px solid rgba(255, 255, 255, 0.07); }
+
+        .mp-rec {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .mp-rec::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #ff4d4d;
+            box-shadow: 0 0 10px rgba(255, 77, 77, 0.9);
+            animation: mp-blink 2.4s ease-in-out infinite;
+        }
+
+        @keyframes mp-blink {
+            0%, 45%  { opacity: 1; }
+            55%, 95% { opacity: 0.25; }
+            100%     { opacity: 1; }
+        }
+
+        /* Corner ticks — the frame markers of a viewfinder */
+        .mp-tick {
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            border: 2px solid rgba(255, 255, 255, 0.22);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Set outside the content column so the brackets frame the hero
+           rather than crowding the kicker at the same inset. */
+        .mp-tick.tl { top: 144px; left: clamp(12px, 3vw, 34px); border-right: 0; border-bottom: 0; }
+        .mp-tick.tr { top: 144px; right: clamp(12px, 3vw, 34px); border-left: 0; border-bottom: 0; }
+        .mp-tick.bl { bottom: 58px; left: clamp(12px, 3vw, 34px); border-right: 0; border-top: 0; }
+        .mp-tick.br { bottom: 58px; right: clamp(12px, 3vw, 34px); border-left: 0; border-top: 0; }
+
+        /* --- Hero content -------------------------------------------------- */
+        .mp-hero-inner { position: relative; z-index: 3; max-width: 940px; }
+
+        .mp-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 16px 7px 12px;
+            border-radius: 9999px;
+            border: 1px solid rgba(139, 61, 255, 0.45);
+            background: rgba(139, 61, 255, 0.16);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.76rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 26px;
+        }
+
+        .mp-kicker svg { flex: none; }
+
+        .mp-hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 6.6vw, 5rem);
+            font-weight: 800;
+            line-height: 1.02;
+            letter-spacing: -0.035em;
+            color: #fff;
+            margin-bottom: 24px;
+            text-wrap: balance;
+        }
+
+        .mp-hero h1 em {
+            font-style: normal;
+            background: linear-gradient(120deg, #ffffff 20%, #c084fc 65%, #8b3dff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mp-hero-sub {
+            font-size: clamp(1rem, 1.5vw, 1.16rem);
+            line-height: 1.68;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 640px;
+            margin-bottom: 34px;
+        }
+
+        .mp-hero-cta {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 46px;
+        }
+
+        /* Capability strip — the four things this page has to establish
+           immediately, stated as facts rather than adjectives. */
+        .mp-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 30px;
+            padding-top: 26px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .mp-strip span {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.86rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .mp-strip span::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #c084fc;
+            flex: none;
+        }
+
+        /* ------------------------------------------------------------------
+           OUTCOMES — the page's argument, so it runs before any capability
+           list. Set as a ledger rather than cards: claim on the left, the
+           reason it is true on the right, nothing decorative between them.
+           ------------------------------------------------------------------ */
+        .mp-ledger { border-top: 1px solid var(--border-glass); }
+
+        .mp-ledger-row {
+            display: grid;
+            grid-template-columns: 62px 1.05fr 1.25fr;
+            gap: 34px;
+            align-items: start;
+            padding: 38px 0;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .mp-ledger-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            color: var(--accent-blue);
+            padding-top: 8px;
+        }
+
+        .mp-ledger-row h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+            color: #fff;
+        }
+
+        .mp-ledger-row p {
+            color: var(--text-gray);
+            font-size: 1rem;
+            line-height: 1.72;
+            padding-top: 4px;
+        }
+
+        /* ------------------------------------------------------------------
+           PIPELINE — one horizontal run, because the selling point is that it
+           is one run and not four suppliers. The connecting rail is drawn on
+           the container so it cannot break between stages.
+           ------------------------------------------------------------------ */
+        .mp-pipeline {
             position: relative;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 22px;
+            margin-top: 54px;
+        }
+
+        .mp-pipeline::before {
+            content: '';
+            position: absolute;
+            top: 21px;
+            left: 6%;
+            right: 6%;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(139, 61, 255, 0.1), rgba(139, 61, 255, 0.65) 20%, rgba(139, 61, 255, 0.65) 80%, rgba(139, 61, 255, 0.1));
+        }
+
+        .mp-stage { position: relative; padding-top: 0; }
+
+        .mp-stage-dot {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #fff;
+            background: #1a0c30;
+            border: 2px solid rgba(139, 61, 255, 0.7);
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
             transition: var(--transition-smooth);
         }
-        .pricing-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(139, 61, 255, 0.3);
-            box-shadow: 0 15px 30px rgba(139, 61, 255, 0.1);
-        }
-        .pricing-card.popular {
-            background: linear-gradient(135deg, #7b2cbf 0%, #b300ff 100%);
-            color: #ffffff;
-            border-color: #d8b4fe;
-            transform: scale(1.05);
-            z-index: 2;
-            box-shadow: 0 20px 40px rgba(179, 0, 255, 0.3);
-        }
-        .pricing-card.popular:hover {
-            transform: scale(1.05) translateY(-5px);
-        }
-        .popular-badge {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #fff;
-            color: #5A2C89;
-            padding: 4px 16px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .pkg-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        .pkg-price {
-            font-family: 'Outfit', sans-serif;
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: baseline;
-            gap: 5px;
-        }
-        .pkg-price span {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-faded);
-        }
-        .pkg-features {
-            text-align: left;
-            margin-bottom: 30px;
-        }
-        .pkg-feature {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 12px;
-            color: var(--text-gray);
-            font-size: 0.95rem;
-        }
-        .pkg-feature svg {
-            color: #c084fc;
-            flex-shrink: 0;
-            margin-top: 3px;
+
+        .mp-stage:hover .mp-stage-dot {
+            background: #8b3dff;
+            border-color: #c084fc;
+            box-shadow: 0 0 0 6px rgba(139, 61, 255, 0.16);
         }
 
-        /* Theme Light Specifics for Benefit Cards */
-        .theme-light .benefit-card {
-            background: #ffffff !important;
-            border: 1px solid rgba(139, 61, 255, 0.1) !important;
-            box-shadow: 0 10px 20px rgba(139, 61, 255, 0.02) !important;
-        }
-        .theme-light .benefit-card:hover {
-            border-color: rgba(139, 61, 255, 0.3) !important;
-            box-shadow: 0 15px 30px rgba(139, 61, 255, 0.06) !important;
-        }
-        .theme-light .benefit-card h3 {
-            color: #120626 !important;
-        }
-        .theme-light .benefit-card p {
-            color: #4d445e !important;
-        }
-        @media (max-width: 992px) {
-            .benefits-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 768px) {
-            .benefits-grid { grid-template-columns: 1fr; }
-        }
-        
-        .theme-light .pricing-card:not(.popular) {
-            background: #ffffff !important;
-            border: 1px solid rgba(139, 61, 255, 0.1) !important;
-            box-shadow: 0 10px 20px rgba(139, 61, 255, 0.02) !important;
-            z-index: 2;
-        }
-        .theme-light .pricing-card:not(.popular):hover {
-            border-color: rgba(139, 61, 255, 0.3) !important;
-            box-shadow: 0 15px 30px rgba(139, 61, 255, 0.06) !important;
-        }
-        
-        .highlight-badge {
-            background: #e11d48;
+        .mp-stage h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.02rem;
+            font-weight: 700;
             color: #fff;
-            padding: 4px 16px;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(225, 29, 72, 0.6);
-            display: inline-block;
-            white-space: nowrap;
+            margin-bottom: 8px;
         }
-        
-        .bg-grid-pattern {
+
+        .mp-stage p {
+            color: var(--text-faded);
+            font-size: 0.88rem;
+            line-height: 1.62;
+        }
+
+        /* ------------------------------------------------------------------
+           CAPABILITY BENTO — deliberately uneven. Full production is the
+           headline offer and gets the large cell; the rest are the reasons it
+           can be delivered in-house.
+           ------------------------------------------------------------------ */
+        .mp-bento {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 18px;
+        }
+
+        .mp-tile {
             position: relative;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-glass);
+            background: var(--bg-glass);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            padding: 32px 30px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 260px;
+            transition: var(--transition-smooth);
         }
-        .bg-grid-pattern::before {
+
+        .mp-tile:hover {
+            border-color: rgba(139, 61, 255, 0.34);
+            transform: translateY(-4px);
+            box-shadow: 0 26px 54px rgba(0, 0, 0, 0.42);
+        }
+
+        .mp-tile.is-lead   { grid-column: span 3; min-height: 420px; }
+        .mp-tile.is-tall   { grid-column: span 3; min-height: 420px; }
+        .mp-tile.is-third  { grid-column: span 2; }
+        .mp-tile.is-half   { grid-column: span 3; }
+
+        /* Photographic tiles: the image is the background, darkened enough
+           that body copy stays legible over it without a second scrim div. */
+        .mp-tile-img {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-size: cover;
+            background-position: center;
+            filter: saturate(0.75) brightness(0.36);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mp-tile:hover .mp-tile-img { transform: scale(1.06); }
+
+        .mp-tile-img::after {
             content: '';
             position: absolute;
             inset: 0;
-            background-image: radial-gradient(circle, rgba(139, 61, 255, 0.25) 2px, transparent 2px);
-            background-size: 40px 40px;
-            -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
-            mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
-            z-index: 0;
-            pointer-events: none;
-            animation: panGrid 40s linear infinite;
-        }
-        
-        @keyframes panGrid {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
+            background: linear-gradient(180deg, rgba(10, 4, 22, 0.15) 0%, rgba(10, 4, 22, 0.88) 78%);
         }
 
-        /* Zigzag Process Section */
-        .process-zigzag-wrapper {
-            position: relative;
-            padding: 20px 0;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .bg-grid-pattern > * {
-            position: relative;
-            z-index: 1;
+        .mp-tile > * { position: relative; z-index: 1; }
+
+        .mp-tile-tag {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
         }
 
+        .mp-tile h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.2rem, 2vw, 1.55rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .mp-tile p {
+            color: var(--text-gray);
+            font-size: 0.94rem;
+            line-height: 1.68;
+        }
+
+        .mp-tile-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .mp-tile-list li {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.82);
+            padding: 5px 12px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* ------------------------------------------------------------------
+           AI BAND — held apart from the bento because it is the newest part
+           of the offer and the one a reader is most likely to be sceptical
+           about. The split says plainly where AI is used and where it is not.
+           ------------------------------------------------------------------ */
+        .mp-ai {
+            position: relative;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(139, 61, 255, 0.24);
+            overflow: hidden;
+            background:
+                radial-gradient(90% 120% at 100% 0%, rgba(139, 61, 255, 0.22) 0%, transparent 60%),
+                linear-gradient(180deg, #150a28 0%, #0b0418 100%);
+        }
+
+        .mp-ai-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 0;
+            align-items: stretch;
+        }
+
+        .mp-ai-body { padding: clamp(30px, 4vw, 52px); }
+
+        .mp-ai-figure {
+            position: relative;
+            min-height: 340px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .mp-ai-figure::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, #0b0418 0%, rgba(11, 4, 24, 0.25) 45%, transparent 100%);
+        }
+
+        .mp-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 26px;
+        }
+
+        .mp-split-col {
+            padding: 20px 20px 22px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-glass);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .mp-split-col h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .mp-split-col.is-yes h4 { color: #6ee7a8; }
+        .mp-split-col.is-no h4 { color: var(--text-faded); }
+
+        .mp-split-col ul { list-style: none; display: grid; gap: 9px; }
+
+        .mp-split-col li {
+            font-size: 0.89rem;
+            line-height: 1.5;
+            color: var(--text-gray);
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .mp-split-col.is-yes li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 7px;
+            width: 9px;
+            height: 5px;
+            border-left: 2px solid #6ee7a8;
+            border-bottom: 2px solid #6ee7a8;
+            transform: rotate(-45deg);
+        }
+
+        .mp-split-col.is-no li::before {
+            content: '';
+            position: absolute;
+            left: 1px;
+            top: 10px;
+            width: 9px;
+            height: 2px;
+            background: var(--text-faded);
+        }
+
+        /* ------------------------------------------------------------------
+           FORMATS — one shoot, several placements. The ratio blocks are drawn
+           to their real aspect ratios, so each row demonstrates the thing it
+           is describing.
+           ------------------------------------------------------------------ */
+        .mp-formats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .mp-format {
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-glass);
+            background: var(--bg-glass);
+            padding: 30px 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            transition: var(--transition-smooth);
+        }
+
+        .mp-format:hover { border-color: rgba(139, 61, 255, 0.3); }
+
+        .mp-ratio {
+            border: 1.5px solid rgba(139, 61, 255, 0.6);
+            border-radius: 6px;
+            background: rgba(139, 61, 255, 0.12);
+        }
+
+        .mp-ratio.is-vertical { width: 34px; aspect-ratio: 9 / 16; }
+        .mp-ratio.is-square   { width: 52px; aspect-ratio: 1 / 1; }
+        .mp-ratio.is-wide     { width: 76px; aspect-ratio: 16 / 9; }
+
+        .mp-format strong {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.06rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+        }
+
+        .mp-format span {
+            color: var(--text-faded);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            display: block;
+            margin-top: 6px;
+        }
+
+        .mp-format em {
+            font-style: normal;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            margin-top: auto;
+            padding-top: 14px;
+        }
+
+        /* ------------------------------------------------------------------
+           Responsive
+           ------------------------------------------------------------------ */
+        @media (max-width: 1100px) {
+            .mp-tile.is-lead, .mp-tile.is-tall { grid-column: span 6; min-height: 340px; }
+            /* is-third stays at span 2 here on purpose: promoting it to span 3
+               makes the three small tiles wrap 2 + 1 and leaves an orphan. */
+            .mp-tile.is-half { grid-column: span 6; }
+        }
+
+        @media (max-width: 992px) {
+            .mp-hero { min-height: auto; padding: 160px 0 90px; }
+            .mp-ledger-row { grid-template-columns: 46px 1fr; gap: 8px 20px; }
+            .mp-ledger-row p { grid-column: 2; padding-top: 10px; }
+            .mp-pipeline { grid-template-columns: repeat(2, 1fr); gap: 30px 22px; }
+            .mp-pipeline::before { display: none; }
+            .mp-ai-grid { grid-template-columns: 1fr; }
+            .mp-ai-figure { min-height: 240px; order: -1; }
+            .mp-ai-figure::after { background: linear-gradient(180deg, transparent 30%, #0b0418 100%); }
+            .mp-formats { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 700px) {
+            .mp-tile.is-third { grid-column: span 6; }
+            .mp-pipeline { grid-template-columns: 1fr; gap: 26px; }
+            .mp-split { grid-template-columns: 1fr; }
+            .mp-tick { display: none; }
+            .mp-bar { height: 34px; font-size: 0.6rem; letter-spacing: 0.16em; }
+            /* Below the floating pill header, whose bottom edge sits at ~92px */
+            .mp-bar-top { top: 98px; }
+            .mp-hero { padding: 156px 0 80px; }
+            .mp-bar .mp-bar-hide { display: none; }
+            .mp-tile { padding: 26px 22px; min-height: 220px; }
+            .mp-hero-cta .btn { width: 100%; justify-content: center; }
+        }
+
+        /* The plate drift and the REC blink are decorative; nothing on the
+           page depends on either running. */
+        @media (prefers-reduced-motion: reduce) {
+            .mp-hero-plate { animation: none; }
+            .mp-rec::before { animation: none; }
+            .mp-tile:hover { transform: none; }
+            .mp-tile:hover .mp-tile-img { transform: none; }
+        }
         /* ==================================================================
            SERVICE PAGE LAYOUT — hero, panels, included-grid and enquiry form.
            Shared with web-development-services.html, hence the wd- prefix;
@@ -484,1036 +923,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             .wd-inc-item { transition: none; }
         }
 
-        /* --- Hero ---------------------------------------------------------
-           Left column states the offer; right column *is* an offer — a small
-           specimen board rather than a photograph of one. Every value in it
-           is real (the hexes are this site's own tokens), which is the whole
-           argument a design page has to make in its first screen.
-           ------------------------------------------------------------------ */
-        .bd-hero {
-            position: relative;
-            padding: 96px 0 70px;
-            overflow: visible;
-            z-index: 10;
-        }
 
-        .bd-hero-grid {
-            display: grid;
-            grid-template-columns: 1.05fr 0.95fr;
-            gap: 66px;
-            align-items: center;
-        }
-
-        /* Above-the-fold, so the entrance runs on load rather than waiting on
-           the scroll observer that drives .fade-in-up further down the page. */
-        @keyframes bd-rise {
-            from { opacity: 0; transform: translateY(28px); }
-            to   { opacity: 1; transform: none; }
-        }
-
-        .bd-rise {
-            opacity: 0;
-            animation: bd-rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .bd-rise-1 { animation-delay: 0.10s; }
-        .bd-rise-2 { animation-delay: 0.22s; }
-        .bd-rise-3 { animation-delay: 0.34s; }
-        .bd-rise-4 { animation-delay: 0.46s; }
-        .bd-rise-5 { animation-delay: 0.58s; }
-
-        .bd-eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 7px 16px 7px 13px;
-            border-radius: 999px;
-            border: 1px solid rgba(139, 61, 255, 0.28);
-            background: rgba(139, 61, 255, 0.09);
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--accent-blue);
-        }
-
-        .bd-eyebrow svg { flex-shrink: 0; }
-
-        .bd-hero-title {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: clamp(2.9rem, 7vw, 5.4rem);
-            line-height: 0.92;
-            letter-spacing: -0.045em;
-            text-transform: none;
-            margin: 26px 0 0;
-        }
-
-        .bd-hero-title span { display: block; }
-
-        .bd-hero-title .is-accent {
-            background: var(--grad-neon-text);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .bd-hero-sub {
-            margin-top: 26px;
-            max-width: 470px;
-            color: var(--text-gray);
-            font-size: 1.02rem;
-            line-height: 1.72;
-        }
-
-        .bd-hero-sub b { color: var(--text-white); font-weight: 600; }
-
-        .bd-hero-cta {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px 28px;
-            margin-top: 32px;
-        }
-
-        .bd-cred {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .bd-cred svg { color: rgba(255, 255, 255, 0.38); flex-shrink: 0; }
-
-        .bd-cred b {
-            display: block;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.84rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            color: var(--text-gray);
-        }
-
-        .bd-cred small {
-            display: block;
-            font-size: 0.68rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--text-faded);
-        }
-
-        .bd-hero-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px 38px;
-            margin-top: 40px;
-            padding-top: 28px;
-            border-top: 1px solid var(--border-glass);
-        }
-
-        .bd-hero-stats b {
-            display: block;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: clamp(1.6rem, 3vw, 2.25rem);
-            letter-spacing: -0.035em;
-        }
-
-        .bd-hero-stats span {
-            display: block;
-            margin-top: 3px;
-            font-size: 0.68rem;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--text-faded);
-        }
-
-        /* --- Specimen board ------------------------------------------------ */
-        /* Board on top, mascot dock beneath it and right-aligned. The dock is
-           a fixed 200px square (index.css sizes the travelling mascot, and
-           that file is shared), so it gets its own row rather than being hung
-           over a corner — at 200px it would cover half the board. */
-        .bd-board-wrap {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .bd-board { width: 100%; }
-
-        .bd-board {
-            position: relative;
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            background: linear-gradient(158deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018));
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            box-shadow: 0 44px 84px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-        }
-
-        .bd-board-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 14px;
-            padding: 13px 18px;
-            border-bottom: 1px solid var(--border-glass);
-            font-size: 0.64rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text-faded);
-        }
-
-        .bd-board-dots { display: flex; gap: 6px; }
-
-        .bd-board-dots i {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .bd-board-dots i:first-child { background: rgba(139, 61, 255, 0.8); }
-
-        .bd-board-grid { display: grid; grid-template-columns: 1fr 1fr; }
-
-        .bd-cell {
-            padding: 24px 22px;
-            border-bottom: 1px solid var(--border-glass);
-        }
-
-        .bd-cell + .bd-cell { border-left: 1px solid var(--border-glass); }
-
-        .bd-cell.is-wide {
-            grid-column: 1 / -1;
-            border-left: 0;
-            border-bottom: 0;
-        }
-
-        .bd-cell-label {
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text-faded);
-            margin-bottom: 16px;
-        }
-
-        .bd-mark {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 92px;
-        }
-
-        .bd-mark svg { width: 74px; height: 74px; }
-
-        /* The clearspace ticks are the point of the tile — a mark shown with
-           its rules reads as identity work, a mark alone reads as a logo. */
-        .bd-mark-frame {
-            position: relative;
-            padding: 10px;
-        }
-
-        .bd-mark-frame::before,
-        .bd-mark-frame::after {
-            content: '';
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border: 1px solid rgba(139, 61, 255, 0.4);
-        }
-
-        .bd-mark-frame::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
-        .bd-mark-frame::after { bottom: 0; right: 0; border-left: 0; border-top: 0; }
-
-        .bd-specimen {
-            height: 92px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .bd-specimen b {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: 3rem;
-            line-height: 1;
-            letter-spacing: -0.055em;
-        }
-
-        .bd-specimen small {
-            margin-top: 10px;
-            font-size: 0.62rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--text-faded);
-        }
-
-        .bd-swatches {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-        }
-
-        .bd-swatch {
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .bd-swatch i { display: block; height: 44px; }
-
-        .bd-swatch span {
-            display: block;
-            padding: 6px 0 7px;
-            text-align: center;
-            font-size: 0.56rem;
-            letter-spacing: 0.04em;
-            color: var(--text-faded);
-        }
-
-        .bd-board-wrap .wd-hero-mascot-space {
-            /* The docked art is scaled 2.1x inside its 200px box by
-               index.css, so it overflows the box upwards — hence the gap. */
-            margin: 34px 30px 0 0;
-        }
-
-        /* --- Discipline index ---------------------------------------------- */
-        .bd-index {
-            margin-top: 70px;
-            border-top: 1px solid var(--border-glass);
-        }
-
-        .bd-index-row {
-            position: relative;
-            display: grid;
-            grid-template-columns: 54px 1.05fr 1.3fr auto 26px;
-            gap: 24px;
-            align-items: center;
-            padding: 21px 10px;
-            border-bottom: 1px solid var(--border-glass);
-            text-decoration: none;
-            color: inherit;
-            transition: padding 0.45s cubic-bezier(0.16, 1, 0.3, 1), background 0.45s ease;
-        }
-
-        .bd-index-row::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -1px;
-            height: 1px;
-            width: 0;
-            background: var(--grad-glow);
-            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .bd-index-row:hover,
-        .bd-index-row:focus-visible {
-            padding-left: 22px;
-            background: linear-gradient(90deg, rgba(139, 61, 255, 0.08), transparent 62%);
-        }
-
-        .bd-index-row:hover::before,
-        .bd-index-row:focus-visible::before { width: 100%; }
-
-        .bd-index-num {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 0.76rem;
-            letter-spacing: 0.16em;
-            color: var(--text-faded);
-            transition: color 0.35s ease;
-        }
-
-        .bd-index-row:hover .bd-index-num { color: var(--accent-blue); }
-
-        .bd-index-name {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: clamp(1.05rem, 1.7vw, 1.3rem);
-            letter-spacing: -0.025em;
-        }
-
-        .bd-index-desc {
-            color: var(--text-gray);
-            font-size: 0.89rem;
-            line-height: 1.5;
-        }
-
-        .bd-index-price {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            font-size: 0.94rem;
-            white-space: nowrap;
-        }
-
-        .bd-index-price small {
-            display: block;
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            font-size: 0.64rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text-faded);
-        }
-
-        .bd-index-go {
-            color: var(--text-faded);
-            transition: transform 0.35s ease, color 0.35s ease;
-        }
-
-        .bd-index-row:hover .bd-index-go {
-            color: var(--accent-blue);
-            transform: translateX(5px);
-        }
-
-        /* --- Opening statement band --------------------------------------- */
-        .bd-approach-grid {
-            display: grid;
-            grid-template-columns: 0.9fr 1.1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        /* The source art is a square render, so every frame on this page
-           crops it. --pos picks the focal point and doubles as the transform
-           origin, so --zoom pushes in *towards* that point rather than the
-           middle — which is how a near-square frame gets panned at all, since
-           object-position alone has nothing to slide against there.
-
-           The sources are 3:2 landscape. Against the near-square panel frames
-           that crops the SIDES, so --pos X is what chooses the subject there;
-           against the 16:9 band it crops the top and bottom instead, and only
-           --pos Y does anything. Re-check both if the artwork is replaced. */
-        .bd-figure {
-            position: relative;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            border: 1px solid var(--border-glass);
-            background: #0d0618;
-            aspect-ratio: 5 / 4;
-        }
-
-        .bd-figure img {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-            object-position: var(--pos, 50% 50%);
-            transform: scale(var(--zoom, 1));
-            transform-origin: var(--pos, 50% 50%);
-            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Pulls the warmer AI renders back towards the site's violet. */
-        .bd-figure::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(180deg, rgba(5, 1, 10, 0) 45%, rgba(5, 1, 10, 0.75) 100%),
-                radial-gradient(120% 90% at 50% 40%, rgba(139, 61, 255, 0.12), transparent 70%);
-            pointer-events: none;
-        }
-
-        .bd-lead {
-            color: var(--text-gray);
-            font-size: 1.05rem;
-            line-height: 1.75;
-            max-width: 560px;
-        }
-
-        .bd-lead + .bd-lead { margin-top: 16px; }
-
-        .bd-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px 44px;
-            margin-top: 36px;
-            padding-top: 28px;
-            border-top: 1px solid var(--border-glass);
-        }
-
-        .bd-stat b {
-            display: block;
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            background: var(--grad-neon-text);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .bd-stat span {
-            font-size: 0.82rem;
-            color: var(--text-faded);
-            letter-spacing: 0.03em;
-        }
-
-        /* --- Discipline panels -------------------------------------------- */
-        .bd-disciplines {
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-        }
-
-        .bd-disc {
-            display: grid;
-            grid-template-columns: 0.95fr 1.05fr;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            transition: var(--transition-smooth);
-        }
-
-        .bd-disc:hover {
-            border-color: rgba(139, 61, 255, 0.3);
-            box-shadow: 0 26px 54px rgba(0, 0, 0, 0.4);
-        }
-
-        .bd-disc:hover .bd-figure img { transform: scale(calc(var(--zoom, 1) * 1.06)); }
-
-        .bd-disc .bd-figure {
-            border: 0;
-            border-radius: 0;
-            aspect-ratio: auto;
-            min-height: 340px;
-        }
-
-        /* Alternating sides, so the eye zig-zags down the stack. */
-        .bd-disc.is-flipped .bd-figure { order: 2; }
-        .bd-disc.is-flipped .bd-disc-body { order: 1; }
-
-        .bd-disc-body {
-            padding: 40px 42px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .bd-disc-index {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.74rem;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--accent-blue);
-            margin-bottom: 12px;
-        }
-
-        .bd-disc-body h3 {
-            font-family: 'Outfit', sans-serif;
-            font-size: clamp(1.35rem, 2.4vw, 1.75rem);
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            margin-bottom: 12px;
-        }
-
-        .bd-disc-body > p {
-            color: var(--text-gray);
-            font-size: 0.96rem;
-            line-height: 1.7;
-            margin-bottom: 22px;
-        }
-
-        .bd-disc-list {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 9px 20px;
-            margin-bottom: 26px;
-        }
-
-        .bd-disc-list li {
-            position: relative;
-            padding-left: 22px;
-            font-size: 0.89rem;
-            color: var(--text-gray);
-            line-height: 1.5;
-        }
-
-        .bd-disc-list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 7px;
-            width: 8px;
-            height: 8px;
-            border-radius: 2px;
-            background: var(--grad-glow);
-        }
-
-        .bd-disc-foot {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 18px;
-            flex-wrap: wrap;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-glass);
-        }
-
-        .bd-disc-price {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            font-size: 1.02rem;
-            color: var(--text-white);
-        }
-
-        .bd-disc-price small {
-            display: block;
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            font-size: 0.74rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: var(--text-faded);
-            margin-bottom: 3px;
-        }
-
-        .bd-disc-turn {
-            font-size: 0.8rem;
-            color: var(--text-faded);
-            letter-spacing: 0.02em;
-        }
-
-        /* --- Creative work grid ------------------------------------------- */
-        .bd-work-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-
-        .bd-work-card {
-            position: relative;
-            display: block;
-            aspect-ratio: 4 / 5;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border-glass);
-            background: #0d0618;
-            text-decoration: none;
-        }
-
-        .bd-work-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top center;
-            display: block;
-        }
-
-        /* Pixel-dissolve reveal. The blocks are injected by the script at
-           the foot of the page so the markup stays readable; the diagonal
-           stagger lives in --din / --dout on each block. */
-        .bd-pixels {
-            position: absolute;
-            inset: 0;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: repeat(6, 1fr);
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .bd-pixels i {
-            background: rgba(11, 3, 22, 0.88);
-            transform: scale(0);
-            opacity: 0;
-            transform-origin: center;
-            transition: transform 0.25s ease, opacity 0.25s ease;
-            transition-delay: var(--dout, 0s);
-        }
-
-        .bd-work-card:hover .bd-pixels i,
-        .bd-work-card:focus-visible .bd-pixels i {
-            transform: scale(1.02);
-            opacity: 1;
-            transition-delay: var(--din, 0s);
-        }
-
-        .bd-work-mark {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            z-index: 4;
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            color: #fff;
-            font-size: 0.85rem;
-            line-height: 1;
-            opacity: 0;
-            transform: translateY(-4px);
-            transition: opacity 0.35s ease 0.12s, transform 0.35s ease 0.12s;
-        }
-
-        .bd-work-card:hover .bd-work-mark,
-        .bd-work-card:focus-visible .bd-work-mark {
-            opacity: 1;
-            transform: none;
-        }
-
-        /* Readable at rest — the plate is the label, not a hover reward. */
-        .bd-work-plate {
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            z-index: 4;
-            max-width: 82%;
-            background: #fff;
-            color: var(--text-dark);
-            padding: 11px 18px 12px;
-            border-top-right-radius: 12px;
-        }
-
-        .bd-work-plate strong {
-            display: block;
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-        }
-
-        .bd-work-plate span {
-            display: block;
-            margin-top: 3px;
-            font-size: 0.76rem;
-            color: var(--text-dark-faded);
-            letter-spacing: 0.02em;
-        }
-
-        .bd-work-card:focus-visible {
-            outline: 2px solid var(--accent-blue);
-            outline-offset: 3px;
-        }
-
-        /* Before-After Slider */
-        .ba-slider {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 4 / 5;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border-glass);
-            background: #0d0618;
-            --pos: 50%;
-        }
-        .ba-image-after, .ba-image-before {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .ba-image-before {
-            z-index: 2;
-            clip-path: polygon(0 0, var(--pos) 0, var(--pos) 100%, 0 100%);
-        }
-        .ba-image-after img, .ba-image-before img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top center;
-            display: block;
-        }
-        .ba-range {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            opacity: 0;
-            cursor: ew-resize;
-            margin: 0;
-        }
-        .ba-line {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: var(--pos);
-            width: 3px;
-            background: #8B3DFF;
-            z-index: 3;
-            transform: translateX(-50%);
-            pointer-events: none;
-            box-shadow: 0 0 10px rgba(139, 61, 255, 0.5);
-        }
-        .ba-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 36px;
-            height: 36px;
-            background: #fff;
-            border: 2px solid #8B3DFF;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            color: #8B3DFF;
-        }
-        .ba-labels {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            display: flex;
-            justify-content: space-between;
-            z-index: 4;
-            pointer-events: none;
-        }
-        .ba-label {
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* --- Responsive ---------------------------------------------------- */
-        @media (max-width: 1180px) {
-            .bd-hero-grid { gap: 44px; }
-            .bd-index-row { grid-template-columns: 48px 1fr auto 26px; row-gap: 6px; }
-            .bd-index-desc { grid-column: 2 / -1; }
-        }
-
-        @media (max-width: 992px) {
-            .bd-hero { padding: 80px 0 54px; }
-            .bd-hero-grid { grid-template-columns: 1fr; gap: 48px; }
-            .bd-board-wrap { max-width: 540px; }
-            .bd-board-wrap .wd-hero-mascot-space { margin: 14px 0 0 0; }
-            .bd-index { margin-top: 48px; }
-            .bd-approach-grid { grid-template-columns: 1fr; gap: 34px; }
-            .bd-disc { grid-template-columns: 1fr; }
-            .bd-disc .bd-figure { min-height: 240px; }
-            /* Order resets, otherwise every other panel leads with its text. */
-            .bd-disc.is-flipped .bd-figure,
-            .bd-disc.is-flipped .bd-disc-body { order: 0; }
-            .bd-disc-body { padding: 30px 24px; }
-            .bd-work-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        @media (max-width: 600px) {
-            .bd-disc-list { grid-template-columns: 1fr; }
-            .bd-work-grid { grid-template-columns: 1fr; gap: 12px; }
-            .bd-stats { gap: 14px 28px; }
-            .bd-hero-stats { gap: 16px 30px; }
-            .bd-hero-cta { gap: 14px 20px; }
-            .bd-cell { padding: 20px 16px; }
-            .bd-swatches { gap: 6px; }
-            .bd-swatch span { font-size: 0.5rem; }
-            .bd-index-row { grid-template-columns: 40px 1fr 22px; padding: 18px 4px; }
-            .bd-index-desc { grid-column: 2 / -1; }
-            .bd-index-price { grid-column: 2 / -1; }
-            .bd-index-row:hover, .bd-index-row:focus-visible { padding-left: 10px; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .bd-figure img,
-            .bd-disc,
-            .bd-pixels i,
-            .bd-index-row,
-            .bd-index-go,
-            .bd-work-mark { transition: none; }
-            .bd-disc:hover .bd-figure img { transform: scale(var(--zoom, 1)); }
-            .bd-rise { opacity: 1; animation: none; }
-        }
-
-        /* ==================================================================
-           MP — page-specific additions
-           ================================================================== */
-
-        /* --- Hero right column: a delivery slate ---------------------------
-           The argument this page has to make in its first screen is that one
-           shoot is cut for several places, so the panel lists the real ratios
-           and durations rather than showing a stock frame of a camera.
-           ------------------------------------------------------------------ */
-        .mp-slate {
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-glass);
-            background: var(--bg-glass);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            overflow: hidden;
-        }
-
-        .mp-slate-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 18px;
-            border-bottom: 1px solid var(--border-glass);
-            background: rgba(139, 61, 255, 0.08);
-        }
-
-        .mp-slate-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: #8B3DFF;
-            flex: none;
-        }
-
-        .mp-slate-dot:nth-child(2) { background: rgba(139, 61, 255, 0.5); }
-        .mp-slate-dot:nth-child(3) { background: rgba(139, 61, 255, 0.25); }
-
-        .mp-slate-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--text-faded);
-            margin-left: 4px;
-        }
-
-        .mp-slate-body { padding: 8px 18px 18px; }
-
-        .mp-cut {
-            display: grid;
-            grid-template-columns: 54px 1fr auto;
-            align-items: center;
-            gap: 16px;
-            padding: 15px 4px;
-            border-bottom: 1px solid var(--border-glass);
-        }
-
-        .mp-cut:last-child { border-bottom: 0; }
-
-        /* The ratio block is drawn to its own aspect ratio, so the shape of
-           each row is the thing it is describing. */
-        .mp-ratio {
-            border: 1.5px solid rgba(139, 61, 255, 0.55);
-            border-radius: 5px;
-            background: rgba(139, 61, 255, 0.10);
-            justify-self: center;
-        }
-
-        .mp-ratio.is-vertical { width: 26px; aspect-ratio: 9 / 16; }
-        .mp-ratio.is-square   { width: 40px; aspect-ratio: 1 / 1; }
-        .mp-ratio.is-wide     { width: 54px; aspect-ratio: 16 / 9; }
-
-        .mp-cut-name {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--text-light);
-            display: block;
-        }
-
-        .mp-cut-where {
-            font-size: 0.82rem;
-            color: var(--text-faded);
-            display: block;
-            margin-top: 2px;
-        }
-
-        .mp-cut-len {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--accent-blue);
-            white-space: nowrap;
-        }
-
-        /* --- Contact sheet, used as the photography panel's figure ---------
-           There is no stock frame here that would be honest — a photograph of
-           a photographer says nothing about the work — so the figure is a
-           frame grid instead, which at least describes the deliverable.
-           ------------------------------------------------------------------ */
-        .mp-sheet {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: 1fr;
-            gap: 10px;
-            padding: 22px;
-            background:
-                radial-gradient(circle at 30% 20%, rgba(139, 61, 255, 0.18), transparent 60%),
-                #140a24;
-            align-content: center;
-        }
-
-        .mp-frame {
-            border: 1px solid rgba(139, 61, 255, 0.3);
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.035);
-            position: relative;
-            min-height: 74px;
-        }
-
-        .mp-frame::after {
-            content: attr(data-n);
-            position: absolute;
-            left: 7px;
-            bottom: 5px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .mp-frame.is-pick {
-            background: rgba(139, 61, 255, 0.22);
-            border-color: rgba(139, 61, 255, 0.75);
-        }
-
-        /* --- Cross-link back to the design page ---------------------------- */
-        .mp-crosslink {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 24px;
-            flex-wrap: wrap;
-            padding: 26px 30px;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-glass);
-            background: var(--bg-glass);
-        }
-
-        .mp-crosslink p {
-            color: var(--text-gray);
-            font-size: 0.97rem;
-            line-height: 1.65;
-            margin: 0;
-            max-width: 620px;
-        }
-
-        .mp-crosslink strong { color: var(--text-light); }
-
-        /* --- Responsive ---------------------------------------------------- */
-        @media (max-width: 992px) {
-            .mp-slate { max-width: 520px; margin: 0 auto; }
-        }
-
-        @media (max-width: 600px) {
-            .mp-cut { grid-template-columns: 44px 1fr; row-gap: 4px; }
-            .mp-cut-len { grid-column: 2; }
-            .mp-sheet { padding: 16px; gap: 8px; }
-            .mp-frame { min-height: 56px; }
-            .mp-crosslink { padding: 22px 20px; }
-        }
     </style>
 </head>
 <body>
@@ -1583,414 +993,386 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <main>
 
-        <!-- Glowing Ambient Background Drops -->
-        <div class="glow-wrapper">
-            <div class="glow-orb orb-primary"></div>
-            <div class="glow-orb orb-secondary"></div>
-            <div class="glow-orb orb-accent"></div>
-        </div>
+        <!-- ============================================================
+             HERO
+             ============================================================ -->
+        <section class="mp-hero" id="home">
+            <div class="mp-hero-plate" aria-hidden="true"></div>
+            <div class="mp-hero-wash" aria-hidden="true"></div>
+            <div class="mp-hero-vignette" aria-hidden="true"></div>
 
-        <!-- Hero. Left column states the offer; right column is the argument
-             the page has to win in its first screen — that one shoot leaves
-             as several cuts, each sized for where it actually plays. -->
-        <section class="bd-hero" id="home">
+            <div class="mp-bar mp-bar-top" aria-hidden="true">
+                <span class="mp-rec">Rec</span>
+                <span class="mp-bar-hide">Script · Shoot · Edit</span>
+                <span>4K · 9:16 · 1:1 · 16:9</span>
+            </div>
+
+            <span class="mp-tick tl" aria-hidden="true"></span>
+            <span class="mp-tick tr" aria-hidden="true"></span>
+            <span class="mp-tick bl" aria-hidden="true"></span>
+            <span class="mp-tick br" aria-hidden="true"></span>
+
             <div class="container">
-                <div class="bd-hero-grid">
+                <div class="mp-hero-inner">
+                    <span class="mp-kicker">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        Video Production · Dubai
+                    </span>
 
-                    <div class="bd-lead">
-                        <div class="bd-eyebrow bd-rise bd-rise-1">Media Production</div>
+                    <h1>We make the video that <em>makes the sale</em>.</h1>
 
-                        <h1 class="bd-hero-title bd-rise bd-rise-2">
-                            Shot once.<br>Cut for everywhere it plays.
-                        </h1>
+                    <p class="mp-hero-sub">
+                        Not footage you file away. Scripting, casting, crew, camera and edit run by one team
+                        under one invoice — plus the creators, the UGC and the AI production that keep the
+                        content coming long after the shoot day ends.
+                    </p>
 
-                        <p class="bd-hero-sub bd-rise bd-rise-3">
-                            Most footage dies in the export. A film is made at one length, one shape and one
-                            pace, then squeezed into a feed that rewards none of them. We plan the shoot around
-                            the cuts it has to produce — vertical, square and wide, short and long — so the
-                            same day on set feeds the ad, the reel and the website without any of them looking
-                            like an afterthought.
-                        </p>
-
-                        <div class="bd-hero-cta bd-rise bd-rise-4">
-                            <a href="#enquire" class="btn btn-primary">Brief a production</a>
-                            <a href="#build" class="btn btn-secondary">What we produce</a>
-                        </div>
-
-                        <div class="bd-hero-stats bd-rise bd-rise-5">
-                            <div class="bd-stat">
-                                <strong>4K</strong>
-                                <span>Capture and master</span>
-                            </div>
-                            <div class="bd-stat">
-                                <strong>3</strong>
-                                <span>Ratios cut per film</span>
-                            </div>
-                            <div class="bd-stat">
-                                <strong>Project files</strong>
-                                <span>Handed over on request</span>
-                            </div>
-                        </div>
+                    <div class="mp-hero-cta">
+                        <a href="#enquire" class="btn btn-primary">Book a production call</a>
+                        <a href="#pipeline" class="btn btn-secondary">See how a shoot runs</a>
                     </div>
 
-                    <div class="mp-slate bd-rise bd-rise-3" aria-label="How one shoot is delivered">
-                        <div class="mp-slate-bar">
-                            <span class="mp-slate-dot"></span>
-                            <span class="mp-slate-dot"></span>
-                            <span class="mp-slate-dot"></span>
-                            <span class="mp-slate-title">One shoot · three cuts</span>
-                        </div>
-                        <div class="mp-slate-body">
-                            <div class="mp-cut">
-                                <span class="mp-ratio is-vertical" aria-hidden="true"></span>
-                                <span>
-                                    <span class="mp-cut-name">9:16 vertical</span>
-                                    <span class="mp-cut-where">Reels, TikTok, Stories, Shorts</span>
-                                </span>
-                                <span class="mp-cut-len">15–30s</span>
-                            </div>
-                            <div class="mp-cut">
-                                <span class="mp-ratio is-square" aria-hidden="true"></span>
-                                <span>
-                                    <span class="mp-cut-name">1:1 square</span>
-                                    <span class="mp-cut-where">Feed posts and paid social</span>
-                                </span>
-                                <span class="mp-cut-len">15–60s</span>
-                            </div>
-                            <div class="mp-cut">
-                                <span class="mp-ratio is-wide" aria-hidden="true"></span>
-                                <span>
-                                    <span class="mp-cut-name">16:9 wide</span>
-                                    <span class="mp-cut-where">Website hero, YouTube, events</span>
-                                </span>
-                                <span class="mp-cut-len">60–120s</span>
-                            </div>
-                        </div>
+                    <div class="mp-strip">
+                        <span>In-house crew &amp; equipment</span>
+                        <span>Influencer &amp; creator network</span>
+                        <span>Editing team on staff</span>
+                        <span>AI video &amp; UGC at scale</span>
                     </div>
+                </div>
+            </div>
 
+            <div class="mp-bar mp-bar-bottom" aria-hidden="true">
+                <span>The Web Branding</span>
+                <span class="mp-bar-hide">Media Production</span>
+                <span>Dubai · UAE</span>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             OUTCOMES — what the client ends up with. Runs before any
+             capability list, because that is what is actually being bought.
+             ============================================================ -->
+        <section class="section-padding" id="outcomes">
+            <div class="container">
+                <div style="max-width: 760px; margin-bottom: 46px;" class="fade-in-up">
+                    <span class="section-tag">What you end up with</span>
+                    <h2 class="section-title" style="text-align: left;">Production is the cost. This is the point.</h2>
+                    <p style="color: var(--text-gray); font-size: 1.05rem; line-height: 1.7;">
+                        Anyone can hand over a film. What a business needs is the month of content, the ad it
+                        can run, and the proof that makes someone buy. We work backwards from those.
+                    </p>
                 </div>
 
-                <!-- Four disciplines as an index rather than four cards. Each
-                     row links to its full panel in #build. -->
-                <div class="bd-index bd-rise bd-rise-5">
-                    <a href="#d-production" class="bd-index-row">
-                        <span class="bd-index-num">01</span>
-                        <span class="bd-index-name">Video Production</span>
-                        <span class="bd-index-desc">Crew, camera, lighting and sound — planned around the cuts the footage has to produce.</span>
-                        <span class="bd-index-price"><small>Quoted</small>On scope</span>
-                        <span class="bd-index-go" aria-hidden="true">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </span>
-                    </a>
+                <div class="mp-ledger">
+                    <div class="mp-ledger-row fade-in-up">
+                        <span class="mp-ledger-num">01</span>
+                        <h3>A month of content from one day on set</h3>
+                        <p>
+                            The shoot is planned against the calendar it has to fill, so one crew day leaves
+                            with the hero film, the cutdowns, the vertical hooks and the stills — instead of a
+                            single long video and nothing to post the following week.
+                        </p>
+                    </div>
 
-                    <a href="#d-video" class="bd-index-row">
-                        <span class="bd-index-num">02</span>
-                        <span class="bd-index-name">Video Editing</span>
-                        <span class="bd-index-desc">Reels, ads and brand films cut, graded and captioned in the identity you already have.</span>
-                        <span class="bd-index-price"><small>From</small>AED 2,499</span>
-                        <span class="bd-index-go" aria-hidden="true">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </span>
-                    </a>
+                    <div class="mp-ledger-row fade-in-up">
+                        <span class="mp-ledger-num">02</span>
+                        <h3>Ads you can put spend behind</h3>
+                        <p>
+                            Every cut is built to be run, not just watched: the hook lands in the first second,
+                            captions carry it on mute, and the same idea ships in enough variants that the
+                            media buyer has something to test rather than one file to defend.
+                        </p>
+                    </div>
 
-                    <a href="#d-motion" class="bd-index-row">
-                        <span class="bd-index-num">03</span>
-                        <span class="bd-index-name">Motion Graphics</span>
-                        <span class="bd-index-desc">Logo stings, titles, explainers and animated type built from the brand's own artwork.</span>
-                        <span class="bd-index-price"><small>Quoted</small>On scope</span>
-                        <span class="bd-index-go" aria-hidden="true">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </span>
-                    </a>
+                    <div class="mp-ledger-row fade-in-up">
+                        <span class="mp-ledger-num">03</span>
+                        <h3>Faces your audience already trusts</h3>
+                        <p>
+                            We cast from a working network of influencers and creators, brief them properly,
+                            and keep usage rights in writing — so the content can run as a paid ad afterwards
+                            instead of expiring the day the story does.
+                        </p>
+                    </div>
 
-                    <a href="#d-photo" class="bd-index-row">
-                        <span class="bd-index-num">04</span>
-                        <span class="bd-index-name">Photography</span>
-                        <span class="bd-index-desc">Product, interior, food and team shoots, retouched and cropped for every placement.</span>
-                        <span class="bd-index-price"><small>Quoted</small>On scope</span>
-                        <span class="bd-index-go" aria-hidden="true">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </span>
-                    </a>
+                    <div class="mp-ledger-row fade-in-up">
+                        <span class="mp-ledger-num">04</span>
+                        <h3>Volume that does not need a second budget</h3>
+                        <p>
+                            AI production and UGC fill the gap between big shoots. Variants, localisations,
+                            avatars, voiceovers and product scenes are generated in days, so the feed stays fed
+                            between the campaigns that genuinely justify a full crew.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- The argument for producing rather than commissioning ad hoc. -->
-        <section class="section-padding" id="approach" style="border-top: 1px solid var(--border-glass);">
+        <!-- ============================================================
+             PIPELINE
+             ============================================================ -->
+        <section class="section-padding" id="pipeline" style="border-top: 1px solid var(--border-glass);">
             <div class="container">
-                <div style="text-align: center; margin-bottom: 40px;" class="fade-in-up">
-                    <span class="section-tag center no-dot">How we work</span>
-                    <h2 class="section-title">The edit is decided before the camera moves</h2>
-                    <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">
-                        A shoot booked without knowing what it has to become is the most expensive way to end
-                        up with footage nobody uses.
+                <div style="max-width: 760px;" class="fade-in-up">
+                    <span class="section-tag">End to end</span>
+                    <h2 class="section-title" style="text-align: left;">One team from the first line to the final export</h2>
+                    <p style="color: var(--text-gray); font-size: 1.05rem; line-height: 1.7;">
+                        The usual way to make a video is to hire a writer, a crew, an editor and a colourist
+                        and hope they agree. Every stage below is ours, which is why the thing that arrives is
+                        the thing that was pitched.
                     </p>
                 </div>
 
-                <div class="bd-approach-grid">
-                    <article class="bd-cred fade-in-up">
-                        <h3>Formats first</h3>
-                        <p>
-                            We agree the deliverables — how many cuts, at what ratios, at what lengths — before
-                            a call sheet exists. Framing on the day then leaves room for the vertical crop
-                            instead of forcing it later, which is why so much repurposed footage looks wrong.
-                        </p>
-                    </article>
+                <div class="mp-pipeline">
+                    <div class="mp-stage fade-in-up">
+                        <div class="mp-stage-dot">01</div>
+                        <h4>Script</h4>
+                        <p>The idea, the hook and the words — written against where it will run and who has to act on it.</p>
+                    </div>
 
-                    <article class="bd-cred fade-in-up delay-100">
-                        <h3>Your brand, not a preset</h3>
-                        <p>
-                            Grades, titles, captions and end cards are built from the palette and typeface the
-                            brand already uses. Footage is where most identities come apart; it should look
-                            like the same company that made the feed post.
-                        </p>
-                    </article>
+                    <div class="mp-stage fade-in-up delay-100">
+                        <div class="mp-stage-dot">02</div>
+                        <h4>Cast</h4>
+                        <p>Presenters, creators or influencers matched to the audience, briefed and contracted for the usage you need.</p>
+                    </div>
 
-                    <article class="bd-cred fade-in-up delay-200">
-                        <h3>Shot for the second view</h3>
-                        <p>
-                            Enough coverage, b-roll and cutaways are captured to recut the same material for a
-                            new campaign without going back to set. One production day should keep paying out
-                            for months, not expire with the campaign it was booked for.
-                        </p>
-                    </article>
+                    <div class="mp-stage fade-in-up delay-200">
+                        <div class="mp-stage-dot">03</div>
+                        <h4>Shoot</h4>
+                        <p>Our cameraman, lighting and sound on location or in studio, working a shot list built from the deliverables.</p>
+                    </div>
+
+                    <div class="mp-stage fade-in-up delay-300">
+                        <div class="mp-stage-dot">04</div>
+                        <h4>Edit</h4>
+                        <p>Cut, graded, captioned and titled in-house — including every vertical, square and wide version.</p>
+                    </div>
+
+                    <div class="mp-stage fade-in-up delay-400">
+                        <div class="mp-stage-dot">05</div>
+                        <h4>Deliver</h4>
+                        <p>Masters, platform exports and subtitle files handed over ready to upload, with the selects and project files on request.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- The four disciplines in full. -->
-        <section class="section-padding" id="build" style="border-top: 1px solid var(--border-glass);">
+        <!-- ============================================================
+             CAPABILITIES
+             ============================================================ -->
+        <section class="section-padding" id="capabilities" style="border-top: 1px solid var(--border-glass);">
             <div class="container">
-                <div style="text-align: center; margin-bottom: 50px;" class="fade-in-up">
-                    <span class="section-tag center no-dot">What we produce</span>
-                    <h2 class="section-title">Four disciplines, one production</h2>
-                    <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">
-                        Booked together or on their own — but run by the same team, so the stills, the film and
-                        the animation come back looking like they belong to each other.
+                <div style="max-width: 760px; margin-bottom: 42px;" class="fade-in-up">
+                    <span class="section-tag">What we run in-house</span>
+                    <h2 class="section-title" style="text-align: left;">The reason none of it gets subcontracted</h2>
+                </div>
+
+                <div class="mp-bento">
+
+                    <article class="mp-tile is-lead fade-in-up">
+                        <div class="mp-tile-img" style="background-image: url('./assets/service-video.webp');" aria-hidden="true"></div>
+                        <span class="mp-tile-tag">Full production</span>
+                        <h3>Scripting to final export</h3>
+                        <p>
+                            Corporate films, brand stories, product launches, ads and event coverage — taken
+                            from a blank page through to the graded, captioned files you publish. One brief,
+                            one team, one point of contact for the whole thing.
+                        </p>
+                        <ul class="mp-tile-list">
+                            <li>Concept &amp; script</li>
+                            <li>Storyboard</li>
+                            <li>Direction</li>
+                            <li>Grade &amp; sound</li>
+                        </ul>
+                    </article>
+
+                    <article class="mp-tile is-tall fade-in-up delay-100">
+                        <span class="mp-tile-tag">Talent</span>
+                        <h3>Influencers &amp; creators</h3>
+                        <p>
+                            A working network rather than a database — creators we have actually shot with,
+                            matched to your audience and price bracket. We handle the brief, the shoot day and
+                            the usage rights, so the content is yours to run as paid media afterwards.
+                        </p>
+                        <ul class="mp-tile-list">
+                            <li>Creator casting</li>
+                            <li>Briefing</li>
+                            <li>Usage rights</li>
+                            <li>Whitelisting</li>
+                        </ul>
+                    </article>
+
+                    <article class="mp-tile is-third fade-in-up">
+                        <span class="mp-tile-tag">Crew</span>
+                        <h3>Camera &amp; equipment</h3>
+                        <p>
+                            Professional cameramen, cinema bodies and lenses, lighting and sound kit — ours, so
+                            a shoot is scheduled around your date rather than a rental house's.
+                        </p>
+                    </article>
+
+                    <article class="mp-tile is-third fade-in-up delay-100">
+                        <div class="mp-tile-img" style="background-image: url('./assets/motion_graphics_design.webp');" aria-hidden="true"></div>
+                        <span class="mp-tile-tag">Post</span>
+                        <h3>Editing team</h3>
+                        <p>
+                            Editors, colourists and motion designers on staff. Revisions come back in days, and
+                            the brand's typeface and palette are already in the project.
+                        </p>
+                    </article>
+
+                    <article class="mp-tile is-third fade-in-up delay-200">
+                        <span class="mp-tile-tag">Stills</span>
+                        <h3>Photography</h3>
+                        <p>
+                            Product, interior, food and team photography shot alongside the video on the same
+                            day, retouched and cropped for every placement.
+                        </p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             AI
+             ============================================================ -->
+        <section class="section-padding" id="ai" style="border-top: 1px solid var(--border-glass);">
+            <div class="container">
+                <div class="mp-ai fade-in-up">
+                    <div class="mp-ai-grid">
+                        <div class="mp-ai-body">
+                            <span class="section-tag">AI production</span>
+                            <h2 class="section-title" style="text-align: left; margin-bottom: 16px;">Ten versions for the cost of arguing about one</h2>
+                            <p style="color: var(--text-gray); font-size: 1rem; line-height: 1.72;">
+                                AI is how the volume problem gets solved — variants, languages, avatars and
+                                product scenes produced in days instead of booking a second shoot. It is not
+                                how the flagship film gets made, and we will tell you which one you are asking
+                                for.
+                            </p>
+
+                            <div class="mp-split">
+                                <div class="mp-split-col is-yes">
+                                    <h4>Where AI earns its place</h4>
+                                    <ul>
+                                        <li>Ad variants and A/B versions at volume</li>
+                                        <li>UGC-style creator content without a booking</li>
+                                        <li>Avatar presenters and voiceover</li>
+                                        <li>Arabic and multi-language versions</li>
+                                        <li>Product scenes and backgrounds</li>
+                                        <li>Storyboards and pre-visualisation</li>
+                                    </ul>
+                                </div>
+
+                                <div class="mp-split-col is-no">
+                                    <h4>Where we still roll camera</h4>
+                                    <ul>
+                                        <li>Your actual premises, product and team</li>
+                                        <li>Founder and customer testimonials</li>
+                                        <li>Anything a customer must believe is real</li>
+                                        <li>Food, interiors and texture-critical work</li>
+                                        <li>Events, as they only happen once</li>
+                                        <li>The flagship brand film</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mp-ai-figure" style="background-image: url('./assets/video_ugc_production.png');" role="img" aria-label="A cinema lens above an editing timeline with generated clips and audio"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             FORMATS
+             ============================================================ -->
+        <section class="section-padding" id="formats" style="border-top: 1px solid var(--border-glass);">
+            <div class="container">
+                <div style="max-width: 760px; margin-bottom: 42px;" class="fade-in-up">
+                    <span class="section-tag">Delivered</span>
+                    <h2 class="section-title" style="text-align: left;">Shot once. Cut for everywhere it plays.</h2>
+                    <p style="color: var(--text-gray); font-size: 1.05rem; line-height: 1.7;">
+                        A film made at one length and one shape, then squeezed into a feed that rewards
+                        neither, is the most common way a production budget disappears. Every shoot leaves
+                        with all three.
                     </p>
                 </div>
 
-                <div class="bd-disciplines">
+                <div class="mp-formats">
+                    <div class="mp-format fade-in-up">
+                        <span class="mp-ratio is-vertical" aria-hidden="true"></span>
+                        <span>
+                            <strong>9:16 vertical</strong>
+                            <span>Reels, TikTok, Stories and Shorts — framed for it on the day, not cropped into it afterwards.</span>
+                        </span>
+                        <em>15–30 seconds</em>
+                    </div>
 
-                    <!-- Production -->
-                    <article class="bd-disc reveal-3d-fold" id="d-production">
-                        <div class="bd-figure" style="--pos: 50% 50%;">
-                            <img src="./assets/service-video.webp" alt="A film set with the camera on a dolly track, crew and lighting in position" loading="lazy" decoding="async" width="1024" height="1024">
-                        </div>
-                        <div class="bd-disc-body">
-                            <div class="bd-disc-index">01 — Production</div>
-                            <h3>Video production &amp; shoots</h3>
-                            <p>
-                                Everything up to the footage existing: what the film is for, who is in it, where
-                                it is shot, and what has to be in the can before the crew wraps. We run the
-                                shoot day with a call sheet and a shot list drawn from the deliverables, so the
-                                edit is not a rescue operation.
-                            </p>
-                            <ul class="bd-disc-list">
-                                <li>Concept &amp; scripting</li>
-                                <li>Storyboard &amp; shot list</li>
-                                <li>Crew, camera &amp; lighting</li>
-                                <li>Location &amp; scheduling</li>
-                                <li>Sound recording</li>
-                                <li>B-roll &amp; coverage</li>
-                            </ul>
-                            <div class="bd-disc-foot">
-                                <div class="bd-disc-price"><small>Quoted</small>On scope</div>
-                                <span class="bd-disc-turn">Half-day to multi-day · Crew sized to the brief</span>
-                                <a href="#enquire" class="btn btn-secondary">Brief a shoot</a>
-                            </div>
-                        </div>
-                    </article>
+                    <div class="mp-format fade-in-up delay-100">
+                        <span class="mp-ratio is-square" aria-hidden="true"></span>
+                        <span>
+                            <strong>1:1 square</strong>
+                            <span>Feed posts and paid social, captioned so the message survives being watched on mute.</span>
+                        </span>
+                        <em>15–60 seconds</em>
+                    </div>
 
-                    <!-- Editing. Moved here from the brand & creative design
-                         page, which now links across to it. -->
-                    <article class="bd-disc reveal-3d-fold is-flipped" id="d-video">
-                        <div class="bd-figure" style="--pos: 50% 50%;">
-                            <img src="./assets/video_ugc_production.png" alt="A cinema lens above an editing timeline with audio waveform and captioned clips" loading="lazy" decoding="async" width="1024" height="1024">
-                        </div>
-                        <div class="bd-disc-body">
-                            <div class="bd-disc-index">02 — Post</div>
-                            <h3>Video editing &amp; post-production</h3>
-                            <p>
-                                Footage is where most brands come apart — the identity holds on the feed and
-                                then the video looks like someone else made it. We cut to the length each
-                                platform actually rewards, grade to the brand palette, and title it in the
-                                brand typeface, rather than chopping down one master film afterwards.
-                            </p>
-                            <ul class="bd-disc-list">
-                                <li>Reels &amp; shorts editing</li>
-                                <li>Colour grading</li>
-                                <li>Subtitles &amp; captions</li>
-                                <li>Titles &amp; lower thirds</li>
-                                <li>Logo sting &amp; end card</li>
-                                <li>Sound mix &amp; music</li>
-                            </ul>
-                            <div class="bd-disc-foot">
-                                <div class="bd-disc-price"><small>From</small>AED 2,499</div>
-                                <span class="bd-disc-turn">1–2 weeks · Delivered per platform</span>
-                                <a href="#enquire" class="btn btn-secondary">Brief an edit</a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Motion -->
-                    <article class="bd-disc reveal-3d-fold" id="d-motion">
-                        <div class="bd-figure" style="--pos: 56% 46%;">
-                            <img src="./assets/motion_graphics_design.webp" alt="A design workstation with a brand mark open in a vector editor" loading="lazy" decoding="async" width="1536" height="1024">
-                        </div>
-                        <div class="bd-disc-body">
-                            <div class="bd-disc-index">03 — Motion</div>
-                            <h3>Motion graphics &amp; animation</h3>
-                            <p>
-                                A logo that only exists as a flat file has nothing to do when it arrives on
-                                screen. We animate from the brand's own artwork — the real mark, the real
-                                typeface, the real palette — so a sting, a title card and an explainer all move
-                                the same way rather than each borrowing a different template.
-                            </p>
-                            <ul class="bd-disc-list">
-                                <li>Logo sting &amp; ident</li>
-                                <li>Animated titles &amp; type</li>
-                                <li>Explainer animation</li>
-                                <li>Infographic motion</li>
-                                <li>Social motion templates</li>
-                                <li>Product &amp; UI animation</li>
-                            </ul>
-                            <div class="bd-disc-foot">
-                                <div class="bd-disc-price"><small>Quoted</small>On scope</div>
-                                <span class="bd-disc-turn">1–3 weeks · Project files on request</span>
-                                <a href="#enquire" class="btn btn-secondary">Brief an animation</a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Photography. The figure is a frame grid rather than a
-                         stock photograph — a picture of a photographer says
-                         nothing about the work, a contact sheet at least
-                         describes the deliverable. -->
-                    <article class="bd-disc reveal-3d-fold is-flipped" id="d-photo">
-                        <div class="bd-figure mp-sheet" role="img" aria-label="A contact sheet of eight frames with two selected">
-                            <span class="mp-frame" data-n="01"></span>
-                            <span class="mp-frame is-pick" data-n="02"></span>
-                            <span class="mp-frame" data-n="03"></span>
-                            <span class="mp-frame" data-n="04"></span>
-                            <span class="mp-frame" data-n="05"></span>
-                            <span class="mp-frame is-pick" data-n="06"></span>
-                            <span class="mp-frame" data-n="07"></span>
-                            <span class="mp-frame" data-n="08"></span>
-                            <span class="mp-frame" data-n="09"></span>
-                        </div>
-                        <div class="bd-disc-body">
-                            <div class="bd-disc-index">04 — Stills</div>
-                            <h3>Photography &amp; retouching</h3>
-                            <p>
-                                A product listing, a menu, a hotel page and a paid ad all want the same subject
-                                at different crops. We shoot with those placements known, then retouch and cut
-                                the selects to each one, so nothing has to be re-shot because it will not fit
-                                the space it was bought for.
-                            </p>
-                            <ul class="bd-disc-list">
-                                <li>Product &amp; e-commerce</li>
-                                <li>Interior &amp; property</li>
-                                <li>Food &amp; hospitality</li>
-                                <li>Team &amp; headshots</li>
-                                <li>Retouching &amp; clean-up</li>
-                                <li>Crops per placement</li>
-                            </ul>
-                            <div class="bd-disc-foot">
-                                <div class="bd-disc-price"><small>Quoted</small>On scope</div>
-                                <span class="bd-disc-turn">Selects in days · Retouched set to follow</span>
-                                <a href="#enquire" class="btn btn-secondary">Brief a shoot</a>
-                            </div>
-                        </div>
-                    </article>
-
+                    <div class="mp-format fade-in-up delay-200">
+                        <span class="mp-ratio is-wide" aria-hidden="true"></span>
+                        <span>
+                            <strong>16:9 wide</strong>
+                            <span>Website hero, YouTube, presentations and events — the full film, at full quality.</span>
+                        </span>
+                        <em>60–120 seconds</em>
+                    </div>
                 </div>
 
-                <!-- Sends identity work back where it belongs, now that video
-                     has moved off the brand & creative design page. -->
-                <div class="mp-crosslink fade-in-up" style="margin-top: 34px;">
-                    <p>
-                        <strong>Need the identity itself?</strong> Logo, typography, palette, guidelines, UI/UX
-                        and social templates are handled on the brand &amp; creative design page — and what we
-                        animate and grade here is drawn straight from it.
+                <!-- Identity work lives on the design page; what we grade and
+                     title here is drawn from it. -->
+                <div class="mp-tile is-half fade-in-up" style="grid-column: auto; min-height: auto; margin-top: 22px; flex-direction: row; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+                    <p style="max-width: 620px;">
+                        <strong style="color: #fff;">Need the identity itself?</strong> Logo, typography, palette,
+                        guidelines, UI/UX and social templates are handled on the brand &amp; creative design
+                        page — and everything we grade and title here is drawn from it.
                     </p>
                     <a href="brand-design-services.html" class="btn btn-secondary">Brand &amp; creative design</a>
                 </div>
             </div>
         </section>
 
-        <!-- What lands at the end, stated plainly. -->
-        <section class="section-padding" id="deliverables" style="border-top: 1px solid var(--border-glass);">
-            <div class="container">
-                <div style="text-align: center; margin-bottom: 40px;" class="fade-in-up">
-                    <span class="section-tag center no-dot">What you receive</span>
-                    <h2 class="section-title">Delivered so it can be used tomorrow</h2>
-                    <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">
-                        Every production hands over in the formats the placements need, not one master file
-                        and an invoice.
-                    </p>
-                </div>
-
-                <div class="wd-included">
-                    <div class="wd-inc-item fade-in-up">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
-                        <h4>Cuts per platform</h4>
-                        <p>Vertical, square and wide versions of the same film, each cut to the length that platform rewards rather than letterboxed from one master.</p>
-                    </div>
-
-                    <div class="wd-inc-item fade-in-up delay-100">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        <h4>Masters &amp; web exports</h4>
-                        <p>A high-bitrate master for archive and compressed exports sized for upload, so quality is not decided by whatever the platform does to a single file.</p>
-                    </div>
-
-                    <div class="wd-inc-item fade-in-up delay-200">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
-                        <h4>Captions &amp; subtitles</h4>
-                        <p>Burned-in captions for social plus a separate subtitle file where the platform supports it, because most of the audience watches on mute.</p>
-                    </div>
-
-                    <div class="wd-inc-item fade-in-up delay-300">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                        <h4>Selects &amp; raw material</h4>
-                        <p>The graded selects and, on request, the underlying footage and project files — so a future edit does not depend on us still holding the drive.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Enquiry -->
+        <!-- ============================================================
+             ENQUIRY
+             ============================================================ -->
         <section class="section-padding" id="enquire" style="border-top: 1px solid var(--border-glass);">
             <div class="container">
                 <div class="wd-enquire-grid">
 
                     <div class="fade-in-up">
                         <span class="section-tag">Start a conversation</span>
-                        <h2 class="section-title" style="text-align: left;">Tell us what you need filmed</h2>
+                        <h2 class="section-title" style="text-align: left;">Tell us what it has to achieve</h2>
                         <p style="color: var(--text-gray); font-size: 1.05rem; line-height: 1.7; max-width: 480px;">
-                            You do not need a script or a storyboard. Tell us what the business does, where the
-                            video or the photographs are going to run, and roughly when you need them — that is
-                            enough for us to come back with a shape and a price.
+                            Not what you want filmed — what you need it to do. Launch a product, fill a feed,
+                            run as a paid ad, explain something complicated. We will come back with the shape
+                            of production that gets there, including when the honest answer is a smaller one.
                         </p>
 
                         <ol class="wd-next">
                             <li>
-                                <strong>You send the details</strong>
-                                <span>What needs filming or shooting, and where it will be published. No brief document required.</span>
+                                <strong>You send the goal</strong>
+                                <span>What the video is for and where it will run. No script or storyboard required.</span>
                             </li>
                             <li>
                                 <strong>We reply within one working day</strong>
-                                <span>With the deliverables, a fixed price, and a shoot window — including when the honest answer is that an edit of existing footage will do.</span>
+                                <span>With the deliverables, a fixed price and a shoot window — or a reason to spend less than you planned.</span>
                             </li>
                             <li>
                                 <strong>You approve before anyone rolls</strong>
-                                <span>Shot list and call sheet are signed off first, so what comes back is what was agreed.</span>
+                                <span>Script, shot list and call sheet are signed off first, so what comes back is what was agreed.</span>
                             </li>
                         </ol>
 
                         <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 34px;">
-                            <a href="https://wa.me/971585577182?text=I%20have%20a%20question%20about%20your%20media%20production%20services" target="_blank" rel="noopener" class="btn btn-whatsapp">WhatsApp instead</a>
+                            <a href="https://wa.me/971585577182?text=I%20have%20a%20question%20about%20your%20video%20production%20services" target="_blank" rel="noopener" class="btn btn-whatsapp">WhatsApp instead</a>
                             <a href="tel:+971544387023" class="btn btn-secondary">Call the team</a>
                         </div>
                     </div>
@@ -2017,16 +1399,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <div class="form-group">
                                 <select class="form-control" name="service" required>
                                     <option value="" disabled selected>What do you need produced?</option>
-                                    <option value="Video Production">Video production &amp; shoot</option>
-                                    <option value="Video Editing">Video editing &amp; post-production</option>
-                                    <option value="Motion Graphics">Motion graphics &amp; animation</option>
-                                    <option value="Photography">Photography &amp; retouching</option>
-                                    <option value="Social Content Retainer">Ongoing social content</option>
+                                    <option value="Full Video Production">Full video production (script to edit)</option>
+                                    <option value="Influencer Content">Influencer &amp; creator content</option>
+                                    <option value="UGC Content">UGC content</option>
+                                    <option value="AI Video">AI video &amp; variants</option>
+                                    <option value="Editing Only">Editing an existing shoot</option>
+                                    <option value="Photography">Photography</option>
+                                    <option value="Ongoing Content">Ongoing monthly content</option>
                                     <option value="Not Sure Yet">Not sure yet</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" name="message" placeholder="What's the project? A sentence or two is plenty." rows="3"></textarea>
+                                <textarea class="form-control" name="message" placeholder="What does it need to achieve? A sentence or two is plenty." rows="3"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Request quote</button>
                         </form>
@@ -2058,9 +1442,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="footer-col">
                     <span class="footer-col-title">Navigation</span>
                     <ul class="footer-menu">
-                        <li><a href="#build" class="footer-menu-link">What We Produce</a></li>
-                        <li><a href="#approach" class="footer-menu-link">How We Work</a></li>
-                        <li><a href="#deliverables" class="footer-menu-link">What You Receive</a></li>
+                        <li><a href="#outcomes" class="footer-menu-link">What You Get</a></li>
+                        <li><a href="#pipeline" class="footer-menu-link">How A Shoot Runs</a></li>
+                        <li><a href="#capabilities" class="footer-menu-link">What We Run In-House</a></li>
+                        <li><a href="#ai" class="footer-menu-link">AI Production</a></li>
                         <li><a href="brand-design-services.html" class="footer-menu-link">Brand &amp; Design</a></li>
                     </ul>
                 </div>
