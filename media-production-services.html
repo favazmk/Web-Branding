@@ -644,6 +644,116 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         /* ------------------------------------------------------------------
+           FORM CONTROLS
+
+           index.css carries no .form-control rules — every page that has a
+           form defines its own — so without this block the inputs here fall
+           back to the browser default: white boxes, Arial, no width, and a
+           monospace textarea. Sized for touch (48px+) rather than the 12px
+           padding used elsewhere, and the autofill override matters because
+           Chrome otherwise repaints a saved value on a white background and
+           the dark card loses its bottom half.
+           ------------------------------------------------------------------ */
+        .wd-form-card .form-group { min-width: 0; }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.045);
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 10px;
+            transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .form-control::placeholder { color: var(--text-faded); opacity: 1; }
+
+        .form-control:hover { border-color: rgba(255, 255, 255, 0.22); }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #8b3dff;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(139, 61, 255, 0.18);
+        }
+
+        /* Chrome paints autofilled fields white and ignores background — the
+           inset shadow is the only way to keep the field dark. */
+        .form-control:-webkit-autofill,
+        .form-control:-webkit-autofill:hover,
+        .form-control:-webkit-autofill:focus {
+            -webkit-text-fill-color: #fff;
+            -webkit-box-shadow: 0 0 0 1000px #1c0e33 inset;
+            caret-color: #fff;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        /* app.js hides the native select and builds .custom-select-container
+           in its place, so these select rules are the no-JS fallback path
+           rather than what you normally see. The custom trigger is styled to
+           match the inputs just below. */
+        select.form-control {
+            background-image: url("data:image/svg+xml;utf8,<svg fill='%23968eab' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 18px;
+            padding-right: 44px;
+            cursor: pointer;
+        }
+
+        /* Unselected state should read as a placeholder, not as an answer */
+        select.form-control:invalid { color: var(--text-faded); }
+
+        /* Native options inherit the OS palette, which renders white-on-white
+           against this dark card in some browsers. */
+        select.form-control option { background: #17092b; color: #fff; }
+        select.form-control option[disabled] { color: var(--text-faded); }
+
+        textarea.form-control {
+            font-family: 'Inter', sans-serif;
+            min-height: 104px;
+            resize: vertical;
+        }
+
+        /* index.css sizes the custom select trigger to the 12px/8px-radius
+           form used on the other pages. Scoped to this card so the dropdown
+           lines up with the taller inputs above it and no other page moves. */
+        .wd-form-card .custom-select-trigger {
+            padding: 14px 16px;
+            min-height: 51px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            /* Matches the inputs' line-height so the trigger lands at the same
+               51px as the fields above it rather than 54px. */
+            line-height: 1.4;
+            background: rgba(255, 255, 255, 0.045);
+            border-color: rgba(255, 255, 255, 0.13);
+        }
+
+        .wd-form-card .custom-select-trigger:hover {
+            border-color: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.045);
+            box-shadow: none;
+        }
+
+        .wd-form-card .custom-select-container.open .custom-select-trigger {
+            border-color: #8b3dff;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(139, 61, 255, 0.18);
+        }
+
+        .wd-form-card .custom-select-trigger span.placeholder { color: var(--text-faded); }
+
+        .wd-form-card .custom-select-options { border-radius: 10px; }
+
+        .wd-form-card .custom-select-option { padding: 13px 16px; font-size: 0.92rem; }
+
+        /* ------------------------------------------------------------------
            Responsive
            ------------------------------------------------------------------ */
         @media (max-width: 1100px) {
@@ -1186,6 +1296,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </article>
 
                     <article class="mp-tile is-tall fade-in-up delay-100">
+                        <div class="mp-tile-img" style="background-image: url('./assets/influencer.webp');" aria-hidden="true"></div>
                         <span class="mp-tile-tag">Talent</span>
                         <h3>Influencers &amp; creators</h3>
                         <p>
@@ -1202,6 +1313,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </article>
 
                     <article class="mp-tile is-third fade-in-up">
+                        <div class="mp-tile-img" style="background-image: url('./assets/equipment.webp');" aria-hidden="true"></div>
                         <span class="mp-tile-tag">Crew</span>
                         <h3>Camera &amp; equipment</h3>
                         <p>
@@ -1221,6 +1333,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </article>
 
                     <article class="mp-tile is-third fade-in-up delay-200">
+                        <div class="mp-tile-img" style="background-image: url('./assets/product-shoot.webp');" aria-hidden="true"></div>
                         <span class="mp-tile-tag">Stills</span>
                         <h3>Photography</h3>
                         <p>
@@ -1277,7 +1390,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             </div>
                         </div>
 
-                        <div class="mp-ai-figure" style="background-image: url('./assets/video_ugc_production.png');" role="img" aria-label="A cinema lens above an editing timeline with generated clips and audio"></div>
+                        <div class="mp-ai-figure" style="background-image: url('./assets/ai-generation.webp');" role="img" aria-label="An AI video generator on screen, rendering a cinematic shot from a written prompt"></div>
                     </div>
                 </div>
             </div>
@@ -1384,20 +1497,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <form id="webdev-page-lead-form">
                             <div class="wd-form-row">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="name" placeholder="Name" required autocomplete="name">
+                                    <input type="text" class="form-control" name="name" placeholder="Name" aria-label="Name" required autocomplete="name">
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" class="form-control" name="phone" placeholder="Phone number" required pattern="[+]?[0-9\s\-()]{7,20}" autocomplete="tel">
+                                    <input type="tel" class="form-control" name="phone" placeholder="Phone number" aria-label="Phone number" required pattern="[+]?[0-9\s\-()]{7,20}" autocomplete="tel">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" placeholder="Email address" required autocomplete="email">
+                                <input type="email" class="form-control" name="email" placeholder="Email address" aria-label="Email address" required autocomplete="email">
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="company" placeholder="Company (optional)" autocomplete="organization">
+                                <input type="text" class="form-control" name="company" placeholder="Company (optional)" aria-label="Company (optional)" autocomplete="organization">
                             </div>
                             <div class="form-group">
-                                <select class="form-control" name="service" required>
+                                <select class="form-control" name="service" aria-label="What do you need produced?" required>
                                     <option value="" disabled selected>What do you need produced?</option>
                                     <option value="Full Video Production">Full video production (script to edit)</option>
                                     <option value="Influencer Content">Influencer &amp; creator content</option>
@@ -1410,7 +1523,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" name="message" placeholder="What does it need to achieve? A sentence or two is plenty." rows="3"></textarea>
+                                <textarea class="form-control" name="message" placeholder="What does it need to achieve? A sentence or two is plenty." aria-label="What does it need to achieve?" rows="3"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; background: #8B3DFF; border-color: #8B3DFF; color: #fff;">Request quote</button>
                         </form>
