@@ -2765,6 +2765,72 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             margin: 0;
         }
 
+    
+        /* --- Studio Logo Showcase Section --- */
+        .bd-logo-showcase {
+            background: linear-gradient(180deg, rgba(8, 3, 18, 0.7) 0%, rgba(18, 9, 36, 0.4) 50%, rgba(8, 3, 18, 0.7) 100%);
+            position: relative;
+            z-index: 5;
+        }
+
+        .bd-logo-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-top: 36px;
+        }
+
+        @media (max-width: 1024px) {
+            .bd-logo-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .bd-logo-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+        }
+
+        .bd-logo-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 24px 18px;
+            aspect-ratio: 4 / 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bd-logo-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(192, 132, 252, 0.5);
+            box-shadow: 0 12px 32px rgba(90, 44, 137, 0.35);
+            transform: translateY(-5px);
+        }
+
+        .bd-logo-img {
+            max-width: 88%;
+            max-height: 82%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+            transition: transform 0.4s ease;
+        }
+
+        .bd-logo-card:hover .bd-logo-img {
+            transform: scale(1.08);
+        }
+
     </style>
 </head>
 <body>
@@ -3250,7 +3316,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
         </section>
 
-        <!-- What we design — the four disciplines in full -->
+        
+        <!-- Studio Designed Logos Showcase -->
+        <section class="section-padding bd-logo-showcase" id="our-logos" style="border-top: 1px solid var(--border-glass);">
+            <div class="container">
+                <div style="text-align: center; max-width: 760px; margin: 0 auto 40px;" class="fade-in-up">
+                    <span class="section-tag center no-dot">CRAFTED BY US</span>
+                    <h2 class="section-title">Logos Designed By Our Studio</h2>
+                    <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">
+                        Every brand identity begins with an unmistakable mark. Here is a showcase of custom logo marks and visual identities designed and crafted in-house for our clients.
+                    </p>
+                </div>
+
+                <div class="bd-logo-grid">
+                    <div class="bd-logo-card fade-in-up">
+                        <img src="./assets/logos/logo_1.webp" alt="Custom Brand Identity Logo Mark 1 designed by The Web Branding" loading="lazy" decoding="async" class="bd-logo-img">
+                    </div>
+                    <div class="bd-logo-card fade-in-up delay-100">
+                        <img src="./assets/logos/logo_2.webp" alt="Custom Brand Identity Logo Mark 2 designed by The Web Branding" loading="lazy" decoding="async" class="bd-logo-img">
+                    </div>
+                    <div class="bd-logo-card fade-in-up delay-200">
+                        <img src="./assets/logos/logo_3.webp" alt="Custom Brand Identity Logo Mark 3 designed by The Web Branding" loading="lazy" decoding="async" class="bd-logo-img">
+                    </div>
+                    <div class="bd-logo-card fade-in-up delay-300">
+                        <img src="./assets/logos/logo_4.webp" alt="Custom Brand Identity Logo Mark 4 designed by The Web Branding" loading="lazy" decoding="async" class="bd-logo-img">
+                    </div>
+                    <div class="bd-logo-card fade-in-up delay-400">
+                        <img src="./assets/logos/logo_5.webp" alt="Custom Brand Identity Logo Mark 5 designed by The Web Branding" loading="lazy" decoding="async" class="bd-logo-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!-- What we design — the four disciplines in full -->
         <section class="section-padding" id="build" style="border-top: 1px solid var(--border-glass);">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 50px;" class="fade-in-up">
