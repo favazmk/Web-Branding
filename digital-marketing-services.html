@@ -270,21 +270,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             z-index: 10;
         }
 
-        /* Scribble Annotation */
+        /* Scribble Annotation (Positioned Below Button: Arrow on top pointing UP, Text underneath) */
         .hero-annotation-badge {
             position: absolute;
-            top: -34px;
-            right: -35px;
+            bottom: -58px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 2px;
             color: #e9d5ff;
             font-family: 'Outfit', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 600;
             letter-spacing: 0.5px;
             pointer-events: none;
-            transform: rotate(4deg);
+            white-space: nowrap;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
             animation: annotationFloat 3s infinite ease-in-out alternate;
             transition: opacity 0.4s ease, transform 0.4s ease;
@@ -292,44 +294,74 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         .hero-annotation-badge .annotation-arrow {
             color: #c084fc;
-            transform: scaleX(-1) rotate(15deg);
             filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.8));
         }
 
         @keyframes annotationFloat {
-            0% { transform: translateY(0) rotate(4deg); }
-            100% { transform: translateY(-5px) rotate(2deg); }
+            0% { transform: translateX(-50%) translateY(0); }
+            100% { transform: translateX(-50%) translateY(4px); }
         }
 
-        /* Buttons Styling (Compact size) */
+        @keyframes transform-pulse {
+            0%, 100% {
+                box-shadow: 0 0 25px rgba(157, 78, 221, 0.6), 0 0 50px rgba(90, 44, 137, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            }
+            50% {
+                box-shadow: 0 0 45px rgba(192, 132, 252, 0.95), 0 0 75px rgba(139, 92, 246, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+            }
+        }
+
+        @keyframes transform-shimmer {
+            0% { transform: translateX(-100%) rotate(25deg); }
+            100% { transform: translateX(300%) rotate(25deg); }
+        }
+
+        /* Buttons Styling (Redesigned Hero CTA) */
         .btn-hero-transform {
             position: relative;
-            background: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%);
+            background: linear-gradient(135deg, #a855f7 0%, #7b2cbf 50%, #5A2C89 100%);
             color: #ffffff;
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
-            font-size: 0.95rem;
-            padding: 13px 30px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 25px rgba(123, 44, 191, 0.6), 0 0 15px rgba(0,0,0,0.5);
+            font-size: 1.05rem;
+            padding: 16px 42px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            animation: transform-pulse 3s infinite ease-in-out;
             cursor: pointer;
             overflow: hidden;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.3s ease;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: transform, box-shadow;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .btn-hero-transform::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 45px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(25deg);
+            animation: transform-shimmer 3.5s infinite ease-in-out;
+            pointer-events: none;
         }
 
         .btn-hero-transform:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 12px 35px rgba(157, 78, 221, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-            background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+            transform: translateY(-3px) scale(1.05);
+            background: linear-gradient(135deg, #c084fc 0%, #9333ea 50%, #6b21a8 100%);
+            border-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 0 50px rgba(192, 132, 252, 0.95), 0 0 85px rgba(147, 51, 234, 0.75);
         }
 
         .btn-hero-transform:active {
-            transform: translateY(1px) scale(0.95);
+            transform: translateY(1px) scale(0.97);
         }
 
         .btn-hero-transform .btn-icon {
@@ -338,8 +370,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .btn-hero-transform:hover .btn-icon .icon-rocket {
-            transform: translateY(-3px) rotate(-10deg) scale(1.15);
+        .btn-hero-transform:hover .btn-icon {
+            transform: translateX(5px) scale(1.15);
         }
 
         .hero-btn-secondary {
@@ -1423,29 +1455,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                     <!-- CTA Buttons Stack -->
                     <div class="hero-cta-wrapper">
-                        <!-- Handwritten Annotation Badge with Arrow -->
-                        <div id="hero-annotation" class="hero-annotation-badge">
-                            <span class="annotation-text">Watch the transformation</span>
-                            <svg class="annotation-arrow" width="36" height="24" viewBox="0 0 45 28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 24C12 18 20 6 36 6M36 6L28 2M36 6L30 12"></path>
-                            </svg>
-                        </div>
-
-                        <!-- Primary CTA (Clean SVG Icon, No Rocket Emoji) -->
+                        <!-- Primary CTA -->
                         <button id="transform-cta-btn" class="btn btn-hero-transform" aria-label="Transform My Brand">
                             <span id="btn-text-content">Transform My Brand</span>
                             <span class="btn-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
-                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                    <polyline points="12 5 19 12 17 17"></polyline>
                                 </svg>
                             </span>
                         </button>
 
-                        <!-- Secondary CTA -->
-                        <a id="secondary-cta-btn" href="#projects" class="btn btn-secondary hero-btn-secondary" aria-label="See Our Work">
-                            <span id="sec-btn-text">Our Work →</span>
-                        </a>
+                        <!-- Handwritten Annotation Badge with Arrow (Under Button) -->
+                        <div id="hero-annotation" class="hero-annotation-badge">
+                            <svg class="annotation-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 19V5M5 12l7-7 7 7"></path>
+                            </svg>
+                            <span class="annotation-text">Watch the transformation</span>
+                        </div>
                     </div>
 
                 </div>
@@ -1512,7 +1539,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="service-pillar-card fade-in-up">
                         <div>
                             <div class="pillar-image-wrapper">
-                                <img src="./assets/social_media_mgmt.png" alt="Social Media Management" class="pillar-img">
+                                <img src="./assets/social_media_mgmt.jpg" alt="Social Media Management" class="pillar-img">
                                 <div class="pillar-icon-overlay">
                                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                                 </div>
@@ -1531,7 +1558,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="service-pillar-card fade-in-up delay-100">
                         <div>
                             <div class="pillar-image-wrapper">
-                                <img src="./assets/paid_ads_campaigns.png" alt="Paid Ad Campaigns" class="pillar-img">
+                                <img src="./assets/paid_ads_campaigns.jpg" alt="Paid Ad Campaigns" class="pillar-img">
                                 <div class="pillar-icon-overlay">
                                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                                 </div>
@@ -1550,7 +1577,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="service-pillar-card fade-in-up delay-200">
                         <div>
                             <div class="pillar-image-wrapper">
-                                <img src="./assets/seo_optimization.png" alt="Search Engine Optimization" class="pillar-img">
+                                <img src="./assets/seo_optimization.jpg" alt="Search Engine Optimization" class="pillar-img">
                                 <div class="pillar-icon-overlay">
                                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                 </div>
@@ -1569,7 +1596,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="service-pillar-card fade-in-up delay-300">
                         <div>
                             <div class="pillar-image-wrapper">
-                                <img src="./assets/video_ugc_production.png" alt="Video & UGC Production" class="pillar-img">
+                                <img src="./assets/video_ugc_production.jpg" alt="Video & UGC Production" class="pillar-img">
                                 <div class="pillar-icon-overlay">
                                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
                                 </div>
@@ -1915,7 +1942,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div>
                     <img src="./assets/logo.webp" alt="The Web Branding Logo" style="height: 45px; margin-bottom: 15px;">
                     <p style="color: #8b8398; font-size: 0.9rem; line-height: 1.6; max-width: 300px;">
-                        The Web Branding is a premier digital transformation and performance agency based in Dubai, UAE & Kerala, India.
+                        The Web Branding is a premier digital transformation and performance agency based in Global Agency.
                     </p>
                 </div>
                 <div>
@@ -2105,8 +2132,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         btnText.innerText = '← See Before';
                         const btnIcon = document.querySelector('#transform-cta-btn .btn-icon');
                         if(btnIcon) btnIcon.style.display = 'none';
-                        secBtnText.innerText = 'Book Free Strategy Call →';
-                        secondaryBtn.setAttribute('href', '#offer');
+                        if(secBtnText) secBtnText.innerText = 'Book Free Strategy Call →';
+                        if(secondaryBtn) secondaryBtn.setAttribute('href', '#offer');
 
                         if (annotationBadge) {
                             annotationBadge.style.opacity = '0';
@@ -2165,8 +2192,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         btnText.innerText = 'Transform My Brand';
                         const btnIcon = document.querySelector('#transform-cta-btn .btn-icon');
                         if(btnIcon) btnIcon.style.display = 'inline-flex';
-                        secBtnText.innerText = 'Our Work →';
-                        secondaryBtn.setAttribute('href', '#projects');
+                        if(secBtnText) secBtnText.innerText = 'Our Work →';
+                        if(secondaryBtn) secondaryBtn.setAttribute('href', '#projects');
 
                         if (annotationBadge) {
                             annotationBadge.style.opacity = '1';

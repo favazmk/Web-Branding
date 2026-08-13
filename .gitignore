@@ -11,6 +11,7 @@ Thumbs.db
 *.zip
 *.tar
 *.gz
+scratch/
 
 # Raw Source Assets
 assets/WEBSITE MOCKUP VIDEOS/
