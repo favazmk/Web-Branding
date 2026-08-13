@@ -2766,70 +2766,153 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
     
-        /* --- Studio Logo Showcase Section --- */
-        .bd-logo-showcase {
-            background: linear-gradient(180deg, rgba(12, 6, 26, 0.95) 0%, rgba(20, 10, 40, 0.9) 50%, rgba(12, 6, 26, 0.95) 100%);
-            position: relative;
-            z-index: 5;
-        }
-
-        .bd-logo-grid {
+        /* --- Unique Studio Logo Showcase --- */
+        .bd-unique-logo-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 18px;
-            margin-top: 36px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
         }
 
-        @media (max-width: 1200px) {
-            .bd-logo-grid {
-                grid-template-columns: repeat(3, 1fr);
+        @media (max-width: 992px) {
+            .bd-unique-logo-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .bd-unique-logo-grid {
+                grid-template-columns: 1fr;
                 gap: 20px;
             }
         }
 
-        @media (max-width: 640px) {
-            .bd-logo-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-            }
+        .bd-logo-tile {
+            background: rgba(18, 10, 32, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .bd-logo-card {
-            background: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 20px;
-            padding: 24px 20px;
+        .bd-logo-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color, #c084fc), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .bd-logo-tile:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px var(--accent-glow, rgba(192, 132, 252, 0.25));
+        }
+
+        .bd-logo-tile:hover::before {
+            opacity: 1;
+        }
+
+        .bd-tile-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .bd-tile-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 0.05em;
+        }
+
+        .bd-tile-category {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--accent-color, #c084fc);
+            background: rgba(255, 255, 255, 0.06);
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bd-tile-stage {
+            position: relative;
+            width: 100%;
             aspect-ratio: 16 / 10;
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.15);
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 24px;
             overflow: hidden;
-            position: relative;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .bd-logo-card:hover {
-            background: #ffffff;
-            border-color: rgba(192, 132, 252, 0.8);
-            box-shadow: 0 18px 45px rgba(192, 132, 252, 0.4), 0 0 20px rgba(90, 44, 137, 0.3);
-            transform: translateY(-6px);
+        .bd-tile-stage-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, var(--accent-glow, rgba(192, 132, 252, 0.25)) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
         }
 
-        .bd-logo-img {
+        .bd-logo-tile:hover .bd-tile-stage-glow {
+            opacity: 1;
+        }
+
+        .bd-unique-logo-img {
             max-width: 82%;
             max-height: 75%;
             width: auto;
             height: auto;
             object-fit: contain;
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
         }
 
-        .bd-logo-card:hover .bd-logo-img {
-            transform: scale(1.08);
+        .bd-logo-tile:hover .bd-unique-logo-img {
+            transform: scale(1.09);
         }
 
-    </style>
+        .bd-tile-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 2px;
+        }
+
+        .bd-tile-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.02em;
+        }
+
+        .bd-tile-tag {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.55);
+            font-weight: 500;
+        }
+        </style>
 </head>
 <body>
 
@@ -3318,32 +3401,109 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- Studio Designed Logos Showcase -->
         <section class="section-padding bd-logo-showcase" id="our-logos" style="border-top: 1px solid var(--border-glass);">
             <div class="container">
-                <div style="text-align: center; max-width: 760px; margin: 0 auto 40px; position: relative; z-index: 10;" class="fade-in-up">
-                    <span class="section-tag center no-dot">CRAFTED BY US</span>
-                    <h2 class="section-title">Logos Designed By Our Studio</h2>
+                <div style="text-align: center; max-width: 780px; margin: 0 auto 52px; position: relative; z-index: 10;" class="fade-in-up">
+                    <span class="section-tag center no-dot">STUDIO MARKS</span>
+                    <h2 class="section-title">Logos Crafted In-House</h2>
                     <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">
-                        Every brand identity begins with an unmistakable mark. Here is a showcase of custom logo marks and visual identities designed and crafted in-house for our clients.
+                        Distinctive brand marks, monograms, and visual identity systems designed from scratch for forward-thinking companies.
                     </p>
                 </div>
 
-                <div class="bd-logo-grid">
-                    <div class="bd-logo-card fade-in-up">
-                        <img src="./assets/logos/logo_1.webp" alt="Custom Brand Identity Logo Mark 1 designed by The Web Branding" loading="lazy" decoding="async" class="bd-logo-img">
+                <div class="bd-unique-logo-grid">
+                    <!-- Logo 1: Mice Media -->
+                    <div class="bd-logo-tile fade-in-up" style="--accent-glow: rgba(225, 29, 72, 0.2); --accent-color: #f43f5e;">
+                        <div class="bd-tile-top">
+                            <span class="bd-tile-num">01</span>
+                            <span class="bd-tile-category">MEDIA &amp; CREATIVE</span>
+                        </div>
+                        <div class="bd-tile-stage">
+                            <div class="bd-tile-stage-glow"></div>
+                            <img src="./assets/logos/logo_1.webp" alt="Mice Media Logo Mark" loading="lazy" decoding="async" class="bd-unique-logo-img">
+                        </div>
+                        <div class="bd-tile-bottom">
+                            <span class="bd-tile-label">MICE MEDIA</span>
+                            <span class="bd-tile-tag">Identity &amp; Mark</span>
+                        </div>
                     </div>
-                    <div class="bd-logo-card fade-in-up delay-100">
-                        <img src="./assets/logos/logo_2.webp" alt="Custom Brand Identity Logo Mark 2 designed by The Web Branding" loading="lazy" decoding="async" class="bd-logo-img">
+
+                    <!-- Logo 2: 1Point 360 -->
+                    <div class="bd-logo-tile fade-in-up delay-100" style="--accent-glow: rgba(168, 85, 247, 0.2); --accent-color: #c084fc;">
+                        <div class="bd-tile-top">
+                            <span class="bd-tile-num">02</span>
+                            <span class="bd-tile-category">TECH &amp; DIGITAL</span>
+                        </div>
+                        <div class="bd-tile-stage">
+                            <div class="bd-tile-stage-glow"></div>
+                            <img src="./assets/logos/logo_2.webp" alt="1Point 360 Logo Mark" loading="lazy" decoding="async" class="bd-unique-logo-img">
+                        </div>
+                        <div class="bd-tile-bottom">
+                            <span class="bd-tile-label">1POINT 360</span>
+                            <span class="bd-tile-tag">Visual System</span>
+                        </div>
                     </div>
-                    <div class="bd-logo-card fade-in-up delay-200">
-                        <img src="./assets/logos/logo_3.webp" alt="Custom Brand Identity Logo Mark 3 designed by The Web Branding" loading="lazy" decoding="async" class="bd-logo-img">
+
+                    <!-- Logo 3: Kenz Trading -->
+                    <div class="bd-logo-tile fade-in-up delay-200" style="--accent-glow: rgba(245, 158, 11, 0.2); --accent-color: #fbbf24;">
+                        <div class="bd-tile-top">
+                            <span class="bd-tile-num">03</span>
+                            <span class="bd-tile-category">TRADE &amp; COMMERCE</span>
+                        </div>
+                        <div class="bd-tile-stage">
+                            <div class="bd-tile-stage-glow"></div>
+                            <img src="./assets/logos/logo_3.webp" alt="Kenz Trading Logo Mark" loading="lazy" decoding="async" class="bd-unique-logo-img">
+                        </div>
+                        <div class="bd-tile-bottom">
+                            <span class="bd-tile-label">KENZ TRADING</span>
+                            <span class="bd-tile-tag">Corporate Mark</span>
+                        </div>
                     </div>
-                    <div class="bd-logo-card fade-in-up delay-300">
-                        <img src="./assets/logos/logo_4.webp" alt="Custom Brand Identity Logo Mark 4 designed by The Web Branding" loading="lazy" decoding="async" class="bd-logo-img">
+
+                    <!-- Logo 4: Enterprise Identity -->
+                    <div class="bd-logo-tile fade-in-up delay-300" style="--accent-glow: rgba(59, 130, 246, 0.2); --accent-color: #60a5fa;">
+                        <div class="bd-tile-top">
+                            <span class="bd-tile-num">04</span>
+                            <span class="bd-tile-category">ENTERPRISE</span>
+                        </div>
+                        <div class="bd-tile-stage">
+                            <div class="bd-tile-stage-glow"></div>
+                            <img src="./assets/logos/logo_4.webp" alt="Enterprise Logo Mark" loading="lazy" decoding="async" class="bd-unique-logo-img">
+                        </div>
+                        <div class="bd-tile-bottom">
+                            <span class="bd-tile-label">ENTERPRISE identity</span>
+                            <span class="bd-tile-tag">Monogram Mark</span>
+                        </div>
                     </div>
-                    <div class="bd-logo-card fade-in-up delay-400">
-                        <img src="./assets/logos/logo_5.webp" alt="Custom Brand Identity Logo Mark 5 designed by The Web Branding" loading="lazy" decoding="async" class="bd-logo-img">
+
+                    <!-- Logo 5: Meltoz Cafe -->
+                    <div class="bd-logo-tile fade-in-up delay-400" style="--accent-glow: rgba(234, 179, 8, 0.2); --accent-color: #facc15;">
+                        <div class="bd-tile-top">
+                            <span class="bd-tile-num">05</span>
+                            <span class="bd-tile-category">CAFE &amp; HOSPITALITY</span>
+                        </div>
+                        <div class="bd-tile-stage">
+                            <div class="bd-tile-stage-glow"></div>
+                            <img src="./assets/logos/logo_5.webp" alt="Meltoz Cafe Logo Mark" loading="lazy" decoding="async" class="bd-unique-logo-img">
+                        </div>
+                        <div class="bd-tile-bottom">
+                            <span class="bd-tile-label">MELTOZ CAFE</span>
+                            <span class="bd-tile-tag">Badge Emblem</span>
+                        </div>
                     </div>
-                    <div class="bd-logo-card fade-in-up delay-500">
-                        <img src="./assets/logos/logo_6.webp" alt="Custom Brand Identity Logo Mark 6 designed by The Web Branding" loading="lazy" decoding="async" class="bd-logo-img">
+
+                    <!-- Logo 6: Viaggio Tourism -->
+                    <div class="bd-logo-tile fade-in-up delay-500" style="--accent-glow: rgba(14, 165, 233, 0.2); --accent-color: #38bdf8;">
+                        <div class="bd-tile-top">
+                            <span class="bd-tile-num">06</span>
+                            <span class="bd-tile-category">TRAVEL &amp; TOURISM</span>
+                        </div>
+                        <div class="bd-tile-stage">
+                            <div class="bd-tile-stage-glow"></div>
+                            <img src="./assets/logos/logo_6.webp" alt="Viaggio Tourism Logo Mark" loading="lazy" decoding="async" class="bd-unique-logo-img">
+                        </div>
+                        <div class="bd-tile-bottom">
+                            <span class="bd-tile-label">VIAGGIO TOURISM</span>
+                            <span class="bd-tile-tag">Brand Icon</span>
+                        </div>
                     </div>
                 </div>
             </div>
