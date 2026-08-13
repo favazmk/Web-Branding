@@ -484,8 +484,13 @@ nav {
     color: var(--text-white);
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.active::after {
     width: 100%;
+}
+
+.nav-link.active {
+    color: var(--text-white);
 }
 
 .menu-toggle {
@@ -2460,6 +2465,10 @@ nav {
     filter: blur(4px);
     transform-origin: top center;
     transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+}
+
+.ag-menu-item.active {
+    color: var(--primary);
 }
 
 /* Active state when menu is open */
