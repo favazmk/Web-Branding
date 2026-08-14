@@ -1772,6 +1772,167 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             box-shadow: 0 0 8px rgba(192, 132, 252, 0.8);
             transition: width 0.1s linear;
         }
+
+        /* --- Media Production Packages Styling --- */
+        .mp-pkg-section {
+            background: linear-gradient(180deg, rgba(10, 4, 22, 0.98) 0%, rgba(20, 10, 36, 0.95) 100%);
+            border-top: 1px solid var(--border-glass);
+            position: relative;
+            z-index: 5;
+        }
+        .mp-pkg-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 40px;
+        }
+        @media (max-width: 1100px) {
+            .mp-pkg-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .mp-pkg-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .mp-pkg-card {
+            background: rgba(19, 11, 35, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 32px 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .mp-pkg-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(192, 132, 252, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(139, 61, 255, 0.25);
+        }
+        .mp-pkg-card.is-featured {
+            background: linear-gradient(145deg, rgba(32, 14, 58, 0.85) 0%, rgba(18, 9, 34, 0.85) 100%);
+            border: 1.5px solid rgba(192, 132, 252, 0.6);
+            box-shadow: 0 15px 40px rgba(139, 61, 255, 0.2), inset 0 0 20px rgba(192, 132, 252, 0.08);
+        }
+        .mp-pkg-card.is-featured:hover {
+            border-color: rgba(192, 132, 252, 0.9);
+            box-shadow: 0 22px 50px rgba(139, 61, 255, 0.35), inset 0 0 30px rgba(192, 132, 252, 0.15);
+        }
+        .mp-pkg-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            margin-bottom: 16px;
+            width: fit-content;
+        }
+        .pkg-badge-starter { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3); }
+        .pkg-badge-popular { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(244, 114, 182, 0.4); }
+        .pkg-badge-scripted { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.4); }
+        .pkg-badge-premium { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.4); }
+        .pkg-badge-influencer { background: linear-gradient(90deg, rgba(245, 158, 11, 0.25), rgba(236, 72, 153, 0.25)); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.5); }
+
+        .mp-pkg-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 6px 0;
+            letter-spacing: -0.01em;
+        }
+        .mp-pkg-sub {
+            font-size: 0.85rem;
+            color: var(--text-faded);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        .mp-pkg-price-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .mp-pkg-price-old {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .mp-pkg-price-current {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .mp-pkg-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 24px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .mp-pkg-features li {
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            line-height: 1.4;
+        }
+        .mp-pkg-features li svg {
+            color: #c084fc;
+            flex-shrink: 0;
+        }
+        .mp-pkg-addons {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 24px;
+        }
+        .mp-pkg-addons-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .mp-pkg-addons-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .mp-addon-pill {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            background: rgba(139, 61, 255, 0.2);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
         @media (max-width: 1024px) {
             .mp-ai-showcase-grid { grid-template-columns: repeat(2, 1fr); }
         }
@@ -2455,6 +2616,172 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <span class="mp-ba-badge badge-after" style="right: auto; left: 12px; top: 12px;">HYPER-REAL AI RENDER 🚀</span>
                             <video class="mp-ai-video" src="./assets/ai 2.MP4" autoplay loop muted playsinline preload="metadata"></video>
                             <div class="mp-ai-progress-bar"><div class="mp-ai-progress-fill"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             MEDIA PRODUCTION PACKAGES (FROM NEW BROCHURE)
+             ============================================================ -->
+        <section class="section-padding mp-pkg-section" id="packages">
+            <div class="container">
+                <div style="text-align: center; max-width: 760px; margin: 0 auto 10px auto;" class="fade-in-up">
+                    <span class="section-tag center">LIMITED TIME OFFER 🎬</span>
+                    <h2 class="section-title">Media Production Packages</h2>
+                    <p style="color: var(--text-faded); font-size: 1.05rem; line-height: 1.7; margin-top: 10px;">
+                        Transparent pricing for high-converting video production. Shoot, script, edit &amp; 4K delivery under one clear package.
+                    </p>
+                </div>
+
+                <div class="mp-pkg-grid">
+                    <!-- Package 1: Basic Reel -->
+                    <div class="mp-pkg-card fade-in-up">
+                        <div>
+                            <span class="mp-pkg-badge pkg-badge-starter">Basic Reel Package</span>
+                            <h3 class="mp-pkg-title">Basic Reel</h3>
+                            <p class="mp-pkg-sub">Essential 4K shooting for short-form social reels.</p>
+                            <div class="mp-pkg-price-wrap">
+                                <span class="mp-pkg-price-old">AED 999</span>
+                                <span class="mp-pkg-price-current">AED 599</span>
+                            </div>
+                            <ul class="mp-pkg-features">
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> ⏱️ <strong>4 Hours</strong> Shooting Duration</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 🎬 <strong>3 Premium Reels</strong> (4K High Quality)</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> ✂️ Full In-House Edit &amp; Color Grade</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 📱 Optimized for Instagram &amp; TikTok</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="mp-pkg-addons">
+                                <span class="mp-pkg-addons-title">Add-ons Available:</span>
+                                <div class="mp-pkg-addons-list">
+                                    <span class="mp-addon-pill">+ Extra Hour: AED 200/hr</span>
+                                    <span class="mp-addon-pill">+ Model Charges (If Applicable)</span>
+                                </div>
+                            </div>
+                            <a href="#enquire" class="btn btn-primary" style="width: 100%; justify-content: center;">Book Basic Slot</a>
+                        </div>
+                    </div>
+
+                    <!-- Package 2: Full Day (Popular Choice) -->
+                    <div class="mp-pkg-card is-featured fade-in-up delay-100">
+                        <div>
+                            <span class="mp-pkg-badge pkg-badge-popular">Popular Choice 🔥</span>
+                            <h3 class="mp-pkg-title">Full Day Package</h3>
+                            <p class="mp-pkg-sub">Comprehensive full-day shoot for max content volume.</p>
+                            <div class="mp-pkg-price-wrap">
+                                <span class="mp-pkg-price-old">AED 1500</span>
+                                <span class="mp-pkg-price-current">AED 999</span>
+                            </div>
+                            <ul class="mp-pkg-features">
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> ⏱️ <strong>8 Hours (Full Day)</strong> Duration</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 🎬 <strong>6 Premium Reels</strong> (4K High Quality)</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 💡 Cinema Lighting &amp; Sound Kit Included</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 🎵 Custom Music &amp; Audio Mixing</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="mp-pkg-addons">
+                                <span class="mp-pkg-addons-title">Add-ons Available:</span>
+                                <div class="mp-pkg-addons-list">
+                                    <span class="mp-addon-pill">+ Extra Hour: AED 200/hr</span>
+                                    <span class="mp-addon-pill">+ Additional Model: AED 400</span>
+                                </div>
+                            </div>
+                            <a href="#enquire" class="btn btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #8b3dff, #c084fc); border: none;">Book Full Day Slot</a>
+                        </div>
+                    </div>
+
+                    <!-- Package 3: Presentation Package -->
+                    <div class="mp-pkg-card fade-in-up delay-200">
+                        <div>
+                            <span class="mp-pkg-badge pkg-badge-scripted">Scripted Production</span>
+                            <h3 class="mp-pkg-title">Presentation Package</h3>
+                            <p class="mp-pkg-sub">Script-driven, structured brand presentation films.</p>
+                            <div class="mp-pkg-price-wrap">
+                                <span class="mp-pkg-price-old">AED 2000</span>
+                                <span class="mp-pkg-price-current">AED 1499</span>
+                            </div>
+                            <ul class="mp-pkg-features">
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> ⏱️ <strong>4-5 Hours</strong> Shooting Duration</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 🎬 <strong>10 Ultra HD Reels</strong></li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 📝 <strong>Professional Scriptwriter</strong> Included</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 🎙️ Scripted Hook &amp; Narrative Direction</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="mp-pkg-addons">
+                                <span class="mp-pkg-addons-title">Add-ons Available:</span>
+                                <div class="mp-pkg-addons-list">
+                                    <span class="mp-addon-pill">+ Extra Hour: AED 200/hr</span>
+                                    <span class="mp-addon-pill">+ Additional Model: AED 400</span>
+                                </div>
+                            </div>
+                            <a href="#enquire" class="btn btn-primary" style="width: 100%; justify-content: center;">Book Presentation Slot</a>
+                        </div>
+                    </div>
+
+                    <!-- Package 4: Premium Presentation Package -->
+                    <div class="mp-pkg-card fade-in-up">
+                        <div>
+                            <span class="mp-pkg-badge pkg-badge-premium">Ultra Commercial</span>
+                            <h3 class="mp-pkg-title">Premium Presentation</h3>
+                            <p class="mp-pkg-sub">Maximum HD output with scriptwriting &amp; full crew.</p>
+                            <div class="mp-pkg-price-wrap">
+                                <span class="mp-pkg-price-old">AED 3000</span>
+                                <span class="mp-pkg-price-current">AED 2000</span>
+                            </div>
+                            <ul class="mp-pkg-features">
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> ⏱️ <strong>Full Day</strong> Shooting Duration</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 🎬 <strong>15 Ultra HD Reels</strong></li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 📝 <strong>Professional Scriptwriter</strong> Included</li>
+                                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 🎨 Premium Color Grade &amp; Motion Titles</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="mp-pkg-addons">
+                                <span class="mp-pkg-addons-title">Add-ons Available:</span>
+                                <div class="mp-pkg-addons-list">
+                                    <span class="mp-addon-pill">+ Extra Hour: AED 200/hr</span>
+                                    <span class="mp-addon-pill">+ Additional Model: AED 400</span>
+                                </div>
+                            </div>
+                            <a href="#enquire" class="btn btn-primary" style="width: 100%; justify-content: center;">Book Premium Slot</a>
+                        </div>
+                    </div>
+
+                    <!-- Package 5: Influencer Collaboration -->
+                    <div class="mp-pkg-card fade-in-up delay-100" style="grid-column: span 2;">
+                        <div>
+                            <span class="mp-pkg-badge pkg-badge-influencer">Viral Reach Guaranteed 🌟</span>
+                            <h3 class="mp-pkg-title">Influencer Collaboration</h3>
+                            <p class="mp-pkg-sub">Leverage top influencers to reach massive local audiences and scale brand awareness instantly.</p>
+                            <div class="mp-pkg-price-wrap">
+                                <span class="mp-pkg-price-old">AED 4000</span>
+                                <span class="mp-pkg-price-current">AED 3000</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                <ul class="mp-pkg-features">
+                                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> ⏱️ <strong>Full Day</strong> Production Duration</li>
+                                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 🌟 <strong>Influencer Collaboration</strong> Included</li>
+                                </ul>
+                                <ul class="mp-pkg-features">
+                                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 🚀 <strong>1 Million+ Reach Guaranteed</strong></li>
+                                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 📲 Paid Ad Whitelisting &amp; Commercial Usage</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="mp-pkg-addons">
+                                <span class="mp-pkg-addons-title">Add-ons Available:</span>
+                                <div class="mp-pkg-addons-list">
+                                    <span class="mp-addon-pill">+ Extra Hour: AED 200/hr</span>
+                                    <span class="mp-addon-pill">+ Additional Model: AED 400</span>
+                                </div>
+                            </div>
+                            <a href="#enquire" class="btn btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #f59e0b, #ec4899); border: none; color: #fff;">Book Influencer Package</a>
                         </div>
                     </div>
                 </div>
