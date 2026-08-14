@@ -146,7 +146,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         /* Clears the fixed site header rather than sitting at top: 0 under it —
            the nav is transparent over the hero, so an edge-anchored bar reads
            as a collision with the logo and links. */
-        .mp-bar-top { top: 92px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+        .mp-bar-top { top: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
         .mp-bar-bottom { bottom: 0; border-top: 1px solid rgba(255, 255, 255, 0.07); }
 
         .mp-rec {
@@ -170,6 +170,38 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             0%, 45%  { opacity: 1; }
             55%, 95% { opacity: 0.25; }
             100%     { opacity: 1; }
+        }
+
+        /* Client Brands Marquee */
+        .brands-marquee {
+            padding: 40px 0;
+            background: #ffffff;
+            overflow: hidden;
+        }
+        .marquee-client-logo {
+            height: 55px;
+            width: auto;
+            object-fit: contain;
+            opacity: 0.75;
+            filter: grayscale(100%);
+            transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+            flex-shrink: 0;
+            margin-right: 45px;
+        }
+        .marquee-client-logo:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.08);
+        }
+        .marquee-content {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            will-change: transform;
+            animation: scroll 35s linear infinite;
+        }
+        .marquee-content:hover {
+            animation-play-state: paused;
         }
 
         /* Corner ticks — the frame markers of a viewfinder */
@@ -851,7 +883,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             .mp-tick { display: none; }
             .mp-bar { height: 34px; font-size: 0.6rem; letter-spacing: 0.16em; }
             /* Below the floating pill header, whose bottom edge sits at ~92px */
-            .mp-bar-top { top: 98px; }
+            .mp-bar-top { top: 0; }
             .mp-hero { padding: 156px 0 80px; }
             .mp-bar .mp-bar-hide { display: none; }
             .mp-tile { padding: 26px 22px; min-height: 220px; }
@@ -1658,6 +1690,95 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.6), 0 0 15px rgba(192, 132, 252, 0.9);
         }
 
+        /* --- AI Video Showcase Section --- */
+        .mp-ai-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        .mp-ai-card {
+            border: 1px solid rgba(139, 61, 255, 0.35) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(139, 61, 255, 0.15) !important;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+        }
+        .mp-ai-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(192, 132, 252, 0.7) !important;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(192, 132, 252, 0.35) !important;
+        }
+        .mp-ai-video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #090614;
+            overflow: hidden;
+            border-radius: 0 0 16px 16px;
+        }
+        .mp-ai-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 1 !important;
+            visibility: visible !important;
+            cursor: pointer;
+        }
+        /* --- AI Video Header Control Group --- */
+        .mp-ai-control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 12px;
+        }
+        .mp-ai-icon-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .mp-ai-icon-btn:hover {
+            background: rgba(139, 61, 255, 0.85);
+            border-color: rgba(192, 132, 252, 0.8);
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(139, 61, 255, 0.5);
+        }
+        .mp-ai-icon-btn.is-active {
+            background: rgba(139, 61, 255, 0.9);
+            border-color: rgba(192, 132, 252, 0.9);
+            box-shadow: 0 0 12px rgba(192, 132, 252, 0.7);
+        }
+        .mp-ai-progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            z-index: 10;
+        }
+        .mp-ai-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #8b3dff, #c084fc);
+            box-shadow: 0 0 8px rgba(192, 132, 252, 0.8);
+            transition: width 0.1s linear;
+        }
+        @media (max-width: 1024px) {
+            .mp-ai-showcase-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .mp-ai-showcase-grid { grid-template-columns: 1fr; }
+        }
+
     </style>
 </head>
 <body>
@@ -1971,7 +2092,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             <div class="mp-bar mp-bar-top" aria-hidden="true">
                 <span class="mp-rec">Rec</span>
-                <span class="mp-bar-hide">Script · Shoot · Edit</span>
+                <span class="mp-bar-hide">Concept · Shoot · Edit</span>
                 <span>4K · 9:16 · 1:1 · 16:9</span>
             </div>
 
@@ -2013,6 +2134,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <span>The Web Branding</span>
                 <span class="mp-bar-hide">Media Production</span>
                 <span>Dubai · UAE</span>
+            </div>
+        </section>
+
+        <!-- Trusted Brands Marquee -->
+        <section class="brands-marquee fade-in-up">
+            <div class="container" style="text-align: center; margin-bottom: 20px;">
+                <span class="section-tag center no-dot" style="color: #64748b; font-weight: 700; font-size: 0.9rem;">
+                    TRUSTED BY TOP BRANDS IN UAE & ACROSS THE WORLD
+                </span>
+            </div>
+            <div style="width: 100%; overflow: hidden; position: relative;">
+                <div class="marquee-content">
+                    <img src="./assets/clients/logo_0.webp" alt="Cedar Cosmetics" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_1.webp" alt="Vogue Venue" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_2.webp" alt="Rashid Ali Hassan Cafeteria" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_3.webp" alt="Silvan Global" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_4.webp" alt="Ray Sports UAE" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_5.webp" alt="The Specs Store" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_6.webp" alt="Brod" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_7.webp" alt="Indus Jewellers" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_8.webp" alt="Magic Mirror Beauty Salon" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_9.webp" alt="The Leather Doctor" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_10.webp" alt="Desert Fresh Market" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_11.webp" alt="Extragram Jewels" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_12.webp" alt="Diora Jewellery" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_13.webp" alt="Zawaya" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_1.webp" alt="Mice Media" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_2.webp" alt="iPoint 360" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_3.webp" alt="Kenz Trading" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_4.webp" alt="Meltoz Cafe" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_5.webp" alt="Viaggio Tourism" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_6.webp" alt="Bandhan Contracting" class="marquee-client-logo">
+
+                    <!-- Duplicated for Infinite Loop -->
+                    <img src="./assets/clients/logo_0.webp" alt="Cedar Cosmetics" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_1.webp" alt="Vogue Venue" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_2.webp" alt="Rashid Ali Hassan Cafeteria" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_3.webp" alt="Silvan Global" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_4.webp" alt="Ray Sports UAE" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_5.webp" alt="The Specs Store" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_6.webp" alt="Brod" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_7.webp" alt="Indus Jewellers" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_8.webp" alt="Magic Mirror Beauty Salon" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_9.webp" alt="The Leather Doctor" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_10.webp" alt="Desert Fresh Market" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_11.webp" alt="Extragram Jewels" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_12.webp" alt="Diora Jewellery" class="marquee-client-logo">
+                    <img src="./assets/clients/logo_13.webp" alt="Zawaya" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_1.webp" alt="Mice Media" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_2.webp" alt="iPoint 360" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_3.webp" alt="Kenz Trading" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_4.webp" alt="Meltoz Cafe" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_5.webp" alt="Viaggio Tourism" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_6.webp" alt="Bandhan Contracting" class="marquee-client-logo">
+                </div>
             </div>
         </section>
 
@@ -2179,6 +2355,107 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             avatars, voiceovers and product scenes are generated in days, so the feed stays fed
                             between the campaigns that genuinely justify a full crew.
                         </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             AI VIDEO GENERATION SHOWCASE
+             ============================================================ -->
+        <section class="section-padding mp-ai-showcase-section" id="ai-showcase" style="border-top: 1px solid var(--border-glass); background: rgba(13, 10, 25, 0.6);">
+            <div class="container">
+                <div style="max-width: 760px; margin-bottom: 46px;" class="fade-in-up">
+                    <span class="section-tag">AI VIDEO PRODUCTION ✨</span>
+                    <h2 class="section-title" style="text-align: left;">Produced Entirely With Generative AI</h2>
+                    <p style="color: var(--text-gray); font-size: 1.05rem; line-height: 1.7;">
+                        From creative concepting to hyper-realistic character animation and 4K commercial rendering — see how we engineer publish-ready video ad campaigns at scale.
+                    </p>
+                </div>
+
+                <div class="mp-ai-showcase-grid">
+                    <!-- AI Video 1 (Left) -->
+                    <div class="mp-ba-card mp-ai-card fade-in-up" id="card-ai-1">
+                        <div class="mp-ba-header">
+                            <div>
+                                <h3 class="mp-ba-title">AI Commercial Concept</h3>
+                                <span class="mp-ba-subtitle">Creative &amp; Motion Synthesis</span>
+                            </div>
+                            <div class="mp-ai-control-group">
+                                <button class="mp-ai-icon-btn btn-replay" title="Play from beginning" aria-label="Replay video">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                                </button>
+                                <button class="mp-ai-icon-btn btn-playpause" title="Play / Pause" aria-label="Play or pause video">
+                                    <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
+                                    <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                </button>
+                                <button class="mp-ai-icon-btn btn-sound mp-ai-sound-btn" title="Toggle Sound" aria-label="Toggle Sound">
+                                    <svg class="sound-off-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                                    <svg class="sound-on-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mp-ba-slider-container mp-ai-video-container">
+                            <span class="mp-ba-badge badge-after" style="right: auto; left: 12px; top: 12px;">GENERATIVE CREATIVE ✨</span>
+                            <video class="mp-ai-video" src="./assets/ai 1.MP4" autoplay loop muted playsinline preload="metadata"></video>
+                            <div class="mp-ai-progress-bar"><div class="mp-ai-progress-fill"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- AI Video 3 (Middle) -->
+                    <div class="mp-ba-card mp-ai-card fade-in-up delay-100" id="card-ai-3">
+                        <div class="mp-ba-header">
+                            <div>
+                                <h3 class="mp-ba-title">AI Voiceover &amp; Motion</h3>
+                                <span class="mp-ba-subtitle">Synthesized Voice &amp; Performance</span>
+                            </div>
+                            <div class="mp-ai-control-group">
+                                <button class="mp-ai-icon-btn btn-replay" title="Play from beginning" aria-label="Replay video">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                                </button>
+                                <button class="mp-ai-icon-btn btn-playpause" title="Play / Pause" aria-label="Play or pause video">
+                                    <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
+                                    <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                </button>
+                                <button class="mp-ai-icon-btn btn-sound mp-ai-sound-btn" title="Toggle Sound" aria-label="Toggle Sound">
+                                    <svg class="sound-off-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                                    <svg class="sound-on-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mp-ba-slider-container mp-ai-video-container">
+                            <span class="mp-ba-badge badge-after" style="right: auto; left: 12px; top: 12px;">NEURAL VOICE &amp; MOTION 🎙️</span>
+                            <video class="mp-ai-video" src="./assets/ai 3.MP4" autoplay loop muted playsinline preload="metadata"></video>
+                            <div class="mp-ai-progress-bar"><div class="mp-ai-progress-fill"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- AI Video 2 (Right) -->
+                    <div class="mp-ba-card mp-ai-card fade-in-up delay-200" id="card-ai-2">
+                        <div class="mp-ba-header">
+                            <div>
+                                <h3 class="mp-ba-title">Generative Brand Story</h3>
+                                <span class="mp-ba-subtitle">Hyper-Real Neural Render</span>
+                            </div>
+                            <div class="mp-ai-control-group">
+                                <button class="mp-ai-icon-btn btn-replay" title="Play from beginning" aria-label="Replay video">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                                </button>
+                                <button class="mp-ai-icon-btn btn-playpause" title="Play / Pause" aria-label="Play or pause video">
+                                    <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
+                                    <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                </button>
+                                <button class="mp-ai-icon-btn btn-sound mp-ai-sound-btn" title="Toggle Sound" aria-label="Toggle Sound">
+                                    <svg class="sound-off-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                                    <svg class="sound-on-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mp-ba-slider-container mp-ai-video-container">
+                            <span class="mp-ba-badge badge-after" style="right: auto; left: 12px; top: 12px;">HYPER-REAL AI RENDER 🚀</span>
+                            <video class="mp-ai-video" src="./assets/ai 2.MP4" autoplay loop muted playsinline preload="metadata"></video>
+                            <div class="mp-ai-progress-bar"><div class="mp-ai-progress-fill"></div></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3059,6 +3336,139 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         if (offIcon) offIcon.style.display = 'inline-block';
                         if (onIcon) onIcon.style.display = 'none';
                         if (statusText) statusText.innerText = 'Sound Off';
+                    }
+                });
+            }
+        });
+    })();
+    </script>
+
+    <!-- AI Video Showcase Controller (Replay, Play/Pause, Sound & Progress Bar) -->
+    <script>
+    (function () {
+        document.querySelectorAll('.mp-ai-card').forEach(function(card) {
+            var video = card.querySelector('.mp-ai-video');
+            var replayBtn = card.querySelector('.btn-replay');
+            var playPauseBtn = card.querySelector('.btn-playpause');
+            var soundBtn = card.querySelector('.mp-ai-sound-btn');
+            var progressBar = card.querySelector('.mp-ai-progress-bar');
+            var progressFill = card.querySelector('.mp-ai-progress-fill');
+
+            if (!video) return;
+
+            // Update Progress Bar
+            video.addEventListener('timeupdate', function () {
+                if (video.duration && progressFill) {
+                    var pct = (video.currentTime / video.duration) * 100;
+                    progressFill.style.width = pct.toFixed(2) + '%';
+                }
+            });
+
+            // Click progress bar to seek
+            if (progressBar) {
+                progressBar.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    var rect = progressBar.getBoundingClientRect();
+                    var clickX = e.clientX - rect.left;
+                    var pct = clickX / rect.width;
+                    if (video.duration) {
+                        video.currentTime = pct * video.duration;
+                    }
+                });
+            }
+
+            // Click video element to toggle play/pause
+            video.addEventListener('click', function () {
+                togglePlayPause();
+            });
+
+            function togglePlayPause() {
+                if (video.paused) {
+                    video.play().catch(function(){});
+                    updatePlayPauseUI(true);
+                } else {
+                    video.pause();
+                    updatePlayPauseUI(false);
+                }
+            }
+
+            function updatePlayPauseUI(isPlaying) {
+                if (!playPauseBtn) return;
+                var iconPause = playPauseBtn.querySelector('.icon-pause');
+                var iconPlay = playPauseBtn.querySelector('.icon-play');
+
+                if (isPlaying) {
+                    if (iconPause) iconPause.style.display = 'inline-block';
+                    if (iconPlay) iconPlay.style.display = 'none';
+                    playPauseBtn.classList.remove('is-active');
+                } else {
+                    if (iconPause) iconPause.style.display = 'none';
+                    if (iconPlay) iconPlay.style.display = 'inline-block';
+                    playPauseBtn.classList.add('is-active');
+                }
+            }
+
+            // Replay Button: Play from beginning
+            if (replayBtn) {
+                replayBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    video.currentTime = 0;
+                    video.play().catch(function(){});
+                    updatePlayPauseUI(true);
+                });
+            }
+
+            // Play/Pause Button
+            if (playPauseBtn) {
+                playPauseBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    togglePlayPause();
+                });
+            }
+
+            // Sound Button
+            if (soundBtn) {
+                soundBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var isMuted = video.muted;
+
+                    if (isMuted) {
+                        // Mute all other videos on the entire page
+                        document.querySelectorAll('video').forEach(function(v) {
+                            v.muted = true;
+                        });
+                        document.querySelectorAll('.mp-ba-sound-btn, .mp-ai-sound-btn').forEach(function(btn) {
+                            btn.classList.remove('is-active');
+                            var oOff = btn.querySelector('.sound-off-icon');
+                            var oOn = btn.querySelector('.sound-on-icon');
+                            var oTxt = btn.querySelector('.sound-status-text');
+                            if (oOff) oOff.style.display = 'inline-block';
+                            if (oOn) oOn.style.display = 'none';
+                            if (oTxt) oTxt.innerText = 'Sound Off';
+                        });
+
+                        // Unmute THIS AI Video
+                        video.muted = false;
+                        video.volume = 1.0;
+                        if (video.paused) video.play().catch(function(){});
+
+                        soundBtn.classList.add('is-active');
+                        var offIcon = soundBtn.querySelector('.sound-off-icon');
+                        var onIcon = soundBtn.querySelector('.sound-on-icon');
+                        if (offIcon) offIcon.style.display = 'none';
+                        if (onIcon) onIcon.style.display = 'inline-block';
+                    } else {
+                        // Mute THIS AI Video
+                        video.muted = true;
+                        soundBtn.classList.remove('is-active');
+                        var offIcon = soundBtn.querySelector('.sound-off-icon');
+                        var onIcon = soundBtn.querySelector('.sound-on-icon');
+                        if (offIcon) offIcon.style.display = 'inline-block';
+                        if (onIcon) onIcon.style.display = 'none';
                     }
                 });
             }

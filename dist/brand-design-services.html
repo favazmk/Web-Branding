@@ -176,7 +176,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             object-fit: contain;
             opacity: 0.75;
             filter: grayscale(100%);
-            transition: all 0.3s ease;
+            transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+            flex-shrink: 0;
+            margin-right: 45px;
         }
         .marquee-client-logo:hover {
             opacity: 1;
@@ -185,10 +187,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
         .marquee-content {
             display: flex;
-            gap: 45px;
             align-items: center;
-            animation: scroll 25s linear infinite;
-            white-space: nowrap;
+            width: max-content;
+            will-change: transform;
+            animation: scroll 35s linear infinite;
+        }
+        .marquee-content:hover {
+            animation-play-state: paused;
         }
         @keyframes scroll {
             0% { transform: translateX(0); }
@@ -2797,9 +2802,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             gap: 16px;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
             position: relative;
-            overflow: hidden;
+            perspective: 1000px;
         }
 
         .bd-logo-tile::before {
@@ -2815,9 +2820,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         .bd-logo-tile:hover {
-            transform: translateY(-6px);
-            border-color: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px var(--accent-glow, rgba(192, 132, 252, 0.25));
+            border-color: rgba(255, 255, 255, 0.22);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
         }
 
         .bd-logo-tile:hover::before {
@@ -2850,46 +2854,55 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Still background stage card */
         .bd-tile-stage {
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 10;
-            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-            border-radius: 16px;
+            background: linear-gradient(155deg, #ffffff 0%, #f3f4f6 45%, #e2e8f0 100%);
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 24px;
             overflow: hidden;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), 0 8px 24px rgba(0, 0, 0, 0.2);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            perspective: 800px;
+            box-shadow:
+                inset 0 1px 2px 0 rgba(255, 255, 255, 1),
+                inset 0 -2px 4px 0 rgba(0, 0, 0, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.9),
+                0 6px 16px -4px rgba(0, 0, 0, 0.2);
         }
 
-        .bd-tile-stage-glow {
+        /* Floor ground shadow directly under the logo */
+        .bd-tile-stage::after {
+            content: '';
             position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, var(--accent-glow, rgba(192, 132, 252, 0.25)) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 16px;
+            background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.18) 50%, transparent 75%);
+            border-radius: 50%;
+            filter: blur(5px);
             pointer-events: none;
+            z-index: 1;
         }
 
-        .bd-logo-tile:hover .bd-tile-stage-glow {
-            opacity: 1;
-        }
-
+        /* Logo image itself: tilts in 3D following cursor */
         .bd-unique-logo-img {
             max-width: 84%;
             max-height: 84%;
             width: auto;
             height: auto;
             object-fit: contain;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
-        }
-
-        .bd-logo-tile:hover .bd-unique-logo-img {
-            transform: scale(1.09);
+            position: relative;
+            z-index: 2;
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 16px 12px rgba(0, 0, 0, 0.35));
         }
 
         /* Copy block: name, the "why it works" line, and scannable traits.
@@ -3350,6 +3363,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <img src="./assets/clients/logo_11.webp" alt="Extragram Jewels" class="marquee-client-logo">
                     <img src="./assets/clients/logo_12.webp" alt="Diora Jewellery" class="marquee-client-logo">
                     <img src="./assets/clients/logo_13.webp" alt="Zawaya" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_1.webp" alt="Mice Media" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_2.webp" alt="iPoint 360" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_3.webp" alt="Kenz Trading" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_4.webp" alt="Meltoz Cafe" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_5.webp" alt="Viaggio Tourism" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_6.webp" alt="Bandhan Contracting" class="marquee-client-logo">
 
                     <!-- Duplicated for Infinite Loop -->
                     <img src="./assets/clients/logo_0.webp" alt="Cedar Cosmetics" class="marquee-client-logo">
@@ -3366,6 +3385,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <img src="./assets/clients/logo_11.webp" alt="Extragram Jewels" class="marquee-client-logo">
                     <img src="./assets/clients/logo_12.webp" alt="Diora Jewellery" class="marquee-client-logo">
                     <img src="./assets/clients/logo_13.webp" alt="Zawaya" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_1.webp" alt="Mice Media" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_2.webp" alt="iPoint 360" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_3.webp" alt="Kenz Trading" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_4.webp" alt="Meltoz Cafe" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_5.webp" alt="Viaggio Tourism" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_6.webp" alt="Bandhan Contracting" class="marquee-client-logo">
                 </div>
             </div>
         </section>
@@ -3490,7 +3515,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <span class="bd-tile-category">EVENT MANAGEMENT</span>
                         </div>
                         <div class="bd-tile-stage">
-                            <div class="bd-tile-stage-glow"></div>
                             <img src="./assets/logos/logo_1.webp" alt="Mice Media logo — a red M shared by the words mice and media" loading="lazy" decoding="async" class="bd-unique-logo-img">
                         </div>
                         <div class="bd-tile-body">
@@ -3503,11 +3527,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 so the name stacks into a single block instead of a long line. It still reads from the
                                 back of a hall on a stage backdrop, and crops cleanly into a profile picture.
                             </p>
-                            <ul class="bd-tile-traits">
-                                <li>Stacked lockup</li>
-                                <li>Two colours only</li>
-                                <li>Crop-safe</li>
-                            </ul>
                         </div>
                     </article>
 
@@ -3518,7 +3537,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <span class="bd-tile-category">ADVISORY &amp; PRO SERVICES</span>
                         </div>
                         <div class="bd-tile-stage">
-                            <div class="bd-tile-stage-glow"></div>
                             <img src="./assets/logos/logo_2.webp" alt="iPoint 360 logo — purple to magenta wordmark with a detachable 360 badge" loading="lazy" decoding="async" class="bd-unique-logo-img">
                         </div>
                         <div class="bd-tile-body">
@@ -3531,11 +3549,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 wordmark without crowding it. The 360 badge lifts out on its own, giving the firm a
                                 square icon for apps and stamps while the full lockup handles documents.
                             </p>
-                            <ul class="bd-tile-traits">
-                                <li>Detachable badge</li>
-                                <li>Gradient system</li>
-                                <li>Tagline lockup</li>
-                            </ul>
                         </div>
                     </article>
 
@@ -3546,7 +3559,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <span class="bd-tile-category">TRADE &amp; COMMERCE</span>
                         </div>
                         <div class="bd-tile-stage">
-                            <div class="bd-tile-stage-glow"></div>
                             <img src="./assets/logos/logo_3.webp" alt="Kenz Trading logo — a K built from concentric arcs with a wire globe at its apex" loading="lazy" decoding="async" class="bd-unique-logo-img">
                         </div>
                         <div class="bd-tile-body">
@@ -3559,11 +3571,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 is read into the letterform rather than bolted on as clip art. It flattens to a single
                                 colour for crates, stencils and stamped paperwork without losing the K.
                             </p>
-                            <ul class="bd-tile-traits">
-                                <li>Letterform icon</li>
-                                <li>1-colour safe</li>
-                                <li>Print-ready</li>
-                            </ul>
                         </div>
                     </article>
 
@@ -3574,7 +3581,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <span class="bd-tile-category">CAFE &amp; HOSPITALITY</span>
                         </div>
                         <div class="bd-tile-stage">
-                            <div class="bd-tile-stage-glow"></div>
                             <img src="./assets/logos/logo_4.webp" alt="Meltoz Cafe logo — a round sage green badge with Arabic and English set around the ring" loading="lazy" decoding="async" class="bd-unique-logo-img">
                         </div>
                         <div class="bd-tile-body">
@@ -3587,11 +3593,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 vinyl, loyalty stamps, tote bags. Arabic and English share the same ring, so one
                                 emblem speaks to both audiences without needing a second version.
                             </p>
-                            <ul class="bd-tile-traits">
-                                <li>Bilingual ring</li>
-                                <li>Stamp-ready</li>
-                                <li>Single colour</li>
-                            </ul>
                         </div>
                     </article>
 
@@ -3602,7 +3603,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <span class="bd-tile-category">TRAVEL &amp; TOURISM</span>
                         </div>
                         <div class="bd-tile-stage">
-                            <div class="bd-tile-stage-glow"></div>
                             <img src="./assets/logos/logo_5.webp" alt="Viaggio Tourism logo — a V drawn as a flight path with an aircraft cut from its negative space" loading="lazy" decoding="async" class="bd-unique-logo-img">
                         </div>
                         <div class="bd-tile-body">
@@ -3615,11 +3615,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 inside it — one shape doing the work of two. The symbol travels alone as an app icon
                                 or a stamp, with the Arabic weighted to match the Latin rather than added as an afterthought.
                             </p>
-                            <ul class="bd-tile-traits">
-                                <li>Negative space</li>
-                                <li>Bilingual</li>
-                                <li>Detachable icon</li>
-                            </ul>
                         </div>
                     </article>
 
@@ -3630,7 +3625,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <span class="bd-tile-category">CONSTRUCTION</span>
                         </div>
                         <div class="bd-tile-stage">
-                            <div class="bd-tile-stage-glow"></div>
                             <img src="./assets/logos/logo_6.webp" alt="Bandhan Contracting logo — a gold building silhouette forming the counter of a charcoal B" loading="lazy" decoding="async" class="bd-unique-logo-img">
                         </div>
                         <div class="bd-tile-body">
@@ -3643,11 +3637,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 letter, not a picture parked beside it. Gold on charcoal holds its edges on site
                                 hoardings, hard hats and embroidered polos, where fine detail usually disappears.
                             </p>
-                            <ul class="bd-tile-traits">
-                                <li>Negative space</li>
-                                <li>Embroidery-safe</li>
-                                <li>Vertical lockup</li>
-                            </ul>
                         </div>
                     </article>
                 </div>
@@ -4617,6 +4606,71 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     }
                 }
                 grid.appendChild(frag);
+            });
+        })();
+
+        // 3D Tilt Effect following cursor & mobile touch (tap & swipe) for logo image mark only
+        (function () {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            var tiles = document.querySelectorAll('.bd-unique-logo-grid .bd-logo-tile');
+
+            tiles.forEach(function (tile) {
+                var logoImg = tile.querySelector('.bd-unique-logo-img');
+                if (!logoImg) return;
+
+                var rafId = null;
+
+                function updateTilt(clientX, clientY) {
+                    var rect = tile.getBoundingClientRect();
+                    var x = clientX - rect.left;
+                    var y = clientY - rect.top;
+                    var centerX = rect.width / 2;
+                    var centerY = rect.height / 2;
+
+                    var normX = Math.max(-1, Math.min(1, (x - centerX) / centerX));
+                    var normY = Math.max(-1, Math.min(1, (y - centerY) / centerY));
+
+                    // Max 3D tilt angle (degrees)
+                    var maxTilt = 25;
+                    var rotateX = (-normY * maxTilt).toFixed(2);
+                    var rotateY = (normX * maxTilt).toFixed(2);
+
+                    if (rafId) cancelAnimationFrame(rafId);
+                    rafId = requestAnimationFrame(function () {
+                        logoImg.style.transition = 'transform 0.08s ease-out';
+                        logoImg.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.08, 1.08, 1.08)';
+                    });
+                }
+
+                function resetTilt() {
+                    if (rafId) cancelAnimationFrame(rafId);
+                    logoImg.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    logoImg.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                }
+
+                // Desktop mouse cursor events
+                tile.addEventListener('mousemove', function (e) {
+                    updateTilt(e.clientX, e.clientY);
+                }, { passive: true });
+
+                tile.addEventListener('mouseleave', resetTilt);
+
+                // Mobile touch (tap & swipe) events
+                tile.addEventListener('touchstart', function (e) {
+                    if (e.touches && e.touches.length > 0) {
+                        updateTilt(e.touches[0].clientX, e.touches[0].clientY);
+                    }
+                }, { passive: true });
+
+                tile.addEventListener('touchmove', function (e) {
+                    if (e.touches && e.touches.length > 0) {
+                        updateTilt(e.touches[0].clientX, e.touches[0].clientY);
+                    }
+                }, { passive: true });
+
+                tile.addEventListener('touchend', resetTilt, { passive: true });
+                tile.addEventListener('touchcancel', resetTilt, { passive: true });
             });
         })();
     </script>

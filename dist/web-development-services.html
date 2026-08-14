@@ -175,7 +175,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             object-fit: contain;
             opacity: 0.75;
             filter: grayscale(100%);
-            transition: all 0.3s ease;
+            transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+            flex-shrink: 0;
+            margin-right: 45px;
         }
         .marquee-client-logo:hover {
             opacity: 1;
@@ -184,10 +186,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
         .marquee-content {
             display: flex;
-            gap: 45px;
             align-items: center;
-            animation: scroll 25s linear infinite;
-            white-space: nowrap;
+            width: max-content;
+            will-change: transform;
+            animation: scroll 35s linear infinite;
+        }
+        .marquee-content:hover {
+            animation-play-state: paused;
         }
         @keyframes scroll {
             0% { transform: translateX(0); }
@@ -2146,6 +2151,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <img src="./assets/clients/logo_11.webp" alt="Extragram Jewels" class="marquee-client-logo">
                     <img src="./assets/clients/logo_12.webp" alt="Diora Jewellery" class="marquee-client-logo">
                     <img src="./assets/clients/logo_13.webp" alt="Zawaya" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_1.webp" alt="Mice Media" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_2.webp" alt="iPoint 360" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_3.webp" alt="Kenz Trading" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_4.webp" alt="Meltoz Cafe" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_5.webp" alt="Viaggio Tourism" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_6.webp" alt="Bandhan Contracting" class="marquee-client-logo">
 
                     <!-- Duplicated for Infinite Loop -->
                     <img src="./assets/clients/logo_0.webp" alt="Cedar Cosmetics" class="marquee-client-logo">
@@ -2162,6 +2173,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <img src="./assets/clients/logo_11.webp" alt="Extragram Jewels" class="marquee-client-logo">
                     <img src="./assets/clients/logo_12.webp" alt="Diora Jewellery" class="marquee-client-logo">
                     <img src="./assets/clients/logo_13.webp" alt="Zawaya" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_1.webp" alt="Mice Media" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_2.webp" alt="iPoint 360" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_3.webp" alt="Kenz Trading" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_4.webp" alt="Meltoz Cafe" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_5.webp" alt="Viaggio Tourism" class="marquee-client-logo">
+                    <img src="./assets/logos/logo_6.webp" alt="Bandhan Contracting" class="marquee-client-logo">
                 </div>
             </div>
         </section>
