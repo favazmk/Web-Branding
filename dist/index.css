@@ -4328,3 +4328,373 @@ nav {
         transform: translateX(-50%);
     }
 }
+
+/* ==========================================================================
+   TEAM LANYARDS — hanging ID cards (physics in scripts/lanyard.js)
+   ========================================================================== */
+
+.lanyard-section {
+    --lny-w: 190px;
+    --lny-card-h: 252px;
+    --lny-clip-h: 26px;
+    --lny-stage-h: 470px;
+    overflow: hidden;
+}
+
+.lanyard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 56px;
+}
+
+.lanyard-stage {
+    position: relative;
+    z-index: 1;
+    height: var(--lny-stage-h);
+    perspective: 950px;
+    perspective-origin: 50% 32%;
+}
+
+/* A card being thrown around can cross its neighbours; keep it on top. */
+.lanyard-stage.is-held {
+    z-index: 5;
+}
+
+/* --- The strap ---------------------------------------------------------- */
+
+.lanyard-band {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.lanyard-band-strap {
+    fill: none;
+    stroke-width: 15;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Sits under the strap purely for edge definition — no blur filter, which
+   would be re-rasterised on every animation frame. */
+.lanyard-band-shadow {
+    fill: none;
+    stroke: rgba(0, 0, 0, 0.5);
+    stroke-width: 18;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.lanyard-band-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 6.5px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    fill: rgba(255, 255, 255, 0.32);
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+/* --- The hanging assembly ----------------------------------------------- */
+
+.lanyard-hanger {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--lny-w);
+    transform-origin: 50% 0;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.lanyard-clip {
+    position: relative;
+    width: 40px;
+    height: var(--lny-clip-h);
+    margin: 0 auto;
+    border-radius: 5px 5px 3px 3px;
+    background: linear-gradient(100deg, #6b6f78 0%, #d8dde5 26%, #f2f5f9 44%, #9aa1ad 62%, #575b63 100%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Slot the strap feeds through. */
+.lanyard-clip::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 5px;
+    border-radius: 3px;
+    background: #1b1024;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* Hinge line where the clip grips the card. */
+.lanyard-clip::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 6px;
+    right: 6px;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+/* --- The card ------------------------------------------------------------ */
+
+.lanyard-card {
+    position: relative;
+    width: var(--lny-w);
+    height: var(--lny-card-h);
+    margin-top: -3px;
+    transform-style: preserve-3d;
+    cursor: grab;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    border-radius: 16px;
+}
+
+.lanyard-stage.is-held .lanyard-card {
+    cursor: grabbing;
+}
+
+.lanyard-card:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 6px;
+}
+
+.lanyard-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(160deg, #1b0f2e 0%, #120725 55%, #0b0417 100%);
+    box-shadow: 0 22px 45px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.lanyard-face-back {
+    transform: rotateY(180deg);
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px;
+    text-align: center;
+    background:
+        radial-gradient(circle at 50% 38%, rgba(139, 61, 255, 0.28) 0%, transparent 62%),
+        linear-gradient(160deg, #1b0f2e 0%, #120725 55%, #0b0417 100%);
+}
+
+/* Punch-slot strip at the top of the badge. */
+.lanyard-slotbar {
+    position: relative;
+    flex: 0 0 26px;
+    background: rgba(0, 0, 0, 0.35);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.lanyard-slotbar::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 34px;
+    height: 7px;
+    border-radius: 4px;
+    background: #05010a;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.lanyard-photo {
+    position: relative;
+    flex: 1 1 auto;
+    overflow: hidden;
+    background: var(--grad-primary);
+}
+
+.lanyard-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Initials stand in until a photo is dropped in (or if one fails to load). */
+.lanyard-initials {
+    display: none;
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.9);
+    background: var(--grad-primary);
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+.lanyard-stage.no-photo .lanyard-photo img {
+    display: none;
+}
+
+.lanyard-stage.no-photo .lanyard-initials {
+    display: flex;
+}
+
+.lanyard-meta {
+    position: relative;
+    padding: 14px 16px 16px;
+    background: linear-gradient(180deg, rgba(11, 4, 23, 0) 0%, rgba(11, 4, 23, 0.92) 42%, #0b0417 100%);
+    margin-top: -46px;
+    z-index: 2;
+}
+
+.lanyard-name {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text-white);
+}
+
+.lanyard-role {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+}
+
+.lanyard-face-back .lanyard-back-logo {
+    width: 92%;
+    max-width: 158px;
+    opacity: 0.95;
+    pointer-events: none;
+}
+
+.lanyard-face-back .lanyard-back-text {
+    position: relative;
+    padding-top: 14px;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faded);
+    line-height: 1.8;
+}
+
+/* Hairline rule above the location line, so the reverse reads as a printed
+   badge back rather than an empty panel. */
+.lanyard-face-back .lanyard-back-text::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 46px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.65), transparent);
+}
+
+.lanyard-hint {
+    margin-top: 34px;
+    text-align: center;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--text-faded);
+}
+
+/* --- Responsive ---------------------------------------------------------- */
+
+@media (max-width: 992px) {
+    .lanyard-section {
+        --lny-w: 168px;
+        --lny-card-h: 224px;
+        --lny-stage-h: 420px;
+    }
+
+    .lanyard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4px;
+    }
+}
+
+@media (max-width: 560px) {
+    .lanyard-section {
+        --lny-w: 134px;
+        --lny-card-h: 180px;
+        --lny-clip-h: 20px;
+        --lny-stage-h: 330px;
+    }
+
+    .lanyard-grid {
+        margin-top: 36px;
+    }
+
+    .lanyard-clip {
+        width: 32px;
+    }
+
+    .lanyard-band-strap {
+        stroke-width: 11;
+    }
+
+    .lanyard-band-shadow {
+        stroke-width: 13.5;
+    }
+
+    .lanyard-name {
+        font-size: 0.82rem;
+    }
+
+    .lanyard-role {
+        font-size: 0.56rem;
+    }
+
+    .lanyard-initials {
+        font-size: 2.1rem;
+    }
+
+    .lanyard-meta {
+        padding: 10px 12px 12px;
+    }
+}
+
+/* Physics is skipped entirely in lanyard.js under this preference; the cards
+   simply hang straight down and dragging is not wired up, so the prompt to
+   drag them is withheld too. */
+@media (prefers-reduced-motion: reduce) {
+    .lanyard-hanger {
+        will-change: auto;
+    }
+
+    .lanyard-card {
+        cursor: default;
+    }
+
+    .lanyard-hint {
+        display: none;
+    }
+}
