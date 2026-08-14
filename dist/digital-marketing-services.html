@@ -799,6 +799,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: relative;
+            z-index: 20;
+            pointer-events: auto;
         }
         .reel-badge {
             display: inline-flex;
@@ -832,6 +835,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             align-items: center;
             gap: 8px;
             margin-left: 10px;
+            position: relative;
+            z-index: 22;
         }
         .reel-icon-btn {
             width: 34px;
@@ -845,6 +850,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
+            position: relative;
+            z-index: 25;
+            pointer-events: auto;
+        }
+        .reel-icon-btn svg {
+            pointer-events: none;
         }
         .reel-icon-btn:hover {
             background: rgba(139, 61, 255, 0.85);
@@ -1779,14 +1790,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <span class="reel-subtitle">Relatable viral business skits</span>
                             </div>
                             <div class="reel-control-group">
-                                <button class="reel-icon-btn btn-replay" title="Play from beginning" aria-label="Replay video">
+                                <button class="reel-icon-btn btn-replay" onclick="window.replayReel(this)" title="Play from beginning" aria-label="Replay video">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
                                 </button>
-                                <button class="reel-icon-btn btn-playpause" title="Play / Pause" aria-label="Play or pause video">
+                                <button class="reel-icon-btn btn-playpause" onclick="window.toggleReelPlay(this)" title="Play / Pause" aria-label="Play or pause video">
                                     <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
                                     <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                                 </button>
-                                <button class="reel-icon-btn btn-sound" title="Toggle sound" aria-label="Toggle sound">
+                                <button class="reel-icon-btn btn-sound" onclick="window.toggleReelSound(this)" title="Toggle sound" aria-label="Toggle sound">
                                     <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
                                     <svg class="icon-unmute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                                 </button>
@@ -1810,14 +1821,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <span class="reel-subtitle">Deep audience engagement</span>
                             </div>
                             <div class="reel-control-group">
-                                <button class="reel-icon-btn btn-replay" title="Play from beginning" aria-label="Replay video">
+                                <button class="reel-icon-btn btn-replay" onclick="window.replayReel(this)" title="Play from beginning" aria-label="Replay video">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
                                 </button>
-                                <button class="reel-icon-btn btn-playpause" title="Play / Pause" aria-label="Play or pause video">
+                                <button class="reel-icon-btn btn-playpause" onclick="window.toggleReelPlay(this)" title="Play / Pause" aria-label="Play or pause video">
                                     <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
                                     <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                                 </button>
-                                <button class="reel-icon-btn btn-sound" title="Toggle sound" aria-label="Toggle sound">
+                                <button class="reel-icon-btn btn-sound" onclick="window.toggleReelSound(this)" title="Toggle sound" aria-label="Toggle sound">
                                     <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
                                     <svg class="icon-unmute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                                 </button>
@@ -1841,14 +1852,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <span class="reel-subtitle">Riding active social trends</span>
                             </div>
                             <div class="reel-control-group">
-                                <button class="reel-icon-btn btn-replay" title="Play from beginning" aria-label="Replay video">
+                                <button class="reel-icon-btn btn-replay" onclick="window.replayReel(this)" title="Play from beginning" aria-label="Replay video">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
                                 </button>
-                                <button class="reel-icon-btn btn-playpause" title="Play / Pause" aria-label="Play or pause video">
+                                <button class="reel-icon-btn btn-playpause" onclick="window.toggleReelPlay(this)" title="Play / Pause" aria-label="Play or pause video">
                                     <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
                                     <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                                 </button>
-                                <button class="reel-icon-btn btn-sound" title="Toggle sound" aria-label="Toggle sound">
+                                <button class="reel-icon-btn btn-sound" onclick="window.toggleReelSound(this)" title="Toggle sound" aria-label="Toggle sound">
                                     <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
                                     <svg class="icon-unmute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                                 </button>
@@ -2472,136 +2483,98 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     heroContent.style.opacity = Math.max(0, 1 - (scrolled / 700));
                 }
             }
-        // Social Reels Interactive Controller
-        document.querySelectorAll('.reel-card').forEach(function(card) {
+        // Global Reels Interactive Functions
+        window.toggleReelPlay = function(btn) {
+            const card = btn.closest('.reel-card');
+            if (!card) return;
             const video = card.querySelector('.reel-video');
-            const playPauseBtn = card.querySelector('.btn-playpause');
-            const replayBtn = card.querySelector('.btn-replay');
-            const soundBtn = card.querySelector('.btn-sound');
-            const iconPause = playPauseBtn ? playPauseBtn.querySelector('.icon-pause') : null;
-            const iconPlay = playPauseBtn ? playPauseBtn.querySelector('.icon-play') : null;
-            const iconMute = soundBtn ? soundBtn.querySelector('.icon-mute') : null;
-            const iconUnmute = soundBtn ? soundBtn.querySelector('.icon-unmute') : null;
-            const progressFill = card.querySelector('.reel-progress-fill');
-            const progressBar = card.querySelector('.reel-progress-bar');
-
             if (!video) return;
 
-            function updatePlayState() {
-                if (video.paused) {
-                    if (iconPause) iconPause.style.display = 'none';
-                    if (iconPlay) iconPlay.style.display = 'inline-block';
-                    if (playPauseBtn) playPauseBtn.classList.remove('is-active');
-                } else {
+            const iconPause = btn.querySelector('.icon-pause');
+            const iconPlay = btn.querySelector('.icon-play');
+
+            if (video.paused) {
+                video.play().then(function() {
                     if (iconPause) iconPause.style.display = 'inline-block';
                     if (iconPlay) iconPlay.style.display = 'none';
-                    if (playPauseBtn) playPauseBtn.classList.add('is-active');
-                }
+                    btn.classList.add('is-active');
+                }).catch(function(){});
+            } else {
+                video.pause();
+                if (iconPause) iconPause.style.display = 'none';
+                if (iconPlay) iconPlay.style.display = 'inline-block';
+                btn.classList.remove('is-active');
             }
+        };
 
-            // Attempt initial play
+        window.replayReel = function(btn) {
+            const card = btn.closest('.reel-card');
+            if (!card) return;
+            const video = card.querySelector('.reel-video');
+            if (!video) return;
+
+            video.currentTime = 0;
+            const playBtn = card.querySelector('.btn-playpause');
+            const iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
+            const iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
+
             video.play().then(function() {
-                updatePlayState();
-            }).catch(function() {
-                updatePlayState();
+                if (iconPause) iconPause.style.display = 'inline-block';
+                if (iconPlay) iconPlay.style.display = 'none';
+                if (playBtn) playBtn.classList.add('is-active');
+            }).catch(function(){});
+        };
+
+        window.toggleReelSound = function(btn) {
+            const card = btn.closest('.reel-card');
+            if (!card) return;
+            const video = card.querySelector('.reel-video');
+            if (!video) return;
+
+            const iconMute = btn.querySelector('.icon-mute');
+            const iconUnmute = btn.querySelector('.icon-unmute');
+
+            if (video.muted) {
+                document.querySelectorAll('.reel-video').forEach(function(v) {
+                    v.muted = true;
+                });
+                document.querySelectorAll('.btn-sound').forEach(function(b) {
+                    b.classList.remove('is-active');
+                    const m = b.querySelector('.icon-mute');
+                    const um = b.querySelector('.icon-unmute');
+                    if (m) m.style.display = 'inline-block';
+                    if (um) um.style.display = 'none';
+                });
+
+                video.muted = false;
+                if (iconMute) iconMute.style.display = 'none';
+                if (iconUnmute) iconUnmute.style.display = 'inline-block';
+                btn.classList.add('is-active');
+
+                if (video.paused) {
+                    video.play().catch(function(){});
+                }
+            } else {
+                video.muted = true;
+                if (iconMute) iconMute.style.display = 'inline-block';
+                if (iconUnmute) iconUnmute.style.display = 'none';
+                btn.classList.remove('is-active');
+            }
+        };
+
+        // Initialize progress bar & scroll autoplay
+        document.querySelectorAll('.reel-card').forEach(function(card) {
+            const video = card.querySelector('.reel-video');
+            const progressFill = card.querySelector('.reel-progress-fill');
+            const progressBar = card.querySelector('.reel-progress-bar');
+            if (!video) return;
+
+            video.addEventListener('timeupdate', function() {
+                if (video.duration && progressFill) {
+                    const pct = (video.currentTime / video.duration) * 100;
+                    progressFill.style.width = pct + '%';
+                }
             });
-
-            // IntersectionObserver for auto-playing when scrolled into view
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            video.play().then(function() {
-                                updatePlayState();
-                            }).catch(function(){});
-                        }
-                    });
-                }, { threshold: 0.2 });
-                observer.observe(card);
-            }
-
-            if (playPauseBtn) {
-                playPauseBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    if (video.paused) {
-                        video.play().then(function() {
-                            updatePlayState();
-                        }).catch(function(){});
-                    } else {
-                        video.pause();
-                        updatePlayState();
-                    }
-                });
-            }
-
-            if (video) {
-                video.addEventListener('click', function() {
-                    if (video.paused) {
-                        video.play().then(function() {
-                            updatePlayState();
-                        }).catch(function(){});
-                    } else {
-                        video.pause();
-                        updatePlayState();
-                    }
-                });
-
-                video.addEventListener('play', updatePlayState);
-                video.addEventListener('pause', updatePlayState);
-
-                video.addEventListener('timeupdate', function() {
-                    if (video.duration && progressFill) {
-                        const pct = (video.currentTime / video.duration) * 100;
-                        progressFill.style.width = pct + '%';
-                    }
-                });
-            }
-
-            if (replayBtn) {
-                replayBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    video.currentTime = 0;
-                    video.play().then(function() {
-                        updatePlayState();
-                    }).catch(function(){});
-                });
-            }
-
-            if (soundBtn) {
-                soundBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    if (video.muted) {
-                        // Mute all other reels sound
-                        document.querySelectorAll('.reel-video').forEach(function(v) {
-                            v.muted = true;
-                        });
-                        document.querySelectorAll('.btn-sound').forEach(function(btn) {
-                            btn.classList.remove('is-active');
-                            const m = btn.querySelector('.icon-mute');
-                            const um = btn.querySelector('.icon-unmute');
-                            if (m) m.style.display = 'inline-block';
-                            if (um) um.style.display = 'none';
-                        });
-
-                        video.muted = false;
-                        if (iconMute) iconMute.style.display = 'none';
-                        if (iconUnmute) iconUnmute.style.display = 'inline-block';
-                        soundBtn.classList.add('is-active');
-
-                        // Ensure video is playing when sound is unmuted
-                        if (video.paused) {
-                            video.play().then(function() {
-                                updatePlayState();
-                            }).catch(function(){});
-                        }
-                    } else {
-                        video.muted = true;
-                        if (iconMute) iconMute.style.display = 'inline-block';
-                        if (iconUnmute) iconUnmute.style.display = 'none';
-                        soundBtn.classList.remove('is-active');
-                    }
-                });
-            }
 
             if (progressBar) {
                 progressBar.addEventListener('click', function(e) {
@@ -2612,6 +2585,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         video.currentTime = pos * video.duration;
                     }
                 });
+            }
+
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            video.play().catch(function(){});
+                        }
+                    });
+                }, { threshold: 0.2 });
+                observer.observe(card);
             }
         });
     });
