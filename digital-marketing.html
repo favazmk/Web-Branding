@@ -1459,92 +1459,131 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Global Reels Interactive Functions
-        window.toggleReelPlay = function(btn) {
-            const card = btn.closest('.reel-card');
-            if (!card) return;
-            const video = card.querySelector('.reel-video');
-            if (!video) return;
+    // Top-Level Social Reels Interactive Functions
+    window.toggleReelPlay = function(target) {
+        if (window.event) {
+            window.event.stopPropagation();
+            window.event.preventDefault();
+        }
+        const card = target.classList.contains('reel-card') ? target : target.closest('.reel-card');
+        if (!card) return false;
+        const video = card.querySelector('.reel-video');
+        const playBtn = card.querySelector('.btn-playpause');
+        if (!video) return false;
 
-            const iconPause = btn.querySelector('.icon-pause');
-            const iconPlay = btn.querySelector('.icon-play');
+        const iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
+        const iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
 
-            if (video.paused) {
-                video.play().then(function() {
+        if (video.paused) {
+            var promise = video.play();
+            if (promise !== undefined) {
+                promise.then(function() {
                     if (iconPause) iconPause.style.display = 'inline-block';
                     if (iconPlay) iconPlay.style.display = 'none';
-                    btn.classList.add('is-active');
-                }).catch(function(){});
-            } else {
-                video.pause();
-                if (iconPause) iconPause.style.display = 'none';
-                if (iconPlay) iconPlay.style.display = 'inline-block';
-                btn.classList.remove('is-active');
+                    if (playBtn) playBtn.classList.add('is-active');
+                }).catch(function(e){ console.log("Play blocked:", e); });
             }
-        };
+        } else {
+            video.pause();
+            if (iconPause) iconPause.style.display = 'none';
+            if (iconPlay) iconPlay.style.display = 'inline-block';
+            if (playBtn) playBtn.classList.remove('is-active');
+        }
+        return false;
+    };
 
-        window.replayReel = function(btn) {
-            const card = btn.closest('.reel-card');
-            if (!card) return;
-            const video = card.querySelector('.reel-video');
-            if (!video) return;
+    window.replayReel = function(btn) {
+        if (window.event) {
+            window.event.stopPropagation();
+            window.event.preventDefault();
+        }
+        const card = btn.closest('.reel-card');
+        if (!card) return false;
+        const video = card.querySelector('.reel-video');
+        const playBtn = card.querySelector('.btn-playpause');
+        if (!video) return false;
 
-            video.currentTime = 0;
-            const playBtn = card.querySelector('.btn-playpause');
-            const iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
-            const iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
+        video.currentTime = 0;
+        const iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
+        const iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
 
-            video.play().then(function() {
+        var promise = video.play();
+        if (promise !== undefined) {
+            promise.then(function() {
                 if (iconPause) iconPause.style.display = 'inline-block';
                 if (iconPlay) iconPlay.style.display = 'none';
                 if (playBtn) playBtn.classList.add('is-active');
             }).catch(function(){});
-        };
+        }
+        return false;
+    };
 
-        window.toggleReelSound = function(btn) {
-            const card = btn.closest('.reel-card');
-            if (!card) return;
-            const video = card.querySelector('.reel-video');
-            if (!video) return;
+    window.toggleReelSound = function(btn) {
+        if (window.event) {
+            window.event.stopPropagation();
+            window.event.preventDefault();
+        }
+        const card = btn.closest('.reel-card');
+        if (!card) return false;
+        const video = card.querySelector('.reel-video');
+        if (!video) return false;
 
-            const iconMute = btn.querySelector('.icon-mute');
-            const iconUnmute = btn.querySelector('.icon-unmute');
+        const iconMute = btn.querySelector('.icon-mute');
+        const iconUnmute = btn.querySelector('.icon-unmute');
 
-            if (video.muted) {
-                document.querySelectorAll('.reel-video').forEach(function(v) {
-                    v.muted = true;
-                });
-                document.querySelectorAll('.btn-sound').forEach(function(b) {
-                    b.classList.remove('is-active');
-                    const m = b.querySelector('.icon-mute');
-                    const um = b.querySelector('.icon-unmute');
-                    if (m) m.style.display = 'inline-block';
-                    if (um) um.style.display = 'none';
-                });
+        if (video.muted) {
+            // Mute all other videos on the page
+            document.querySelectorAll('video').forEach(function(v) {
+                v.muted = true;
+            });
+            document.querySelectorAll('.btn-sound').forEach(function(b) {
+                b.classList.remove('is-active');
+                const m = b.querySelector('.icon-mute');
+                const um = b.querySelector('.icon-unmute');
+                if (m) m.style.display = 'inline-block';
+                if (um) um.style.display = 'none';
+            });
 
-                video.muted = false;
-                if (iconMute) iconMute.style.display = 'none';
-                if (iconUnmute) iconUnmute.style.display = 'inline-block';
-                btn.classList.add('is-active');
+            video.muted = false;
+            if (iconMute) iconMute.style.display = 'none';
+            if (iconUnmute) iconUnmute.style.display = 'inline-block';
+            btn.classList.add('is-active');
 
-                if (video.paused) {
-                    video.play().catch(function(){});
-                }
-            } else {
-                video.muted = true;
-                if (iconMute) iconMute.style.display = 'inline-block';
-                if (iconUnmute) iconUnmute.style.display = 'none';
-                btn.classList.remove('is-active');
+            if (video.paused) {
+                video.play().catch(function(){});
             }
-        };
+        } else {
+            video.muted = true;
+            if (iconMute) iconMute.style.display = 'inline-block';
+            if (iconUnmute) iconUnmute.style.display = 'none';
+            btn.classList.remove('is-active');
+        }
+        return false;
+    };
 
-        // Initialize progress bar & scroll autoplay
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sync progress bars and video events
         document.querySelectorAll('.reel-card').forEach(function(card) {
             const video = card.querySelector('.reel-video');
             const progressFill = card.querySelector('.reel-progress-fill');
             const progressBar = card.querySelector('.reel-progress-bar');
+            const playBtn = card.querySelector('.btn-playpause');
+            const iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
+            const iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
+
             if (!video) return;
+
+            video.addEventListener('play', function() {
+                if (iconPause) iconPause.style.display = 'inline-block';
+                if (iconPlay) iconPlay.style.display = 'none';
+                if (playBtn) playBtn.classList.add('is-active');
+            });
+
+            video.addEventListener('pause', function() {
+                if (iconPause) iconPause.style.display = 'none';
+                if (iconPlay) iconPlay.style.display = 'inline-block';
+                if (playBtn) playBtn.classList.remove('is-active');
+            });
 
             video.addEventListener('timeupdate', function() {
                 if (video.duration && progressFill) {
