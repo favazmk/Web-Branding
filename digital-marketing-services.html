@@ -769,6 +769,132 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             text-align: center;
             color: #fff;
         }
+
+        /* --- Social Reels Showcase Section --- */
+        .reels-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 40px;
+        }
+        .reel-card {
+            background: rgba(15, 8, 30, 0.7);
+            border: 1px solid rgba(139, 61, 255, 0.35);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(139, 61, 255, 0.15);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .reel-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(192, 132, 252, 0.7);
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55), 0 0 32px rgba(192, 132, 252, 0.35);
+        }
+        .reel-header {
+            padding: 18px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .reel-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 9999px;
+        }
+        .badge-comedy { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(244, 114, 182, 0.4); }
+        .badge-emotional { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.4); }
+        .badge-trending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); }
+
+        .reel-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 4px;
+        }
+        .reel-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-faded);
+        }
+        .reel-control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 10px;
+        }
+        .reel-icon-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .reel-icon-btn:hover {
+            background: rgba(139, 61, 255, 0.85);
+            border-color: rgba(192, 132, 252, 0.8);
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(139, 61, 255, 0.5);
+        }
+        .reel-icon-btn.is-active {
+            background: rgba(139, 61, 255, 0.9);
+            border-color: rgba(192, 132, 252, 0.9);
+            box-shadow: 0 0 12px rgba(192, 132, 252, 0.7);
+        }
+        .reel-video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #090614;
+            overflow: hidden;
+        }
+        .reel-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .reel-progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            z-index: 10;
+        }
+        .reel-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #8b3dff, #c084fc);
+            box-shadow: 0 0 8px rgba(192, 132, 252, 0.8);
+            transition: width 0.1s linear;
+        }
+        @media (max-width: 1024px) {
+            .reels-showcase-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .reels-showcase-grid { grid-template-columns: 1fr; }
+        }
         .form-group {
             margin-bottom: 15px;
         }
@@ -1632,6 +1758,114 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
         </section>
 
+        <!-- High-Impact Social Reels Showcase Section -->
+        <section class="section-padding" id="social-reels" style="background: rgba(10, 4, 22, 0.95); border-top: 1px solid var(--border-glass);">
+            <div class="container">
+                <div style="text-align: center; max-width: 750px; margin: 0 auto 10px auto;" class="fade-in-up">
+                    <span class="section-tag center">Social Media Growth ✨</span>
+                    <h2 class="section-title">Reels Crafted to Reach Millions</h2>
+                    <p style="color: var(--text-faded); font-size: 1.05rem; line-height: 1.7; margin-top: 10px;">
+                        From high-converting comedy skits and emotional storytelling to viral trend-based edits — we create content designed to explode organic reach and turn viewers into loyal customers.
+                    </p>
+                </div>
+
+                <div class="reels-showcase-grid">
+                    <!-- Reel 1: Comedy Reel -->
+                    <div class="reel-card fade-in-up" id="card-reel-1">
+                        <div class="reel-header">
+                            <div>
+                                <span class="reel-badge badge-comedy">Comedy &amp; Skit</span>
+                                <h3 class="reel-title">Humor That Converts</h3>
+                                <span class="reel-subtitle">Relatable viral business skits</span>
+                            </div>
+                            <div class="reel-control-group">
+                                <button class="reel-icon-btn btn-replay" title="Play from beginning" aria-label="Replay video">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                                </button>
+                                <button class="reel-icon-btn btn-playpause" title="Play / Pause" aria-label="Play or pause video">
+                                    <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
+                                    <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                </button>
+                                <button class="reel-icon-btn btn-sound" title="Toggle sound" aria-label="Toggle sound">
+                                    <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                                    <svg class="icon-unmute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="reel-video-container">
+                            <video class="reel-video" loop muted playsinline preload="metadata">
+                                <source src="./assets/reel_1.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="reel-progress-bar"><div class="reel-progress-fill"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Reel 2: Emotional Storytelling -->
+                    <div class="reel-card fade-in-up delay-100" id="card-reel-2">
+                        <div class="reel-header">
+                            <div>
+                                <span class="reel-badge badge-emotional">Emotional &amp; Brand</span>
+                                <h3 class="reel-title">Storytelling &amp; Hook</h3>
+                                <span class="reel-subtitle">Deep audience engagement</span>
+                            </div>
+                            <div class="reel-control-group">
+                                <button class="reel-icon-btn btn-replay" title="Play from beginning" aria-label="Replay video">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                                </button>
+                                <button class="reel-icon-btn btn-playpause" title="Play / Pause" aria-label="Play or pause video">
+                                    <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
+                                    <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                </button>
+                                <button class="reel-icon-btn btn-sound" title="Toggle sound" aria-label="Toggle sound">
+                                    <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                                    <svg class="icon-unmute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="reel-video-container">
+                            <video class="reel-video" loop muted playsinline preload="metadata">
+                                <source src="./assets/reel_2.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="reel-progress-bar"><div class="reel-progress-fill"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Reel 3: Trend Based -->
+                    <div class="reel-card fade-in-up delay-200" id="card-reel-3">
+                        <div class="reel-header">
+                            <div>
+                                <span class="reel-badge badge-trending">Trend Based</span>
+                                <h3 class="reel-title">Viral Audios &amp; Edits</h3>
+                                <span class="reel-subtitle">Riding active social trends</span>
+                            </div>
+                            <div class="reel-control-group">
+                                <button class="reel-icon-btn btn-replay" title="Play from beginning" aria-label="Replay video">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                                </button>
+                                <button class="reel-icon-btn btn-playpause" title="Play / Pause" aria-label="Play or pause video">
+                                    <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
+                                    <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                </button>
+                                <button class="reel-icon-btn btn-sound" title="Toggle sound" aria-label="Toggle sound">
+                                    <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                                    <svg class="icon-unmute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="reel-video-container">
+                            <video class="reel-video" loop muted playsinline preload="metadata">
+                                <source src="./assets/reel_3.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="reel-progress-bar"><div class="reel-progress-fill"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Pricing Packages Section -->
         <section class="section-padding theme-light" style="background: var(--bg-slate);" id="packages">
             <div class="container">
@@ -2237,6 +2471,99 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     heroContent.style.transform = `translate3d(0, ${scrolled * 0.05}px, 0)`;
                     heroContent.style.opacity = Math.max(0, 1 - (scrolled / 700));
                 }
+            }
+        // Social Reels Interactive Controller
+        document.querySelectorAll('.reel-card').forEach(function(card) {
+            const video = card.querySelector('.reel-video');
+            const playPauseBtn = card.querySelector('.btn-playpause');
+            const replayBtn = card.querySelector('.btn-replay');
+            const soundBtn = card.querySelector('.btn-sound');
+            const iconPause = playPauseBtn ? playPauseBtn.querySelector('.icon-pause') : null;
+            const iconPlay = playPauseBtn ? playPauseBtn.querySelector('.icon-play') : null;
+            const iconMute = soundBtn ? soundBtn.querySelector('.icon-mute') : null;
+            const iconUnmute = soundBtn ? soundBtn.querySelector('.icon-unmute') : null;
+            const progressFill = card.querySelector('.reel-progress-fill');
+            const progressBar = card.querySelector('.reel-progress-bar');
+
+            if (!video) return;
+
+            function updatePlayState() {
+                if (video.paused) {
+                    if (iconPause) iconPause.style.display = 'none';
+                    if (iconPlay) iconPlay.style.display = 'inline-block';
+                    if (playPauseBtn) playPauseBtn.classList.remove('is-active');
+                } else {
+                    if (iconPause) iconPause.style.display = 'inline-block';
+                    if (iconPlay) iconPlay.style.display = 'none';
+                    if (playPauseBtn) playPauseBtn.classList.add('is-active');
+                }
+            }
+
+            if (playPauseBtn) {
+                playPauseBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (video.paused) {
+                        video.play().catch(function(){});
+                    } else {
+                        video.pause();
+                    }
+                    updatePlayState();
+                });
+            }
+
+            if (video) {
+                video.addEventListener('click', function() {
+                    if (video.paused) {
+                        video.play().catch(function(){});
+                    } else {
+                        video.pause();
+                    }
+                    updatePlayState();
+                });
+
+                video.addEventListener('timeupdate', function() {
+                    if (video.duration && progressFill) {
+                        const pct = (video.currentTime / video.duration) * 100;
+                        progressFill.style.width = pct + '%';
+                    }
+                });
+            }
+
+            if (replayBtn) {
+                replayBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    video.currentTime = 0;
+                    video.play().catch(function(){});
+                    updatePlayState();
+                });
+            }
+
+            if (soundBtn) {
+                soundBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (video.muted) {
+                        video.muted = false;
+                        if (iconMute) iconMute.style.display = 'none';
+                        if (iconUnmute) iconUnmute.style.display = 'inline-block';
+                        soundBtn.classList.add('is-active');
+                    } else {
+                        video.muted = true;
+                        if (iconMute) iconMute.style.display = 'inline-block';
+                        if (iconUnmute) iconUnmute.style.display = 'none';
+                        soundBtn.classList.remove('is-active');
+                    }
+                });
+            }
+
+            if (progressBar) {
+                progressBar.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const rect = progressBar.getBoundingClientRect();
+                    const pos = (e.clientX - rect.left) / rect.width;
+                    if (video.duration) {
+                        video.currentTime = pos * video.duration;
+                    }
+                });
             }
         });
     });
