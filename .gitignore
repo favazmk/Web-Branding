@@ -13,9 +13,13 @@ Thumbs.db
 *.gz
 scratch/
 
+# Build output. Regenerate with: node scripts/build.js
+# Vercel serves from the repo root (vercel.json outputDirectory: "./"),
+# so dist/ is only a staging folder for the Hostinger deploy zip.
+dist/
+
 # Raw Source Assets
 assets/WEBSITE MOCKUP VIDEOS/
-dist/assets/WEBSITE MOCKUP VIDEOS/
 
 # Design-page image masters. The site ships the .webp next to them;
 # these stay local so the repo does not carry ~10 MB of PNG.

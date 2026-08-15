@@ -16,7 +16,10 @@ fs.mkdirSync(distDir, { recursive: true });
 const files = fs.readdirSync(rootDir);
 files.forEach(file => {
     const ext = path.extname(file).toLowerCase();
-    if (['.html', '.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.svg', '.ico', '.xlsx'].includes(ext)) {
+    // Web-servable types only. Don't add document formats (.xlsx, .docx, .pdf)
+    // here — dist/ is uploaded to the public web root, so anything copied in
+    // becomes publicly downloadable.
+    if (['.html', '.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.svg', '.ico'].includes(ext)) {
         fs.copyFileSync(path.join(rootDir, file), path.join(distDir, file));
         console.log(`Copied ${file} to dist/`);
     }
