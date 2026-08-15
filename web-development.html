@@ -143,40 +143,45 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             margin-bottom: 15px;
         }
 
-        /* Client Brands Marquee */
-        .brands-marquee {
-            padding: 40px 0;
-            background: #ffffff;
-            overflow: hidden;
+        /* Marquee — styling comes from index.css so this page matches the
+           homepage brands marquee (white background, dark heading text). */
+
+        /* Projects marquee loop length. Overrides index.css, which assumes 10
+           slides at 400px; this page renders 9 slides at 320px after the
+           1Point360 card was removed for Google Ads policy compliance. */
+        .projects-track { --track-shift: -3060px; } /* 9 x (320px + 20px gap) */
+        @media (max-width: 768px) {
+            .projects-track { --track-shift: -2880px; } /* 9 x (300px + 20px gap) */
         }
-        .marquee-client-logo {
-            height: 55px;
-            width: auto;
-            object-fit: contain;
-            opacity: 0.75;
-            filter: grayscale(100%);
-            transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
-            flex-shrink: 0;
-            margin-right: 45px;
+
+        /* Google Ads compliance disclaimer (footer) */
+        .commercial-identity-disclaimer {
+            margin-top: 40px;
+            padding: 20px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
         }
-        .marquee-client-logo:hover {
-            opacity: 1;
-            filter: grayscale(0%);
-            transform: scale(1.08);
+        .commercial-identity-disclaimer .disclaimer-heading {
+            display: block;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #c5c0d0;
+            margin-bottom: 10px;
         }
-        .marquee-content {
-            display: flex;
-            align-items: center;
-            width: max-content;
-            will-change: transform;
-            animation: scroll 35s linear infinite;
+        .commercial-identity-disclaimer p {
+            margin: 0 0 8px 0;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: #9b95a8;
         }
-        .marquee-content:hover {
-            animation-play-state: paused;
+        .commercial-identity-disclaimer p:last-child {
+            margin-bottom: 0;
         }
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        .commercial-identity-disclaimer strong {
+            color: #c5c0d0;
         }
 
         /* Pricing Cards */
@@ -1229,7 +1234,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <img src="./assets/clients/logo_12.webp" alt="Diora Jewellery" class="marquee-client-logo">
                     <img src="./assets/clients/logo_13.webp" alt="Zawaya" class="marquee-client-logo">
                     <img src="./assets/logos/logo_1.webp" alt="Mice Media" class="marquee-client-logo">
-                    <img src="./assets/logos/logo_2.webp" alt="iPoint 360" class="marquee-client-logo">
                     <img src="./assets/logos/logo_3.webp" alt="Kenz Trading" class="marquee-client-logo">
                     <img src="./assets/logos/logo_4.webp" alt="Meltoz Cafe" class="marquee-client-logo">
                     <img src="./assets/logos/logo_5.webp" alt="Viaggio Tourism" class="marquee-client-logo">
@@ -1251,7 +1255,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <img src="./assets/clients/logo_12.webp" alt="Diora Jewellery" class="marquee-client-logo">
                     <img src="./assets/clients/logo_13.webp" alt="Zawaya" class="marquee-client-logo">
                     <img src="./assets/logos/logo_1.webp" alt="Mice Media" class="marquee-client-logo">
-                    <img src="./assets/logos/logo_2.webp" alt="iPoint 360" class="marquee-client-logo">
                     <img src="./assets/logos/logo_3.webp" alt="Kenz Trading" class="marquee-client-logo">
                     <img src="./assets/logos/logo_4.webp" alt="Meltoz Cafe" class="marquee-client-logo">
                     <img src="./assets/logos/logo_5.webp" alt="Viaggio Tourism" class="marquee-client-logo">
@@ -1420,13 +1423,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="projects-track">
 
                         <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Business Consultancy" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Business Consultancy</span>
-                                <h3 class="project-title">1Point360</h3>
-                            </div>
-                        </a>
-                        <a href="#" class="project-slide ig-project-card">
                             <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="Wellness Pools & Hydrotherm" class="ig-img">
                             <div class="project-overlay-custom">
                                 <span class="project-cat">Luxury Wellness</span>
@@ -1490,13 +1486,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             </div>
                         </a>
 
-                        <a href="#" class="project-slide ig-project-card">
-                            <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-1point360-2026-07-15-14_51_51.webp" alt="1Point360 Business Consultancy" class="ig-img">
-                            <div class="project-overlay-custom">
-                                <span class="project-cat">Business Consultancy</span>
-                                <h3 class="project-title">1Point360</h3>
-                            </div>
-                        </a>
                         <a href="#" class="project-slide ig-project-card">
                             <img loading="lazy" decoding="async" src="./assets/works-new/screencapture-360new-hashirnisam-2026-07-15-15_14_51.webp" alt="Wellness Pools & Hydrotherm" class="ig-img">
                             <div class="project-overlay-custom">
@@ -1777,6 +1766,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             function selectCompareOption(index) {
                 const isMobile = window.innerWidth <= 992;
                 const clickedPill = document.querySelectorAll('.compare-opt-pill')[index];
+                // The pill UI this drives was replaced by .expand-card, so on
+                // this page there is nothing to select — without the guard the
+                // call below threw on every load, from inside DOMContentLoaded.
+                if (!clickedPill) return;
                 const isActive = clickedPill.classList.contains('active');
                 
                 // Remove active classes from all options
@@ -2126,8 +2119,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             </div>
 
+            <!-- Google Ads compliance: private-entity disclosure. Keeps this
+                 landing page clear of the "Government Documents & Official
+                 Services" policy by stating we are a commercial agency and
+                 have no government affiliation. Do not remove while ads run. -->
+            <div class="commercial-identity-disclaimer">
+                <span class="disclaimer-heading">Official Organization Disclaimer &amp; Commercial Identity</span>
+                <p>
+                    <strong>Web Branding LLC</strong> is an independent, private digital agency providing
+                    commercial web design, software development, and online marketing services in
+                    Dubai, United Arab Emirates.
+                </p>
+                <p>
+                    <strong>Government Non-Affiliation Statement:</strong> Web Branding LLC is a purely
+                    private entity. We are not owned, operated, affiliated with, endorsed by, or an
+                    official representative of any government entity, municipal department, ministry,
+                    or regulatory agency in the UAE or internationally. We do not issue, facilitate, or
+                    process government-issued official documents, trade licenses, visas, or civil
+                    registrations.
+                </p>
+            </div>
+
             <div class="footer-bottom">
-                <p class="copyright">&copy; <span id="current-year">2026</span> The Web Branding.</p>
+                <p class="copyright">&copy; <span id="current-year">2026</span> The Web Branding. Commercial Web Design &amp; Development Services.</p>
             </div>
         </div>
     </footer>

@@ -142,41 +142,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             margin-bottom: 15px;
         }
 
-        /* Client Brands Marquee */
-        .brands-marquee {
-            padding: 40px 0;
-            background: #ffffff;
-            overflow: hidden;
-        }
-        .marquee-client-logo {
-            height: 55px;
-            width: auto;
-            object-fit: contain;
-            opacity: 0.75;
-            filter: grayscale(100%);
-            transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
-            flex-shrink: 0;
-            margin-right: 45px;
-        }
-        .marquee-client-logo:hover {
-            opacity: 1;
-            filter: grayscale(0%);
-            transform: scale(1.08);
-        }
-        .marquee-content {
-            display: flex;
-            align-items: center;
-            width: max-content;
-            will-change: transform;
-            animation: scroll 35s linear infinite;
-        }
-        .marquee-content:hover {
-            animation-play-state: paused;
-        }
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+        /* Marquee — styling comes from index.css so this page matches the
+           homepage brands marquee (white background, dark heading text). */
 
         /* Pricing Cards */
         .pricing-grid {
@@ -470,23 +437,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             overflow: hidden;
             white-space: nowrap;
             position: relative;
-            width: 100vw;
-            left: 50%;
-            transform: translateX(-50%);
+            /* Full-bleed comes from index.css (margin-left: calc(50% - 50vw)).
+               Don't add left/transform here as well — the two techniques stack
+               and shift the marquee a further half-viewport left, leaving a
+               blank strip at the right edge. */
         }
         .projects-track {
             display: flex;
             width: max-content;
             gap: 20px;
-            --track-shift: -2520px;
+            /* One loop period = 6 unique cards x (320px card + 20px gap) */
+            --track-shift: -2040px;
             animation: scroll-marquee 45s linear infinite;
             padding: 20px 0;
             will-change: transform;
-        }
-        .projects-track::after {
-            content: '';
-            width: 20px;
-            flex-shrink: 0;
         }
         .projects-track:hover {
             animation-play-state: paused;
@@ -586,142 +550,134 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             .addons-glass-container { padding: 40px 0; }
             .addon-glass-card { padding: 30px 20px; }
             .pricing-card { padding: 30px 20px; }
+            /* 6 unique cards x (300px card + 20px gap) */
             .projects-track { --track-shift: -1920px; }
-        /* --- Social Reels Showcase Section --- */
-        .reels-showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 28px;
-            margin-top: 40px;
+            /* CEO Bot Mobile Styling */
+            .ceo-bot {
+                bottom: 15px !important;
+                left: 15px !important;
+                gap: 8px !important;
+            }
+            .ceo-bot-avatar {
+                width: 45px !important;
+                height: 45px !important;
+            }
+            .ceo-bot-bubble {
+                max-width: 190px !important;
+                padding: 10px 12px !important;
+                border-radius: 12px !important;
+                border-bottom-left-radius: 4px !important;
+            }
+            .ceo-bot-bubble .ceo-title {
+                font-size: 0.7rem !important;
+            }
+            .ceo-bot-bubble p {
+                font-size: 0.75rem !important;
+                margin-bottom: 6px !important;
+                line-height: 1.3 !important;
+            }
+            .ceo-bot-btn {
+                font-size: 0.7rem !important;
+                padding: 4px 8px !important;
+            }
         }
-        .reel-card {
-            background: rgba(15, 8, 30, 0.7);
-            border: 1px solid rgba(139, 61, 255, 0.35);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(139, 61, 255, 0.15);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-        .reel-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(192, 132, 252, 0.7);
-            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55), 0 0 32px rgba(192, 132, 252, 0.35);
-        }
-        .reel-header {
-            padding: 18px 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            z-index: 20;
-            pointer-events: auto;
-        }
-        .reel-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 9999px;
-        }
-        .badge-comedy { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(244, 114, 182, 0.4); }
-        .badge-emotional { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.4); }
-        .badge-trending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); }
 
-        .reel-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-top: 4px;
-        }
-        .reel-subtitle {
-            font-size: 0.8rem;
-            color: var(--text-faded);
-        }
-        .reel-control-group {
+        /* CEO Floating Sales Bot */
+        .ceo-bot {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-left: 10px;
-            position: relative;
-            z-index: 22;
-        }
-        .reel-icon-btn {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            z-index: 25;
-            pointer-events: auto;
-        }
-        .reel-icon-btn svg {
+            gap: 12px;
+            opacity: 0;
             pointer-events: none;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .reel-icon-btn:hover {
-            background: rgba(139, 61, 255, 0.85);
-            border-color: rgba(192, 132, 252, 0.8);
-            transform: scale(1.08);
-            box-shadow: 0 4px 12px rgba(139, 61, 255, 0.5);
+        .ceo-bot.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+            animation: float-bob 4s ease-in-out infinite;
         }
-        .reel-icon-btn.is-active {
-            background: rgba(139, 61, 255, 0.9);
-            border-color: rgba(192, 132, 252, 0.9);
-            box-shadow: 0 0 12px rgba(192, 132, 252, 0.7);
+        @keyframes float-bob {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
         }
-        .reel-video-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 9 / 16;
-            background: #090614;
+        .ceo-bot-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #8B3DFF;
             overflow: hidden;
+            box-shadow: 0 0 15px rgba(139, 61, 255, 0.4);
+            background: #1e0b36;
+            position: relative;
+            flex-shrink: 0;
         }
-        .reel-video {
-            position: absolute;
-            inset: 0;
+        .ceo-bot-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            cursor: pointer;
         }
-        .reel-progress-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
+        .ceo-bot-bubble {
+            background: rgba(25, 12, 45, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            padding: 12px 18px;
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            max-width: 250px;
+            color: #ffffff;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        .ceo-bot-bubble .ceo-title {
+            font-weight: 700;
+            color: #8B3DFF;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .ceo-bot-bubble p {
+            margin: 0 0 8px 0;
+            color: #e5e7eb;
+            line-height: 1.4;
+        }
+        .ceo-bot-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .ceo-bot-btn {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+        .ceo-bot-btn.btn-chat {
+            background: #25d366;
+            color: #ffffff;
+        }
+        .ceo-bot-btn.btn-chat:hover {
+            background: #20ba5a;
+        }
+        .ceo-bot-btn.btn-call {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .ceo-bot-btn.btn-call:hover {
             background: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            z-index: 10;
-        }
-        .reel-progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #8b3dff, #c084fc);
-            box-shadow: 0 0 8px rgba(192, 132, 252, 0.8);
-            transition: width 0.1s linear;
-        }
-        @media (max-width: 1024px) {
-            .reels-showcase-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 768px) {
-            .reels-showcase-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -871,7 +827,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <img src="./assets/clients/logo_12.webp" alt="Diora Jewellery" class="marquee-client-logo">
                     <img src="./assets/clients/logo_13.webp" alt="Zawaya" class="marquee-client-logo">
                     <img src="./assets/logos/logo_1.webp" alt="Mice Media" class="marquee-client-logo">
-                    <img src="./assets/logos/logo_2.webp" alt="iPoint 360" class="marquee-client-logo">
                     <img src="./assets/logos/logo_3.webp" alt="Kenz Trading" class="marquee-client-logo">
                     <img src="./assets/logos/logo_4.webp" alt="Meltoz Cafe" class="marquee-client-logo">
                     <img src="./assets/logos/logo_5.webp" alt="Viaggio Tourism" class="marquee-client-logo">
@@ -893,119 +848,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <img src="./assets/clients/logo_12.webp" alt="Diora Jewellery" class="marquee-client-logo">
                     <img src="./assets/clients/logo_13.webp" alt="Zawaya" class="marquee-client-logo">
                     <img src="./assets/logos/logo_1.webp" alt="Mice Media" class="marquee-client-logo">
-                    <img src="./assets/logos/logo_2.webp" alt="iPoint 360" class="marquee-client-logo">
                     <img src="./assets/logos/logo_3.webp" alt="Kenz Trading" class="marquee-client-logo">
                     <img src="./assets/logos/logo_4.webp" alt="Meltoz Cafe" class="marquee-client-logo">
                     <img src="./assets/logos/logo_5.webp" alt="Viaggio Tourism" class="marquee-client-logo">
                     <img src="./assets/logos/logo_6.webp" alt="Bandhan Contracting" class="marquee-client-logo">
-                </div>
-            </div>
-        </section>
-
-        <!-- High-Impact Social Reels Showcase Section -->
-        <section class="section-padding" id="social-reels" style="background: rgba(10, 4, 22, 0.95); border-top: 1px solid var(--border-glass);">
-            <div class="container">
-                <div style="text-align: center; max-width: 750px; margin: 0 auto 10px auto;" class="fade-in-up">
-                    <span class="section-tag center">Social Media Growth ✨</span>
-                    <h2 class="section-title">Reels Crafted to Reach Millions</h2>
-                    <p style="color: var(--text-faded); font-size: 1.05rem; line-height: 1.7; margin-top: 10px;">
-                        From high-converting comedy skits and emotional storytelling to viral trend-based edits — we create content designed to explode organic reach and turn viewers into loyal customers.
-                    </p>
-                </div>
-
-                <div class="reels-showcase-grid">
-                    <!-- Reel 1: Comedy Reel -->
-                    <div class="reel-card fade-in-up" id="card-reel-1">
-                        <div class="reel-header">
-                            <div>
-                                <span class="reel-badge badge-comedy">Comedy &amp; Skit</span>
-                                <h3 class="reel-title">Humor That Converts</h3>
-                                <span class="reel-subtitle">Relatable viral business skits</span>
-                            </div>
-                            <div class="reel-control-group">
-                                <button class="reel-icon-btn btn-replay" onclick="window.replayReel(this)" title="Play from beginning" aria-label="Replay video">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-                                </button>
-                                <button class="reel-icon-btn btn-playpause" onclick="window.toggleReelPlay(this)" title="Play / Pause" aria-label="Play or pause video">
-                                    <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
-                                    <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                </button>
-                                <button class="reel-icon-btn btn-sound" onclick="window.toggleReelSound(this)" title="Toggle sound" aria-label="Toggle sound">
-                                    <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-                                    <svg class="icon-unmute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="reel-video-container">
-                            <video class="reel-video" autoplay loop muted playsinline preload="auto">
-                                <source src="./assets/reel_1.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <div class="reel-progress-bar"><div class="reel-progress-fill"></div></div>
-                        </div>
-                    </div>
-
-                    <!-- Reel 2: Emotional Storytelling -->
-                    <div class="reel-card fade-in-up delay-100" id="card-reel-2">
-                        <div class="reel-header">
-                            <div>
-                                <span class="reel-badge badge-emotional">Emotional &amp; Brand</span>
-                                <h3 class="reel-title">Storytelling &amp; Hook</h3>
-                                <span class="reel-subtitle">Deep audience engagement</span>
-                            </div>
-                            <div class="reel-control-group">
-                                <button class="reel-icon-btn btn-replay" onclick="window.replayReel(this)" title="Play from beginning" aria-label="Replay video">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-                                </button>
-                                <button class="reel-icon-btn btn-playpause" onclick="window.toggleReelPlay(this)" title="Play / Pause" aria-label="Play or pause video">
-                                    <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
-                                    <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                </button>
-                                <button class="reel-icon-btn btn-sound" onclick="window.toggleReelSound(this)" title="Toggle sound" aria-label="Toggle sound">
-                                    <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-                                    <svg class="icon-unmute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="reel-video-container">
-                            <video class="reel-video" autoplay loop muted playsinline preload="auto">
-                                <source src="./assets/reel_2.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <div class="reel-progress-bar"><div class="reel-progress-fill"></div></div>
-                        </div>
-                    </div>
-
-                    <!-- Reel 3: Trend Based -->
-                    <div class="reel-card fade-in-up delay-200" id="card-reel-3">
-                        <div class="reel-header">
-                            <div>
-                                <span class="reel-badge badge-trending">Trend Based</span>
-                                <h3 class="reel-title">Viral Audios &amp; Edits</h3>
-                                <span class="reel-subtitle">Riding active social trends</span>
-                            </div>
-                            <div class="reel-control-group">
-                                <button class="reel-icon-btn btn-replay" onclick="window.replayReel(this)" title="Play from beginning" aria-label="Replay video">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-                                </button>
-                                <button class="reel-icon-btn btn-playpause" onclick="window.toggleReelPlay(this)" title="Play / Pause" aria-label="Play or pause video">
-                                    <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
-                                    <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                </button>
-                                <button class="reel-icon-btn btn-sound" onclick="window.toggleReelSound(this)" title="Toggle sound" aria-label="Toggle sound">
-                                    <svg class="icon-mute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-                                    <svg class="icon-unmute" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="reel-video-container">
-                            <video class="reel-video" autoplay loop muted playsinline preload="auto">
-                                <source src="./assets/reel_3.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <div class="reel-progress-bar"><div class="reel-progress-fill"></div></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -1458,163 +1304,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="mascot-shadow"></div>
     </div>
 
+    <div id="ceo-sales-bot" class="ceo-bot">
+        <div class="ceo-bot-avatar">
+            <img src="./assets/founder.webp" alt="Hashir Nisam">
+        </div>
+        <div class="ceo-bot-bubble">
+            <div class="ceo-title">Hashir Nisam</div>
+            <p>Ready to grow your brand online? Let's discuss your campaign.</p>
+            <div class="ceo-bot-actions">
+                <a href="https://wa.me/971585577182?text=Hi%20Hashir,%20I%20want%20to%20discuss%20our%20digital%20marketing%20campaign." target="_blank" class="ceo-bot-btn btn-chat">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.62.963 3.4 1.47 5.358 1.471 5.53 0 10.029-4.505 10.032-10.04.001-2.68-1.036-5.197-2.924-7.086-1.887-1.889-4.399-2.928-7.085-2.929-5.537 0-10.039 4.504-10.042 10.041-.001 1.884.492 3.722 1.428 5.34L1.737 21.8l6.115-1.606zM17.47 14.39c-.3-.149-1.777-.878-2.027-.971-.25-.091-.432-.136-.613.136-.181.272-.703.878-.862 1.058-.16.179-.318.2-.618.05-1.92-.953-3.08-1.93-4.225-3.89-.3-.513.3-.476.858-1.587.091-.182.046-.34-.023-.477-.069-.136-.613-1.477-.84-2.023-.222-.534-.447-.461-.613-.47l-.523-.01c-.181 0-.476.068-.726.34-.25.272-.953.931-.953 2.27s.976 2.632 1.112 2.813c.136.18 1.92 2.93 4.652 4.114.65.28 1.157.447 1.554.573.653.208 1.248.179 1.717.11.523-.078 1.777-.726 2.027-1.385.25-.658.25-1.226.175-1.385-.075-.159-.272-.25-.572-.399z"/></svg>
+                    WhatsApp
+                </a>
+                <a href="tel:+971544387023" class="ceo-bot-btn btn-call">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Call
+                </a>
+            </div>
+        </div>
+    </div>
+
     <script>
-    // Top-Level Social Reels Interactive Functions
-    window.toggleReelPlay = function(target) {
-        if (window.event) {
-            window.event.stopPropagation();
-            window.event.preventDefault();
-        }
-        const card = target.classList.contains('reel-card') ? target : target.closest('.reel-card');
-        if (!card) return false;
-        const video = card.querySelector('.reel-video');
-        const playBtn = card.querySelector('.btn-playpause');
-        if (!video) return false;
-
-        const iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
-        const iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
-
-        if (video.paused) {
-            var promise = video.play();
-            if (promise !== undefined) {
-                promise.then(function() {
-                    if (iconPause) iconPause.style.display = 'inline-block';
-                    if (iconPlay) iconPlay.style.display = 'none';
-                    if (playBtn) playBtn.classList.add('is-active');
-                }).catch(function(e){ console.log("Play blocked:", e); });
-            }
-        } else {
-            video.pause();
-            if (iconPause) iconPause.style.display = 'none';
-            if (iconPlay) iconPlay.style.display = 'inline-block';
-            if (playBtn) playBtn.classList.remove('is-active');
-        }
-        return false;
-    };
-
-    window.replayReel = function(btn) {
-        if (window.event) {
-            window.event.stopPropagation();
-            window.event.preventDefault();
-        }
-        const card = btn.closest('.reel-card');
-        if (!card) return false;
-        const video = card.querySelector('.reel-video');
-        const playBtn = card.querySelector('.btn-playpause');
-        if (!video) return false;
-
-        video.currentTime = 0;
-        const iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
-        const iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
-
-        var promise = video.play();
-        if (promise !== undefined) {
-            promise.then(function() {
-                if (iconPause) iconPause.style.display = 'inline-block';
-                if (iconPlay) iconPlay.style.display = 'none';
-                if (playBtn) playBtn.classList.add('is-active');
-            }).catch(function(){});
-        }
-        return false;
-    };
-
-    window.toggleReelSound = function(btn) {
-        if (window.event) {
-            window.event.stopPropagation();
-            window.event.preventDefault();
-        }
-        const card = btn.closest('.reel-card');
-        if (!card) return false;
-        const video = card.querySelector('.reel-video');
-        if (!video) return false;
-
-        const iconMute = btn.querySelector('.icon-mute');
-        const iconUnmute = btn.querySelector('.icon-unmute');
-
-        if (video.muted) {
-            // Mute all other videos on the page
-            document.querySelectorAll('video').forEach(function(v) {
-                v.muted = true;
-            });
-            document.querySelectorAll('.btn-sound').forEach(function(b) {
-                b.classList.remove('is-active');
-                const m = b.querySelector('.icon-mute');
-                const um = b.querySelector('.icon-unmute');
-                if (m) m.style.display = 'inline-block';
-                if (um) um.style.display = 'none';
-            });
-
-            video.muted = false;
-            if (iconMute) iconMute.style.display = 'none';
-            if (iconUnmute) iconUnmute.style.display = 'inline-block';
-            btn.classList.add('is-active');
-
-            if (video.paused) {
-                video.play().catch(function(){});
-            }
-        } else {
-            video.muted = true;
-            if (iconMute) iconMute.style.display = 'inline-block';
-            if (iconUnmute) iconUnmute.style.display = 'none';
-            btn.classList.remove('is-active');
-        }
-        return false;
-    };
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Sync progress bars and video events
-        document.querySelectorAll('.reel-card').forEach(function(card) {
-            const video = card.querySelector('.reel-video');
-            const progressFill = card.querySelector('.reel-progress-fill');
-            const progressBar = card.querySelector('.reel-progress-bar');
-            const playBtn = card.querySelector('.btn-playpause');
-            const iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
-            const iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
-
-            if (!video) return;
-
-            video.addEventListener('play', function() {
-                if (iconPause) iconPause.style.display = 'inline-block';
-                if (iconPlay) iconPlay.style.display = 'none';
-                if (playBtn) playBtn.classList.add('is-active');
-            });
-
-            video.addEventListener('pause', function() {
-                if (iconPause) iconPause.style.display = 'none';
-                if (iconPlay) iconPlay.style.display = 'inline-block';
-                if (playBtn) playBtn.classList.remove('is-active');
-            });
-
-            video.addEventListener('timeupdate', function() {
-                if (video.duration && progressFill) {
-                    const pct = (video.currentTime / video.duration) * 100;
-                    progressFill.style.width = pct + '%';
+        // CEO bot scroll logic
+        window.addEventListener('scroll', () => {
+            const ceoBot = document.getElementById('ceo-sales-bot');
+            const heroSection = document.getElementById('home');
+            if (ceoBot && heroSection) {
+                const heroHeight = heroSection.offsetHeight;
+                if (window.scrollY > heroHeight - 100) {
+                    ceoBot.classList.add('visible');
+                } else {
+                    ceoBot.classList.remove('visible');
                 }
-            });
-
-            if (progressBar) {
-                progressBar.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const rect = progressBar.getBoundingClientRect();
-                    const pos = (e.clientX - rect.left) / rect.width;
-                    if (video.duration) {
-                        video.currentTime = pos * video.duration;
-                    }
-                });
-            }
-
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            video.play().catch(function(){});
-                        }
-                    });
-                }, { threshold: 0.2 });
-                observer.observe(card);
             }
         });
-    });
     </script>
-</body>
+
+    </body>
 </html>
