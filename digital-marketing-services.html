@@ -906,6 +906,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         @media (max-width: 768px) {
             .reels-showcase-grid { grid-template-columns: 1fr; }
         }
+        @media (max-width: 900px) {
+            .audit-form-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+        }
         .form-group {
             margin-bottom: 15px;
         }
@@ -2290,6 +2293,63 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </section>
 
         <!-- Mid-Page Consultation CTA -->
+        <!-- Free Marketing Audit - target of the "Free Audit" buttons in the nav -->
+        <section class="section-padding" id="audit-form" style="border-top: 1px solid var(--border-glass);">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;" class="audit-form-grid">
+
+                    <div class="fade-in-up">
+                        <h2 class="section-title" style="text-align: left; margin-bottom: 16px;">Get your free marketing audit</h2>
+                        <p style="color: #c5c0d0; font-size: 1.1rem; margin-bottom: 28px;">Tell us where you are now. We review your ads, social presence, and search visibility, then come back with what we would change first and what it costs.</p>
+                        <ul style="list-style: none; padding: 0; color: #c5c0d0; line-height: 1.9;">
+                            <li>&#10003;&nbsp; No cost and no obligation to continue</li>
+                            <li>&#10003;&nbsp; Reviewed by a strategist, not an automated report</li>
+                            <li>&#10003;&nbsp; Back within one working day</li>
+                        </ul>
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px;">
+                            <a href="https://wa.me/971585577182?text=I%20would%20like%20a%20free%20digital%20marketing%20audit" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">WhatsApp instead</a>
+                            <a href="tel:+971544387023" class="btn btn-secondary">Call the team</a>
+                        </div>
+                    </div>
+
+                    <div class="lead-form-card fade-in-up delay-100">
+                        <h3>Request your free audit</h3>
+                        <form id="marketing-services-audit-form" data-form-title="Digital Marketing Audit">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="name" placeholder="Name" required autocomplete="name">
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" class="form-control" name="phone" placeholder="Phone number" required pattern="[+]?[0-9\s\-()]{7,20}" autocomplete="tel">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="email" placeholder="Email address" required autocomplete="email">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="company" placeholder="Company (optional)" autocomplete="organization">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" name="service" required>
+                                    <option value="" disabled selected>What are you interested in?</option>
+                                    <option value="Growth Plan (AED 7,500/mo)">Growth Plan &mdash; AED 7,500/mo</option>
+                                    <option value="Premium Plan (AED 12,000/mo)">Premium Plan &mdash; AED 12,000/mo</option>
+                                    <option value="Elite Pro Plan (AED 15,000/mo)">Elite Pro Plan &mdash; AED 15,000/mo</option>
+                                    <option value="Meta &amp; Google Ads Only">Meta &amp; Google Ads only</option>
+                                    <option value="Social Media Management Only">Social media management only</option>
+                                    <option value="SEO Only">SEO only</option>
+                                    <option value="Not Sure Yet">Not sure yet</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" placeholder="Anything we should know? A sentence or two is plenty." rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Request free audit</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
         <section class="footer-cta" style="padding: 70px 0;">
             <div class="container fade-in-up" style="text-align: center;">
                 <h2 class="section-title" style="color: #fff; margin-bottom: 12px;">Ready to dominate your market in Dubai?</h2>

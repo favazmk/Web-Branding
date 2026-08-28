@@ -1540,8 +1540,6 @@ Looking forward to bringing this digital transformation to life!`;
 
         let currentClosestTarget = null;
         const updateMascotPosition = () => {
-            const ceoBot = document.getElementById('ceo-sales-bot');
-            const isCeoBotVisible = ceoBot && ceoBot.classList.contains('visible');
             const heroSection = document.getElementById('home') || document.querySelector('.hero-section, .hero, .bh-hero');
             // Allow multiple hero targets per page, prioritizing the first one that is visible below the navbar
             const heroTargets = document.querySelectorAll('.mascot-hero-target');
@@ -1595,24 +1593,8 @@ Looking forward to bringing this digital transformation to life!`;
             let defaultX = window.innerWidth - 120;
             let defaultY = window.innerHeight - 150;
 
-            if (ceoBot) {
-                // Sit on top of CEO bot avatar on bottom-left
-                defaultX = 15;
-                defaultY = window.innerHeight - 215;
-
-                // Bind mascot visibility to CEO bot visibility status
-                if (isCeoBotVisible) {
-                    mascotContainer.style.opacity = '1';
-                    mascotContainer.style.pointerEvents = 'auto';
-                } else {
-                    mascotContainer.style.opacity = '0';
-                    mascotContainer.style.pointerEvents = 'none';
-                }
-            } else {
-                // Standard visibility for pages without CEO bot
-                mascotContainer.style.opacity = '1';
-                mascotContainer.style.pointerEvents = 'auto';
-            }
+            mascotContainer.style.opacity = '1';
+            mascotContainer.style.pointerEvents = 'auto';
             
             // Elements to track
             const targets = document.querySelectorAll('.section-title, .industry-card, .service-card, .portfolio-card');
@@ -1887,9 +1869,20 @@ Looking forward to bringing this digital transformation to life!`;
     // Main-site web development page (indexable, linked from the nav).
     // Kept separate from the ads landing form so organic and paid leads
     // stay distinguishable in both GTM and the inbox.
-    const webdevPageLeadForm = document.getElementById('webdev-page-lead-form');
-    if (webdevPageLeadForm) {
-        webdevPageLeadForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, 'Web Development Enquiry'));
+    // Three service pages share this form id. Each one declares its own
+    // data-form-title so the enquiry lands in the inbox - and in the GTM
+    // form_name - under the service actually being asked about.
+    const servicePageLeadForm = document.getElementById('webdev-page-lead-form');
+    if (servicePageLeadForm) {
+        const formTitle = servicePageLeadForm.dataset.formTitle || 'Web Development Enquiry';
+        servicePageLeadForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, formTitle));
+    }
+
+    // Main-site digital marketing page (indexable). Separate from the ads
+    // landing page's audit form so organic and paid leads stay distinct.
+    const marketingServicesAuditForm = document.getElementById('marketing-services-audit-form');
+    if (marketingServicesAuditForm) {
+        marketingServicesAuditForm.addEventListener('submit', (e) => handleGenericFormSubmit(e, marketingServicesAuditForm.dataset.formTitle || 'Digital Marketing Audit'));
     }
 
     const campaignLeadForm = document.getElementById('campaign-lead-form');
