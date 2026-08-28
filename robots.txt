@@ -1,0 +1,11 @@
+# https://www.webbranding.ae/robots.txt
+
+# Crawling is open to every search engine. Pages that must stay out of
+# search results (ad landing pages, the thank-you page) carry their own
+# <meta name="robots" content="noindex"> tag instead of being blocked
+# here - a blocked page can never be crawled, so Google would never read
+# that tag and the page could still surface in results.
+User-agent: *
+Allow: /
+
+Sitemap: https://www.webbranding.ae/sitemap.xml
