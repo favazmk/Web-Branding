@@ -24,8 +24,8 @@
     'use strict';
 
     /* --- Tunables --------------------------------------------------------- */
-    var ROPE_POINTS = 12;      // masses in the strap, pivot included
-    var ITERATIONS = 8;        // constraint relaxation passes (higher = stiffer)
+    var ROPE_POINTS = 10;      // masses in the strap, pivot included
+    var ITERATIONS = 16;       // constraint relaxation passes (higher = stiffer)
     var GRAVITY = 2600;        // px/s^2
     var FRICTION = 0.994;      // velocity retained per step
     var CARD_FRICTION = 0.988; // the card sheds energy faster than the strap
@@ -168,7 +168,7 @@
         this.bodyLen = Math.max(40, this.hanger.offsetHeight);
 
         this.anchor = { x: this.w / 2, y: 6 };
-        this.ropeLen = Math.max(50, this.h - this.bodyLen - this.anchor.y - 14);
+        this.ropeLen = Math.max(50, (this.h * 0.75) - this.bodyLen - this.anchor.y - 14);
         this.segLen = this.ropeLen / (ROPE_POINTS - 1);
     };
 

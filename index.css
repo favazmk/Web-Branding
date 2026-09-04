@@ -4827,7 +4827,16 @@ a.vs-live:hover {
    ========================================================================== */
 
 .team-mobile-marquee {
-    display: none;
+    display: none !important;
+}
+
+.tm-card {
+    max-width: 130px;
+}
+
+.tm-photo img {
+    max-width: 100%;
+    height: auto;
 }
 
 @media (max-width: 768px) {
@@ -4849,7 +4858,7 @@ a.vs-live:hover {
     }
 
     .team-mobile-marquee {
-        display: flex;
+        display: flex !important;
         flex-direction: column;
         gap: 16px;
         margin-top: 36px;
