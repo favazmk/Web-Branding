@@ -359,8 +359,87 @@
         this.render();
     };
 
+    /* --- Mobile Marquee Card Swing Handler -------------------------------- */
+    function initMobileSwing() {
+        var cards = Array.prototype.slice.call(document.querySelectorAll('.tm-card'));
+        if (!cards.length) return;
+
+        cards.forEach(function (card) {
+            var startX = 0, startY = 0;
+            var lastX = 0;
+            var isDragging = false;
+            var track = card.closest('.tm-track');
+
+            card.addEventListener('touchstart', function (e) {
+                var touch = e.touches[0];
+                startX = touch.clientX;
+                startY = touch.clientY;
+                lastX = touch.clientX;
+                isDragging = false;
+                card.classList.remove('is-settling');
+                card.classList.remove('is-tapped');
+            }, { passive: true });
+
+            card.addEventListener('touchmove', function (e) {
+                var touch = e.touches[0];
+                var dx = touch.clientX - startX;
+                var dy = touch.clientY - startY;
+
+                // Allow clean vertical page scroll if gesture is predominantly vertical
+                if (!isDragging && Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 10) {
+                    return;
+                }
+
+                if (Math.abs(dx) > 5) {
+                    isDragging = true;
+                    lastX = touch.clientX;
+                    if (track) track.style.animationPlayState = 'paused';
+                    card.classList.add('is-dragging');
+
+                    var angle = clamp(dx * 0.25, -36, 36);
+                    var twist = clamp(dx * 0.16, -24, 24);
+                    card.style.transform = 'rotateZ(' + angle + 'deg) rotateY(' + twist + 'deg)';
+                }
+            }, { passive: true });
+
+            card.addEventListener('touchend', function () {
+                if (!isDragging) {
+                    // Tap trigger a fun swing
+                    card.classList.add('is-tapped');
+                    setTimeout(function () { card.classList.remove('is-tapped'); }, 1400);
+                    return;
+                }
+                isDragging = false;
+                if (track) track.style.animationPlayState = '';
+                card.classList.remove('is-dragging');
+
+                var totalDx = lastX - startX;
+                var releaseAngle = clamp(totalDx * 0.25, -30, 30);
+                card.style.setProperty('--release-angle', releaseAngle + 'deg');
+                card.style.transform = '';
+                card.classList.add('is-settling');
+
+                setTimeout(function () {
+                    card.classList.remove('is-settling');
+                }, 1400);
+            }, { passive: true });
+        });
+    }
+
     /* --- Driver ----------------------------------------------------------- */
     function init() {
+        initMobileSwing();
+
+        if (window.innerWidth <= 768) {
+            window.addEventListener('resize', function onFirstDesk() {
+                if (window.innerWidth > 768) {
+                    window.removeEventListener('resize', onFirstDesk);
+                    init();
+                }
+            });
+            return;
+        }
+
         var stages = Array.prototype.slice.call(
             document.querySelectorAll('.lanyard-stage'));
         if (!stages.length) return;

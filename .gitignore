@@ -34,3 +34,6 @@ assets/influencer.png
 assets/equipment.png
 assets/product shoot.png
 assets/ai generation.png
+
+# Team photo source masters. The site ships the .webp next to them.
+assets/Team/*.jpg

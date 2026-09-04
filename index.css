@@ -3961,22 +3961,61 @@ nav {
 .vs-dots .dot-yellow { background: #ffbd2e; }
 .vs-dots .dot-green { background: #27c93f; }
 
-.vs-frame-label {
+.vs-frame-label,
+.vs-frame-url {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     flex: 1;
     min-width: 0;
     max-width: 320px;
     margin: 0 auto;
-    padding: 5px 14px;
+    padding: 6px 16px;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.55);
-    background: rgba(0, 0, 0, 0.32);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.vs-frame-url:hover {
+    color: #ffffff;
+    background: rgba(90, 44, 137, 0.32);
+    border-color: rgba(192, 132, 252, 0.4);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+}
+
+.vs-url-icon {
+    width: 12px;
+    height: 12px;
+    color: #27c93f;
+    flex-shrink: 0;
+}
+
+.vs-url-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.vs-external-icon {
+    width: 12px;
+    height: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    flex-shrink: 0;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.vs-frame-url:hover .vs-external-icon {
+    color: #c084fc;
+    transform: translate(1px, -1px);
 }
 
 .vs-live {
@@ -3989,6 +4028,13 @@ nav {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #c49aff;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+a.vs-live:hover {
+    color: #ffffff;
+    transform: translateY(-1px);
 }
 
 .vs-live i {
@@ -4013,7 +4059,61 @@ nav {
     overflow: hidden;
 }
 
-/* All five stay in the DOM and cross-fade; only the active one is playing. */
+/* Screen overlay link */
+.vs-screen-link {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.vs-screen-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: rgba(12, 6, 26, 0.86);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(192, 132, 252, 0.45);
+    border-radius: 999px;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7),
+                0 0 24px rgba(123, 44, 191, 0.4);
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+
+.vs-screen-pill svg {
+    width: 15px;
+    height: 15px;
+    stroke: #c084fc;
+    flex-shrink: 0;
+}
+
+.vs-frame:hover .vs-screen-pill {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.vs-screen-link:hover .vs-screen-pill {
+    background: rgba(90, 44, 137, 0.92);
+    border-color: rgba(216, 180, 254, 0.7);
+    box-shadow: 0 14px 42px rgba(0, 0, 0, 0.8),
+                0 0 32px rgba(168, 85, 247, 0.6);
+}
+
+/* All six stay in the DOM and cross-fade; only the active one is playing. */
 .vs-video {
     position: absolute;
     inset: 0;
@@ -4046,6 +4146,7 @@ nav {
     padding: 70px 28px 22px;
     background: linear-gradient(180deg, transparent 0%, rgba(6, 2, 14, 0.5) 45%, rgba(6, 2, 14, 0.92) 100%);
     pointer-events: none;
+    z-index: 3;
 }
 
 .vs-cap-sector {
@@ -4067,6 +4168,53 @@ nav {
     color: #ffffff;
 }
 
+.vs-cap-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    pointer-events: auto;
+}
+
+.vs-visit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(90, 44, 137, 0.88), rgba(123, 44, 191, 0.94));
+    border: 1px solid rgba(192, 132, 252, 0.4);
+    border-radius: 999px;
+    box-shadow: 0 4px 18px rgba(90, 44, 137, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+
+.vs-visit-btn svg {
+    width: 14px;
+    height: 14px;
+    stroke: #ffffff;
+    transition: transform 0.25s ease;
+}
+
+.vs-visit-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, rgba(123, 44, 191, 1), rgba(168, 85, 247, 1));
+    border-color: rgba(216, 180, 254, 0.7);
+    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+}
+
+.vs-visit-btn:hover svg {
+    transform: translate(2px, -2px);
+}
+
 .vs-count {
     flex-shrink: 0;
     font-family: 'Outfit', sans-serif;
@@ -4085,8 +4233,8 @@ nav {
 /* ---- Selector rail ----------------------------------------------------- */
 .vs-rail {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
     margin: 18px 0 0;
     padding: 0;
     list-style: none;
@@ -4222,9 +4370,8 @@ nav {
 }
 
 /* ---- Responsive -------------------------------------------------------- */
-@media (max-width: 900px) {
-    /* Five chips no longer divide the width sensibly, so the rail becomes a
-       snap scroller rather than a 3 + 2 orphan row. */
+@media (max-width: 1024px) {
+    /* Six chips divide width smoothly with snap scroller on tablet */
     .vs-rail {
         display: flex;
         gap: 12px;
@@ -4237,7 +4384,7 @@ nav {
         scrollbar-color: rgba(90, 44, 137, 0.5) transparent;
     }
     .vs-rail li {
-        flex: 0 0 44%;
+        flex: 0 0 32%;
         scroll-snap-align: start;
     }
     .vs-rail::-webkit-scrollbar { height: 4px; }
@@ -4252,10 +4399,12 @@ nav {
        cover the work it is captioning, so it drops out to a footer bar. */
     .vs-caption {
         position: static;
-        padding: 12px 14px 14px;
+        padding: 14px 16px;
         background: rgba(12, 5, 24, 0.72);
         border-top: 1px solid rgba(255, 255, 255, 0.06);
         align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
     }
     .vs-cap-sector {
         margin-bottom: 3px;
@@ -4263,12 +4412,31 @@ nav {
         letter-spacing: 0.1em;
     }
     .vs-cap-title { font-size: 1.1rem; }
+    .vs-cap-actions { gap: 12px; }
+    .vs-visit-btn {
+        padding: 7px 14px;
+        font-size: 0.74rem;
+        gap: 6px;
+    }
+    .vs-visit-btn svg {
+        width: 12px;
+        height: 12px;
+    }
     .vs-count { font-size: 0.8rem; }
     .vs-count b { font-size: 1.15rem; }
     .vs-frame { border-radius: 14px; }
     .vs-frame-bar { padding: 9px 12px; gap: 10px; }
-    .vs-frame-label { font-size: 0.7rem; padding: 4px 10px; }
+    .vs-frame-label,
+    .vs-frame-url {
+        font-size: 0.7rem;
+        padding: 4px 10px;
+        max-width: 200px;
+    }
     .vs-live span { display: none; }
+    .vs-screen-pill {
+        padding: 8px 14px;
+        font-size: 0.75rem;
+    }
     .vs-dots .dot { width: 8px; height: 8px; }
     .vs-rail li { flex: 0 0 62%; }
     .vs-aura { top: 18%; }
@@ -4334,23 +4502,25 @@ nav {
    ========================================================================== */
 
 .lanyard-section {
-    --lny-w: 190px;
-    --lny-card-h: 252px;
+    --lny-w: 180px;
+    --lny-card-h: 242px;
     --lny-clip-h: 26px;
-    --lny-stage-h: 470px;
+    --lny-stage-h: 460px;
     overflow: hidden;
 }
 
 .lanyard-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px 12px;
     margin-top: 56px;
 }
 
 .lanyard-stage {
     position: relative;
     z-index: 1;
+    width: 226px;
     height: var(--lny-stage-h);
     perspective: 950px;
     perspective-origin: 50% 32%;
@@ -4628,6 +4798,18 @@ nav {
 
 /* --- Responsive ---------------------------------------------------------- */
 
+@media (max-width: 1100px) {
+    .lanyard-section {
+        --lny-w: 172px;
+        --lny-card-h: 232px;
+        --lny-stage-h: 435px;
+    }
+
+    .lanyard-stage {
+        width: 225px;
+    }
+}
+
 @media (max-width: 992px) {
     .lanyard-section {
         --lny-w: 168px;
@@ -4635,50 +4817,365 @@ nav {
         --lny-stage-h: 420px;
     }
 
-    .lanyard-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 4px;
+    .lanyard-stage {
+        width: 220px;
     }
 }
 
-@media (max-width: 560px) {
+/* ==========================================================================
+   MOBILE 3-LINE TEAM ID CARD MARQUEE (max-width: 768px)
+   ========================================================================== */
+
+.team-mobile-marquee {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .lanyard-desktop-only,
+    .lanyard-hint {
+        display: none !important;
+    }
+
     .lanyard-section {
-        --lny-w: 134px;
-        --lny-card-h: 180px;
-        --lny-clip-h: 20px;
-        --lny-stage-h: 330px;
+        overflow: hidden;
+        padding-left: 0;
+        padding-right: 0;
     }
 
-    .lanyard-grid {
+    .lanyard-section .container {
+        padding-left: 0;
+        padding-right: 0;
+        max-width: 100%;
+    }
+
+    .team-mobile-marquee {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
         margin-top: 36px;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        padding: 8px 0;
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
     }
 
-    .lanyard-clip {
-        width: 32px;
+    .tm-row {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        perspective: 900px;
+        perspective-origin: 50% 20%;
+        padding: 16px 0 20px;
     }
 
-    .lanyard-band-strap {
-        stroke-width: 11;
+    .tm-track {
+        display: flex;
+        align-items: flex-start;
+        width: max-content;
+        will-change: transform;
+        gap: 16px;
+        padding: 4px 0;
+        transform-style: preserve-3d;
     }
 
-    .lanyard-band-shadow {
-        stroke-width: 13.5;
+    /* Top Marquee: moves to left from right side */
+    .tm-track-left {
+        animation: tm-scroll-left 25s linear infinite;
     }
 
-    .lanyard-name {
+    /* Middle Marquee: moves left to right */
+    .tm-track-right {
+        animation: tm-scroll-right 27s linear infinite;
+    }
+
+    .tm-row:hover .tm-track,
+    .tm-row:active .tm-track {
+        animation-play-state: paused;
+    }
+
+    @keyframes tm-scroll-left {
+        0% { transform: translate3d(0, 0, 0); }
+        100% { transform: translate3d(-50%, 0, 0); }
+    }
+
+    @keyframes tm-scroll-right {
+        0% { transform: translate3d(-50%, 0, 0); }
+        100% { transform: translate3d(0, 0, 0); }
+    }
+
+    .tm-group {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        flex-shrink: 0;
+        transform-style: preserve-3d;
+    }
+
+    /* --- The ID Badge Card with Natural Pendulum Swing --- */
+    .tm-card {
+        position: relative;
+        width: 142px;
+        height: 206px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        user-select: none;
+        -webkit-user-select: none;
+        cursor: grab;
+        transform-origin: 50% 4px;
+        transform-style: preserve-3d;
+        touch-action: pan-y;
+        will-change: transform;
+        transition: filter 0.2s ease;
+    }
+
+    /* Continuous natural pendulum sway for left-moving rows */
+    .tm-track-left .tm-card {
+        animation: tm-card-swing-left 3.4s ease-in-out infinite;
+    }
+
+    /* Continuous natural pendulum sway for right-moving row */
+    .tm-track-right .tm-card {
+        animation: tm-card-swing-right 3.1s ease-in-out infinite;
+    }
+
+    /* Stagger delays so each card sways at its own natural harmonic frequency */
+    .tm-card:nth-child(4n + 1) { animation-delay: 0s; }
+    .tm-card:nth-child(4n + 2) { animation-delay: -0.85s; }
+    .tm-card:nth-child(4n + 3) { animation-delay: -1.7s; }
+    .tm-card:nth-child(4n + 4) { animation-delay: -2.55s; }
+
+    @keyframes tm-card-swing-left {
+        0% {
+            transform: rotateZ(-5deg) rotateY(-7deg) translate3d(0, 0, 0);
+        }
+        50% {
+            transform: rotateZ(4deg) rotateY(5deg) translate3d(0, 0, 0);
+        }
+        100% {
+            transform: rotateZ(-5deg) rotateY(-7deg) translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes tm-card-swing-right {
+        0% {
+            transform: rotateZ(5deg) rotateY(7deg) translate3d(0, 0, 0);
+        }
+        50% {
+            transform: rotateZ(-4deg) rotateY(-5deg) translate3d(0, 0, 0);
+        }
+        100% {
+            transform: rotateZ(5deg) rotateY(7deg) translate3d(0, 0, 0);
+        }
+    }
+
+    /* Interactive touch / drag / release swinging states */
+    .tm-card.is-dragging {
+        animation: none !important;
+        z-index: 10;
+        cursor: grabbing;
+        filter: drop-shadow(0 14px 28px rgba(90, 44, 137, 0.45));
+    }
+
+    .tm-card.is-tapped {
+        animation: tm-card-tap-swing 1.3s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+        z-index: 5;
+    }
+
+    .tm-card.is-settling {
+        animation: tm-card-spring-settle 1.4s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+        z-index: 5;
+    }
+
+    @keyframes tm-card-tap-swing {
+        0%   { transform: rotateZ(0deg) scale(1.04); }
+        22%  { transform: rotateZ(18deg) rotateY(14deg) scale(1.04); }
+        48%  { transform: rotateZ(-13deg) rotateY(-9deg) scale(1.02); }
+        70%  { transform: rotateZ(7deg) rotateY(5deg) scale(1.01); }
+        86%  { transform: rotateZ(-3deg) rotateY(-2deg); }
+        100% { transform: rotateZ(0deg) scale(1); }
+    }
+
+    @keyframes tm-card-spring-settle {
+        0% {
+            transform: rotateZ(var(--release-angle, 20deg)) rotateY(calc(var(--release-angle, 20deg) * 0.6));
+        }
+        24% {
+            transform: rotateZ(calc(var(--release-angle, 20deg) * -0.68)) rotateY(calc(var(--release-angle, 20deg) * -0.4));
+        }
+        48% {
+            transform: rotateZ(calc(var(--release-angle, 20deg) * 0.42)) rotateY(calc(var(--release-angle, 20deg) * 0.24));
+        }
+        70% {
+            transform: rotateZ(calc(var(--release-angle, 20deg) * -0.2)) rotateY(calc(var(--release-angle, 20deg) * -0.1));
+        }
+        87% {
+            transform: rotateZ(calc(var(--release-angle, 20deg) * 0.08));
+        }
+        100% {
+            transform: rotateZ(0deg);
+        }
+    }
+
+    /* Metal clip & woven strap tag at the top of the badge */
+    .tm-clip {
+        width: 28px;
+        height: 20px;
+        position: relative;
+        z-index: 3;
+        margin-bottom: -10px;
+        pointer-events: none;
+    }
+
+    .tm-strap {
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 14px;
+        height: 16px;
+        border-radius: 3px 3px 0 0;
+        background: linear-gradient(180deg, #2a0f42 0%, #5A2C89 55%, #7b2cbf 100%);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: none;
+    }
+
+    .tm-clip-ring {
+        position: absolute;
+        top: 2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 14px;
+        height: 10px;
+        border-radius: 6px 6px 0 0;
+        border: 2px solid #b8b0c8;
+        background: transparent;
+    }
+
+    .tm-clip-tab {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 24px;
+        height: 11px;
+        border-radius: 3px;
+        background: linear-gradient(180deg, #d8d2e8 0%, #8c829e 50%, #4a4258 100%);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    /* Main Badge Body */
+    .tm-badge {
+        position: relative;
+        width: 100%;
+        height: 191px;
+        border-radius: 14px;
+        overflow: hidden;
+        background: linear-gradient(165deg, #1d0f33 0%, #110722 55%, #090314 100%);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55),
+                    0 0 15px rgba(90, 44, 137, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Slot punch */
+    .tm-slotbar {
+        position: relative;
+        flex: 0 0 18px;
+        background: rgba(0, 0, 0, 0.4);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .tm-slotbar::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 24px;
+        height: 5px;
+        border-radius: 3px;
+        background: #05010a;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    /* Photo */
+    .tm-photo {
+        position: relative;
+        flex: 1 1 auto;
+        overflow: hidden;
+        background: var(--grad-primary);
+    }
+
+    .tm-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+    }
+
+    .tm-initials {
+        display: none;
+        position: absolute;
+        inset: 0;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800;
+        font-size: 1.6rem;
+        letter-spacing: 0.05em;
+        color: rgba(255, 255, 255, 0.95);
+        background: linear-gradient(135deg, #7b2cbf 0%, #3c096c 100%);
+    }
+
+    .tm-card.no-photo .tm-photo img {
+        display: none;
+    }
+
+    .tm-card.no-photo .tm-initials {
+        display: flex;
+    }
+
+    /* Meta text */
+    .tm-meta {
+        position: relative;
+        padding: 8px 10px 10px;
+        background: linear-gradient(180deg, rgba(11, 4, 23, 0) 0%, rgba(11, 4, 23, 0.94) 40%, #0b0417 100%);
+        margin-top: -36px;
+        z-index: 2;
+    }
+
+    .tm-name {
+        display: block;
+        font-family: 'Outfit', sans-serif;
         font-size: 0.82rem;
+        font-weight: 700;
+        line-height: 1.2;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
-    .lanyard-role {
-        font-size: 0.56rem;
-    }
-
-    .lanyard-initials {
-        font-size: 2.1rem;
-    }
-
-    .lanyard-meta {
-        padding: 10px 12px 12px;
+    .tm-role {
+        display: block;
+        margin-top: 2px;
+        font-size: 0.58rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-blue);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 
