@@ -1,14 +1,14 @@
 // Trace a scroll and aggregate main-thread cost by event and JS source: node trace.mjs <root> <page> <desktop|phone>
 import { createRequire } from 'node:module';
 import http from 'node:http'; import fs from 'node:fs'; import path from 'node:path'; import os from 'node:os';
-const require = createRequire(path.join(os.homedir(), '.claude/skills/launch-check/runner/package.json'));
+const require = createRequire(import.meta.url);
 const { chromium } = require('playwright-core');
 const root = path.resolve(process.argv[2]); const name = process.argv[3]; const dev = process.argv[4] || 'desktop';
 const srv = http.createServer((q, r) => { let p = decodeURIComponent(q.url.split('?')[0]); if (p === '/') p = '/index.html'; let f = path.join(root, p);
   if (!fs.existsSync(f) && fs.existsSync(f + '.html')) f += '.html'; if (!fs.existsSync(f) || fs.statSync(f).isDirectory()) { r.writeHead(404); return r.end(); }
   r.writeHead(200, { 'Content-Type': { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css' }[path.extname(f)] || '' }); fs.createReadStream(f).pipe(r); }).listen(0);
 const base = `http://127.0.0.1:${srv.address().port}/`;
-const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const browser = await chromium.launch({ headless: true });
 const ctx = await browser.newContext(dev === 'phone' ? { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true } : { viewport: { width: 1440, height: 900 } });
 const page = await ctx.newPage(); const cdp = await ctx.newCDPSession(page);
 await page.goto(base + (name === 'index' ? '' : name), { waitUntil: 'load' }); if (process.env.EXP_CSS) await page.addStyleTag({ content: process.env.EXP_CSS });

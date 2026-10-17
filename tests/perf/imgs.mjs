@@ -1,10 +1,10 @@
 import { createRequire } from 'node:module'; import http from 'node:http'; import fs from 'node:fs'; import path from 'node:path'; import os from 'node:os';
-const require = createRequire(path.join(os.homedir(), '.claude/skills/launch-check/runner/package.json'));
+const require = createRequire(import.meta.url);
 const { chromium } = require('playwright-core'); const root = path.resolve(process.argv[2]);
 const srv = http.createServer((q, r) => { let p = decodeURIComponent(q.url.split('?')[0]); if (p === '/') p = '/index.html'; let f = path.join(root, p);
   if (!fs.existsSync(f) && fs.existsSync(f + '.html')) f += '.html'; if (!fs.existsSync(f) || fs.statSync(f).isDirectory()) { r.writeHead(404); return r.end(); }
   r.writeHead(200, { 'Content-Type': { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg':'image/svg+xml' }[path.extname(f)] || '' }); fs.createReadStream(f).pipe(r); }).listen(0);
-const base = `http://127.0.0.1:${srv.address().port}/`; const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const base = `http://127.0.0.1:${srv.address().port}/`; const browser = await chromium.launch({ headless: true });
 const all = {};
 for (const name of process.argv[3].split(',')) { const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.goto(base + (name === 'index' ? '' : name), { waitUntil: 'load' });

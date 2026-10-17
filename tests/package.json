@@ -1,0 +1,12 @@
+{
+  "name": "web-branding-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "launch": "playwright test -c launch/playwright.config.mjs",
+    "perf": "node perf/scrollprof.mjs .."
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}
