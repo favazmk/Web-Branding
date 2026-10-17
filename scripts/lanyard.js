@@ -284,8 +284,14 @@
     };
 
     Lanyard.prototype.render = function () {
-        this.strap.setAttribute('d', ropePath(this.points));
-        this.shadow.setAttribute('d', this.strap.getAttribute('d'));
+        // The breeze never fully settles, so only rewrite the strap when its
+        // rounded path actually changes; each write re-lays out the textPath.
+        var d = ropePath(this.points);
+        if (d !== this.lastPath) {
+            this.lastPath = d;
+            this.strap.setAttribute('d', d);
+            this.shadow.setAttribute('d', d);
+        }
 
         var pivot = this.points[ROPE_POINTS - 1];
         var dx = this.base.x - pivot.x;
@@ -294,10 +300,14 @@
         // x term so a base hanging right maps to the matching tilt.
         var tilt = Math.atan2(-dx, Math.max(dy, 0.001)) * 180 / Math.PI;
 
-        this.hanger.style.transform =
+        var transform =
             'translate3d(' + (pivot.x - this.halfW).toFixed(1) + 'px,' +
             pivot.y.toFixed(1) + 'px,0) rotate(' + tilt.toFixed(2) + 'deg)' +
             ' rotateY(' + this.spin.toFixed(2) + 'deg)';
+        if (transform !== this.lastTransform) {
+            this.lastTransform = transform;
+            this.hanger.style.transform = transform;
+        }
     };
 
     /* --- Interaction ------------------------------------------------------ */
@@ -481,7 +491,9 @@
             }
             if (steps === MAX_STEPS) acc = 0;
 
-            for (var j = 0; j < items.length; j++) items[j].render();
+            for (var j = 0; j < items.length; j++) {
+                if (items[j].onScreen) items[j].render();
+            }
             raf = requestAnimationFrame(frame);
         }
 
@@ -499,8 +511,13 @@
 
         // Matches the rest of the site: simulation is halted whenever the
         // section is off-screen or the tab is hidden.
+        // entries only lists stages whose state changed, so track each stage
+        // and derive overall visibility from all of them.
         var io = new IntersectionObserver(function (entries) {
-            visible = entries.some(function (en) { return en.isIntersecting; });
+            entries.forEach(function (en) {
+                items[stages.indexOf(en.target)].onScreen = en.isIntersecting;
+            });
+            visible = items.some(function (it) { return it.onScreen; });
             if (visible) start(); else stop();
         }, { threshold: 0.08 });
 

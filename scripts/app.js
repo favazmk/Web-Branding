@@ -78,17 +78,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 1. Header Scroll Effect ---
     const header = document.getElementById('main-header');
     
+    // Read scrollY at most once per frame, and only touch the class when the
+    // state flips, so scrolling does not force a style recalc every event.
+    let headerScrolled = null;
+    let headerTicking = false;
     const handleScroll = () => {
-        if (!header) return;
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+        headerTicking = false;
+        const scrolled = window.scrollY > 50;
+        if (scrolled === headerScrolled) return;
+        headerScrolled = scrolled;
+        header.classList.toggle('scrolled', scrolled);
     };
     
     if (header) {
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', () => {
+            if (headerTicking) return;
+            headerTicking = true;
+            requestAnimationFrame(handleScroll);
+        }, { passive: true });
         handleScroll(); // Run initially in case of refresh
     }
 
@@ -934,7 +941,11 @@ Looking forward to bringing this digital transformation to life!`;
                 const italVal = getAttr(d, maxDist, 0, 1).toFixed(2);
 
                 const settings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
-                item.span.style.fontVariationSettings = settings;
+                // Skip unchanged writes; each write re-lays out the whole title.
+                if (item.lastSettings !== settings) {
+                    item.lastSettings = settings;
+                    item.span.style.fontVariationSettings = settings;
+                }
             });
 
             rafId = requestAnimationFrame(animate);
@@ -1539,8 +1550,35 @@ Looking forward to bringing this digital transformation to life!`;
         mascotContainer.style.right = 'auto';
 
         let currentClosestTarget = null;
+
+        // Writes are skipped when the value is unchanged: left/top carry a CSS
+        // transition, and every redundant write restarts it and dirties layout.
+        const applied = {};
+        const setStyle = (prop, value) => {
+            if (applied[prop] === value) return;
+            applied[prop] = value;
+            if (value === null) mascotContainer.style.removeProperty(prop);
+            else mascotContainer.style.setProperty(prop, value);
+        };
+        const setMode = (mode) => {
+            if (applied.mode === mode) return;
+            applied.mode = mode;
+            mascotContainer.classList.toggle('in-hero', mode === 'hero');
+            mascotContainer.classList.toggle('in-sub-hero', mode === 'sub-hero');
+            if (mode !== 'hero') {
+                // Hero docking owns these; any other mode must not inherit them.
+                mascotContainer.style.removeProperty('--bh-mascot-scale');
+                mascotContainer.style.removeProperty('--bh-mascot-inv-scale');
+            }
+        };
+        const setPosition = (x, y) => {
+            setStyle('left', `${Math.round(x)}px`);
+            setStyle('top', `${Math.round(y)}px`);
+        };
+
+        // All rect reads happen before any write so a frame costs at most one
+        // layout instead of one per read.
         const updateMascotPosition = () => {
-            const heroSection = document.getElementById('home') || document.querySelector('.hero-section, .hero, .bh-hero');
             // Allow multiple hero targets per page, prioritizing the first one that is visible below the navbar
             const heroTargets = document.querySelectorAll('.mascot-hero-target');
             
@@ -1555,52 +1593,22 @@ Looking forward to bringing this digital transformation to life!`;
             }
 
             // Mascot stays docked in hero ONLY while target top is below navbar bottom + 25px buffer
-            let inHero = false;
-            let activeHeroTarget = null;
-            
             for (let i = 0; i < heroTargets.length; i++) {
                 const targetRect = heroTargets[i].getBoundingClientRect();
                 if (targetRect.top > (navBottom + 25) && targetRect.bottom > 0 && targetRect.top < window.innerHeight) {
-                    inHero = true;
-                    activeHeroTarget = heroTargets[i];
-                    break;
+                    setMode(heroTargets[i].classList.contains('bh-dock') ? 'hero' : 'sub-hero');
+                    setPosition(targetRect.left, targetRect.top);
+                    currentClosestTarget = heroTargets[i];
+                    return;
                 }
             }
 
-            if (inHero && activeHeroTarget) {
-                if (activeHeroTarget.classList.contains('bh-dock')) {
-                    mascotContainer.classList.add('in-hero');
-                    mascotContainer.classList.remove('in-sub-hero');
-                } else {
-                    mascotContainer.classList.add('in-sub-hero');
-                    mascotContainer.classList.remove('in-hero');
-                    mascotContainer.style.removeProperty('--bh-mascot-scale');
-                    mascotContainer.style.removeProperty('--bh-mascot-inv-scale');
-                }
-                const targetRect = activeHeroTarget.getBoundingClientRect();
-                mascotContainer.style.left = `${targetRect.left}px`;
-                mascotContainer.style.top = `${targetRect.top}px`;
-                currentClosestTarget = activeHeroTarget;
-                return;
-            }
-
-            mascotContainer.classList.remove('in-hero');
-            mascotContainer.classList.remove('in-sub-hero');
-            mascotContainer.style.removeProperty('--bh-mascot-scale');
-            mascotContainer.style.removeProperty('--bh-mascot-inv-scale');
-
-            // Default bottom-right corner
-            let defaultX = window.innerWidth - 120;
-            let defaultY = window.innerHeight - 150;
-
-            mascotContainer.style.opacity = '1';
-            mascotContainer.style.pointerEvents = 'auto';
-            
             // Elements to track
             const targets = document.querySelectorAll('.section-title, .industry-card, .service-card, .portfolio-card');
             const centerY = window.innerHeight / 2;
             
             let closestTarget = null;
+            let closestRect = null;
             let minDistance = Infinity;
 
             targets.forEach(target => {
@@ -1612,13 +1620,18 @@ Looking forward to bringing this digital transformation to life!`;
                     if (distance < minDistance) {
                         minDistance = distance;
                         closestTarget = target;
+                        closestRect = rect;
                     }
                 }
             });
 
+            setMode('free');
+            setStyle('opacity', '1');
+            setStyle('pointer-events', 'auto');
+
             // If a target is near the center, fly to it
             if (closestTarget && minDistance < 250) {
-                const rect = closestTarget.getBoundingClientRect();
+                const rect = closestRect;
                 // Sit on top-right of the element
                 let targetX = rect.right - 80; 
                 let targetY = rect.top - 90; 
@@ -1633,12 +1646,10 @@ Looking forward to bringing this digital transformation to life!`;
                 targetX = Math.max(20, Math.min(targetX, window.innerWidth - 120));
                 targetY = Math.max(20, Math.min(targetY, window.innerHeight - 150));
 
-                mascotContainer.style.left = `${targetX}px`;
-                mascotContainer.style.top = `${targetY}px`;
+                setPosition(targetX, targetY);
             } else {
-                // Fly back to default
-                mascotContainer.style.left = `${defaultX}px`;
-                mascotContainer.style.top = `${defaultY}px`;
+                // Fly back to default bottom-right corner
+                setPosition(window.innerWidth - 120, window.innerHeight - 150);
             }
             currentClosestTarget = closestTarget;
         };
@@ -1708,6 +1719,7 @@ Looking forward to bringing this digital transformation to life!`;
         });
 
         window.addEventListener('resize', updateMascotPosition);
+
 
         // Add speech bubble
         const bubble = document.createElement('div');
