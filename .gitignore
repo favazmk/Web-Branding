@@ -37,3 +37,6 @@ assets/ai generation.png
 
 # Team photo source masters. The site ships the .webp next to them.
 assets/Team/*.jpg
+
+# /launch-check output
+launch-report/
