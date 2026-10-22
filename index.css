@@ -3,7 +3,7 @@
    ========================================================================== */
 
 /* --- Google Fonts Import --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Roboto+Flex:slnt,wdth,wght@-10..0,25..151,100..1000&display=swap');
 
 /* --- Custom Variables & Tokens --- */
 :root {
@@ -547,16 +547,11 @@ nav {
 }
 
 
-@font-face {
-    font-family: 'Compressa VF';
-    src: url('https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2') format('woff2');
-    font-weight: 100 900;
-    font-stretch: 5% 200%;
-    font-style: normal;
-}
-
+/* Variable font for the hero "text pressure" effect (scripts/app.js drives
+   its wght, wdth and slnt axes per letter). It replaced a hot-linked copy of
+   the commercial Compressa font that had gone 404. */
 .hero-title {
-    font-family: 'Compressa VF', 'Outfit', sans-serif;
+    font-family: 'Roboto Flex', 'Outfit', sans-serif;
     font-size: clamp(2.5rem, 6vw, 4.5rem); /* 40px - 72px */
     line-height: 1.05;
     margin-bottom: 24px;
@@ -4553,9 +4548,15 @@ a.vs-live:hover {
    would be re-rasterised on every animation frame. */
 .lanyard-band-shadow {
     fill: none;
-    stroke: rgba(0, 0, 0, 0.5);
     stroke-width: 18;
     stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Violet centre thread. Butt caps so it never pokes out past the strap. */
+.lanyard-band-stripe {
+    fill: none;
+    stroke-width: 4;
     stroke-linejoin: round;
 }
 
@@ -4877,7 +4878,7 @@ a.vs-live:hover {
         display: flex;
         perspective: 900px;
         perspective-origin: 50% 20%;
-        padding: 16px 0 20px;
+        padding: 36px 0 34px; /* headroom for the strap; legroom for a stretched pull */
     }
 
     .tm-track {
@@ -4982,52 +4983,53 @@ a.vs-live:hover {
         }
     }
 
-    /* Interactive touch / drag / release swinging states */
-    .tm-card.is-dragging {
-        animation: none !important;
+    /* --- Physics (scripts/lanyard.js, PHONE config) ---
+       The script wraps each card in a .tm-slot holding its strap and adds
+       .tm-physics, which replaces the CSS sway above with the simulation. */
+    /* Sized by its card (no width of its own): .tm-card is capped at 130px,
+       and a wider slot put the strap, which hangs from the slot's centre,
+       off the card's centre. The slot is its own flat 3D context with its
+       own perspective, so the strap and the card never share a depth plane
+       (shared planes z-fight, which showed as flicker at the clip). */
+    .tm-slot {
+        position: relative;
+        flex-shrink: 0;
+        perspective: 900px;
+        perspective-origin: 50% 0;
+    }
+
+    /* A thrown card can cross its neighbours; keep it on top. */
+    .tm-slot.is-held {
         z-index: 10;
+    }
+
+    .tm-physics .tm-card {
+        animation: none !important;
+        transform-style: flat; /* clip and badge paint in DOM order instead of z-fighting */
+        touch-action: pan-y; /* sideways drags swing the card, vertical ones scroll the page */
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .tm-slot.is-held .tm-card {
         cursor: grabbing;
         filter: drop-shadow(0 14px 28px rgba(90, 44, 137, 0.45));
     }
 
-    .tm-card.is-tapped {
-        animation: tm-card-tap-swing 1.3s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
-        z-index: 5;
+    /* The drawn strap replaces the short fixed tab. */
+    .tm-physics .tm-strap {
+        display: none;
     }
 
-    .tm-card.is-settling {
-        animation: tm-card-spring-settle 1.4s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
-        z-index: 5;
+    .tm-slot .lanyard-band-strap {
+        stroke-width: 10;
     }
 
-    @keyframes tm-card-tap-swing {
-        0%   { transform: rotateZ(0deg) scale(1.04); }
-        22%  { transform: rotateZ(18deg) rotateY(14deg) scale(1.04); }
-        48%  { transform: rotateZ(-13deg) rotateY(-9deg) scale(1.02); }
-        70%  { transform: rotateZ(7deg) rotateY(5deg) scale(1.01); }
-        86%  { transform: rotateZ(-3deg) rotateY(-2deg); }
-        100% { transform: rotateZ(0deg) scale(1); }
+    .tm-slot .lanyard-band-shadow {
+        stroke-width: 12;
     }
 
-    @keyframes tm-card-spring-settle {
-        0% {
-            transform: rotateZ(var(--release-angle, 20deg)) rotateY(calc(var(--release-angle, 20deg) * 0.6));
-        }
-        24% {
-            transform: rotateZ(calc(var(--release-angle, 20deg) * -0.68)) rotateY(calc(var(--release-angle, 20deg) * -0.4));
-        }
-        48% {
-            transform: rotateZ(calc(var(--release-angle, 20deg) * 0.42)) rotateY(calc(var(--release-angle, 20deg) * 0.24));
-        }
-        70% {
-            transform: rotateZ(calc(var(--release-angle, 20deg) * -0.2)) rotateY(calc(var(--release-angle, 20deg) * -0.1));
-        }
-        87% {
-            transform: rotateZ(calc(var(--release-angle, 20deg) * 0.08));
-        }
-        100% {
-            transform: rotateZ(0deg);
-        }
+    .tm-slot .lanyard-band-stripe {
+        stroke-width: 2.5;
     }
 
     /* Metal clip & woven strap tag at the top of the badge */

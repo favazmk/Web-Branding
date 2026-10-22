@@ -813,7 +813,7 @@ Looking forward to bringing this digital transformation to life!`;
         const cacheCoords = () => {
             // Temporarily set to baseline so we get the resting coordinates
             spans.forEach(span => {
-                span.style.fontVariationSettings = `'wght' 200, 'wdth' 100, 'ital' 0`;
+                span.style.fontVariationSettings = `'wght' 200, 'wdth' 100, 'slnt' 0`;
             });
             // Force layout reflow once
             titleRect = title.getBoundingClientRect();
@@ -931,9 +931,9 @@ Looking forward to bringing this digital transformation to life!`;
 
                 const wdth = Math.floor(getAttr(d, maxDist, minWdth, maxWdth));
                 const wght = Math.floor(getAttr(d, maxDist, minWght, maxWght));
-                const italVal = getAttr(d, maxDist, 0, 1).toFixed(2);
+                const slnt = getAttr(d, maxDist, 0, -10).toFixed(1); // Roboto Flex leans via slnt (0 to -10)
 
-                const settings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
+                const settings = `'wght' ${wght}, 'wdth' ${wdth}, 'slnt' ${slnt}`;
                 item.span.style.fontVariationSettings = settings;
             });
 
